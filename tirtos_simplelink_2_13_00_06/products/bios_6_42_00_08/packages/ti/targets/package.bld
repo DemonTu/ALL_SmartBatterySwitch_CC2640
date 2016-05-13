@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2015 by Texas Instruments Incorporated.
+ *
+ */
+
+Pkg.attrs.relScript = "./local.rel";
+
+Pkg.otherSrcs = ['ccs_exec.xdt', 'linkcmd.xdt', 'linkUtils.xs', 'std.h',
+    'ccs_package.xdt', 'ccs_start.bat', 'ccs_start.pl'
+];
+
+Pkg.otherFiles = Pkg.otherSrcs;
+/*
+ *  @(#) ti.targets; 1, 0, 3,5; 2-27-2015 12:11:33; /db/ztree/library/trees/xdctargets/xdctargets-i02/src/ xlibrary
+
+ */
+

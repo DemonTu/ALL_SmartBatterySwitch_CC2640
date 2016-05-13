@@ -1,0 +1,326 @@
+\subsection{G\+P\+I\+O\+C\+C3200.\+h File Reference}
+\label{_g_p_i_o_c_c3200_8h}\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+C\+C3200 G\+P\+I\+O driver. 
+
+============================================================================
+
+The G\+P\+I\+O header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/gpio/GPIOCC3200.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The G\+P\+I\+O module allows you to manage General Purpose I/\+O pins via simple and portable A\+P\+Is. The application is required to supply a \hyperlink{struct_g_p_i_o_c_c3200___config}{G\+P\+I\+O\+C\+C3200\+\_\+\+Config} structure to the module (see example below). This structure communicates to the G\+P\+I\+O module how to configure the pins used by the application (See the description of G\+P\+I\+O\+\_\+\+Pin\+Config in the \hyperlink{_g_p_i_o_8h}{G\+P\+I\+O.\+h} file).
+
+The application is required to call \hyperlink{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}{G\+P\+I\+O\+\_\+init()}. This function will initialize all the G\+P\+I\+O pins defined in the G\+P\+I\+O\+\_\+\+Pin\+Config table to the configurations specified. Once completed the other A\+P\+Is can be used to access the pins.
+
+Asserts are used to verify that the driver has been initialized, and is reading/writing a valid index.
+
+The following is an example of the code required to use the 2 switches and 4 L\+E\+Ds on the C\+C3200 Launchpad board.
+
+Board header\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// Enum of GPIO names on the CC3200\_LP dev board}
+\textcolor{keyword}{typedef} \textcolor{keyword}{enum} CC3200\_LP\_GPIOName \{
+    \textcolor{comment}{// input pins with callbacks first}
+    CC3200\_LP\_SW2 = 0,
+    CC3200\_LP\_SW3,
+    \textcolor{comment}{// output pins}
+    CC3200\_LP\_LED\_D7,
+    CC3200\_LP\_LED\_D6,
+    CC3200\_LP\_LED\_D5,
+
+    CC3200\_LP\_GPIOCOUNT
+\} CC3200\_LP\_GPIOName;
+\end{DoxyCode}
+
+
+Board initialization code\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/GPIO.h>}
+\textcolor{preprocessor}{#include <ti/drivers/gpio/GPIOCC3200.h>}
+
+\textcolor{comment}{// Array of Pin configurations}
+\textcolor{comment}{// NOTE: The order of the pin configurations must coincide with what was}
+\textcolor{comment}{//       defined in CC3200\_LP.h}
+\textcolor{comment}{// NOTE: Pins not used for interrupts should be placed at the end of the}
+         array.  Callback entries can be omitted from callbacks array to
+         reduce memory usage.
+const GPIO_PinConfig gpioPinConfigs[] = \{
+    \textcolor{comment}{// input pins with callbacks}
+
+    \textcolor{comment}{// CC3200\_LP\_SW2}
+    GPIOCC3200_GPIO_22 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_RISING,
+    \textcolor{comment}{// CC3200\_LP\_SW3}
+    GPIOCC3200_GPIO_13 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_RISING,
+
+    \textcolor{comment}{// output pins}
+
+    \textcolor{comment}{// CC3200\_LP\_LED\_D7}
+    GPIOCC3200_GPIO_09 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | 
+      GPIO_CFG_OUT_LOW,
+    \textcolor{comment}{// CC3200\_LP\_LED\_D6}
+    GPIOCC3200_GPIO_10 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | 
+      GPIO_CFG_OUT_LOW,
+    \textcolor{comment}{// CC3200\_LP\_LED\_D5}
+    GPIOCC3200_GPIO_11 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | 
+      GPIO_CFG_OUT_LOW,
+\};
+
+\textcolor{comment}{// Array of callback function pointers}
+\textcolor{comment}{// NOTE: The order of the pin configurations must coincide with what was}
+\textcolor{comment}{//       defined in CC3200\_LP.h}
+\textcolor{comment}{// NOTE: Pins not used for interrupts can be omitted from callbacks array to}
+         reduce memory usage (\textcolor{keywordflow}{if} placed at end of gpioPinConfigs array).
+const GPIO\_callbackFxn gpioCallbackFunctions[] = \{
+    \textcolor{comment}{// CC3200\_LP\_SW2}
+    NULL,
+    \textcolor{comment}{// CC3200\_LP\_SW3}
+    NULL
+\};
+
+\textcolor{comment}{//}
+\textcolor{comment}{// The device-specific GPIO\_config structure}
+\textcolor{comment}{//}
+\textcolor{keyword}{const} GPIOCC3200_Config GPIOCC3200\_config = \{
+    .pinConfigs = (GPIO_PinConfig *)gpioPinConfigs,
+    .callbacks = (GPIO_CallbackFxn *)gpioCallbackFunctions,
+    .numberOfPinConfigs =
+             \textcolor{keyword}{sizeof}(gpioPinConfigs)/\textcolor{keyword}{sizeof}(GPIO_PinConfig),
+    .numberOfCallbacks =
+             \textcolor{keyword}{sizeof}(gpioCallbackFunctions)/\textcolor{keyword}{sizeof}(GPIO_CallbackFxn),
+    .intPriority = ~0
+\};
+
+\textcolor{comment}{// Initialize peripheral and pins}
+\textcolor{keywordtype}{void} CC3200\_initGPIO(\textcolor{keywordtype}{void})
+\{
+    \textcolor{comment}{// set up initial GPIO pin configurations}
+    GPIO_init();
+\}
+\end{DoxyCode}
+
+
+Keep in mind that the callback functions will be called in the context of an interrupt service routine and should be designed accordingly. When an interrupt is triggered, the interrupt status of all (interrupt enabled) pins on a port will be read, cleared, and the respective callbacks will be executed. Callbacks will be called in order from least significant bit to most significant bit.
+
+\subsubsection*{Instrumentation}
+
+The G\+P\+I\+O driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+G\+P\+I\+O.\+h$>$}\\*
+Include dependency graph for G\+P\+I\+O\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=165pt]{_g_p_i_o_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_g_p_i_o_c_c3200___config}{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em G\+P\+I\+O device specific driver configuration structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a5e7e582daec7fc79e7ef88bd015c7a6c}{G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N}~0x0000
+\begin{DoxyCompactList}\small\item\em Device specific port/pin definition macros. \end{DoxyCompactList}\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a6cb5b0e9b310d34a9cc6151d87c712f7}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00}~0x0001
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a8210c14a4986fe3206f9b3723153602e}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01}~0x0002
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_adc0e5d58e132621ceab31d7862b948c9}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02}~0x0004
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a711fc69488b035d57ac084da865392a8}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03}~0x0008
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a5a68bc0944d0ca2316733440f697850c}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04}~0x0010
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ab927a53598dc39ced3f6223960077545}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05}~0x0020
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a30ffb9c8fa86a2c506735e062c771b12}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06}~0x0040
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ad45daa5f44f1770f3ac4c48ad843e949}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07}~0x0080
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a710a27ac2d241f6e4ae9e9705f1f2a8a}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08}~0x0101
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ac1c1f7165ee9db6935e55c8545315b1d}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09}~0x0102
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_afebeb9277c7bca291cf550af3e218aa0}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10}~0x0104
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ad5356861b3ed5561ab9f8adadf76d1aa}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11}~0x0108
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a2a32d258abb9895cd89e736015103777}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12}~0x0110
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_abd0666f015d58692d940e5d86148bcc6}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13}~0x0120
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a87e8f985c84c4e3a0431a74578bef818}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14}~0x0140
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a52c48ab831aab6dbc7d11941f7380ca1}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15}~0x0180
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_abd2aae0eee43c24c318a5a51d612a0e2}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16}~0x0201
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a972a1431203f21b7ac5e2a4618a2b64b}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17}~0x0202
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ac60e15f560f438b57c586437fab63cfc}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18}~0x0204
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a49f8a1662affd2c2e2ddc6f63ecf96fd}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19}~0x0208
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ad33a7fba3fdb4fda44066b5a592abd32}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20}~0x0210
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a2e6f9c9e8087d24b2219efe6f9651360}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21}~0x0220
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a55a6e4b72eb6ed411e21b57c0ec2104b}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22}~0x0240
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_afcb79a753359e428071f5c906b83c2ea}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23}~0x0280
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_acde50e1c128aa313cad5890cdbbee750}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24}~0x0301
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ae8b7abb0da4734943181643af80ffda6}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25}~0x0302
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a2a643d3e640feaddd2d01f13f963c450}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26}~0x0304
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_ac8e9bbf6ba31c048c3f8d0d3b4c4c3d1}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27}~0x0308
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a78fbc8892e9e311dbf141a49208ac71f}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28}~0x0310
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a9417bbe7bb745aae0a0381df084b0192}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29}~0x0320
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_aa18235b477bdeb7a8d0f50418c3cee43}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30}~0x0340
+\item 
+\#define \hyperlink{_g_p_i_o_c_c3200_8h_a94b80d5b24dc2feb1fadeae6c5e4a701}{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31}~0x0380
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_g_p_i_o_c_c3200___config}{G\+P\+I\+O\+C\+C3200\+\_\+\+Config} \hyperlink{_g_p_i_o_c_c3200_8h_a83397cd7214bc18a324928587f638415}{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em G\+P\+I\+O device specific driver configuration structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N@{G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N@{G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+E\+M\+P\+T\+Y\+\_\+\+P\+I\+N~0x0000}\label{_g_p_i_o_c_c3200_8h_a5e7e582daec7fc79e7ef88bd015c7a6c}
+
+
+Device specific port/pin definition macros. 
+
+Below are the port/pin definitions to be used within the board\textquotesingle{}s pin configuration table. \index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+00~0x0001}\label{_g_p_i_o_c_c3200_8h_a6cb5b0e9b310d34a9cc6151d87c712f7}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+01~0x0002}\label{_g_p_i_o_c_c3200_8h_a8210c14a4986fe3206f9b3723153602e}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+02~0x0004}\label{_g_p_i_o_c_c3200_8h_adc0e5d58e132621ceab31d7862b948c9}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+03~0x0008}\label{_g_p_i_o_c_c3200_8h_a711fc69488b035d57ac084da865392a8}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+04~0x0010}\label{_g_p_i_o_c_c3200_8h_a5a68bc0944d0ca2316733440f697850c}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+05~0x0020}\label{_g_p_i_o_c_c3200_8h_ab927a53598dc39ced3f6223960077545}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+06~0x0040}\label{_g_p_i_o_c_c3200_8h_a30ffb9c8fa86a2c506735e062c771b12}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+07~0x0080}\label{_g_p_i_o_c_c3200_8h_ad45daa5f44f1770f3ac4c48ad843e949}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+08~0x0101}\label{_g_p_i_o_c_c3200_8h_a710a27ac2d241f6e4ae9e9705f1f2a8a}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+09~0x0102}\label{_g_p_i_o_c_c3200_8h_ac1c1f7165ee9db6935e55c8545315b1d}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+10~0x0104}\label{_g_p_i_o_c_c3200_8h_afebeb9277c7bca291cf550af3e218aa0}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+11~0x0108}\label{_g_p_i_o_c_c3200_8h_ad5356861b3ed5561ab9f8adadf76d1aa}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+12~0x0110}\label{_g_p_i_o_c_c3200_8h_a2a32d258abb9895cd89e736015103777}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+13~0x0120}\label{_g_p_i_o_c_c3200_8h_abd0666f015d58692d940e5d86148bcc6}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+14~0x0140}\label{_g_p_i_o_c_c3200_8h_a87e8f985c84c4e3a0431a74578bef818}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+15~0x0180}\label{_g_p_i_o_c_c3200_8h_a52c48ab831aab6dbc7d11941f7380ca1}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+16~0x0201}\label{_g_p_i_o_c_c3200_8h_abd2aae0eee43c24c318a5a51d612a0e2}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+17~0x0202}\label{_g_p_i_o_c_c3200_8h_a972a1431203f21b7ac5e2a4618a2b64b}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+18~0x0204}\label{_g_p_i_o_c_c3200_8h_ac60e15f560f438b57c586437fab63cfc}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+19~0x0208}\label{_g_p_i_o_c_c3200_8h_a49f8a1662affd2c2e2ddc6f63ecf96fd}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+20~0x0210}\label{_g_p_i_o_c_c3200_8h_ad33a7fba3fdb4fda44066b5a592abd32}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+21~0x0220}\label{_g_p_i_o_c_c3200_8h_a2e6f9c9e8087d24b2219efe6f9651360}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+22~0x0240}\label{_g_p_i_o_c_c3200_8h_a55a6e4b72eb6ed411e21b57c0ec2104b}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+23~0x0280}\label{_g_p_i_o_c_c3200_8h_afcb79a753359e428071f5c906b83c2ea}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+24~0x0301}\label{_g_p_i_o_c_c3200_8h_acde50e1c128aa313cad5890cdbbee750}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+25~0x0302}\label{_g_p_i_o_c_c3200_8h_ae8b7abb0da4734943181643af80ffda6}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+26~0x0304}\label{_g_p_i_o_c_c3200_8h_a2a643d3e640feaddd2d01f13f963c450}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+27~0x0308}\label{_g_p_i_o_c_c3200_8h_ac8e9bbf6ba31c048c3f8d0d3b4c4c3d1}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+28~0x0310}\label{_g_p_i_o_c_c3200_8h_a78fbc8892e9e311dbf141a49208ac71f}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+29~0x0320}\label{_g_p_i_o_c_c3200_8h_a9417bbe7bb745aae0a0381df084b0192}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+30~0x0340}\label{_g_p_i_o_c_c3200_8h_aa18235b477bdeb7a8d0f50418c3cee43}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31@{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+C\+C3200\+\_\+\+G\+P\+I\+O\+\_\+31~0x0380}\label{_g_p_i_o_c_c3200_8h_a94b80d5b24dc2feb1fadeae6c5e4a701}
+
+
+\subsubsection{Typedef Documentation}
+\index{G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!G\+P\+I\+O\+C\+C3200.\+h@{G\+P\+I\+O\+C\+C3200.\+h}}
+\paragraph[{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf G\+P\+I\+O\+C\+C3200\+\_\+\+Config}  {\bf G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}\label{_g_p_i_o_c_c3200_8h_a83397cd7214bc18a324928587f638415}
+
+
+G\+P\+I\+O device specific driver configuration structure. 
+

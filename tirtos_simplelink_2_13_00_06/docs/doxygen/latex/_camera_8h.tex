@@ -1,0 +1,709 @@
+\subsection{Camera.\+h File Reference}
+\label{_camera_8h}\index{Camera.\+h@{Camera.\+h}}
+
+
+\subsubsection{Detailed Description}
+Camera driver interface. 
+
+============================================================================
+
+The Camera header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Camera.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The Camera driver is used to retrieve the data being transferred by the Camera sensor. This driver provides A\+P\+I for capturing the image from the Camera sensor. The camera sensor control and implementation is the responsibility of the application using the interface.
+
+The application initializes the Camera driver by calling \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} and is then ready to open a Camera by calling \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} and passing in a Camera parameters data structure.
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the O\+S\+A\+L specific primitives to allow for thread-\/safe operation.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+Camera_Handle      handle;
+Camera_Params      params;
+
+Camera_Params_init(&params);
+params.captureMode       =  Camera_MODE_BLOCKING;
+< Change any other params as required >
+
+handle = Camera_open(someCamera\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"Camera did not open"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Capturing image}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} captureBuffer[1920];
+
+ret = Camera_capture(handle,&captureBuffer, \textcolor{keyword}{sizeof}(captureBuffer));
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table}.
+
+The Camera driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_camera___config}{Camera\+\_\+\+Config} data structures named {\itshape Camera\+\_\+config}. {\itshape Camera\+\_\+config} is implemented in the application with each entry being an instance of a Camera peripheral. Each entry in {\itshape Camera\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a Camera peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following Camera peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_camera_c_c3200_d_m_a_8h}{Camera\+C\+C3200\+D\+M\+A.\+h}
+\end{DoxyItemize}
+
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Camera.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_camera_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_camera_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_camera___params}{Camera\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Camera Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Camera function table that contains the required set of functions to control a specific Camera driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_camera___config}{Camera\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Camera Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_camera_8h_aed2b3df48a75ec7e6e78320bb3a48eb9}{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_camera_8h_a13b3728d2673d72db6cc71744a0cbedf}{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_camera_8h_aa4d73b4da4ce113c8fb545d1f2649257}{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_camera_8h_a2863402eca66d26cf447fc02340a0d45}{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_camera_8h_aae8cae4253d68cc8ae921b63a74d1cb9}{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\item 
+\#define \hyperlink{_camera_8h_a1b85e579e68cecb09d1e2be70a6c56a9}{Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}~$\sim$(0)
+\begin{DoxyCompactList}\small\item\em Wait forever define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_camera___config}{Camera\+\_\+\+Config} $\ast$ \hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_camera_8h_ad70b3ced1706386d1a093a0bf659bd87}{Camera\+\_\+\+Callback}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle}, void $\ast$buf, size\+\_\+t buffer\+Length)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used by the Camera driver when used in \hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8ae2f15a1a358226aa81d59509f5a31191}{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8}{Camera\+\_\+\+Capture\+Mode} \hyperlink{_camera_8h_a02bf4fcba941f4fccb7ac818766fb3ec}{Camera\+\_\+\+Capture\+Mode}
+\begin{DoxyCompactList}\small\item\em Camera capture mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a44b110de33cc32adba6d4a5807665987}{Camera\+\_\+\+H\+Sync\+Polarity} \hyperlink{_camera_8h_a14ac7b5f97839774d4cb487bd46dd6bd}{Camera\+\_\+\+H\+Sync\+Polarity}
+\begin{DoxyCompactList}\small\item\em Camera H\+Sync polarity. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412}{Camera\+\_\+\+V\+Sync\+Polarity} \hyperlink{_camera_8h_a90add9e430e82761a9b6846df9cbd0c3}{Camera\+\_\+\+V\+Sync\+Polarity}
+\begin{DoxyCompactList}\small\item\em Camera V\+Sync polarity. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657}{Camera\+\_\+\+Pixel\+Clk\+Config} \hyperlink{_camera_8h_a844022cef41a1a6df47b87ec46f8d658}{Camera\+\_\+\+Pixel\+Clk\+Config}
+\begin{DoxyCompactList}\small\item\em Camera pixel clock configuration. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904}{Camera\+\_\+\+Byte\+Order} \hyperlink{_camera_8h_ae04f64f1517285b35f56ac4f3ae6008f}{Camera\+\_\+\+Byte\+Order}
+\begin{DoxyCompactList}\small\item\em Camera byte order. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a741d469cc903899255a1d3e76fdce47b}{Camera\+\_\+\+If\+Synchoronisation} \hyperlink{_camera_8h_af205d344ecb59e656c640241783ddf6c}{Camera\+\_\+\+If\+Synchoronisation}
+\begin{DoxyCompactList}\small\item\em Camera interface synchoronisation. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a783564f838bc718a5b56f114027f5185}{Camera\+\_\+\+Stop\+Capture\+Config} \hyperlink{_camera_8h_a8b5e3682ad3dca8fd314d7a09e374a68}{Camera\+\_\+\+Stop\+Capture\+Config}
+\begin{DoxyCompactList}\small\item\em Camera stop capture configuration. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5}{Camera\+\_\+\+Start\+Capture\+Config} \hyperlink{_camera_8h_a997e6ea5651105da0ee6f8f473e246dd}{Camera\+\_\+\+Start\+Capture\+Config}
+\begin{DoxyCompactList}\small\item\em Camera start capture configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} \hyperlink{_camera_8h_af493a9fc2ad7b908176dafd7dc39d167}{Camera\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Camera Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_camera_8h_ae6f2789af3ea253197fd2ce98db352f4}{Camera\+\_\+\+Close\+Fxn}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a132c638e5ea994c1f06124f5762470b4}{Camera\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_camera_8h_ae81dd59b680fa8d7a3a9f8fc226f593f}{Camera\+\_\+\+Control\+Fxn}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_camera_8h_a3b6d043e96bfc1f1443521ef10ea01f3}{Camera\+\_\+\+Init\+Fxn}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle}($\ast$ \hyperlink{_camera_8h_a589bec3690a5b7c7890a0e411a1cad9f}{Camera\+\_\+\+Open\+Fxn}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle, \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_camera_8h_a2096274266d6a07b48ee25d8f43805a0}{Camera\+\_\+\+Capture\+Fxn}) (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t bufferlen)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a972bd90e219313d8eca55626c4294c8e}{Camera\+\_\+capture()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table} \hyperlink{_camera_8h_a8c1bd8d1a6d98633dc28a657733d56c8}{Camera\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Camera function table that contains the required set of functions to control a specific Camera driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_camera___config}{Camera\+\_\+\+Config} \hyperlink{_camera_8h_a5dc443a0790d8bd9762dff8cc0716ca0}{Camera\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Camera Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8}{Camera\+\_\+\+Capture\+Mode} \{ \\*
+\hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8aad6127b321c6b22ffe1a50caee5a4fe1}{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8ae2f15a1a358226aa81d59509f5a31191}{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera capture mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a44b110de33cc32adba6d4a5807665987}{Camera\+\_\+\+H\+Sync\+Polarity} \{ \\*
+\hyperlink{_camera_8h_a44b110de33cc32adba6d4a5807665987af152b2a7d9da944fe46858efe055d095}{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H} = 0, 
+\\*
+\hyperlink{_camera_8h_a44b110de33cc32adba6d4a5807665987abcb1c81f87d7738515cd6b22afc09cc5}{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera H\+Sync polarity. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412}{Camera\+\_\+\+V\+Sync\+Polarity} \{ \\*
+\hyperlink{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412acde960b001c2a12b75b7fad97bf7ec54}{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H} = 0, 
+\\*
+\hyperlink{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412a3f3b042b294fe98c91a6d50c7989db35}{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera V\+Sync polarity. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657}{Camera\+\_\+\+Pixel\+Clk\+Config} \{ \\*
+\hyperlink{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657ade970e1c835dea0c6d00f94fcf2abdca}{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E} = 0, 
+\\*
+\hyperlink{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657a2cab0af65ebc5fd82af8bd118d20a6da}{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera pixel clock configuration. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904}{Camera\+\_\+\+Byte\+Order} \{ \\*
+\hyperlink{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904a819196064eea1c6f65a0aeaee5f99acb}{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L} = 0, 
+\\*
+\hyperlink{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904a90cfebe886cda289023a577c9b2cc831}{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera byte order. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a741d469cc903899255a1d3e76fdce47b}{Camera\+\_\+\+If\+Synchoronisation} \{ \\*
+\hyperlink{_camera_8h_a741d469cc903899255a1d3e76fdce47baebefaa79a8ad8c68d84f3e0839dd7ef8}{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F} = 0, 
+\\*
+\hyperlink{_camera_8h_a741d469cc903899255a1d3e76fdce47bab3f554e1d669f4d87917f3f43a45727b}{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera interface synchoronisation. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a783564f838bc718a5b56f114027f5185}{Camera\+\_\+\+Stop\+Capture\+Config} \{ \\*
+\hyperlink{_camera_8h_a783564f838bc718a5b56f114027f5185a95410e8c6eb0a0ae4488f722931d4150}{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E} = 0, 
+\\*
+\hyperlink{_camera_8h_a783564f838bc718a5b56f114027f5185a949d55caf973f4e50fbf1fa3e4246718}{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera stop capture configuration. \end{DoxyCompactList}\item 
+enum \hyperlink{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5}{Camera\+\_\+\+Start\+Capture\+Config} \{ \\*
+\hyperlink{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5a2e7b7db227fef9bf1d1083f1d167c3f0}{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E} = 0, 
+\\*
+\hyperlink{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5a5f6f496192b849174e7b652df2ca1823}{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T}
+ \}
+\begin{DoxyCompactList}\small\item\em Camera start capture configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_camera_8h_a132c638e5ea994c1f06124f5762470b4}{Camera\+\_\+close} (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a Camera peripheral specified by the Camera handle. \end{DoxyCompactList}\item 
+int \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control} (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle, uint32\+\_\+t cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given Camera\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes the Camera module. \end{DoxyCompactList}\item 
+\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open} (uint32\+\_\+t index, \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given Camera peripheral specified by the particular index value. The parameter specifies which mode the Camera will operate. \end{DoxyCompactList}\item 
+void \hyperlink{_camera_8h_a522620ae3e5fb202b1f46f5535619564}{Camera\+\_\+\+Params\+\_\+init} (\hyperlink{struct_camera___params}{Camera\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} structure to its defaults. \end{DoxyCompactList}\item 
+int \hyperlink{_camera_8h_a972bd90e219313d8eca55626c4294c8e}{Camera\+\_\+capture} (\hyperlink{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}{Camera\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t bufferlen)
+\begin{DoxyCompactList}\small\item\em Function that handles the Camera capture of a frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Camera.\+h@{Camera.\+h}!C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Camera.\+h@{Camera.\+h}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_camera_8h_aed2b3df48a75ec7e6e78320bb3a48eb9}
+Common Camera\+\_\+control command code reservation offset. Camera driver implementations should offset command codes with C\+A\+M\+E\+R\+A\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define CAMERAXYZ\_COMMAND0       CAMERA\_CMD\_RESERVED + 0
+2 #define CAMERAXYZ\_COMMAND1       CAMERA\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{Camera.\+h@{Camera.\+h}!C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Camera.\+h@{Camera.\+h}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_camera_8h_a13b3728d2673d72db6cc71744a0cbedf}
+Common Camera\+\_\+control status code reservation offset. Camera driver implementations should offset status codes with C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define CAMERAXYZ\_STATUS\_ERROR0  CAMERA\_STATUS\_RESERVED - 0
+2 #define CAMERAXYZ\_STATUS\_ERROR1  CAMERA\_STATUS\_RESERVED - 1
+3 #define CAMERAXYZ\_STATUS\_ERROR2  CAMERA\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{Camera.\+h@{Camera.\+h}!C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!Camera.\+h@{Camera.\+h}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_camera_8h_aa4d73b4da4ce113c8fb545d1f2649257}
+
+
+Successful status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. 
+
+\hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()} returns C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{Camera.\+h@{Camera.\+h}!C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!Camera.\+h@{Camera.\+h}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_camera_8h_a2863402eca66d26cf447fc02340a0d45}
+
+
+Generic error status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. 
+
+\hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()} returns C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{Camera.\+h@{Camera.\+h}!C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!Camera.\+h@{Camera.\+h}}
+\paragraph[{C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_camera_8h_aae8cae4253d68cc8ae921b63a74d1cb9}
+
+
+An error status code returned by \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()} returns C\+A\+M\+E\+R\+A\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}}
+\index{Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R~$\sim$(0)}\label{_camera_8h_a1b85e579e68cecb09d1e2be70a6c56a9}
+
+
+Wait forever define. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Handle@{Camera\+\_\+\+Handle}}
+\index{Camera\+\_\+\+Handle@{Camera\+\_\+\+Handle}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Camera\+\_\+\+Config}$\ast$ {\bf Camera\+\_\+\+Handle}}\label{_camera_8h_a68ce39c29bb7acaf6a7180bb6d6a7d06}
+
+
+A handle that is returned from a \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} call. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Callback@{Camera\+\_\+\+Callback}}
+\index{Camera\+\_\+\+Callback@{Camera\+\_\+\+Callback}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Camera\+\_\+\+Callback) ({\bf Camera\+\_\+\+Handle}, void $\ast$buf, size\+\_\+t buffer\+Length)}\label{_camera_8h_ad70b3ced1706386d1a093a0bf659bd87}
+
+
+The definition of a callback function used by the Camera driver when used in \hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8ae2f15a1a358226aa81d59509f5a31191}{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Camera\+\_\+\+Handle} & Camera\+\_\+\+Handle\\
+\hline
+{\em buf} & Pointer to capture buffer\\
+\hline
+{\em buffer\+Length} & length of frame \\
+\hline
+\end{DoxyParams}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Capture\+Mode@{Camera\+\_\+\+Capture\+Mode}}
+\index{Camera\+\_\+\+Capture\+Mode@{Camera\+\_\+\+Capture\+Mode}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Capture\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+Capture\+Mode}  {\bf Camera\+\_\+\+Capture\+Mode}}\label{_camera_8h_a02bf4fcba941f4fccb7ac818766fb3ec}
+
+
+Camera capture mode settings. 
+
+This enum defines the capture mode for the configured Camera. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+H\+Sync\+Polarity@{Camera\+\_\+\+H\+Sync\+Polarity}}
+\index{Camera\+\_\+\+H\+Sync\+Polarity@{Camera\+\_\+\+H\+Sync\+Polarity}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+H\+Sync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+H\+Sync\+Polarity}  {\bf Camera\+\_\+\+H\+Sync\+Polarity}}\label{_camera_8h_a14ac7b5f97839774d4cb487bd46dd6bd}
+
+
+Camera H\+Sync polarity. 
+
+This enum defines the polarity of the H\+Sync signal. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+V\+Sync\+Polarity@{Camera\+\_\+\+V\+Sync\+Polarity}}
+\index{Camera\+\_\+\+V\+Sync\+Polarity@{Camera\+\_\+\+V\+Sync\+Polarity}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+V\+Sync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+V\+Sync\+Polarity}  {\bf Camera\+\_\+\+V\+Sync\+Polarity}}\label{_camera_8h_a90add9e430e82761a9b6846df9cbd0c3}
+
+
+Camera V\+Sync polarity. 
+
+This enum defines the polarity of the V\+Sync signal. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Pixel\+Clk\+Config@{Camera\+\_\+\+Pixel\+Clk\+Config}}
+\index{Camera\+\_\+\+Pixel\+Clk\+Config@{Camera\+\_\+\+Pixel\+Clk\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Pixel\+Clk\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+Pixel\+Clk\+Config}  {\bf Camera\+\_\+\+Pixel\+Clk\+Config}}\label{_camera_8h_a844022cef41a1a6df47b87ec46f8d658}
+
+
+Camera pixel clock configuration. 
+
+This enum defines the pixel clock configuration. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Byte\+Order@{Camera\+\_\+\+Byte\+Order}}
+\index{Camera\+\_\+\+Byte\+Order@{Camera\+\_\+\+Byte\+Order}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Byte\+Order}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+Byte\+Order}  {\bf Camera\+\_\+\+Byte\+Order}}\label{_camera_8h_ae04f64f1517285b35f56ac4f3ae6008f}
+
+
+Camera byte order. 
+
+This enum defines the byte order of camera capture.
+
+In normal mode, the byte order is\+: $\vert$ byte3 $\vert$ byte2 $\vert$ byte1 $\vert$ byte0 $\vert$
+
+In swap mode, the bytes are ordered as\+: $\vert$ byte2 $\vert$ byte3 $\vert$ byte0 $\vert$ byte1 $\vert$ \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+If\+Synchoronisation@{Camera\+\_\+\+If\+Synchoronisation}}
+\index{Camera\+\_\+\+If\+Synchoronisation@{Camera\+\_\+\+If\+Synchoronisation}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+If\+Synchoronisation}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+If\+Synchoronisation}  {\bf Camera\+\_\+\+If\+Synchoronisation}}\label{_camera_8h_af205d344ecb59e656c640241783ddf6c}
+
+
+Camera interface synchoronisation. 
+
+This enum defines the sensor to camera inteface synchoronisation configuration. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Stop\+Capture\+Config@{Camera\+\_\+\+Stop\+Capture\+Config}}
+\index{Camera\+\_\+\+Stop\+Capture\+Config@{Camera\+\_\+\+Stop\+Capture\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Stop\+Capture\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+Stop\+Capture\+Config}  {\bf Camera\+\_\+\+Stop\+Capture\+Config}}\label{_camera_8h_a8b5e3682ad3dca8fd314d7a09e374a68}
+
+
+Camera stop capture configuration. 
+
+This enum defines the stop capture configuration. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Start\+Capture\+Config@{Camera\+\_\+\+Start\+Capture\+Config}}
+\index{Camera\+\_\+\+Start\+Capture\+Config@{Camera\+\_\+\+Start\+Capture\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Start\+Capture\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\+\_\+\+Start\+Capture\+Config}  {\bf Camera\+\_\+\+Start\+Capture\+Config}}\label{_camera_8h_a997e6ea5651105da0ee6f8f473e246dd}
+
+
+Camera start capture configuration. 
+
+This enum defines the start capture configuration. \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Camera\+\_\+\+Params}  {\bf Camera\+\_\+\+Params}}\label{_camera_8h_af493a9fc2ad7b908176dafd7dc39d167}
+
+
+Camera Parameters. 
+
+Camera parameters are used to with the \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_camera_8h_a522620ae3e5fb202b1f46f5535619564}{Camera\+\_\+\+Params\+\_\+init()}.
+
+If Camera\+\_\+\+Capture\+Mode is set to Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G then Camera\+\_\+capture function calls will block thread execution until the capture has completed.
+
+If Camera\+\_\+\+Capture\+Mode is set to Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K then Camera\+\_\+capture will not block thread execution and it will call the function specified by capture\+Callback\+Fxn.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_a522620ae3e5fb202b1f46f5535619564}{Camera\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Close\+Fxn@{Camera\+\_\+\+Close\+Fxn}}
+\index{Camera\+\_\+\+Close\+Fxn@{Camera\+\_\+\+Close\+Fxn}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Camera\+\_\+\+Close\+Fxn) ({\bf Camera\+\_\+\+Handle} handle)}\label{_camera_8h_ae6f2789af3ea253197fd2ce98db352f4}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a132c638e5ea994c1f06124f5762470b4}{Camera\+\_\+close()}. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Control\+Fxn@{Camera\+\_\+\+Control\+Fxn}}
+\index{Camera\+\_\+\+Control\+Fxn@{Camera\+\_\+\+Control\+Fxn}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Camera\+\_\+\+Control\+Fxn) ({\bf Camera\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_camera_8h_ae81dd59b680fa8d7a3a9f8fc226f593f}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_camera_8h_adfc7e9a60daa499220296a238a09b393}{Camera\+\_\+control()}. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Init\+Fxn@{Camera\+\_\+\+Init\+Fxn}}
+\index{Camera\+\_\+\+Init\+Fxn@{Camera\+\_\+\+Init\+Fxn}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Camera\+\_\+\+Init\+Fxn) ({\bf Camera\+\_\+\+Handle} handle)}\label{_camera_8h_a3b6d043e96bfc1f1443521ef10ea01f3}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()}. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Open\+Fxn@{Camera\+\_\+\+Open\+Fxn}}
+\index{Camera\+\_\+\+Open\+Fxn@{Camera\+\_\+\+Open\+Fxn}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Camera\+\_\+\+Handle}($\ast$ Camera\+\_\+\+Open\+Fxn) ({\bf Camera\+\_\+\+Handle} handle, {\bf Camera\+\_\+\+Params} $\ast$params)}\label{_camera_8h_a589bec3690a5b7c7890a0e411a1cad9f}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()}. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Capture\+Fxn@{Camera\+\_\+\+Capture\+Fxn}}
+\index{Camera\+\_\+\+Capture\+Fxn@{Camera\+\_\+\+Capture\+Fxn}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Capture\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Camera\+\_\+\+Capture\+Fxn) ({\bf Camera\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t bufferlen)}\label{_camera_8h_a2096274266d6a07b48ee25d8f43805a0}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_camera_8h_a972bd90e219313d8eca55626c4294c8e}{Camera\+\_\+capture()}. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Fxn\+Table@{Camera\+\_\+\+Fxn\+Table}}
+\index{Camera\+\_\+\+Fxn\+Table@{Camera\+\_\+\+Fxn\+Table}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Camera\+\_\+\+Fxn\+Table}  {\bf Camera\+\_\+\+Fxn\+Table}}\label{_camera_8h_a8c1bd8d1a6d98633dc28a657733d56c8}
+
+
+The definition of a Camera function table that contains the required set of functions to control a specific Camera driver implementation. 
+
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Config@{Camera\+\_\+\+Config}}
+\index{Camera\+\_\+\+Config@{Camera\+\_\+\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Camera\+\_\+\+Config}  {\bf Camera\+\_\+\+Config}}\label{_camera_8h_a5dc443a0790d8bd9762dff8cc0716ca0}
+
+
+Camera Global configuration. 
+
+The \hyperlink{struct_camera___config}{Camera\+\_\+\+Config} structure contains a set of pointers used to characterize the Camera driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Capture\+Mode@{Camera\+\_\+\+Capture\+Mode}}
+\index{Camera\+\_\+\+Capture\+Mode@{Camera\+\_\+\+Capture\+Mode}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Capture\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+Capture\+Mode}}\label{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8}
+
+
+Camera capture mode settings. 
+
+This enum defines the capture mode for the configured Camera. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8aad6127b321c6b22ffe1a50caee5a4fe1}
+}]Uses a semaphore to block while data is being sent. Context of the call must be a Task. \index{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}}\item[{\em 
+Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\label{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8ae2f15a1a358226aa81d59509f5a31191}
+}]Non-\/blocking and will return immediately. When the capture by the interrupt is finished the configured callback function is called. \end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+H\+Sync\+Polarity@{Camera\+\_\+\+H\+Sync\+Polarity}}
+\index{Camera\+\_\+\+H\+Sync\+Polarity@{Camera\+\_\+\+H\+Sync\+Polarity}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+H\+Sync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+H\+Sync\+Polarity}}\label{_camera_8h_a44b110de33cc32adba6d4a5807665987}
+
+
+Camera H\+Sync polarity. 
+
+This enum defines the polarity of the H\+Sync signal. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H@{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H@{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H}}\item[{\em 
+Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H\label{_camera_8h_a44b110de33cc32adba6d4a5807665987af152b2a7d9da944fe46858efe055d095}
+}]\index{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W@{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W@{Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}}\item[{\em 
+Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W\label{_camera_8h_a44b110de33cc32adba6d4a5807665987abcb1c81f87d7738515cd6b22afc09cc5}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+V\+Sync\+Polarity@{Camera\+\_\+\+V\+Sync\+Polarity}}
+\index{Camera\+\_\+\+V\+Sync\+Polarity@{Camera\+\_\+\+V\+Sync\+Polarity}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+V\+Sync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+V\+Sync\+Polarity}}\label{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412}
+
+
+Camera V\+Sync polarity. 
+
+This enum defines the polarity of the V\+Sync signal. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H@{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H@{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H}}\item[{\em 
+Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H\label{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412acde960b001c2a12b75b7fad97bf7ec54}
+}]\index{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W@{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W@{Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W}}\item[{\em 
+Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+L\+O\+W\label{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412a3f3b042b294fe98c91a6d50c7989db35}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Pixel\+Clk\+Config@{Camera\+\_\+\+Pixel\+Clk\+Config}}
+\index{Camera\+\_\+\+Pixel\+Clk\+Config@{Camera\+\_\+\+Pixel\+Clk\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Pixel\+Clk\+Config}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+Pixel\+Clk\+Config}}\label{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657}
+
+
+Camera pixel clock configuration. 
+
+This enum defines the pixel clock configuration. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E@{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E@{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E}}\item[{\em 
+Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E\label{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657ade970e1c835dea0c6d00f94fcf2abdca}
+}]\index{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E@{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E@{Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E}}\item[{\em 
+Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+F\+A\+L\+L\+I\+N\+G\+\_\+\+E\+D\+G\+E\label{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657a2cab0af65ebc5fd82af8bd118d20a6da}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Byte\+Order@{Camera\+\_\+\+Byte\+Order}}
+\index{Camera\+\_\+\+Byte\+Order@{Camera\+\_\+\+Byte\+Order}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Byte\+Order}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+Byte\+Order}}\label{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904}
+
+
+Camera byte order. 
+
+This enum defines the byte order of camera capture.
+
+In normal mode, the byte order is\+: $\vert$ byte3 $\vert$ byte2 $\vert$ byte1 $\vert$ byte0 $\vert$
+
+In swap mode, the bytes are ordered as\+: $\vert$ byte2 $\vert$ byte3 $\vert$ byte0 $\vert$ byte1 $\vert$ \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L@{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L@{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L}}\item[{\em 
+Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L\label{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904a819196064eea1c6f65a0aeaee5f99acb}
+}]\index{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P@{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P@{Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P}}\item[{\em 
+Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+S\+W\+A\+P\label{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904a90cfebe886cda289023a577c9b2cc831}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+If\+Synchoronisation@{Camera\+\_\+\+If\+Synchoronisation}}
+\index{Camera\+\_\+\+If\+Synchoronisation@{Camera\+\_\+\+If\+Synchoronisation}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+If\+Synchoronisation}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+If\+Synchoronisation}}\label{_camera_8h_a741d469cc903899255a1d3e76fdce47b}
+
+
+Camera interface synchoronisation. 
+
+This enum defines the sensor to camera inteface synchoronisation configuration. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F@{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F@{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F}}\item[{\em 
+Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+F\+F\label{_camera_8h_a741d469cc903899255a1d3e76fdce47baebefaa79a8ad8c68d84f3e0839dd7ef8}
+}]\index{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N@{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N@{Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N}}\item[{\em 
+Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N\label{_camera_8h_a741d469cc903899255a1d3e76fdce47bab3f554e1d669f4d87917f3f43a45727b}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Stop\+Capture\+Config@{Camera\+\_\+\+Stop\+Capture\+Config}}
+\index{Camera\+\_\+\+Stop\+Capture\+Config@{Camera\+\_\+\+Stop\+Capture\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Stop\+Capture\+Config}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+Stop\+Capture\+Config}}\label{_camera_8h_a783564f838bc718a5b56f114027f5185}
+
+
+Camera stop capture configuration. 
+
+This enum defines the stop capture configuration. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E@{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E@{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E}}\item[{\em 
+Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\label{_camera_8h_a783564f838bc718a5b56f114027f5185a95410e8c6eb0a0ae4488f722931d4150}
+}]\index{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D@{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D@{Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D}}\item[{\em 
+Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D\label{_camera_8h_a783564f838bc718a5b56f114027f5185a949d55caf973f4e50fbf1fa3e4246718}
+}]\end{description}
+\end{Desc}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Start\+Capture\+Config@{Camera\+\_\+\+Start\+Capture\+Config}}
+\index{Camera\+\_\+\+Start\+Capture\+Config@{Camera\+\_\+\+Start\+Capture\+Config}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Start\+Capture\+Config}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\+\_\+\+Start\+Capture\+Config}}\label{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5}
+
+
+Camera start capture configuration. 
+
+This enum defines the start capture configuration. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E@{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E@{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E}}\item[{\em 
+Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\label{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5a2e7b7db227fef9bf1d1083f1d167c3f0}
+}]\index{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T@{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T}!Camera.\+h@{Camera.\+h}}\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T@{Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T}}\item[{\em 
+Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T\label{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5a5f6f496192b849174e7b652df2ca1823}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+close@{Camera\+\_\+close}}
+\index{Camera\+\_\+close@{Camera\+\_\+close}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Camera\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_a132c638e5ea994c1f06124f5762470b4}
+
+
+Function to close a Camera peripheral specified by the Camera handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Camera\+\_\+\+Handle returned from Camera\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+control@{Camera\+\_\+control}}
+\index{Camera\+\_\+control@{Camera\+\_\+control}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Camera\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Camera\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_adfc7e9a60daa499220296a238a09b393}
+
+
+Function performs implementation specific features on a given Camera\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Camera handle returned from \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+init@{Camera\+\_\+init}}
+\index{Camera\+\_\+init@{Camera\+\_\+init}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}
+
+
+Function to initializes the Camera module. 
+
+\begin{DoxyPrecond}{Precondition}
+The Camera\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other Camera driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+open@{Camera\+\_\+open}}
+\index{Camera\+\_\+open@{Camera\+\_\+open}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Handle} Camera\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{index, }
+\item[{{\bf Camera\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}
+
+
+Function to initialize a given Camera peripheral specified by the particular index value. The parameter specifies which mode the Camera will operate. 
+
+\begin{DoxyPrecond}{Precondition}
+Camera controller has been initialized
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the Camera indexed into the Camera\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Camera\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} 
+
+\hyperlink{_camera_8h_a132c638e5ea994c1f06124f5762470b4}{Camera\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{Camera.\+h@{Camera.\+h}!Camera\+\_\+\+Params\+\_\+init@{Camera\+\_\+\+Params\+\_\+init}}
+\index{Camera\+\_\+\+Params\+\_\+init@{Camera\+\_\+\+Params\+\_\+init}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Camera\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_a522620ae3e5fb202b1f46f5535619564}
+
+
+Function to initialize the \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} structure to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_camera___params}{Camera\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: capture\+Mode = Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G; output\+Clock = 24000000; hsync\+Polarity = Camera\+\_\+\+H\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H; vsync\+Polarity = Camera\+\_\+\+V\+S\+Y\+N\+C\+\_\+\+P\+O\+L\+A\+R\+I\+T\+Y\+\_\+\+H\+I\+G\+H; pixel\+Clk\+Config = Camera\+\_\+\+P\+C\+L\+K\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+R\+I\+S\+I\+N\+G\+\_\+\+E\+D\+G\+E; byte\+Order = Camera\+\_\+\+B\+Y\+T\+E\+\_\+\+O\+R\+D\+E\+R\+\_\+\+N\+O\+R\+M\+A\+L; interface\+Sync = Camera\+\_\+\+I\+N\+T\+E\+R\+F\+A\+C\+E\+\_\+\+S\+Y\+N\+C\+\_\+\+O\+N; stop\+Config = Camera\+\_\+\+S\+T\+O\+P\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+E\+N\+D; start\+Config = Camera\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+A\+P\+T\+U\+R\+E\+\_\+\+F\+R\+A\+M\+E\+\_\+\+S\+T\+A\+R\+T; capture\+Timeout = Camera\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R; capture\+Callback = N\+U\+L\+L; \index{Camera.\+h@{Camera.\+h}!Camera\+\_\+capture@{Camera\+\_\+capture}}
+\index{Camera\+\_\+capture@{Camera\+\_\+capture}!Camera.\+h@{Camera.\+h}}
+\paragraph[{Camera\+\_\+capture}]{\setlength{\rightskip}{0pt plus 5cm}int Camera\+\_\+capture (
+\begin{DoxyParamCaption}
+\item[{{\bf Camera\+\_\+\+Handle}}]{handle, }
+\item[{void $\ast$}]{buffer, }
+\item[{size\+\_\+t}]{bufferlen}
+\end{DoxyParamCaption}
+)}\label{_camera_8h_a972bd90e219313d8eca55626c4294c8e}
+
+
+Function that handles the Camera capture of a frame. 
+
+In Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G, Camera\+\_\+capture will block task execution until the capture is complete.
+
+In Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K, Camera\+\_\+capture does not block task execution and calls a callback function specified by capture\+Callback\+Fxn. The Camera buffer must stay persistent until the Camera\+\_\+capture function has completed!
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Camera\+\_\+\+Handle\\
+\hline
+{\em buffer} & A pointer to a W\+O (write-\/only) buffer into which the captured frame is placed\\
+\hline
+{\em bufferlen} & Length (in bytes) of the capture buffer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of bytes captured.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open} 
+\end{DoxySeeAlso}

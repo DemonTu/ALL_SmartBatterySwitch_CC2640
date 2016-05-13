@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>module ti.tirtos.utils.UARTMon</title>
+<meta name="description" content="UART Monitor">
+<link rel="stylesheet" type="text/css" href="../../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.tirtos.utils.</span><span class="xdoc-id">UARTMon</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/tirtos/utils/package.html" title="package ti.tirtos.utils"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/tirtos/utils/UARTMon.html">index URL</a></div>
+<p class="xdocHdrSummary">UART Monitor</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#targ-synop">C synopsis</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocElems">Individual elements</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">Configuration settings</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocMetaElems">Individual elements</a></li>
+</ul>
+<div class="xdocBrief">
+The UARTMon module (ti.tirtos.utils.UARTMon) enables host communication with
+  a target device using the target's UART. The target device can respond to
+  requests to read and write memory at specified addresses. CCS includes
+  features that allow you to leverage this utility to monitor the target
+  device with the Debug view or with GUI Composer.
+[&nbsp;<a class="xdocBrief" href="#xdoc-desc">more</a>&nbsp;...&nbsp;]
+</div>
+<span id='targ-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-targ2">C</span></tt> synopsis</td>
+<td class="xdocLabelCenter">target-domain</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../../ti/tirtos/utils/UARTMon-src.html"><span class="xdocLabelFile">ti/tirtos/utils/UARTMon.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynT">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw3">#include</span> <span class="xdoc-id">&lt;ti/tirtos/utils/UARTMon.h&gt;</span>
+</div>
+<table cellspacing="0" cellpadding="0" border="0">
+</table>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<span id="xdoc-desc"></span>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The UARTMon module (ti.tirtos.utils.UARTMon) enables host communication with
+  a target device using the target's UART. The target device can respond to
+  requests to read and write memory at specified addresses. CCS includes
+  features that allow you to leverage this utility to monitor the target
+  device with the Debug view or with GUI Composer.</div>
+<div class="xdocText">See the TI-RTOS User's Guide for more information.</div>
+<div id="xdocSep">
+</div>
+<div id="xdocElems">
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../../ti/tirtos/utils/UARTMon-src.html"><span class="xdocLabelFile">ti/tirtos/utils/UARTMon.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> UARTMon = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.tirtos.utils.UARTMon'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#baud.Rate">UARTMon.<span class="xdoc-id">baudRate</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;UART baudrate</span></span></a> = <i><span class="xdoc-kw2">UInt32</span></i> 9600;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#index">UARTMon.<span class="xdoc-id">index</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Board UART index</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> 0;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#priority">UARTMon.<span class="xdoc-id">priority</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Monitor task priority</span></span></a> = <i><span class="xdoc-kw2">UInt</span></i> 1;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#stack.Size">UARTMon.<span class="xdoc-id">stackSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Monitor stack size</span></span></a> = <i><span class="xdoc-kw2">SizeT</span></i> 0;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocSep">
+</div>
+<div id="xdocMetaElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="baud.Rate"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">UARTMon.</span><span class="xdoc-id">baudRate</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/tirtos/utils/UARTMon.html" title="module UARTMon"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/tirtos/utils/UARTMon.html#baud.Rate">index URL</a></div>
+<p class="xdocHdrSummaryDcl">UART baudrate</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>UARTMon.<span class="xdoc-id">baudRate</span> = <i><span class="xdoc-kw2">UInt32</span></i> 9600;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">Baudrate for uart peripheral used by the monitor.
+  Default is 9600.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="index"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">UARTMon.</span><span class="xdoc-id">index</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/tirtos/utils/UARTMon.html" title="module UARTMon"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/tirtos/utils/UARTMon.html#index">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Board UART index</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>UARTMon.<span class="xdoc-id">index</span> = <i><span class="xdoc-kw2">Int</span></i> 0;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">Consult Board.h to find the index of the UART
+  peripherals available for your board.
+  By default UART0 is used.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="priority"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">UARTMon.</span><span class="xdoc-id">priority</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/tirtos/utils/UARTMon.html" title="module UARTMon"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/tirtos/utils/UARTMon.html#priority">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Monitor task priority</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>UARTMon.<span class="xdoc-id">priority</span> = <i><span class="xdoc-kw2">UInt</span></i> 1;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This is the priority of the uart monitor task. To
+  prevent monitor from running at BIOS startup, set
+  priority to -1 and call Task_setPri(monitorTask, 1)
+  in your target code to activate the monitor.
+  Default is 1.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="stack.Size"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">UARTMon.</span><span class="xdoc-id">stackSize</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/tirtos/utils/UARTMon.html" title="module UARTMon"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/tirtos/utils/UARTMon.html#stack.Size">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Monitor stack size</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>UARTMon.<span class="xdoc-id">stackSize</span> = <i><span class="xdoc-kw2">SizeT</span></i> 0;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This is the stack size of the monitor task.
+  Default value is 0, which means that default stack
+  size of that target family is used.</div>
+</div>
+<div id="xdocDate">generated on Wed, 06 May 2015 00:39:06 GMT</div>
+</div></div></body>
+</html>

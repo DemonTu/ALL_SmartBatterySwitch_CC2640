@@ -1,0 +1,149 @@
+clean::
+	$(RM) package/ti.sysbios.family.arm.m3.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_family_arm_m3.java
+	$(RM) package/ti_sysbios_family_arm_m3.class
+	$(RM) package/package_ti.sysbios.family.arm.m3.c
+	$(RM) package/package.defs.h
+	$(RM) Clobber.h
+	$(RM) package/internal/Clobber.xdc.h
+	$(RM) Hwi.h
+	$(RM) package/internal/Hwi.xdc.h
+	$(RM) IntrinsicsSupport.h
+	$(RM) package/internal/IntrinsicsSupport.xdc.h
+	$(RM) TaskSupport.h
+	$(RM) package/internal/TaskSupport.xdc.h
+	$(RM) Timer.h
+	$(RM) package/internal/Timer.xdc.h
+	$(RM) TimestampProvider.h
+	$(RM) package/internal/TimestampProvider.xdc.h
+	$(RM) Power.h
+	$(RM) package/internal/Power.xdc.h
+	$(RM) package/ti.sysbios.family.arm.m3.ccs
+
+.interfaces: package/ti.sysbios.family.arm.m3.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_family_arm_m3.java package/package_ti.sysbios.family.arm.m3.c package/package.defs.h Clobber.h package/internal/Clobber.xdc.h Hwi.h package/internal/Hwi.xdc.h IntrinsicsSupport.h package/internal/IntrinsicsSupport.xdc.h TaskSupport.h package/internal/TaskSupport.xdc.h Timer.h package/internal/Timer.xdc.h TimestampProvider.h package/internal/TimestampProvider.xdc.h Power.h package/internal/Power.xdc.h package/ti.sysbios.family.arm.m3.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Clobber.xdc Exception.xdc Hwi.xdc IntrinsicsSupport.xdc TaskSupport.xdc Timer.xdc TimestampProvider.xdc Power.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+Clobber.xs:
+package/package.xdc.inc: Clobber.xs
+Exception.xs:
+package/package.xdc.inc: Exception.xs
+Hwi.xs:
+package/package.xdc.inc: Hwi.xs
+IntrinsicsSupport.xs:
+package/package.xdc.inc: IntrinsicsSupport.xs
+TaskSupport.xs:
+package/package.xdc.inc: TaskSupport.xs
+Timer.xs:
+package/package.xdc.inc: Timer.xs
+TimestampProvider.xs:
+package/package.xdc.inc: TimestampProvider.xs
+Power.xs:
+package/package.xdc.inc: Power.xs
+
+# schema update dependencies
+package/package.xdc.inc: Clobber.xdc
+package/package.xdc.inc: Exception.xdc
+package/package.xdc.inc: Hwi.xdc
+package/package.xdc.inc: IntrinsicsSupport.xdc
+package/package.xdc.inc: TaskSupport.xdc
+package/package.xdc.inc: Timer.xdc
+package/package.xdc.inc: TimestampProvider.xdc
+package/package.xdc.inc: Power.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/BIOS.xdc
+ti/sysbios/BIOS.xdc:
+vpath ti/sysbios/BIOS.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IHwi.xdc
+ti/sysbios/interfaces/IHwi.xdc:
+vpath ti/sysbios/interfaces/IHwi.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IIntrinsicsSupport.xdc
+ti/sysbios/interfaces/IIntrinsicsSupport.xdc:
+vpath ti/sysbios/interfaces/IIntrinsicsSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITaskSupport.xdc
+ti/sysbios/interfaces/ITaskSupport.xdc:
+vpath ti/sysbios/interfaces/ITaskSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimestamp.xdc
+ti/sysbios/interfaces/ITimestamp.xdc:
+vpath ti/sysbios/interfaces/ITimestamp.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampProvider.xdc
+xdc/runtime/ITimestampProvider.xdc:
+vpath xdc/runtime/ITimestampProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampClient.xdc
+xdc/runtime/ITimestampClient.xdc:
+vpath xdc/runtime/ITimestampClient.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IPower.xdc
+ti/sysbios/interfaces/IPower.xdc:
+vpath ti/sysbios/interfaces/IPower.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: Clobber.h
+Clobber.h:
+package/package.xdc.inc: package/internal/Clobber.xdc.h
+package/internal/Clobber.xdc.h:
+package/package.xdc.inc: Hwi.h
+Hwi.h:
+package/package.xdc.inc: package/internal/Hwi.xdc.h
+package/internal/Hwi.xdc.h:
+package/package.xdc.inc: IntrinsicsSupport.h
+IntrinsicsSupport.h:
+package/package.xdc.inc: package/internal/IntrinsicsSupport.xdc.h
+package/internal/IntrinsicsSupport.xdc.h:
+package/package.xdc.inc: TaskSupport.h
+TaskSupport.h:
+package/package.xdc.inc: package/internal/TaskSupport.xdc.h
+package/internal/TaskSupport.xdc.h:
+package/package.xdc.inc: Timer.h
+Timer.h:
+package/package.xdc.inc: package/internal/Timer.xdc.h
+package/internal/Timer.xdc.h:
+package/package.xdc.inc: TimestampProvider.h
+TimestampProvider.h:
+package/package.xdc.inc: package/internal/TimestampProvider.xdc.h
+package/internal/TimestampProvider.xdc.h:
+package/package.xdc.inc: Power.h
+Power.h:
+package/package.xdc.inc: package/internal/Power.xdc.h
+package/internal/Power.xdc.h:
+

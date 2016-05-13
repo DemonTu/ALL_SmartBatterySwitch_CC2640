@@ -1,0 +1,13 @@
+package.xdc
+Platform.xdc
+Platform.xs
+package/ti.platforms.simCM3.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/ti_platforms_simCM3.java
+package/ti_platforms_simCM3.class
+package/package_ti.platforms.simCM3.c
+package/package.defs.h
+package/ti.platforms.simCM3.ccs

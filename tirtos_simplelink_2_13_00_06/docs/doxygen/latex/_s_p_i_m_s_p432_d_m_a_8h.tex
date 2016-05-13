@@ -1,0 +1,150 @@
+\subsection{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h File Reference}
+\label{_s_p_i_m_s_p432_d_m_a_8h}\index{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I driver implementation for a E\+U\+S\+C\+I peripheral on M\+S\+P432 using the micro D\+M\+A controller. 
+
+============================================================================
+
+The S\+P\+I header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/SPI.h>}
+\textcolor{preprocessor}{#include <ti/drivers/spi/SPIMSP432DMA.h>}
+\end{DoxyCode}
+
+
+This S\+P\+I driver implementation is designed to operate on a E\+U\+C\+S\+I controller in S\+P\+I mode.
+
+\paragraph*{S\+P\+I Chip Select}
+
+The S\+P\+I\+M\+S\+P432\+D\+M\+A operates the controller in 3-\/pin mode; therefore it is not safe to use in a multi-\/master S\+P\+I bus environment. It is the application\textquotesingle{}s responsibility to assert and de-\/assert a G\+P\+I\+O pin for chip select purposes.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Chip select type }&{\bf S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R mode }&{\bf S\+P\+I\+\_\+\+S\+L\+A\+V\+E mode  }\\\cline{1-3}
+Hardware chip select &Not available on this peripheral.  \\\cline{1-3}
+Software chip select &The application is responsible to ensure that correct S\+P\+I slave is selected before performing a \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. &Up to the application\textquotesingle{}s implementation.  \\\cline{1-3}
+\end{TabularC}
+
+
+\paragraph*{D\+M\+A Interrupts}
+
+The M\+S\+P432 D\+M\+A controller has 4 interrupt vectors to handle all D\+M\+A related I\+R\+Q. Due to the \char`\"{}shared\char`\"{} nature of the D\+M\+A interrupts, this driver implementation requires each S\+P\+I instance to explicitly use a single D\+M\+A interrupt. It is up to the application to ensure no two peripherals are configured to respond to a given D\+M\+A interrupt at any moment.
+
+\paragraph*{Scratch Buffers}
+
+A uint32\+\_\+t scratch buffer is used to allow S\+P\+I\+\_\+transfers where tx\+Buf or rx\+Buf are N\+U\+L\+L. Rather than requiring tx\+Buf or rx\+Buf to have a dummy buffer of size of the transfer count, a single D\+M\+A accessible uint32\+\_\+t scratch buffer is used. When tx\+Buf is N\+U\+L\+L, an internal scratch buffer is initialized to the default\+Tx\+Buf\+Value so the D\+M\+A will send some known value. Each S\+P\+I driver instance should uses its own scratch buffer.
+
+\paragraph*{S\+P\+I data frames}
+
+The E\+U\+S\+C\+I controller only supports 8-\/bit data frames.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf data\+Size }&{\bf buffer element size  }\\\cline{1-2}
+8 bits &uint8\+\_\+t \\\cline{1-2}
+\end{TabularC}
+\paragraph*{D\+M\+A transfer size limit}
+
+The D\+M\+A contoller only supports data transfers of upto 1024 data frames. Each S\+P\+I driver instance requires 2 D\+M\+A channels (Tx and Rx) to operate.
+
+\paragraph*{D\+M\+A accessible memory}
+
+Ensure that the tx\+Buf and rx\+Buf (in \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction}) point to memory that is accessible by the D\+M\+A. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Semaphore\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+S\+P\+I.\+h$>$}\\*
+Include dependency graph for S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_p_i_m_s_p432_d_m_a_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+M\+S\+P432\+D\+M\+A Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+: \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_p_i_m_s_p432_d_m_a___object}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+M\+S\+P432\+D\+M\+A Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs} \hyperlink{_s_p_i_m_s_p432_d_m_a_8h_a3c134f41d4b331c52e9689b1fa4df451}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+M\+S\+P432\+D\+M\+A Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+: \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i_m_s_p432_d_m_a___object}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object} \hyperlink{_s_p_i_m_s_p432_d_m_a_8h_a8ace92c08f232b6bf494eaf2636f5f40}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+M\+S\+P432\+D\+M\+A Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i_m_s_p432_d_m_a___object}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object} $\ast$ \hyperlink{_s_p_i_m_s_p432_d_m_a_8h_ad9225ceabbfa997521f48546a58b0e1d}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table} \hyperlink{_s_p_i_m_s_p432_d_m_a_8h_aee524b32bcdc37f4035099dff00abbc2}{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}  {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}\label{_s_p_i_m_s_p432_d_m_a_8h_a3c134f41d4b331c52e9689b1fa4df451}
+
+
+S\+P\+I\+M\+S\+P432\+D\+M\+A Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+: 
+
+
+\begin{DoxyItemize}
+\item dma.\+h
+\item spi.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const SPIMSP432DMA\_HWAttrs spiMSP432DMAHWAttrs[] = \{
+2     \{
+3         .baseAddr = EUSCI\_B0\_BASE,
+4         .clockSource = EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+5         .bitOrder = EUSCI\_B\_SPI\_MSB\_FIRST,
+6 
+7         .defaultTxBufValue = 0,
+8 
+9         .dmaIntNum = INT\_DMA\_INT1,
+10         .intPriority = ~0,
+11         .rxDMAChannelIndex = DMA\_CH1\_EUSCIB0RX0,
+12         .txDMAChannelIndex = DMA\_CH0\_EUSCIB0TX0
+13     \},
+14     \{
+15         .baseAddr = EUSCI\_B2\_BASE,
+16         .clockSource = EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+17         .bitOrder = EUSCI\_B\_SPI\_MSB\_FIRST,
+18 
+19         .defaultTxBufValue = 0,
+20 
+21         .dmaIntNum = INT\_DMA\_INT2,
+22         .intPriority = ~0,
+23         .rxDMAChannelIndex = DMA\_CH5\_EUSCIB2RX0,
+24         .txDMAChannelIndex = DMA\_CH4\_EUSCIB2TX0
+25     \}
+26 \};
+\end{DoxyCode}
+ \index{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}!S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}  {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object}}\label{_s_p_i_m_s_p432_d_m_a_8h_a8ace92c08f232b6bf494eaf2636f5f40}
+
+
+S\+P\+I\+M\+S\+P432\+D\+M\+A Object. 
+
+The application must not access any member variables of this structure! \index{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle}}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle}!S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Object} $\ast$ {\bf S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+Handle}}\label{_s_p_i_m_s_p432_d_m_a_8h_ad9225ceabbfa997521f48546a58b0e1d}
+
+
+\subsubsection{Variable Documentation}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table}}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table}!S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h@{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf S\+P\+I\+\_\+\+Fxn\+Table} S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+fxn\+Table}\label{_s_p_i_m_s_p432_d_m_a_8h_aee524b32bcdc37f4035099dff00abbc2}

@@ -1,0 +1,231 @@
+\subsection{Mutex\+P.\+h File Reference}
+\label{_mutex_p_8h}\index{Mutex\+P.\+h@{Mutex\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Mutex module for the R\+T\+O\+S Porting Interface. 
+
+============================================================================
+
+The Mutex\+P module allows task to maintain critical region segments. The Mutex\+P module has two main functions\+: \hyperlink{_mutex_p_8h_a2447ad3ba46c2117235253fc4abb4566}{Mutex\+P\+\_\+lock} and \hyperlink{_mutex_p_8h_a3bb8c88366ec4b5c5903bf0f37924486}{Mutex\+P\+\_\+unlock}.
+
+The Mutex\+P module supports recursive calls to the Mutex\+P\+\_\+lock A\+P\+I by a single task. The same number of Mutex\+P\+\_\+unlock calls must be done for the mutex to be release. Note\+: the returned key must be provided in the L\+I\+F\+O order. For example\+: 
+\begin{DoxyCode}
+uintptr\_t key1, key2;
+key1 = MutexP_lock();
+key2 = MutexP_lock();
+MutexP_lock(key2);
+MutexP_lock(key1);
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Mutex\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_mutex_p_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_mutex_p___params}{Mutex\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Mutex\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135d}{Mutex\+P\+\_\+\+Status} \hyperlink{_mutex_p_8h_a57d61e1b19e6a6e93f9b34795356e431}{Mutex\+P\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes for Mutex\+P A\+P\+Is. \end{DoxyCompactList}\item 
+typedef void $\ast$ \hyperlink{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}{Mutex\+P\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em Opaque client reference to an instance of a Mutex\+P. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_mutex_p___params}{Mutex\+P\+\_\+\+Params} \hyperlink{_mutex_p_8h_a96daeded90eff8d2d53b15190530a2a6}{Mutex\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Mutex\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135d}{Mutex\+P\+\_\+\+Status} \{ \\*
+\hyperlink{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135da64a440a76488541a75038263621380bc}{Mutex\+P\+\_\+\+O\+K} = 0, 
+\\*
+\hyperlink{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135da4a5635016f1caa1382d00bc0a07f9183}{Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E} = -\/1
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes for Mutex\+P A\+P\+Is. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}{Mutex\+P\+\_\+\+Handle} \hyperlink{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}{Mutex\+P\+\_\+create} (\hyperlink{struct_mutex_p___params}{Mutex\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to create a mutex. \end{DoxyCompactList}\item 
+\hyperlink{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135d}{Mutex\+P\+\_\+\+Status} \hyperlink{_mutex_p_8h_a9a2bf10c416f8f30f60d9e42c5995a9c}{Mutex\+P\+\_\+delete} (\hyperlink{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}{Mutex\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to delete a mutex. \end{DoxyCompactList}\item 
+void \hyperlink{_mutex_p_8h_a023e95c8429aa68dcbb98adacb1ac381}{Mutex\+P\+\_\+\+Params\+\_\+init} (\hyperlink{struct_mutex_p___params}{Mutex\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initialize params structure to default values. \end{DoxyCompactList}\item 
+uintptr\+\_\+t \hyperlink{_mutex_p_8h_a2447ad3ba46c2117235253fc4abb4566}{Mutex\+P\+\_\+lock} (\hyperlink{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}{Mutex\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to lock a mutex. \end{DoxyCompactList}\item 
+void \hyperlink{_mutex_p_8h_a3bb8c88366ec4b5c5903bf0f37924486}{Mutex\+P\+\_\+unlock} (\hyperlink{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}{Mutex\+P\+\_\+\+Handle} handle, uintptr\+\_\+t key)
+\begin{DoxyCompactList}\small\item\em Function to unlock a mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+Status@{Mutex\+P\+\_\+\+Status}}
+\index{Mutex\+P\+\_\+\+Status@{Mutex\+P\+\_\+\+Status}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Mutex\+P\+\_\+\+Status}  {\bf Mutex\+P\+\_\+\+Status}}\label{_mutex_p_8h_a57d61e1b19e6a6e93f9b34795356e431}
+
+
+Status codes for Mutex\+P A\+P\+Is. 
+
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+Handle@{Mutex\+P\+\_\+\+Handle}}
+\index{Mutex\+P\+\_\+\+Handle@{Mutex\+P\+\_\+\+Handle}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef void$\ast$ {\bf Mutex\+P\+\_\+\+Handle}}\label{_mutex_p_8h_a1bf40a0e31521bb036d1180d4338b5d9}
+
+
+Opaque client reference to an instance of a Mutex\+P. 
+
+A Mutex\+P\+\_\+\+Handle returned from the \hyperlink{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}{Mutex\+P\+\_\+create} represents that instance. and then is used in the other instance based functions (e.\+g. \hyperlink{_mutex_p_8h_a2447ad3ba46c2117235253fc4abb4566}{Mutex\+P\+\_\+lock}, \hyperlink{_mutex_p_8h_a3bb8c88366ec4b5c5903bf0f37924486}{Mutex\+P\+\_\+unlock}, etc.). \index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+Params@{Mutex\+P\+\_\+\+Params}}
+\index{Mutex\+P\+\_\+\+Params@{Mutex\+P\+\_\+\+Params}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Mutex\+P\+\_\+\+Params}  {\bf Mutex\+P\+\_\+\+Params}}\label{_mutex_p_8h_a96daeded90eff8d2d53b15190530a2a6}
+
+
+Basic Mutex\+P Parameters. 
+
+Structure that contains the parameters are passed into \hyperlink{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}{Mutex\+P\+\_\+create} when creating a Mutex\+P instance. The \hyperlink{_mutex_p_8h_a023e95c8429aa68dcbb98adacb1ac381}{Mutex\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Mutex\+P default parameters are noted in \hyperlink{_mutex_p_8h_a023e95c8429aa68dcbb98adacb1ac381}{Mutex\+P\+\_\+\+Params\+\_\+init}. 
+
+\subsubsection{Enumeration Type Documentation}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+Status@{Mutex\+P\+\_\+\+Status}}
+\index{Mutex\+P\+\_\+\+Status@{Mutex\+P\+\_\+\+Status}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Mutex\+P\+\_\+\+Status}}\label{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135d}
+
+
+Status codes for Mutex\+P A\+P\+Is. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Mutex\+P\+\_\+\+O\+K@{Mutex\+P\+\_\+\+O\+K}!Mutex\+P.\+h@{Mutex\+P.\+h}}\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+O\+K@{Mutex\+P\+\_\+\+O\+K}}\item[{\em 
+Mutex\+P\+\_\+\+O\+K\label{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135da64a440a76488541a75038263621380bc}
+}]A\+P\+I completed successfully \index{Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}!Mutex\+P.\+h@{Mutex\+P.\+h}}\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}}\item[{\em 
+Mutex\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\label{_mutex_p_8h_aa73c706cf0956982c1a84a0e6fe2135da4a5635016f1caa1382d00bc0a07f9183}
+}]A\+P\+I failed \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+create@{Mutex\+P\+\_\+create}}
+\index{Mutex\+P\+\_\+create@{Mutex\+P\+\_\+create}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mutex\+P\+\_\+\+Handle} Mutex\+P\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{{\bf Mutex\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}
+
+
+Function to create a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to the instance configuration parameters. N\+U\+L\+L denotes to use the default parameters. The Mutex\+P default parameters are noted in \hyperlink{_mutex_p_8h_a023e95c8429aa68dcbb98adacb1ac381}{Mutex\+P\+\_\+\+Params\+\_\+init}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Mutex\+P\+\_\+\+Handle on success or a N\+U\+L\+L on an error 
+\end{DoxyReturn}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+delete@{Mutex\+P\+\_\+delete}}
+\index{Mutex\+P\+\_\+delete@{Mutex\+P\+\_\+delete}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+delete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Mutex\+P\+\_\+\+Status} Mutex\+P\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{{\bf Mutex\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_mutex_p_8h_a9a2bf10c416f8f30f60d9e42c5995a9c}
+
+
+Function to delete a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Mutex\+P\+\_\+\+Handle returned from Mutex\+P\+\_\+create\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Mutex\+P\+\_\+\+O\+K\+: Deleted the mutex instance
+\item Mutex\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Failed to delete the mutex instance 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+\+Params\+\_\+init@{Mutex\+P\+\_\+\+Params\+\_\+init}}
+\index{Mutex\+P\+\_\+\+Params\+\_\+init@{Mutex\+P\+\_\+\+Params\+\_\+init}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Mutex\+P\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Mutex\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_mutex_p_8h_a023e95c8429aa68dcbb98adacb1ac381}
+
+
+Initialize params structure to default values. 
+
+The default parameters are\+:
+\begin{DoxyItemize}
+\item name\+: N\+U\+L\+L
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to the instance configuration parameters. \\
+\hline
+\end{DoxyParams}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+lock@{Mutex\+P\+\_\+lock}}
+\index{Mutex\+P\+\_\+lock@{Mutex\+P\+\_\+lock}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+lock}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t Mutex\+P\+\_\+lock (
+\begin{DoxyParamCaption}
+\item[{{\bf Mutex\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_mutex_p_8h_a2447ad3ba46c2117235253fc4abb4566}
+
+
+Function to lock a mutex. 
+
+This function can only be called from a Task. It cannot be called from an interrupt. The lock will block until the mutex is available.
+
+Users of a mutex should make every attempt to minimize the duration that that they have it locked. This is to minimize latency. It is recommended that the users of the mutex do not block while they have the mutex locked.
+
+This function unlocks the mutex. If the mutex is locked multiple times by the caller, the same number of unlocks must be called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Mutex\+P\+\_\+\+Handle returned from \hyperlink{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}{Mutex\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A key is returned. This key must be passed into \hyperlink{_mutex_p_8h_a3bb8c88366ec4b5c5903bf0f37924486}{Mutex\+P\+\_\+unlock}. 
+\end{DoxyReturn}
+\index{Mutex\+P.\+h@{Mutex\+P.\+h}!Mutex\+P\+\_\+unlock@{Mutex\+P\+\_\+unlock}}
+\index{Mutex\+P\+\_\+unlock@{Mutex\+P\+\_\+unlock}!Mutex\+P.\+h@{Mutex\+P.\+h}}
+\paragraph[{Mutex\+P\+\_\+unlock}]{\setlength{\rightskip}{0pt plus 5cm}void Mutex\+P\+\_\+unlock (
+\begin{DoxyParamCaption}
+\item[{{\bf Mutex\+P\+\_\+\+Handle}}]{handle, }
+\item[{uintptr\+\_\+t}]{key}
+\end{DoxyParamCaption}
+)}\label{_mutex_p_8h_a3bb8c88366ec4b5c5903bf0f37924486}
+
+
+Function to unlock a mutex. 
+
+This function unlocks the mutex. If the mutex is locked multiple times by the caller, the same number of unlocks must be called. The order of the keys must be reversed. For example 
+\begin{DoxyCode}
+1 uintptr\_t key1, key2;
+2 key1 = MutexP\_lock();
+3 key2 = MutexP\_lock();
+4 MutexP\_lock(key2);
+5 MutexP\_lock(key1);
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Mutex\+P\+\_\+\+Handle returned from \hyperlink{_mutex_p_8h_af05d5dc3cadfca5a06572ef7e9ead652}{Mutex\+P\+\_\+create}\\
+\hline
+{\em key} & Return from \hyperlink{_mutex_p_8h_a2447ad3ba46c2117235253fc4abb4566}{Mutex\+P\+\_\+lock}. \\
+\hline
+\end{DoxyParams}

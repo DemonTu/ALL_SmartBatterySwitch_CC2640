@@ -1,0 +1,4 @@
+<map id="UARTUSCIA_Object" name="UARTUSCIA_Object">
+<area shape="rect" href="$struct_u_a_r_t___config.html" title="UART Global configuration. " alt="" coords="140,9,244,33" />
+<area shape="rect" href="$struct_u_a_r_t___fxn_table.html" title="The definition of a UART function table that contains the required set of functions to control a spec..." alt="" coords="214,246,334,270" />
+</map>

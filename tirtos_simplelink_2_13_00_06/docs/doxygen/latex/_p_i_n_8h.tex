@@ -1,0 +1,1644 @@
+\subsection{P\+I\+N.\+h File Reference}
+\label{_p_i_n_8h}\index{P\+I\+N.\+h@{P\+I\+N.\+h}}
+
+
+\subsubsection{Detailed Description}
+Generic P\+I\+N \& G\+P\+I\+O driver. 
+
+
+
+
+
+To use the P\+I\+N driver ensure that the correct T\+I-\/\+R\+T\+O\+S driver library for your device is linked in and include this header file\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/PIN.h>}
+\end{DoxyCode}
+
+
+In order to use device-\/specific functionality or to use the size/speed-\/ optimized versions of some of the P\+I\+N driver functions that circumvent error and resource checking, link in the correct T\+I-\/\+R\+T\+O\+S driver library for your device and include the device-\/specific P\+I\+N driver header file (which in turn includes \hyperlink{_p_i_n_8h}{P\+I\+N.\+h}). As an example for the C\+C26xx family of devices\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/pin/PINCC26xx.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+The P\+I\+N driver allows clients (applications or other drivers) to allocate and control the I/\+O pins on the device. The pins can either be software-\/ controlled general-\/purpose I/\+O (G\+P\+I\+O) or connected to hardware peripherals. Furthermore, the P\+I\+N driver allows clients to configure interrupt functionality on the pins to receive callbacks (and potentially wake up from the standby or idle power modes) on configurable signal edges.
+
+Most other drivers rely on functionality in the P\+I\+N driver.
+
+\paragraph*{Structure}
+
+In order to provide a generic driver interface, this file (\hyperlink{_p_i_n_8h}{P\+I\+N.\+h}) only defines the A\+P\+I and some common data types and macros of the driver. A P\+I\+N client (application or driver) can in most cases only use the generic P\+I\+N A\+P\+I, however, for more advanced usage where device-\/specific pin configuration is used or device-\/specific P\+I\+N driver A\+P\+I extensions are used must use the device-\/specific P\+I\+N driver A\+P\+I.
+
+The device-\/independent A\+P\+I is implemented as function calls with pin access control based on the P\+I\+N client handle. For time-\/critical applications the device-\/specific A\+P\+I can be used directly, as these A\+P\+I functions are implemented as inlined functions without access control.
+
+\paragraph*{Functionality}
+
+The P\+I\+N module provides the following functionality\+:
+\begin{DoxyItemize}
+\item Initialize I/\+O pins upon boot to a default configuration (possibly user-\/generated)
+\item Provides atomic manipulation of I/\+O pin hardware registers to allow safe simultaneous use of I/\+O pin resources
+\item I/\+O pin allocation
+\begin{DoxyItemize}
+\item A set of pins can be allocated receiving a pin set handle. Typically each peripheral driver will allocate a set of pins and an application must allocate the pins it uses too
+\item When a pin set is deallocated all the pins in it revert to the state they were initialized to at boot
+\end{DoxyItemize}
+\item General-\/purpose I/\+O (G\+P\+I\+O) services
+\begin{DoxyItemize}
+\item Read input buffer value
+\item Read and set output buffer value
+\item Read and set output buffer enable
+\item Access as single pin or port (muliple pins simultaneously)
+\end{DoxyItemize}
+\item Protect pin manipulation
+\begin{DoxyItemize}
+\item Pins in an allocated set can only be manipulated using the corresponding handle.
+\item No handle is needed to read input and output buffer values
+\end{DoxyItemize}
+\item I/\+O buffer/driver control
+\begin{DoxyItemize}
+\item Input mode (detached, hysteresis, pull-\/up, pull-\/down)
+\item Output mode (tristated, push-\/pull, open drain, open source)
+\item Output driver strength control
+\item Output driver slew rate control
+\end{DoxyItemize}
+\item I/\+O source/target selection (device-\/specific driver only)
+\begin{DoxyItemize}
+\item Map pin to G\+P\+I\+O, peripheral or H\+W observation signal
+\end{DoxyItemize}
+\item Configuration of I/\+O interrupt and wakeup from standby
+\begin{DoxyItemize}
+\item Interrupt configuration\+: signal edge to interrupt on, interrupt mask, callback function registration
+\item Pins that have enabled interrupts will also wake up the device from low-\/ power modes like standby and idle upon events
+\end{DoxyItemize}
+\item Provides data types and enums/defines for use in pin configurations definitions in board files, drivers and applications
+\end{DoxyItemize}
+
+\paragraph*{Pin Allocation}
+
+The purpose of being able to allocate pins to a pin set is to\+:
+\begin{DoxyItemize}
+\item Manage pin resources
+\item Give exclusive, protected access to these pins
+\item Establish a driver state in connection with these pins that allow functionality such as I/\+O interrupt callback and I/\+O port operations in a safe manner
+\end{DoxyItemize}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} &Allocate pins to a set, returns handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ae96b7cc445336d52f8f6db762ff80156}{P\+I\+N\+\_\+add()} &Add pin to pin set for open P\+I\+N handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a7edb10913792e741318ef339d5c7ef13}{P\+I\+N\+\_\+remove()} &Removes pin from pin set foropen P\+I\+N handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close()} &Deallocate pin set, revert to original G\+P\+I\+O state \\\cline{1-2}
+\end{TabularC}
+\paragraph*{G\+P\+I\+O}
+
+Pins that are to be used as software-\/controlled general-\/purpose I/\+O (G\+P\+I\+O) need to be allocated in the same manner as for pins that will be mapped to hardware peripheral ports. A pin set requested with a \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} call may contain a mix of pins to be used for G\+P\+I\+O and hardware-\/mapped pins.
+
+When a pin is deallocated using \hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close()} it reverts to the G\+P\+I\+O configuration it was given in the initial call to \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()}.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} &Initialize I/\+O pins to a safe G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} &Allocate pins to a set, returns handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close()} &Deallocate pin set, revert to original G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} &Sets parts of or complete pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} &Returns pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ace57b32daf13b67b2d8bb1b8470b5cd6}{P\+I\+N\+\_\+set\+Output\+Enable()}&Control output enable of G\+P\+I\+O pin \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a9bfcc2ddeaaac6dcd90d31ff0c125f3d}{P\+I\+N\+\_\+get\+Input\+Value()} &Read input value on pin \\\cline{1-2}
+\hyperlink{_p_i_n_8h_aa928e8e84148f7df7bfd2fb46e475016}{P\+I\+N\+\_\+set\+Output\+Value()} &Set output value of G\+P\+I\+O pin \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a4a05603f0e075a37af59ed66fd6c6443}{P\+I\+N\+\_\+get\+Output\+Value()} &Get current output value of G\+P\+I\+O pin \\\cline{1-2}
+\end{TabularC}
+\paragraph*{G\+P\+I\+O Ports}
+
+Sometimes it is necessary to be able to read from, write to or control multiple pins simultaneously (in time). The P\+I\+N driver allows a set of allocated pins, if they reside on the same G\+P\+I\+O port in the underlying hardware, to be manipulated simultaneously.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} &Allocate pins to a set, returns handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close()} &Deallocate pin set, revert to original G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask()} &Returns bitmask for allocated pins in G\+P\+I\+O port \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a726e06dcb7c0d096efaee431ae7b2aaa}{P\+I\+N\+\_\+get\+Port\+Input\+Value()} &Returns input value of whole G\+P\+I\+O port \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a380bb69c858753895cf62fb462797fc6}{P\+I\+N\+\_\+set\+Port\+Output\+Value()} &Sets output value of whole G\+P\+I\+O port (masked) \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ae7dedbfc51ba785bb2f546eed5fdd806}{P\+I\+N\+\_\+get\+Port\+Output\+Value()} &Get current output value of whole G\+P\+I\+O port \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ae7dedbfc51ba785bb2f546eed5fdd806}{P\+I\+N\+\_\+get\+Port\+Output\+Value()} &Sets output value of whole G\+P\+I\+O port (masked) \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a597fe2039644ee0389980d0a729de4e7}{P\+I\+N\+\_\+set\+Port\+Output\+Enable()}&Sets output enable of whole G\+P\+I\+O port (masked) \\\cline{1-2}
+\end{TabularC}
+\paragraph*{I/\+O Pin Configuration}
+
+Different devices provide different levels of configurability of I/\+O pins. The P\+I\+N driver provides a fairly extensive set of \hyperlink{_p_i_n_8h_PIN_GENERIC_FLAGS}{generic I\+O configuration options} that are device-\/independent, all of which might not be supported by the underlying device-\/specific P\+I\+N driver and hardware. Likewise, the underlying device-\/specific P\+I\+N driver and hardware might support additional configuration options not covered by the generic options.
+
+To allow both independence from and flexibility to use features on the target device, the \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entries used by the P\+I\+N driver allows use of either a set of \hyperlink{_p_i_n_8h_PIN_GENERIC_FLAGS}{generic P\+I\+N configuration options} or a device-\/specific set of P\+I\+N configuration options defined in the underlying device-\/specific P\+I\+N driver (e.\+g. \hyperlink{_p_i_n_c_c26_x_x_8h}{P\+I\+N\+C\+C26\+X\+X.\+h})
+
+\subparagraph*{Mapping to G\+P\+I\+O or Peripheral}
+
+Since the amount of flexibilty in which peripherals can be mapped to which pins and the manner in which this needs to be set up is highly device-\/specific, functions for configuring this is not part of the generic P\+I\+N driver A\+P\+I but is left to be implemented by device-\/specific P\+I\+N drivers. See the releavant device-\/specific P\+I\+N driver (e.\+g. \hyperlink{_p_i_n_c_c26_x_x_8h}{P\+I\+N\+C\+C26\+X\+X.\+h}) for details.
+
+\subparagraph*{Input Mode}
+
+The input mode of a pin controls\+:
+\begin{DoxyItemize}
+\item Input buffer enable
+\item Pull-\/ups or pull-\/downs
+\item Hysteresis of input buffer
+\item Inversion of logical input level
+\item Potentially, device-\/specific options The input mode is set initially with \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} or at a later stage with \hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} and a bitmask with the relevant options
+\end{DoxyItemize}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} &Initialize I\+Os to a safe G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} &Returns pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} &Sets parts of or complete pin configuration \\\cline{1-2}
+\end{TabularC}
+\subparagraph*{Output Mode}
+
+The output mode of a pin controls\+:
+\begin{DoxyItemize}
+\item Output buffer enable
+\item Output driver mode (push-\/pull, open-\/drain, open-\/source)
+\item Output driver slew control
+\item Output driver current (drive strength)
+\item Inversion of logical output level
+\item Potentially, device-\/specific options
+\end{DoxyItemize}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} &Initialize I\+Os to a safe G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ace57b32daf13b67b2d8bb1b8470b5cd6}{P\+I\+N\+\_\+set\+Output\+Enable()}&Control output enable of G\+P\+I\+O pins \\\cline{1-2}
+\hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} &Returns pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} &Sets parts of or complete pin configuration \\\cline{1-2}
+\end{TabularC}
+\subparagraph*{Pin Interrupt and Pin Wakeup}
+
+Pin interrupts are used to process asynchronous signal edge events on pins and potentially wake the device up from low power sleep modes. To use pin interrupts the relevant pins must be allocated and a interrupt callback registered by the client.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} &Initialize I\+Os to a safe G\+P\+I\+O state \\\cline{1-2}
+\hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} &Returns pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} &Sets parts of or complete pin configuration \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a69e2aac02eaabf8d3c3a248a27dd7d0e}{P\+I\+N\+\_\+set\+Interrupt()} &Control interrupt enable and edge for pin \\\cline{1-2}
+\hyperlink{_p_i_n_8h_ae906e3b4880c7c921c90d0baf0ce6e42}{P\+I\+N\+\_\+register\+Int\+Cb()} &Register callback function for a set of pins \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a7bbac83f5f9e2cdee6eac5055247f666}{P\+I\+N\+\_\+set\+User\+Arg()} &Sets a user argument associated with the handle \\\cline{1-2}
+\hyperlink{_p_i_n_8h_a8761c09ec22161bf6f46f491a8e547fd}{P\+I\+N\+\_\+get\+User\+Arg()} &Gets a user argument associated with the handle \\\cline{1-2}
+\end{TabularC}
+\paragraph*{P\+I\+N Data Types}
+
+The P\+I\+N driver defines the following data types\+:
+\begin{DoxyItemize}
+\item \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id}\+: identifies a pin in arguments or lists
+\item \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config}\+: provides I/\+O configuration options for a pin and also embeds a \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} identifier. See \hyperlink{_p_i_n_8h_PIN_GENERIC_FLAGS}{available flags/fields}
+\end{DoxyItemize}
+
+\paragraph*{P\+I\+N Config Flags/\+Fields and Bitmasks}
+
+The P\+I\+N driver uses the \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} data type many places and it merits some additional attention. A \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} value consists of a collection of flags and fields that define how an I/\+O pin and its attached G\+P\+I\+O interface should behave electrically and logically. In addition a \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} value also embeds a \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin I\+D, identifying which pin it refers to.
+
+A \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} value can use one of two mutually exclusive sets of flags and fields\+: \hyperlink{_p_i_n_8h_PIN_GENERIC_FLAGS}{device-\/independent options} defined in \hyperlink{_p_i_n_8h}{P\+I\+N.\+h} or device-\/dependent options defined in the device-\/specific implementation of the P\+I\+N driver interface. Any function that uses \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} will accept both option types, just not at the same time. \hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} always returns device-\/independent options, an additional device-\/specific version (e.\+g. \hyperlink{_p_i_n_c_c26_x_x_8h_aef985455a19581bdb47fff4314fc318b}{P\+I\+N\+C\+C26\+X\+X\+\_\+get\+Config()}) might return device-\/specific options.
+
+The bitmask argument for \hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} decides which of the options the call should affect. All other options are kept at their current values in hardware. Thus P\+I\+N\+\_\+set\+Config(h\+Pins, P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G, P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+U\+P) will only change the pullup/pulldown configuration of the pin, leaving everything else, such as for instance output enable, input hysteresis or output value, untouched. For \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} lists (as supplied to \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} for instance) there is no mask, so all options will affect the pin.
+
+Some of the options affect the pin regardless of whether it is mapped to a hardware peripheral or G\+P\+I\+O and some options only take effect when it is mapped to G\+P\+I\+O. These latter options have \+\_\+\+G\+P\+I\+O\+\_\+ in their names.
+
+The default value for a flag/field is indicated with a star ($\ast$) in the description of the options and will be applied if any explicit value is not supplied for a flag/field that is masked.
+
+The available options can be grouped into categories as follows\+:
+
+\subparagraph*{Input Mode Options}
+
+\begin{TabularC}{4}
+\hline
+\rowcolor{lightgray}{\bf Option }&{\bf Option bitmask }&{\bf H\+W/\+G\+P\+I\+O }&{\bf Description  }\\\cline{1-4}
+\hyperlink{_p_i_n_8h_a3cc36a3cdad818a5261bae5a2657a437}{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N} ($\ast$) &\hyperlink{_p_i_n_8h_aa0ed7bdcf3409fb2e8d2553bfa26ef35}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N} &Both &Enable pin input buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a1c8c8f99cf100a5d8745d879b18bd2b5}{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S} &\hyperlink{_p_i_n_8h_aa0ed7bdcf3409fb2e8d2553bfa26ef35}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N} &Both &Disable pin input buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a4113807b8b5acb98a84b26cc1730ad83}{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S} &\hyperlink{_p_i_n_8h_a90670b834483d4047070f5f310998f29}{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S} &Both &Enable hysteresis on input \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a08ea493b755216db27b51a0402af862e}{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L} ($\ast$) &\hyperlink{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G} &Both &No pullup/pulldown \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a8dd57072ca956a8ace1ee869216dda0a}{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P} &\hyperlink{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G} &Both &Enable pullup \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a12b3efd67d32926ca0c310f95396de43}{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N} &\hyperlink{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G} &Both &Enable pulldown \\\cline{1-4}
+&\hyperlink{_p_i_n_8h_a3fe41a9595912571c21f68fa9d9585bb}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E} &&Mask for all input mode options \\\cline{1-4}
+\end{TabularC}
+\subparagraph*{Output Mode Options}
+
+\begin{TabularC}{4}
+\hline
+\rowcolor{lightgray}{\bf Option }&{\bf Option bitmask }&{\bf H\+W/\+G\+P\+I\+O }&{\bf Description  }\\\cline{1-4}
+\hyperlink{_p_i_n_8h_a8728d817e2f0f18c5fccce87e13d3c34}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S} ($\ast$)&\hyperlink{_p_i_n_8h_a204ca90eb78a0715cca07c95d6b67e65}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N} &G\+P\+I\+O &Disable G\+P\+I\+O output buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a086fd19a419fb4b09f30ed993a3088c7}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N} &\hyperlink{_p_i_n_8h_a204ca90eb78a0715cca07c95d6b67e65}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N} &G\+P\+I\+O &Enable G\+P\+I\+O output buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a269b0e2fe279666149ca1c5949bb32ca}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W} ($\ast$) &\hyperlink{_p_i_n_8h_a40f78467926deed6685f0beb39594be8}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L} &G\+P\+I\+O &Output 0 when G\+P\+I\+O \\\cline{1-4}
+\hyperlink{_p_i_n_8h_aee8e9896270f36a15df12fb85f2cb4ad}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H} &\hyperlink{_p_i_n_8h_a40f78467926deed6685f0beb39594be8}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L} &G\+P\+I\+O &Output 1 when G\+P\+I\+O \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a8b219fa4a7727c4f5a7beb5134144324}{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L} ($\ast$) &\hyperlink{_p_i_n_8h_ae8cadb31765041c9025447cf9538e687}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F} &Both &Use push-\/pull output buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a7d238d7776de5cc504dc37d62ac61295}{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N} &\hyperlink{_p_i_n_8h_ae8cadb31765041c9025447cf9538e687}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F} &Both &Use open drain output buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a649eb3b178440cda981471c27ff761e5}{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E} &\hyperlink{_p_i_n_8h_ae8cadb31765041c9025447cf9538e687}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F} &Both &Use open source output buffer \\\cline{1-4}
+\hyperlink{_p_i_n_8h_afb6df44a1496358f288b2e90dce81a13}{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L} &\hyperlink{_p_i_n_8h_ab564685f4cfb90c924db8d7993612c4b}{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L} &Both &Enable output buffer slew control \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a2a7469e68c23d12b137362dca78a7ae8}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N} ($\ast$) &\hyperlink{_p_i_n_8h_a743420ef571111b0d87f15c0aebb7834}{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R} &Both &Output buffer uses min drive \\\cline{1-4}
+\hyperlink{_p_i_n_8h_aa0c4f9401637a2170b192d5c69faa33b}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D} &\hyperlink{_p_i_n_8h_a743420ef571111b0d87f15c0aebb7834}{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R} &Both &Output buffer uses medium drive \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a218e028386e01367f6e86a2a69eb464a}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X} &\hyperlink{_p_i_n_8h_a743420ef571111b0d87f15c0aebb7834}{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R} &Both &Output buffer uses max drive \\\cline{1-4}
+&\hyperlink{_p_i_n_8h_a3ae1cb8c4750a2833e3dc0072bd9de82}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E} &&Mask for all output mode options \\\cline{1-4}
+\end{TabularC}
+\subparagraph*{Misc Options}
+
+\begin{TabularC}{4}
+\hline
+\rowcolor{lightgray}{\bf Option }&{\bf Option bitmask }&{\bf H\+W/\+G\+P\+I\+O }&{\bf Description  }\\\cline{1-4}
+\hyperlink{_p_i_n_8h_a4f9620411ef92f88c3d2d7ac6c576635}{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T} &\hyperlink{_p_i_n_8h_a668e9dfc27d1ef17602c3cd62ea8d0e2}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T} &Both &Invert input/output \\\cline{1-4}
+\hyperlink{_p_i_n_8h_ad9b6d7921f5a8ad9591bed6c432cd6da}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S} ($\ast$) &\hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q} &Both &Disable pin interrupts \\\cline{1-4}
+\hyperlink{_p_i_n_8h_a3ec5fa8d38321d835720fa518dcfde44}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E} &\hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q} &Both &Pin interrupts on negative edges \\\cline{1-4}
+\hyperlink{_p_i_n_8h_af4d309f5fad9c05487009326888154d1}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E} &\hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q} &Both &Pin interrupts on negative edges \\\cline{1-4}
+\hyperlink{_p_i_n_8h_aba2bee3661f16506e67c7fd8289ccf8f}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S} &\hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q} &Both &Pin interrupts on both edges \\\cline{1-4}
+&\hyperlink{_p_i_n_8h_a7567bcbdf26a95ea42a860aa9beb5a11}{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L} &&Mask for {\itshape all} options \\\cline{1-4}
+\end{TabularC}
+\paragraph*{Initialization}
+
+The P\+I\+N driver must be initialized before any other drivers are initialized. In order for I\+O pins to get a safe value as soon as possible \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} should be called as early as possible in the boot sequence. Typically, \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} is called at the start of main() before T\+I-\/\+R\+T\+O\+S is started with B\+I\+O\+S\+\_\+start().
+
+\hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} takes as an argument a \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} list containing default pin configurations. Typically the \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} list defined in the board files is used\+: 
+\begin{DoxyCode}
+PIN_init(BoardGpioInitTable);
+\end{DoxyCode}
+ It is possible, however, to use another \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} list if desired.
+
+\paragraph*{Power Management Interaction}
+
+No specific interaction with power management module, as P\+I\+N is independent of power mode.
+
+\paragraph*{Functionality Not Supported}
+
+There is no known unsupported functionality.
+
+\paragraph*{Instrumentation}
+
+The pin driver does not use any of the instrumentation facilities.
+
+\subsubsection*{Usage Examples}
+
+\paragraph*{Initialization and Pin Allocation}
+
+Example that illustrates when and how to call \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()}, \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}, \hyperlink{_p_i_n_8h_ae96b7cc445336d52f8f6db762ff80156}{P\+I\+N\+\_\+add()}, \hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close()} 
+\begin{DoxyCode}
+\textcolor{comment}{// Default pin configuration. Typically resides in Board.c file.}
+\textcolor{comment}{// IOs not mentioned here configured to default: input/output/pull disabled}
+PIN_Config BoardGpioInitTable[] = \{
+    \textcolor{comment}{// DIO11: LED A (initially off)}
+    PIN_ID(11) | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | 
+      PIN_DRVSTR_MAX,
+    \textcolor{comment}{// DIO10: LED B (initially off)}
+    PIN_ID(10)  | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | 
+      PIN_DRVSTR_MAX,
+    \textcolor{comment}{// DIO23: BUTTON A (ensure pull-up as button A is also used by other ICs)}
+    PIN_ID(23) | PIN_INPUT_EN  | PIN_PULLUP | PIN_HYSTERESIS,
+    \textcolor{comment}{// DIO3: LCD controller reset line (make sure LCD is in reset)}
+    PIN_ID(3)  | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL,
+    \textcolor{comment}{// Terminate list}
+    PIN_TERMINATE
+\};
+
+Task\_Struct taskStart;
+uint8\_t     taskStartStack[512];
+
+\textcolor{comment}{// PIN\_init() should be called as early as possible in boot}
+\textcolor{keywordtype}{void} main() \{
+    \textcolor{comment}{// Default initialization of IO}
+    PIN_init(BoardGpioInitTable);
+
+    \textcolor{comment}{// Configure startup task}
+    Task\_Params taskParams;
+    Task\_Params\_init(&taskParams);
+    taskParams.stack = taskStartStack;
+    taskParams.stackSize = \textcolor{keyword}{sizeof}(taskStartStack);
+    Task\_construct(&taskStart, taskStartFxn, &taskParams, NULL);
+
+    \textcolor{comment}{// Start kernel (never returns)}
+    BIOS\_start();
+\}
+
+\textcolor{comment}{// Human user interface PIN state/handle}
+PIN_State  hStateHui;
+\textcolor{preprocessor}{#define HUI\_LED\_A     PIN\_ID(11)}
+\textcolor{preprocessor}{#define HUI\_LED\_B     PIN\_ID(10)}
+\textcolor{preprocessor}{#define HUI\_LED\_C     PIN\_ID(9)}
+\textcolor{preprocessor}{#define HUI\_BUTTON\_A  PIN\_ID(23)}
+\textcolor{preprocessor}{#define HUI\_BUTTON\_B  PIN\_ID(24)}
+
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} taskStartFxn(UArg a0, UArg a1) \{
+    \textcolor{comment}{// Define pins used by Human user interface and initial configuration}
+    \textcolor{keyword}{const} PIN_Config aPinListHui[] = \{
+        HUI\_LED\_A    | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | 
+      PIN_DRVSTR_MAX,
+        HUI\_LED\_B    | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | 
+      PIN_DRVSTR_MAX,
+        HUI\_BUTTON\_A | PIN_INPUT_EN  | PIN_PULLUP | PIN_HYSTERESIS,
+        HUI\_BUTTON\_B | PIN_INPUT_EN  | PIN_PULLUP | PIN_HYSTERESIS,
+        PIN_TERMINATE
+    \};
+
+    \textcolor{comment}{// Get handle to this collection of pins}
+    \textcolor{keywordflow}{if} (!PIN_open(&hStateHui, aPinListHui)) \{
+        \textcolor{comment}{// Handle allocation error}
+    \}
+
+    \textcolor{comment}{// ...}
+
+    \textcolor{comment}{// We can also add (and remove) pins to a set at run time}
+    PIN_Status status = PIN_add(
+      &hStateHui,
+      HUI\_LED\_C | PIN_GPIO_OUTPUT_EN | PIN_GPIO_LOW | PIN_PUSHPULL | 
+      PIN_DRVSTR_MAX,
+    );
+    \textcolor{keywordflow}{if} (status != PIN_SUCCESS) \{
+        \textcolor{comment}{// Handling allocation error is especially important with PIN\_add()}
+    \}
+
+    \textcolor{comment}{// ...}
+    huiDoSomething();
+
+    \textcolor{comment}{// Before ending task, make sure to deallocate pins. They will return}
+    \textcolor{comment}{// to the default configurations provided in PIN\_init()}
+    PIN_close(&hStateHui);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Application use of G\+P\+I\+O}
+
+An example of using G\+P\+I\+O that builds on the previous example. Illustrates how to read input values, set output values and control output enable 
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} huiDoSomething() \{
+    \textcolor{comment}{// Running lights on LEDs A-B-C (left to right). Button A causes left}
+    \textcolor{comment}{// movement, button B causes right movement, both simultaneously aborts}
+    \textcolor{comment}{// and disables LED output drivers}
+
+    \textcolor{comment}{// LED initial state (A off, B off, C on). Only our outputs are affected}
+    PIN_setPortOutputValue(&hStateHui, (1<<HUI\_LED\_C));
+
+    int32\_t moveDir = -1;    \textcolor{comment}{// <0: left, 0: stop, >0 right}
+    \textcolor{keywordflow}{while} (moveDir) \{
+        \textcolor{comment}{// Update LEDs}
+        \textcolor{keywordflow}{if} (moveDir<0) \{
+            \textcolor{comment}{// Left movement}
+            uint32\_t t = PIN_getOutputValue(HUI\_LED\_A);
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_A, PIN_getOutputValue(HUI\_LED\_B));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_B, PIN_getOutputValue(HUI\_LED\_C));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_C, t);
+        \} \textcolor{keywordflow}{else} \{
+            \textcolor{comment}{// Right movement}
+            uint32\_t t = PIN_getOutputValue(HUI\_LED\_C);
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_C, PIN_getOutputValue(HUI\_LED\_B));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_B, PIN_getOutputValue(HUI\_LED\_A));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_A, t);
+        \}
+
+        \textcolor{comment}{// Sleep for 333 ms}
+        Task\_sleep(333000/10);
+
+        \textcolor{comment}{// Read input from both buttons simultaneously}
+        uint32\_t buttons = PIN_getPortInputValue(&hStateHui);
+        \textcolor{keywordflow}{if} (buttons&(1<<HUI\_BUTTON\_A) == 0) \{
+            moveDir = -1;
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (buttons&(1<<HUI\_BUTTON\_A) == 0) \{
+             moveDir = 1;
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (buttons&((1<<HUI\_BUTTON\_A)|(1<<HUI\_BUTTON\_A))) \{
+            moveDir = 0;
+        \}
+    \}
+    \textcolor{comment}{// Disable output enable for all pins (only our pins affected)}
+    PIN_setPortOutputEnable(&hStateHui, 0);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Pin Interrupt}
+
+An example that handles pin inputs in the G\+P\+I\+O example above using P\+I\+N interrupts instead\+: 
+\begin{DoxyCode}
+\textcolor{comment}{// volatile variable used to communicate between callback and task}
+\textcolor{keyword}{static} \textcolor{keyword}{volatile} int32\_t moveDir = -1;    \textcolor{comment}{// <0: left, 0: stop, >0 right}
+
+\textcolor{comment}{// Pin interrupt callback}
+\textcolor{keywordtype}{void} huiPinIntCb(PIN_Handle handle, PIN_Id pinId) \{
+    \textcolor{comment}{// Ignore pinId and read input from both buttons simultaneously}
+    uint32\_t buttons = PIN_getPortInputValue(&hStateHui);
+    \textcolor{keywordflow}{if} (buttons&(1<<HUI\_BUTTON\_A) == 0) \{
+        moveDir = -1;
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (buttons&(1<<HUI\_BUTTON\_A) == 0) \{
+         moveDir = 1;
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (buttons&((1<<HUI\_BUTTON\_A)|(1<<HUI\_BUTTON\_A))) \{
+        moveDir = 0;
+    \}
+\}
+
+\textcolor{keywordtype}{void} huiDoSomething() \{
+    \textcolor{comment}{// Running lights on LEDs A-B-C (left to right). Button A causes left}
+    \textcolor{comment}{// movement, button B causes right movement, both simultaneously aborts}
+    \textcolor{comment}{// and disables LED output drivers}
+
+    \textcolor{comment}{// LED initial state (A off, B off, C on). Only our outputs are affected}
+    PIN_setPortOutputValue(&hStateHui, (1<<HUI\_LED\_C));
+    moveDir = -1;    \textcolor{comment}{// <0: left, 0: stop, >0 right}
+
+    \textcolor{comment}{// Setup pin interrupts and register callback}
+    PIN_registerIntCb(&hStateHui, huiPinIntCb);
+    PIN_setInterrupt(&hStateHui, HUI\_BUTTON\_A | PIN_IRQ_NEGEDGE);
+    PIN_setInterrupt(&hStateHui, HUI\_BUTTON\_B | PIN_IRQ_NEGEDGE);
+
+    \textcolor{keywordflow}{while} (moveDir) \{
+        \textcolor{comment}{// Update LEDs}
+        \textcolor{keywordflow}{if} (moveDir<0) \{
+            \textcolor{comment}{// Left movement}
+            uint32\_t t = PIN_getOutputValue(HUI\_LED\_A);
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_A, PIN_getOutputValue(HUI\_LED\_B));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_B, PIN_getOutputValue(HUI\_LED\_C));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_C, t);
+        \} \textcolor{keywordflow}{else} \{
+            \textcolor{comment}{// Right movement}
+            uint32\_t t = PIN_getOutputValue(HUI\_LED\_C);
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_C, PIN_getOutputValue(HUI\_LED\_B));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_B, PIN_getOutputValue(HUI\_LED\_A));
+            PIN_setOutputValue(&hStateHui, HUI\_LED\_A, t);
+        \}
+
+        \textcolor{comment}{// Sleep for 333 ms (we will likely go into standby)}
+        Task\_sleep(333000/10);
+    \}
+    \textcolor{comment}{// Disable output enable for all pins (only our pins affected)}
+    PIN_setPortOutputEnable(&hStateHui, 0);
+    \textcolor{comment}{// Disable pin interrupts}
+    PIN_setInterrupt(&hStateHui, HUI\_BUTTON\_A | PIN_IRQ_DIS);
+    PIN_setInterrupt(&hStateHui, HUI\_BUTTON\_B | PIN_IRQ_DIS);
+\}
+\end{DoxyCode}
+ {\ttfamily \#include $<$xdc/std.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$inc/hw\+\_\+types.\+h$>$}\\*
+Include dependency graph for P\+I\+N.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_p_i_n_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{_p_i_n_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_i_n___state__s}{P\+I\+N\+\_\+\+State\+\_\+s}
+\begin{DoxyCompactList}\small\item\em underlying data structure for type \hyperlink{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}{P\+I\+N\+\_\+\+State} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_i_n_8h_aba219226dfdc9ea2fb82d6a7995395bf}{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}~0x\+F\+F
+\begin{DoxyCompactList}\small\item\em Pin I\+D used to indicate no pin. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E}~\hyperlink{_p_i_n_8h_aba219226dfdc9ea2fb82d6a7995395bf}{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}
+\begin{DoxyCompactList}\small\item\em Pin I\+D used to terminate a list of P\+I\+N\+\_\+\+Id or P\+I\+N\+\_\+\+Config entries. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_add47c82f7563d28053f76d368d344bc6}{P\+I\+N\+\_\+\+I\+D}(x)~((x)\&0x\+F\+F)
+\begin{DoxyCompactList}\small\item\em Macro for inserting or extracting a \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} in a \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf Generic P\+I\+N\+\_\+\+Config flags/fields}\par
+{\em \label{_p_i_n_8h_PIN_GENERIC_FLAGS}%
+\hypertarget{_p_i_n_8h_PIN_GENERIC_FLAGS}{}%
+ Generic (i.\+e. not device-\/specific) fields/flags for I/\+O configuration for use in \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entries. All of these generic options may not be supported by the underlying device-\/specific P\+I\+N driver. A \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entry may use either these generic fields/flags or device-\/specific ones defined in the device-\/specific P\+I\+N-\/driver, but may not mix the two.
+
+The entries starting with P\+I\+N\+\_\+\+B\+M\+\_\+ are bitmasks used to extract individual fields obtained from \hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config()} or to pass as a parameter to \hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()}to define which options it should set.
+
+A star ($\ast$) in the descriptions below means the default if no option is supplied. }\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}~(((uint32\+\_\+t)1)$<$$<$31)
+\begin{DoxyCompactList}\small\item\em Flags that generic options are used. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a3cc36a3cdad818a5261bae5a2657a437}{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$29))
+\begin{DoxyCompactList}\small\item\em ($\ast$) Enable input buffer \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a1c8c8f99cf100a5d8745d879b18bd2b5}{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$29))
+\begin{DoxyCompactList}\small\item\em Disable input buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a4113807b8b5acb98a84b26cc1730ad83}{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$30))
+\begin{DoxyCompactList}\small\item\em Enable input buffer hysteresis. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a08ea493b755216db27b51a0402af862e}{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$13))
+\begin{DoxyCompactList}\small\item\em ($\ast$) No pull-\/up or pull-\/down resistor \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a8dd57072ca956a8ace1ee869216dda0a}{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$13))
+\begin{DoxyCompactList}\small\item\em Pull-\/up resistor enabled. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a12b3efd67d32926ca0c310f95396de43}{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(2$<$$<$13))
+\begin{DoxyCompactList}\small\item\em Pull-\/down resistor enabled. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_aa0ed7bdcf3409fb2e8d2553bfa26ef35}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}~(1$<$$<$29)
+\begin{DoxyCompactList}\small\item\em Bitmask for input enable option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a90670b834483d4047070f5f310998f29}{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}~(1$<$$<$30)
+\begin{DoxyCompactList}\small\item\em Bitmask input hysteresis option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G}~(0x3$<$$<$13)
+\begin{DoxyCompactList}\small\item\em Bitmask for pull-\/up/pull-\/down options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a3fe41a9595912571c21f68fa9d9585bb}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}~(\hyperlink{_p_i_n_8h_aa0ed7bdcf3409fb2e8d2553bfa26ef35}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}$\vert$\hyperlink{_p_i_n_8h_a90670b834483d4047070f5f310998f29}{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}$\vert$\hyperlink{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G})
+\begin{DoxyCompactList}\small\item\em Bitmask for all input mode options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a8728d817e2f0f18c5fccce87e13d3c34}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$23))
+\begin{DoxyCompactList}\small\item\em ($\ast$) Disable output buffer when G\+P\+I\+O \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a086fd19a419fb4b09f30ed993a3088c7}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$23))
+\begin{DoxyCompactList}\small\item\em Enable output buffer when G\+P\+I\+O. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a269b0e2fe279666149ca1c5949bb32ca}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$22))
+\begin{DoxyCompactList}\small\item\em Output buffer drives to V\+S\+S when G\+P\+I\+O. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_aee8e9896270f36a15df12fb85f2cb4ad}{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$22))
+\begin{DoxyCompactList}\small\item\em Output buffer drives to V\+D\+D when G\+P\+I\+O. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a8b219fa4a7727c4f5a7beb5134144324}{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$25))
+\begin{DoxyCompactList}\small\item\em ($\ast$) Output buffer mode\+: push/pull \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a7d238d7776de5cc504dc37d62ac61295}{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(2$<$$<$25))
+\begin{DoxyCompactList}\small\item\em Output buffer mode\+: open drain. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a649eb3b178440cda981471c27ff761e5}{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(3$<$$<$25))
+\begin{DoxyCompactList}\small\item\em Output buffer mode\+: open source. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_afb6df44a1496358f288b2e90dce81a13}{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$12))
+\begin{DoxyCompactList}\small\item\em Enable output buffer slew control. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a2a7469e68c23d12b137362dca78a7ae8}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x0$<$$<$8))
+\begin{DoxyCompactList}\small\item\em ($\ast$) Lowest drive strength \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_aa0c4f9401637a2170b192d5c69faa33b}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x4$<$$<$8))
+\begin{DoxyCompactList}\small\item\em Medium drive strength. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a218e028386e01367f6e86a2a69eb464a}{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x8$<$$<$8))
+\begin{DoxyCompactList}\small\item\em Highest drive strength. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a204ca90eb78a0715cca07c95d6b67e65}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}~(1$<$$<$23)
+\begin{DoxyCompactList}\small\item\em Bitmask for output enable option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a40f78467926deed6685f0beb39594be8}{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L}~(1$<$$<$22)
+\begin{DoxyCompactList}\small\item\em Bitmask for output value option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_ae8cadb31765041c9025447cf9538e687}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F}~(0x3$<$$<$25)
+\begin{DoxyCompactList}\small\item\em Bitmask for output buffer options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_ab564685f4cfb90c924db8d7993612c4b}{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}~(0x1$<$$<$12)
+\begin{DoxyCompactList}\small\item\em Bitmask for slew control options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a743420ef571111b0d87f15c0aebb7834}{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R}~(0x\+F$<$$<$8)
+\begin{DoxyCompactList}\small\item\em Bitmask for drive strength options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a3ae1cb8c4750a2833e3dc0072bd9de82}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}
+\begin{DoxyCompactList}\small\item\em Bitmask for all output mode options. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a4f9620411ef92f88c3d2d7ac6c576635}{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$24))
+\begin{DoxyCompactList}\small\item\em Logically invert input and output. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a668e9dfc27d1ef17602c3cd62ea8d0e2}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}~(1$<$$<$24)
+\begin{DoxyCompactList}\small\item\em Bitmask for input/output inversion option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_ad9b6d7921f5a8ad9591bed6c432cd6da}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x0$<$$<$16))
+\begin{DoxyCompactList}\small\item\em ($\ast$) Disable I\+R\+Q on pin \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a3ec5fa8d38321d835720fa518dcfde44}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x5$<$$<$16))
+\begin{DoxyCompactList}\small\item\em Enable I\+R\+Q on negative edge. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_af4d309f5fad9c05487009326888154d1}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x6$<$$<$16))
+\begin{DoxyCompactList}\small\item\em Enable I\+R\+Q on positive edge. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_aba2bee3661f16506e67c7fd8289ccf8f}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S}~(\hyperlink{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}{P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x7$<$$<$16))
+\begin{DoxyCompactList}\small\item\em Enable I\+R\+Q on both edges. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q}~(0x7$<$$<$16)
+\begin{DoxyCompactList}\small\item\em Bitmask for pin interrupt option. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_i_n_8h_a7567bcbdf26a95ea42a860aa9beb5a11}{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L}~(\hyperlink{_p_i_n_8h_a3fe41a9595912571c21f68fa9d9585bb}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}$\vert$\hyperlink{_p_i_n_8h_a3ae1cb8c4750a2833e3dc0072bd9de82}{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}$\vert$\hyperlink{_p_i_n_8h_a668e9dfc27d1ef17602c3cd62ea8d0e2}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}$\vert$\hyperlink{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q})
+\begin{DoxyCompactList}\small\item\em Bitmask for all options at once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned int \hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t}
+\item 
+typedef int \hyperlink{_p_i_n_8h_ab6fd6105e64ed14a0c9281326f05e623}{int\+\_\+t}
+\item 
+typedef uint8\+\_\+t \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id}
+\begin{DoxyCompactList}\small\item\em Pin identifier data type. \end{DoxyCompactList}\item 
+typedef uint32\+\_\+t \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Pin configuration data type with embedded pin identifier. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_i_n___state__s}{P\+I\+N\+\_\+\+State\+\_\+s} \hyperlink{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}{P\+I\+N\+\_\+\+State}
+\begin{DoxyCompactList}\small\item\em Struct used to store P\+I\+N client state Pointer to a P\+I\+N\+\_\+\+State is used as handles (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle}) in interactions with the I/\+O driver. \end{DoxyCompactList}\item 
+typedef \hyperlink{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}{P\+I\+N\+\_\+\+State} $\ast$ \hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} call Used for further P\+I\+N client interaction with the P\+I\+N driver. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_i_n_8h_a289cbfdcb1e23ade7c3b0f5fc3b2d695}{P\+I\+N\+\_\+\+Int\+Cb}) (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em I/\+O Interrupt callback function pointer type One P\+I\+N Interrupt callback can be registered by each P\+I\+N client and it will be called when one of the pins allocated by the client has an interrupt event. The callback is called from H\+W\+I context with handle and pin I\+D as arguments. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \{ \\*
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} = 0, 
+\\*
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a8280bb6c2bd8ef1fc6f9e24d3d8ed864}{P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D} = 1, 
+\\*
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a25bb5dfe42957cfd0922fc1ece880453}{P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S} = 2, 
+\\*
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a7abd102afc68f4c599c11f8f9c79e7ab}{P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em Return value for many functions in the P\+I\+N driver interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init} (const \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} a\+Pin\+Cfg\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em P\+I\+N module initialization. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open} (\hyperlink{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}{P\+I\+N\+\_\+\+State} $\ast$p\+State, const \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} a\+Pin\+List\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Allocate one or more pins for a driver or an application. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_ae96b7cc445336d52f8f6db762ff80156}{P\+I\+N\+\_\+add} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} pin\+Cfg)
+\begin{DoxyCompactList}\small\item\em Add pin to pin set for open P\+I\+N handle. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a7edb10913792e741318ef339d5c7ef13}{P\+I\+N\+\_\+remove} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em Removes pin from pin set foropen P\+I\+N handle. \end{DoxyCompactList}\item 
+void \hyperlink{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}{P\+I\+N\+\_\+close} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Deallocate all pins previously allocated with a call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void \hyperlink{_p_i_n_8h_a7bbac83f5f9e2cdee6eac5055247f666}{P\+I\+N\+\_\+set\+User\+Arg} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, U\+Arg arg)
+\begin{DoxyCompactList}\small\item\em Sets a user argument associated with the handle. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E U\+Arg \hyperlink{_p_i_n_8h_a8761c09ec22161bf6f46f491a8e547fd}{P\+I\+N\+\_\+get\+User\+Arg} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Gets a user argument associated with the handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}{\bf Pin Manipulation/\+Configuration Functions}\par
+{\em Functions that are used to manipulate the configuration of I/\+O pins and to get input values and set output values. }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} \hyperlink{_p_i_n_8h_a9bfcc2ddeaaac6dcd90d31ff0c125f3d}{P\+I\+N\+\_\+get\+Input\+Value} (\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em Get pin input value (0/1) \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_ace57b32daf13b67b2d8bb1b8470b5cd6}{P\+I\+N\+\_\+set\+Output\+Enable} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id, bool b\+Out\+En)
+\begin{DoxyCompactList}\small\item\em Control output enable for G\+P\+I\+O pin. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_aa928e8e84148f7df7bfd2fb46e475016}{P\+I\+N\+\_\+set\+Output\+Value} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id, \hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} val)
+\begin{DoxyCompactList}\small\item\em Control output value for G\+P\+I\+O pin. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} \hyperlink{_p_i_n_8h_a4a05603f0e075a37af59ed66fd6c6443}{P\+I\+N\+\_\+get\+Output\+Value} (\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em Get value of G\+P\+I\+O pin output buffer. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a69e2aac02eaabf8d3c3a248a27dd7d0e}{P\+I\+N\+\_\+set\+Interrupt} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} pin\+Cfg)
+\begin{DoxyCompactList}\small\item\em Control interrupt enable and edge for pin. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a82957789e7c370b6dd4f16fa36045522}{P\+I\+N\+\_\+clr\+Pend\+Interrupt} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em Clear pending interrupt for pin, if any. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_ae906e3b4880c7c921c90d0baf0ce6e42}{P\+I\+N\+\_\+register\+Int\+Cb} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a289cbfdcb1e23ade7c3b0f5fc3b2d695}{P\+I\+N\+\_\+\+Int\+Cb} p\+Cb)
+\begin{DoxyCompactList}\small\item\em Register callback function for a set of pins. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} \hyperlink{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}{P\+I\+N\+\_\+get\+Config} (\hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} pin\+Id)
+\begin{DoxyCompactList}\small\item\em Returns pin configuration. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} bm\+Mask, \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} pin\+Cfg)
+\begin{DoxyCompactList}\small\item\em Sets complete pin configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf I\+O Port Functions}\par
+{\em Functions used to get input values for, set ouput values for and set output enables for multiple pins at a time. The size of so-\/called I/\+O ports that allows such multiple-\/pin operations are highly device dependent. In order to use the I/\+O port functions a set of pins that reside in the same I/\+O port must have been allocated previously with \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} \hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Returns bitmask indicating pins allocated to client in G\+P\+I\+O port. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} \hyperlink{_p_i_n_8h_a726e06dcb7c0d096efaee431ae7b2aaa}{P\+I\+N\+\_\+get\+Port\+Input\+Value} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Read input value of whole G\+P\+I\+O port. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} \hyperlink{_p_i_n_8h_ae7dedbfc51ba785bb2f546eed5fdd806}{P\+I\+N\+\_\+get\+Port\+Output\+Value} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Returns value of whole G\+P\+I\+O port\textquotesingle{}s output buffers. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a380bb69c858753895cf62fb462797fc6}{P\+I\+N\+\_\+set\+Port\+Output\+Value} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} bm\+Out\+Val)
+\begin{DoxyCompactList}\small\item\em Simultaneous write output buffer values of all allocated pins in G\+P\+I\+O port. \end{DoxyCompactList}\item 
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}{P\+I\+N\+\_\+\+Status} \hyperlink{_p_i_n_8h_a597fe2039644ee0389980d0a729de4e7}{P\+I\+N\+\_\+set\+Port\+Output\+Enable} (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle} handle, \hyperlink{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}{uint\+\_\+t} bm\+Out\+En)
+\begin{DoxyCompactList}\small\item\em Set output enable for all pins allocated to client in G\+P\+I\+O port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D@{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}}
+\index{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D@{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D~0x\+F\+F}\label{_p_i_n_8h_aba219226dfdc9ea2fb82d6a7995395bf}
+
+
+Pin I\+D used to indicate no pin. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E@{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E}}
+\index{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E@{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E~{\bf P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}}\label{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}
+
+
+Pin I\+D used to terminate a list of P\+I\+N\+\_\+\+Id or P\+I\+N\+\_\+\+Config entries. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+D@{P\+I\+N\+\_\+\+I\+D}}
+\index{P\+I\+N\+\_\+\+I\+D@{P\+I\+N\+\_\+\+I\+D}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+D(
+\begin{DoxyParamCaption}
+\item[{}]{x}
+\end{DoxyParamCaption}
+)~((x)\&0x\+F\+F)}\label{_p_i_n_8h_add47c82f7563d28053f76d368d344bc6}
+
+
+Macro for inserting or extracting a \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} in a \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entry. 
+
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_Config pinCfg = PIN\_ID(5) | PIN\_GPIO\_OUTPUT\_EN | PIN\_PUSHPULL |
+2                     PIN\_GPIO\_HIGH | PIN\_IRQ\_POSEDGE;
+3 PIN\_setConfig(hPins, PIN\_BM\_OUTPUT\_MODE, pinCfg);
+4 // Trigger IRQ
+5 PIN\_setOutputValue(hPins, PIN\_ID(pinCfg), 1);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+G\+E\+N@{P\+I\+N\+\_\+\+G\+E\+N}}
+\index{P\+I\+N\+\_\+\+G\+E\+N@{P\+I\+N\+\_\+\+G\+E\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+G\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+G\+E\+N~(((uint32\+\_\+t)1)$<$$<$31)}\label{_p_i_n_8h_ae1f7e47a17caab9697e69e5b9aff270b}
+
+
+Flags that generic options are used. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}}
+\index{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$29))}\label{_p_i_n_8h_a3cc36a3cdad818a5261bae5a2657a437}
+
+
+($\ast$) Enable input buffer 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S}}
+\index{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+N\+P\+U\+T\+\_\+\+D\+I\+S~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$29))}\label{_p_i_n_8h_a1c8c8f99cf100a5d8745d879b18bd2b5}
+
+
+Disable input buffer. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S@{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}}
+\index{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S@{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$30))}\label{_p_i_n_8h_a4113807b8b5acb98a84b26cc1730ad83}
+
+
+Enable input buffer hysteresis. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L@{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}}
+\index{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L@{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$13))}\label{_p_i_n_8h_a08ea493b755216db27b51a0402af862e}
+
+
+($\ast$) No pull-\/up or pull-\/down resistor 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P@{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P}}
+\index{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P@{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+P\+U\+L\+L\+U\+P~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$13))}\label{_p_i_n_8h_a8dd57072ca956a8ace1ee869216dda0a}
+
+
+Pull-\/up resistor enabled. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N@{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N}}
+\index{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N@{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+P\+U\+L\+L\+D\+O\+W\+N~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(2$<$$<$13))}\label{_p_i_n_8h_a12b3efd67d32926ca0c310f95396de43}
+
+
+Pull-\/down resistor enabled. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N~(1$<$$<$29)}\label{_p_i_n_8h_aa0ed7bdcf3409fb2e8d2553bfa26ef35}
+
+
+Bitmask for input enable option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S@{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S@{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S~(1$<$$<$30)}\label{_p_i_n_8h_a90670b834483d4047070f5f310998f29}
+
+
+Bitmask input hysteresis option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G@{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G@{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G~(0x3$<$$<$13)}\label{_p_i_n_8h_a4f6a52f4c21a5ae30926e4d595ee9837}
+
+
+Bitmask for pull-\/up/pull-\/down options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E~({\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+E\+N}$\vert${\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+H\+Y\+S\+T\+E\+R\+E\+S\+I\+S}$\vert${\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+P\+U\+L\+L\+I\+N\+G})}\label{_p_i_n_8h_a3fe41a9595912571c21f68fa9d9585bb}
+
+
+Bitmask for all input mode options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S}}
+\index{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+D\+I\+S~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$23))}\label{_p_i_n_8h_a8728d817e2f0f18c5fccce87e13d3c34}
+
+
+($\ast$) Disable output buffer when G\+P\+I\+O 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}}
+\index{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$23))}\label{_p_i_n_8h_a086fd19a419fb4b09f30ed993a3088c7}
+
+
+Enable output buffer when G\+P\+I\+O. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W}}
+\index{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+L\+O\+W~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$22))}\label{_p_i_n_8h_a269b0e2fe279666149ca1c5949bb32ca}
+
+
+Output buffer drives to V\+S\+S when G\+P\+I\+O. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H}}
+\index{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H@{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+G\+P\+I\+O\+\_\+\+H\+I\+G\+H~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$22))}\label{_p_i_n_8h_aee8e9896270f36a15df12fb85f2cb4ad}
+
+
+Output buffer drives to V\+D\+D when G\+P\+I\+O. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L@{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L}}
+\index{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L@{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+P\+U\+S\+H\+P\+U\+L\+L~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0$<$$<$25))}\label{_p_i_n_8h_a8b219fa4a7727c4f5a7beb5134144324}
+
+
+($\ast$) Output buffer mode\+: push/pull 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}}
+\index{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(2$<$$<$25))}\label{_p_i_n_8h_a7d238d7776de5cc504dc37d62ac61295}
+
+
+Output buffer mode\+: open drain. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E@{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E}}
+\index{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E@{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+O\+P\+E\+N\+S\+O\+U\+R\+C\+E~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(3$<$$<$25))}\label{_p_i_n_8h_a649eb3b178440cda981471c27ff761e5}
+
+
+Output buffer mode\+: open source. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L@{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}}
+\index{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L@{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$12))}\label{_p_i_n_8h_afb6df44a1496358f288b2e90dce81a13}
+
+
+Enable output buffer slew control. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N}}
+\index{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+I\+N~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x0$<$$<$8))}\label{_p_i_n_8h_a2a7469e68c23d12b137362dca78a7ae8}
+
+
+($\ast$) Lowest drive strength 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D}}
+\index{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+E\+D~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x4$<$$<$8))}\label{_p_i_n_8h_aa0c4f9401637a2170b192d5c69faa33b}
+
+
+Medium drive strength. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X}}
+\index{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X@{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+D\+R\+V\+S\+T\+R\+\_\+\+M\+A\+X~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x8$<$$<$8))}\label{_p_i_n_8h_a218e028386e01367f6e86a2a69eb464a}
+
+
+Highest drive strength. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N@{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+E\+N~(1$<$$<$23)}\label{_p_i_n_8h_a204ca90eb78a0715cca07c95d6b67e65}
+
+
+Bitmask for output enable option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+G\+P\+I\+O\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+V\+A\+L~(1$<$$<$22)}\label{_p_i_n_8h_a40f78467926deed6685f0beb39594be8}
+
+
+Bitmask for output value option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F@{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F@{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+U\+F~(0x3$<$$<$25)}\label{_p_i_n_8h_ae8cadb31765041c9025447cf9538e687}
+
+
+Bitmask for output buffer options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+S\+L\+E\+W\+C\+T\+R\+L~(0x1$<$$<$12)}\label{_p_i_n_8h_ab564685f4cfb90c924db8d7993612c4b}
+
+
+Bitmask for slew control options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R@{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R@{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+D\+R\+V\+S\+T\+R~(0x\+F$<$$<$8)}\label{_p_i_n_8h_a743420ef571111b0d87f15c0aebb7834}
+
+
+Bitmask for drive strength options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E@{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E@{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}\label{_p_i_n_8h_a3ae1cb8c4750a2833e3dc0072bd9de82}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+(PIN_BM_GPIO_OUTPUT_VAL|PIN_BM_GPIO_OUTPUT_EN| \
+                             PIN_BM_OUTPUT_BUF|PIN_BM_SLEWCTRL|PIN_BM_DRVSTR)
+\end{DoxyCode}
+
+
+Bitmask for all output mode options. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T@{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}}
+\index{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T@{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(1$<$$<$24))}\label{_p_i_n_8h_a4f9620411ef92f88c3d2d7ac6c576635}
+
+
+Logically invert input and output. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T~(1$<$$<$24)}\label{_p_i_n_8h_a668e9dfc27d1ef17602c3cd62ea8d0e2}
+
+
+Bitmask for input/output inversion option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S}}
+\index{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x0$<$$<$16))}\label{_p_i_n_8h_ad9b6d7921f5a8ad9591bed6c432cd6da}
+
+
+($\ast$) Disable I\+R\+Q on pin 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E}}
+\index{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x5$<$$<$16))}\label{_p_i_n_8h_a3ec5fa8d38321d835720fa518dcfde44}
+
+
+Enable I\+R\+Q on negative edge. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E}}
+\index{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x6$<$$<$16))}\label{_p_i_n_8h_af4d309f5fad9c05487009326888154d1}
+
+
+Enable I\+R\+Q on positive edge. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S}}
+\index{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S@{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S~({\bf P\+I\+N\+\_\+\+G\+E\+N}$\vert$(0x7$<$$<$16))}\label{_p_i_n_8h_aba2bee3661f16506e67c7fd8289ccf8f}
+
+
+Enable I\+R\+Q on both edges. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q@{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q~(0x7$<$$<$16)}\label{_p_i_n_8h_a68cbd2a310fc62c0810754d0894cfeee}
+
+
+Bitmask for pin interrupt option. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L}}
+\index{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L@{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+I\+N\+\_\+\+B\+M\+\_\+\+A\+L\+L~({\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+P\+U\+T\+\_\+\+M\+O\+D\+E}$\vert${\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+M\+O\+D\+E}$\vert${\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+N\+V\+\_\+\+I\+N\+O\+U\+T}$\vert${\bf P\+I\+N\+\_\+\+B\+M\+\_\+\+I\+R\+Q})}\label{_p_i_n_8h_a7567bcbdf26a95ea42a860aa9beb5a11}
+
+
+Bitmask for all options at once. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!uint\+\_\+t@{uint\+\_\+t}}
+\index{uint\+\_\+t@{uint\+\_\+t}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{uint\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int {\bf uint\+\_\+t}}\label{_p_i_n_8h_a12a1e9b3ce141648783a82445d02b58d}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!int\+\_\+t@{int\+\_\+t}}
+\index{int\+\_\+t@{int\+\_\+t}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{int\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}typedef int {\bf int\+\_\+t}}\label{_p_i_n_8h_ab6fd6105e64ed14a0c9281326f05e623}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+Id@{P\+I\+N\+\_\+\+Id}}
+\index{P\+I\+N\+\_\+\+Id@{P\+I\+N\+\_\+\+Id}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+Id}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint8\+\_\+t {\bf P\+I\+N\+\_\+\+Id}}\label{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}
+
+
+Pin identifier data type. 
+
+Data type used to identify a pin through an index between 0 to 254. Typically the index does not refer to the physical device pin number but rather to the index of the subset of pins that are under software-\/control (e.\+g. index 3 refers to D\+I\+O3). This data type is used as arguments in A\+P\+I functions to identify which pin is affected or used in lists (terminated by \hyperlink{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E} entry) identifying multiple pins \begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_8h_add47c82f7563d28053f76d368d344bc6}{P\+I\+N\+\_\+\+I\+D} 
+\end{DoxySeeAlso}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+Config@{P\+I\+N\+\_\+\+Config}}
+\index{P\+I\+N\+\_\+\+Config@{P\+I\+N\+\_\+\+Config}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\+\_\+t {\bf P\+I\+N\+\_\+\+Config}}\label{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}
+
+
+Pin configuration data type with embedded pin identifier. 
+
+A data type used to specify I/\+O-\/pin configuration options. The lower 8b contain an embedded pin I\+D (see \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id}) and the top 24b contain flags/fields that affect I/\+O configuration. \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entries can either use a \hyperlink{_p_i_n_8h_PIN_GENERIC_FLAGS}{set of device-\/independent options} or device-\/specific options defined in P\+I\+N driver (e.\+g. \hyperlink{_p_i_n_c_c26_x_x_8h}{P\+I\+N\+C\+C26\+X\+X.\+h}), but cannot mix the two.
+
+This data type is used as arguments or return values in A\+P\+I functions that manipulate pin configuration or used in lists (terminated by a \hyperlink{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E} entry) for configuring multiple pins at a time. \index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+State@{P\+I\+N\+\_\+\+State}}
+\index{P\+I\+N\+\_\+\+State@{P\+I\+N\+\_\+\+State}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+State}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+I\+N\+\_\+\+State\+\_\+s} {\bf P\+I\+N\+\_\+\+State}}\label{_p_i_n_8h_a36ef69d50df6baa6973482669c24a522}
+
+
+Struct used to store P\+I\+N client state Pointer to a P\+I\+N\+\_\+\+State is used as handles (\hyperlink{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}{P\+I\+N\+\_\+\+Handle}) in interactions with the I/\+O driver. 
+
+\begin{DoxyNote}{Note}
+Must reside in persistent memory 
+
+Fields must never be modified directly 
+\end{DoxyNote}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+Handle@{P\+I\+N\+\_\+\+Handle}}
+\index{P\+I\+N\+\_\+\+Handle@{P\+I\+N\+\_\+\+Handle}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf P\+I\+N\+\_\+\+State}$\ast$ {\bf P\+I\+N\+\_\+\+Handle}}\label{_p_i_n_8h_afb2de52b054638f63c39df1f30a0d88d}
+
+
+A handle that is returned from a \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} call Used for further P\+I\+N client interaction with the P\+I\+N driver. 
+
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+Int\+Cb@{P\+I\+N\+\_\+\+Int\+Cb}}
+\index{P\+I\+N\+\_\+\+Int\+Cb@{P\+I\+N\+\_\+\+Int\+Cb}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+Int\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+I\+N\+\_\+\+Int\+Cb) ({\bf P\+I\+N\+\_\+\+Handle} handle, {\bf P\+I\+N\+\_\+\+Id} pin\+Id)}\label{_p_i_n_8h_a289cbfdcb1e23ade7c3b0f5fc3b2d695}
+
+
+I/\+O Interrupt callback function pointer type One P\+I\+N Interrupt callback can be registered by each P\+I\+N client and it will be called when one of the pins allocated by the client has an interrupt event. The callback is called from H\+W\+I context with handle and pin I\+D as arguments. 
+
+\begin{DoxyRemark}{Remarks}
+The callback must, as it runs in H\+W\+I context, execute and return quickly. Any lengthy operations should be performed in S\+W\+Is or tasks triggered by the callback 
+\end{DoxyRemark}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+Status@{P\+I\+N\+\_\+\+Status}}
+\index{P\+I\+N\+\_\+\+Status@{P\+I\+N\+\_\+\+Status}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+I\+N\+\_\+\+Status}}\label{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6}
+
+
+Return value for many functions in the P\+I\+N driver interface. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S}}\item[{\em 
+P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S\label{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}
+}]Operation succeeded. \index{P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D@{P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D}!P\+I\+N.\+h@{P\+I\+N.\+h}}\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D@{P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D}}\item[{\em 
+P\+I\+N\+\_\+\+A\+L\+R\+E\+A\+D\+Y\+\_\+\+A\+L\+L\+O\+C\+A\+T\+E\+D\label{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a8280bb6c2bd8ef1fc6f9e24d3d8ed864}
+}]Operation failed, some pin already allocated. \index{P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S@{P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S}!P\+I\+N.\+h@{P\+I\+N.\+h}}\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S@{P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S}}\item[{\em 
+P\+I\+N\+\_\+\+N\+O\+\_\+\+A\+C\+C\+E\+S\+S\label{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a25bb5dfe42957cfd0922fc1ece880453}
+}]Operation failed, client does not have access to pin. \index{P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D@{P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D}!P\+I\+N.\+h@{P\+I\+N.\+h}}\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D@{P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D}}\item[{\em 
+P\+I\+N\+\_\+\+U\+N\+S\+U\+P\+P\+O\+R\+T\+E\+D\label{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a7abd102afc68f4c599c11f8f9c79e7ab}
+}]Operation not supported. \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+init@{P\+I\+N\+\_\+init}}
+\index{P\+I\+N\+\_\+init@{P\+I\+N\+\_\+init}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{const {\bf P\+I\+N\+\_\+\+Config}}]{a\+Pin\+Cfg\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}
+
+
+P\+I\+N module initialization. 
+
+Must be called early in the boot sequence to ensure that I/\+O pins have safe configurations. This initialization setups pins as G\+P\+I\+O as defined in an array (possibly user-\/generated) that typically resides in a board file. All pins not mentioned in a\+Pin\+Cfg\mbox{[}\mbox{]} are configured to be input/output/pull disabled. \begin{DoxyNote}{Note}
+Function {\itshape cannot} be called more than once.
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Pin\+Cfg\mbox{[}$\,$\mbox{]}} & Pointer to array of P\+I\+N\+\_\+\+Config entries, one per pin that needs configuration. List terminates when a \hyperlink{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E} entry is encountered. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else an error code. 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+open@{P\+I\+N\+\_\+open}}
+\index{P\+I\+N\+\_\+open@{P\+I\+N\+\_\+open}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Handle} P\+I\+N\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+State} $\ast$}]{p\+State, }
+\item[{const {\bf P\+I\+N\+\_\+\+Config}}]{a\+Pin\+List\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}
+
+
+Allocate one or more pins for a driver or an application. 
+
+Allows a P\+I\+N client (driver or application) to allocate a set of pins, thus ensuring that they cannot be reconfigured/controlled by anyone else. The pins are identified by and reconfigured according to the \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entries in a\+Pin\+List.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+State} & Pointer to a P\+I\+N\+\_\+\+State object that will hold the state for this I\+O client. The object must be in persistent memory \\
+\hline
+{\em a\+Pin\+List\mbox{[}$\,$\mbox{]}} & Pointer to array of \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entries, one per pin to allocate. List terminates when \hyperlink{_p_i_n_8h_ae22ec44ad92ee130a665ca56aad38c75}{P\+I\+N\+\_\+\+T\+E\+R\+M\+I\+N\+A\+T\+E} entry is encountered. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A handle for further P\+I\+N driver calls or N\+U\+L\+L if an error occurred (already allocated pin in a\+Pin\+List or non-\/existent pin in a\+Pin\+List) 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+add@{P\+I\+N\+\_\+add}}
+\index{P\+I\+N\+\_\+add@{P\+I\+N\+\_\+add}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Config}}]{pin\+Cfg}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_ae96b7cc445336d52f8f6db762ff80156}
+
+
+Add pin to pin set for open P\+I\+N handle. 
+
+If the requested pin is unallocated it will be added, else an error code will be returned. 
+\begin{DoxyParams}{Parameters}
+{\em handle} & handle retrieved through an earlier call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \\
+\hline
+{\em pin\+Cfg} & Pin I\+D/configuration for pin to add. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error code if unsuccessful, else P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+remove@{P\+I\+N\+\_\+remove}}
+\index{P\+I\+N\+\_\+remove@{P\+I\+N\+\_\+remove}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+remove}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+remove (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a7edb10913792e741318ef339d5c7ef13}
+
+
+Removes pin from pin set foropen P\+I\+N handle. 
+
+If the requested pin is allocated to handle it will be removed from the pin set, else an error code will be returned. 
+\begin{DoxyParams}{Parameters}
+{\em handle} & handle retrieved through an earlier call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \\
+\hline
+{\em pin\+Id} & Pin I\+D for pin to remove. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error code if unsuccessful, else P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+close@{P\+I\+N\+\_\+close}}
+\index{P\+I\+N\+\_\+close@{P\+I\+N\+\_\+close}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void P\+I\+N\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a877e82b9c5333a122cc408e103feba68}
+
+
+Deallocate all pins previously allocated with a call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. 
+
+Deallocate pins allocated to handle and restore these pins to the pool of unallocated pins. Also restores the pin configuration to what it was set to when \hyperlink{_p_i_n_8h_a0de1df98a14e6e13b16db414e54472ef}{P\+I\+N\+\_\+init()} was called. 
+\begin{DoxyParams}{Parameters}
+{\em handle} & handle retrieved through an earlier call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \\
+\hline
+\end{DoxyParams}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+User\+Arg@{P\+I\+N\+\_\+set\+User\+Arg}}
+\index{P\+I\+N\+\_\+set\+User\+Arg@{P\+I\+N\+\_\+set\+User\+Arg}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+User\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void P\+I\+N\+\_\+set\+User\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{U\+Arg}]{arg}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a7bbac83f5f9e2cdee6eac5055247f666}
+
+
+Sets a user argument associated with the handle. 
+
+Allows the application to store some data, for example a pointer to some data structure, with each P\+I\+N handle 
+\begin{DoxyParams}{Parameters}
+{\em handle} & handle retrieved through an earlier call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \\
+\hline
+{\em arg} & User argument \\
+\hline
+\end{DoxyParams}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+User\+Arg@{P\+I\+N\+\_\+get\+User\+Arg}}
+\index{P\+I\+N\+\_\+get\+User\+Arg@{P\+I\+N\+\_\+get\+User\+Arg}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+User\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E U\+Arg P\+I\+N\+\_\+get\+User\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a8761c09ec22161bf6f46f491a8e547fd}
+
+
+Gets a user argument associated with the handle. 
+
+Allows the application to store some data, for example a pointer to some data structure, with each P\+I\+N handle 
+\begin{DoxyParams}{Parameters}
+{\em handle} & handle retrieved through an earlier call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+User argument. Has the value 0 if never initialized 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Input\+Value@{P\+I\+N\+\_\+get\+Input\+Value}}
+\index{P\+I\+N\+\_\+get\+Input\+Value@{P\+I\+N\+\_\+get\+Input\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Input\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint\+\_\+t} P\+I\+N\+\_\+get\+Input\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a9bfcc2ddeaaac6dcd90d31ff0c125f3d}
+
+
+Get pin input value (0/1) 
+
+Input values of all pins are available to everyone so no handle required 
+\begin{DoxyParams}{Parameters}
+{\em pin\+Id} & I\+D of pin to get input value from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current input buffer value 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 myPin = PIN\_getInputValue(PIN\_ID(5));
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Output\+Enable@{P\+I\+N\+\_\+set\+Output\+Enable}}
+\index{P\+I\+N\+\_\+set\+Output\+Enable@{P\+I\+N\+\_\+set\+Output\+Enable}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Output\+Enable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Output\+Enable (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id, }
+\item[{bool}]{b\+Out\+En}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_ace57b32daf13b67b2d8bb1b8470b5cd6}
+
+
+Control output enable for G\+P\+I\+O pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em pin\+Id} & \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} entry identifying pin \\
+\hline
+{\em b\+Out\+En} & Enable output buffer when true, else disable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+This function is included for consistency with the corresponding port function and to provide a more efficient/directed approach. \hyperlink{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}{P\+I\+N\+\_\+set\+Config()} can be used to achieve same result. 
+
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_setOutputEnable(hPins, PIN\_ID(11), 0);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Output\+Value@{P\+I\+N\+\_\+set\+Output\+Value}}
+\index{P\+I\+N\+\_\+set\+Output\+Value@{P\+I\+N\+\_\+set\+Output\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Output\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Output\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id, }
+\item[{{\bf uint\+\_\+t}}]{val}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_aa928e8e84148f7df7bfd2fb46e475016}
+
+
+Control output value for G\+P\+I\+O pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em pin\+Id} & Pin I\+D \\
+\hline
+{\em val} & Output value (0/1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_setOutputValue(hPins, PIN\_ID(4), 1);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Output\+Value@{P\+I\+N\+\_\+get\+Output\+Value}}
+\index{P\+I\+N\+\_\+get\+Output\+Value@{P\+I\+N\+\_\+get\+Output\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Output\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint\+\_\+t} P\+I\+N\+\_\+get\+Output\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a4a05603f0e075a37af59ed66fd6c6443}
+
+
+Get value of G\+P\+I\+O pin output buffer. 
+
+Output values of all pins are available to everyone so no handle required 
+\begin{DoxyParams}{Parameters}
+{\em pin\+Id} & Pin I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output value (0/1) 
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_setOutputValue(hpins, PIN\_ID(4), PIN\_getOutputValue(PIN\_ID(6)));
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Interrupt@{P\+I\+N\+\_\+set\+Interrupt}}
+\index{P\+I\+N\+\_\+set\+Interrupt@{P\+I\+N\+\_\+set\+Interrupt}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Config}}]{pin\+Cfg}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a69e2aac02eaabf8d3c3a248a27dd7d0e}
+
+
+Control interrupt enable and edge for pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em pin\+Cfg} & \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entry identifying pin I\+D and relevant pin configuration as combinations of\+:
+\begin{DoxyItemize}
+\item \hyperlink{_p_i_n_8h_ad9b6d7921f5a8ad9591bed6c432cd6da}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+D\+I\+S} (default)
+\item \hyperlink{_p_i_n_8h_af4d309f5fad9c05487009326888154d1}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+P\+O\+S\+E\+D\+G\+E}
+\item \hyperlink{_p_i_n_8h_a3ec5fa8d38321d835720fa518dcfde44}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+N\+E\+G\+E\+D\+G\+E}
+\item \hyperlink{_p_i_n_8h_aba2bee3661f16506e67c7fd8289ccf8f}{P\+I\+N\+\_\+\+I\+R\+Q\+\_\+\+B\+O\+T\+H\+E\+D\+G\+E\+S} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Any pending interrupts on pins that have not had interrupt enabled will be cleared when enabling interrupts 
+\end{DoxyNote}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_setInterrupt(hPins, PIN\_ID(8)|PIN\_IRQ\_POSEDGE);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+clr\+Pend\+Interrupt@{P\+I\+N\+\_\+clr\+Pend\+Interrupt}}
+\index{P\+I\+N\+\_\+clr\+Pend\+Interrupt@{P\+I\+N\+\_\+clr\+Pend\+Interrupt}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+clr\+Pend\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+clr\+Pend\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a82957789e7c370b6dd4f16fa36045522}
+
+
+Clear pending interrupt for pin, if any. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em pin\+Id} & \hyperlink{_p_i_n_8h_a9ae8197f460bb76ea09a84f47d09921f}{P\+I\+N\+\_\+\+Id} for pin to clear pending interrupt for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 PIN\_ClrPendInterrupt(hPins, PIN\_ID(8));
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+register\+Int\+Cb@{P\+I\+N\+\_\+register\+Int\+Cb}}
+\index{P\+I\+N\+\_\+register\+Int\+Cb@{P\+I\+N\+\_\+register\+Int\+Cb}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+register\+Int\+Cb}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+register\+Int\+Cb (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Int\+Cb}}]{p\+Cb}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_ae906e3b4880c7c921c90d0baf0ce6e42}
+
+
+Register callback function for a set of pins. 
+
+Registers a callback function (see \hyperlink{_p_i_n_8h_a289cbfdcb1e23ade7c3b0f5fc3b2d695}{P\+I\+N\+\_\+\+Int\+Cb} for details) for the client identified by handle that will be called from H\+W\+I context upon an interrupt event on one or more of the allocated pins that have interrupts enabled 
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em p\+Cb} & Function pointer to a \hyperlink{_p_i_n_8h_a289cbfdcb1e23ade7c3b0f5fc3b2d695}{P\+I\+N\+\_\+\+Int\+Cb} function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Pin interrupts are serviced one at a time in pin order when simultaneous. Pin hardware interrupt flags are automatically cleared by P\+I\+N driver. 
+\end{DoxyNote}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 void pinIntHandler(PIN\_Handle handle, PIN\_Id pinId) \{
+2     // Handle pin interrupt
+3 \}
+4 ...
+5 PIN\_registerIntCb(hPins, pinIntHandler);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Config@{P\+I\+N\+\_\+get\+Config}}
+\index{P\+I\+N\+\_\+get\+Config@{P\+I\+N\+\_\+get\+Config}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Config} P\+I\+N\+\_\+get\+Config (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Id}}]{pin\+Id}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_aed24cb96de8fa957e9f7c05dd239f2f9}
+
+
+Returns pin configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin\+Id} & Pin I\+D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current pin configuration as a device-\/independent \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} value 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The pin I\+D is embedded in return value. 
+
+There is usually a device-\/specific version of this function that returns device-\/specific options 
+\end{DoxyNote}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 // Get config of pin 14 to be able to revert later
+2 myPinConfig = PIN\_getConfig(PIN\_ID(14));
+3 // ...
+4 // Lots of pin reconfigurations
+5 // ...
+6 // Restore previous configuration
+7 PIN\_setConfig(hPins, PIN\_BM\_ALL, myPinConfig);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Config@{P\+I\+N\+\_\+set\+Config}}
+\index{P\+I\+N\+\_\+set\+Config@{P\+I\+N\+\_\+set\+Config}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Config (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf P\+I\+N\+\_\+\+Config}}]{bm\+Mask, }
+\item[{{\bf P\+I\+N\+\_\+\+Config}}]{pin\+Cfg}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a4b9fbd1a86e63d2f14f679b87f17c857}
+
+
+Sets complete pin configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em bm\+Mask} & Bitmask specifying which fields in cfg that should take effect, the rest keep their current value. \\
+\hline
+{\em pin\+Cfg} & \hyperlink{_p_i_n_8h_ae427b7d2925f9b0f3145e455cfdb5841}{P\+I\+N\+\_\+\+Config} entry with pin I\+D and pin configuration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 // Set drive strength on pin 15
+2 PIN\_setConfig(hPins, PIN\_BM\_DRVSTR, PIN\_ID(15)|PIN\_DRVSTR\_MAX);
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Port\+Mask@{P\+I\+N\+\_\+get\+Port\+Mask}}
+\index{P\+I\+N\+\_\+get\+Port\+Mask@{P\+I\+N\+\_\+get\+Port\+Mask}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Port\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint\+\_\+t} P\+I\+N\+\_\+get\+Port\+Mask (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}
+
+
+Returns bitmask indicating pins allocated to client in G\+P\+I\+O port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bitmask indicating which bit positions in an I/\+O port the allocated I/\+O pins lie on, or zero if I/\+O port operations are not supported or the allocated pins span multiple I/\+O ports. The bitmask maps lowest pin index to the rightmost mask bit 
+\end{DoxyReturn}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Port\+Input\+Value@{P\+I\+N\+\_\+get\+Port\+Input\+Value}}
+\index{P\+I\+N\+\_\+get\+Port\+Input\+Value@{P\+I\+N\+\_\+get\+Port\+Input\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Port\+Input\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint\+\_\+t} P\+I\+N\+\_\+get\+Port\+Input\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a726e06dcb7c0d096efaee431ae7b2aaa}
+
+
+Read input value of whole G\+P\+I\+O port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The simultaneous input value for the whole I/\+O port masked by the bit mask for the client\textquotesingle{}s allocated pins 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask()} 
+\end{DoxySeeAlso}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+get\+Port\+Output\+Value@{P\+I\+N\+\_\+get\+Port\+Output\+Value}}
+\index{P\+I\+N\+\_\+get\+Port\+Output\+Value@{P\+I\+N\+\_\+get\+Port\+Output\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+get\+Port\+Output\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint\+\_\+t} P\+I\+N\+\_\+get\+Port\+Output\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_ae7dedbfc51ba785bb2f546eed5fdd806}
+
+
+Returns value of whole G\+P\+I\+O port\textquotesingle{}s output buffers. 
+
+The I/\+O port is identified by the pins allocated by client in a previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} 
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The current output value for whole I/\+O port 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask()} 
+\end{DoxySeeAlso}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Port\+Output\+Value@{P\+I\+N\+\_\+set\+Port\+Output\+Value}}
+\index{P\+I\+N\+\_\+set\+Port\+Output\+Value@{P\+I\+N\+\_\+set\+Port\+Output\+Value}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Port\+Output\+Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Port\+Output\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf uint\+\_\+t}}]{bm\+Out\+Val}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a380bb69c858753895cf62fb462797fc6}
+
+
+Simultaneous write output buffer values of all allocated pins in G\+P\+I\+O port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em bm\+Out\+Val} & Bitmask indicating the desired output value for the whole port, only the pins allocated to the client will be affected \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask()} 
+\end{DoxySeeAlso}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 // Invert all pins allocated to client
+2 PIN\_setPortOutputVal(hPins, ~PIN\_getPortOutputVals(hPins));
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+\index{P\+I\+N.\+h@{P\+I\+N.\+h}!P\+I\+N\+\_\+set\+Port\+Output\+Enable@{P\+I\+N\+\_\+set\+Port\+Output\+Enable}}
+\index{P\+I\+N\+\_\+set\+Port\+Output\+Enable@{P\+I\+N\+\_\+set\+Port\+Output\+Enable}!P\+I\+N.\+h@{P\+I\+N.\+h}}
+\paragraph[{P\+I\+N\+\_\+set\+Port\+Output\+Enable}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+I\+N\+\_\+\+Status} P\+I\+N\+\_\+set\+Port\+Output\+Enable (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+I\+N\+\_\+\+Handle}}]{handle, }
+\item[{{\bf uint\+\_\+t}}]{bm\+Out\+En}
+\end{DoxyParamCaption}
+)}\label{_p_i_n_8h_a597fe2039644ee0389980d0a729de4e7}
+
+
+Set output enable for all pins allocated to client in G\+P\+I\+O port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Handle provided by previous call to \hyperlink{_p_i_n_8h_a731c5bb641ffeb064579432adfc8dba0}{P\+I\+N\+\_\+open()} \\
+\hline
+{\em bm\+Out\+En} & Bitmask indicating the desired output enable configuration for the whole port, only the pins allocated to the client will be affected \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{_p_i_n_8h_abe0ad59bbf09e51fe37195a5e70b23f6a5c9610fffc152c333036f2c2c7ee54e8}{P\+I\+N\+\_\+\+S\+U\+C\+C\+E\+S\+S} if successful, else error code 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_i_n_8h_a9f5b2367253b355909032742a7e6b5e0}{P\+I\+N\+\_\+get\+Port\+Mask()} 
+\end{DoxySeeAlso}
+\begin{DoxyRemark}{Remarks}
+This function typically has an inlined sibling function in the device-\/specific driver that may be used for higher efficiency 
+\end{DoxyRemark}
+\begin{DoxyParagraph}{Usage}
+
+\begin{DoxyCode}
+1 // Set output to 0 on all allocated pins, then enable the output drivers
+2 pin\_setPortOutputVal(hPins, 0);
+3 pin\_setPortOutputEnable(hPins, PIN\_getPortMask());
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}

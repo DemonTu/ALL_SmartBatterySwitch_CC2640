@@ -1,0 +1,59 @@
+\subsection{S\+P\+I\+\_\+\+Config Struct Reference}
+\label{struct_s_p_i___config}\index{S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}}
+
+
+S\+P\+I Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I.\+h$>$}
+
+
+
+Collaboration diagram for S\+P\+I\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{struct_s_p_i___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_s_p_i___config_a099238ad6e5c2ca2d38f041624362636}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_s_p_i___config_a35884e199911642a791e9a422dfccba6}{object}
+\item 
+void const $\ast$ \hyperlink{struct_s_p_i___config_a4c8bfac4e9152b4e1da78f4926ecd4db}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I Global configuration. 
+
+The \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config} structure contains a set of pointers used to characterize the S\+P\+I driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Fxn\+Table} const$\ast$ S\+P\+I\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_s_p_i___config_a099238ad6e5c2ca2d38f041624362636}
+Pointer to a table of driver-\/specific implementations of S\+P\+I A\+P\+Is \index{S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}!object@{object}}
+\index{object@{object}!S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+P\+I\+\_\+\+Config\+::object}\label{struct_s_p_i___config_a35884e199911642a791e9a422dfccba6}
+Pointer to a driver specific data object \index{S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ S\+P\+I\+\_\+\+Config\+::hw\+Attrs}\label{struct_s_p_i___config_a4c8bfac4e9152b4e1da78f4926ecd4db}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_8h}{S\+P\+I.\+h}\end{DoxyCompactItemize}

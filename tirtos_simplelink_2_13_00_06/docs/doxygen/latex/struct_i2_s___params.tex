@@ -1,0 +1,102 @@
+\subsection{I2\+S\+\_\+\+Params Struct Reference}
+\label{struct_i2_s___params}\index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+
+
+Basic I2\+S Parameters.  
+
+
+
+
+{\ttfamily \#include $<$I2\+S.\+h$>$}
+
+
+
+Collaboration diagram for I2\+S\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{struct_i2_s___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0}{I2\+S\+\_\+\+Op\+Mode} \hyperlink{struct_i2_s___params_a4927bdc8e8cc29146f78f68ed2fed5f2}{operation\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s___params_aff5aa130ef087ebb86932182787c1df8}{sampling\+Frequency}
+\item 
+unsigned char \hyperlink{struct_i2_s___params_a82a7b2a0169d0104207814b069178029}{slot\+Length}
+\item 
+unsigned char \hyperlink{struct_i2_s___params_acbfd23bc8cd7e469cbf27d6431e43f7c}{bits\+Per\+Sample}
+\item 
+unsigned char \hyperlink{struct_i2_s___params_ad28849d1820321c2a5d5b4bb8dd83054}{num\+Channels}
+\item 
+\hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405}{I2\+S\+\_\+\+Data\+Mode} \hyperlink{struct_i2_s___params_a52c33812ab184593d8dfe9cdb8f11f04}{read\+Mode}
+\item 
+\hyperlink{_i2_s_8h_af87c5d43590153717044a932ff6b2e03}{I2\+S\+\_\+\+Callback} \hyperlink{struct_i2_s___params_a94ed67cfe1320bd8daf013c132b907cc}{read\+Callback}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s___params_a922986abc9bce28a05c6bc967a41a3ac}{read\+Timeout}
+\item 
+\hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405}{I2\+S\+\_\+\+Data\+Mode} \hyperlink{struct_i2_s___params_a51ab14d450552a917fbadd8c91418ec5}{write\+Mode}
+\item 
+\hyperlink{_i2_s_8h_af87c5d43590153717044a932ff6b2e03}{I2\+S\+\_\+\+Callback} \hyperlink{struct_i2_s___params_a2cf905e275e93a49707613aedcb2ab9b}{write\+Callback}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s___params_ae42c67f2e240e631a7d4944aa36e0050}{write\+Timeout}
+\item 
+void $\ast$ \hyperlink{struct_i2_s___params_afb40d7bc5be946e387d5a0af93525d64}{custom\+Params}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Basic I2\+S Parameters. 
+
+I2\+S parameters are used to with the \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}{I2\+S\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}{I2\+S\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!operation\+Mode@{operation\+Mode}}
+\index{operation\+Mode@{operation\+Mode}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{operation\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Op\+Mode} I2\+S\+\_\+\+Params\+::operation\+Mode}\label{struct_i2_s___params_a4927bdc8e8cc29146f78f68ed2fed5f2}
+$<$ I2\+S operational mode I2\+S sampling frequency configuration in samples/second \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!sampling\+Frequency@{sampling\+Frequency}}
+\index{sampling\+Frequency@{sampling\+Frequency}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{sampling\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+\_\+\+Params\+::sampling\+Frequency}\label{struct_i2_s___params_aff5aa130ef087ebb86932182787c1df8}
+Slot length \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!slot\+Length@{slot\+Length}}
+\index{slot\+Length@{slot\+Length}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{slot\+Length}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char I2\+S\+\_\+\+Params\+::slot\+Length}\label{struct_i2_s___params_a82a7b2a0169d0104207814b069178029}
+Bits per sample (Word length) \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!bits\+Per\+Sample@{bits\+Per\+Sample}}
+\index{bits\+Per\+Sample@{bits\+Per\+Sample}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{bits\+Per\+Sample}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char I2\+S\+\_\+\+Params\+::bits\+Per\+Sample}\label{struct_i2_s___params_acbfd23bc8cd7e469cbf27d6431e43f7c}
+Number of channels (slots per frame) \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!num\+Channels@{num\+Channels}}
+\index{num\+Channels@{num\+Channels}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{num\+Channels}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char I2\+S\+\_\+\+Params\+::num\+Channels}\label{struct_i2_s___params_ad28849d1820321c2a5d5b4bb8dd83054}
+Mode for all read calls \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!read\+Mode@{read\+Mode}}
+\index{read\+Mode@{read\+Mode}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{read\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Data\+Mode} I2\+S\+\_\+\+Params\+::read\+Mode}\label{struct_i2_s___params_a52c33812ab184593d8dfe9cdb8f11f04}
+Pointer to read callback \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!read\+Callback@{read\+Callback}}
+\index{read\+Callback@{read\+Callback}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{read\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Callback} I2\+S\+\_\+\+Params\+::read\+Callback}\label{struct_i2_s___params_a94ed67cfe1320bd8daf013c132b907cc}
+Timeout for read semaphore \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!read\+Timeout@{read\+Timeout}}
+\index{read\+Timeout@{read\+Timeout}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{read\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+\_\+\+Params\+::read\+Timeout}\label{struct_i2_s___params_a922986abc9bce28a05c6bc967a41a3ac}
+Mode for all write calls \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!write\+Mode@{write\+Mode}}
+\index{write\+Mode@{write\+Mode}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{write\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Data\+Mode} I2\+S\+\_\+\+Params\+::write\+Mode}\label{struct_i2_s___params_a51ab14d450552a917fbadd8c91418ec5}
+Pointer to write callback \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!write\+Callback@{write\+Callback}}
+\index{write\+Callback@{write\+Callback}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{write\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Callback} I2\+S\+\_\+\+Params\+::write\+Callback}\label{struct_i2_s___params_a2cf905e275e93a49707613aedcb2ab9b}
+Timeout for write semaphore \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!write\+Timeout@{write\+Timeout}}
+\index{write\+Timeout@{write\+Timeout}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{write\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+\_\+\+Params\+::write\+Timeout}\label{struct_i2_s___params_ae42c67f2e240e631a7d4944aa36e0050}
+Pointer to device specific custom params \index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!custom\+Params@{custom\+Params}}
+\index{custom\+Params@{custom\+Params}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\paragraph[{custom\+Params}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+S\+\_\+\+Params\+::custom\+Params}\label{struct_i2_s___params_afb40d7bc5be946e387d5a0af93525d64}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h}{I2\+S.\+h}\end{DoxyCompactItemize}

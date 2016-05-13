@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId=".*CC3200.*"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="I2S Echo"
+        name="i2secho"
+        toolChain="GNU"
+        linkerCommandFile=""
+        compilerBuildOptions=" -mcpu=cortex-m4 -march=armv7e-m -mthumb -mfloat-abi=soft -Dgcc -DPART_CC3200 -DCCWARE -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0 -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/inc -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib -ffunction-sections -fdata-sections -g -gstrict-dwarf -Wall"
+        linkerBuildOptions=" -nostartfiles -static --gc-sections -ldriver -lgcc -lc -lm -lrdimon  -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib/gcc/exe -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+        description="An example that performs audio echo on the CC3200AUDBOOST boosterpack">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        <property name="xdcToolsVersion" value="3.31.01.33"/>
+        <property name="target" value="gnu.targets.arm.M4"/>
+        <property name="platform" value="ti.platforms.simplelink:CC3200"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+        <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU.I2S"/>
+        <file path="examples/./source/i2secho/i2secho.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/./source/i2secho/i2secho_cc3200_lp.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC3200_LP/CC3200_LP.lds" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC3200_LP/Board.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC3200_LP/CC3200_LP.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC3200_LP/CC3200_LP.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/i2secho/i2secho_readme.txt" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+        <file path="examples/source/i2secho/ti_codec.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+        <file path="examples/source/i2secho/ti_codec.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+        <file path="examples/boards/CC3200_LP/i2secho.pinmux" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+        <file path="examples/boards/CC3200_LP/i2secho_rom_pin_mux_config.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+        <file path="examples/boards/CC3200_LP/pin_mux_config.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+    </project>
+</projectSpec>
+

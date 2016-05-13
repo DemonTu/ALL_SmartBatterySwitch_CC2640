@@ -1,0 +1,51 @@
+\subsection{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_w_m_timer_m_s_p432___h_w_attrs}\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+
+
+P\+W\+M\+Timer\+M\+S\+P432 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Timer\+M\+S\+P432.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_m_s_p432___h_w_attrs_a38a00f25e209ee1f208fcba5b1798260}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_p_w_m_timer_m_s_p432___h_w_attrs_a2e726667a080f99fa9313402f949e3b8}{compare\+Register}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Timer\+M\+S\+P432 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item timer\+\_\+a.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PWMTimerMSP432_HWAttrs PWMTimerMSP432HWAttrs[] = \{
+    \{
+        .baseAddr = TIMER\_A0\_BASE,
+        .compareRegister = TIMER\_A\_CAPTURECOMPARE\_REGISTER\_1
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_p_w_m_timer_m_s_p432___h_w_attrs_a38a00f25e209ee1f208fcba5b1798260}
+P\+W\+M\+Timer peripheral base address \index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!compare\+Register@{compare\+Register}}
+\index{compare\+Register@{compare\+Register}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{compare\+Register}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::compare\+Register}\label{struct_p_w_m_timer_m_s_p432___h_w_attrs_a2e726667a080f99fa9313402f949e3b8}
+Timer compare register for P\+W\+M 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_timer_m_s_p432_8h}{P\+W\+M\+Timer\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

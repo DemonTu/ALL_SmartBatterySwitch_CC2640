@@ -1,0 +1,14 @@
+package.xdc
+UARTMon.xdc
+UARTMon.xs
+package/ti.tirtos.utils.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/ti_tirtos_utils.java
+package/ti_tirtos_utils.class
+package/package_ti.tirtos.utils.c
+package/package.defs.h
+package/internal/UARTMon.xdc.h
+package/ti.tirtos.utils.ccs

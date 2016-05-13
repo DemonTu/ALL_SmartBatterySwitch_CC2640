@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="C6000"
+                deviceId=".*6472.*"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="MessageQ (single image for all cores)"
+        name="MessageQ"
+        toolChain="TI"
+        linkerCommandFile=""
+        compilerBuildOptions=""
+        linkerBuildOptions=""
+        description="The message example shows how to use MessageQ on EVM6472 and UIA. It is a single-image example that must be loaded on all cores. A message is sent from core 0 to core 1 to core 2...back to core 0. The UIABenchmark_start and stop is used on core 0 to determine the duration of a round trip. The Log data is obtained via Ethernet.">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS;com.ti.rtsc.NDK;com.ti.rtsc.IPC"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+        <group id="ti.uia.examples.root.uia.targetsTI.multicoreTI"/>
+        <file path="ti/uia/examples/evm6472/message.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/evm6472/evm6472/message.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+    </project>
+</projectSpec>
+

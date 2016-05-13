@@ -1,0 +1,4 @@
+<map id="Camera_Params" name="Camera_Params">
+<area shape="rect" href="$struct_camera___config.html" title="Camera Global configuration. " alt="" coords="141,9,256,33" />
+<area shape="rect" href="$struct_camera___fxn_table.html" title="The definition of a Camera function table that contains the required set of functions to control a sp..." alt="" coords="192,158,322,182" />
+</map>

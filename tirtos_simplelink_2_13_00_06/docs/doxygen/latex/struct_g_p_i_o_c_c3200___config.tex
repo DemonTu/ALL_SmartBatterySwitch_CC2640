@@ -1,0 +1,50 @@
+\subsection{G\+P\+I\+O\+C\+C3200\+\_\+\+Config Struct Reference}
+\label{struct_g_p_i_o_c_c3200___config}\index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+
+
+G\+P\+I\+O device specific driver configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+I\+O\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}{G\+P\+I\+O\+\_\+\+Pin\+Config} $\ast$ \hyperlink{struct_g_p_i_o_c_c3200___config_abc7b66da3c0a6ec46b16c2571d10a3d4}{pin\+Configs}
+\item 
+\hyperlink{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}{G\+P\+I\+O\+\_\+\+Callback\+Fxn} $\ast$ \hyperlink{struct_g_p_i_o_c_c3200___config_a3878a82f69dac0672b41656f93177715}{callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_c_c3200___config_aeb8538c98edc819489974c5a97530feb}{number\+Of\+Pin\+Configs}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_c_c3200___config_aaa30e1f80e716b304beb4a51729f105c}{number\+Of\+Callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_c_c3200___config_a75035e2fbbae7a387c9af597c26b2d77}{int\+Priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+I\+O device specific driver configuration structure. 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!pin\+Configs@{pin\+Configs}}
+\index{pin\+Configs@{pin\+Configs}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\paragraph[{pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Pin\+Config}$\ast$ G\+P\+I\+O\+C\+C3200\+\_\+\+Config\+::pin\+Configs}\label{struct_g_p_i_o_c_c3200___config_abc7b66da3c0a6ec46b16c2571d10a3d4}
+Pointer to the board\textquotesingle{}s G\+P\+I\+O\+\_\+\+Pin\+Config array \index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!callbacks@{callbacks}}
+\index{callbacks@{callbacks}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\paragraph[{callbacks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Callback\+Fxn}$\ast$ G\+P\+I\+O\+C\+C3200\+\_\+\+Config\+::callbacks}\label{struct_g_p_i_o_c_c3200___config_a3878a82f69dac0672b41656f93177715}
+Pointer to the board\textquotesingle{}s G\+P\+I\+O\+\_\+\+Callback\+Fxn array \index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}}
+\index{number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\paragraph[{number\+Of\+Pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+C\+C3200\+\_\+\+Config\+::number\+Of\+Pin\+Configs}\label{struct_g_p_i_o_c_c3200___config_aeb8538c98edc819489974c5a97530feb}
+Number of G\+P\+I\+O\+\_\+\+Pin\+Configs defined \index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!number\+Of\+Callbacks@{number\+Of\+Callbacks}}
+\index{number\+Of\+Callbacks@{number\+Of\+Callbacks}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\paragraph[{number\+Of\+Callbacks}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+C\+C3200\+\_\+\+Config\+::number\+Of\+Callbacks}\label{struct_g_p_i_o_c_c3200___config_aaa30e1f80e716b304beb4a51729f105c}
+Number of G\+P\+I\+O\+\_\+\+Callbacks defined \index{G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!G\+P\+I\+O\+C\+C3200\+\_\+\+Config@{G\+P\+I\+O\+C\+C3200\+\_\+\+Config}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+C\+C3200\+\_\+\+Config\+::int\+Priority}\label{struct_g_p_i_o_c_c3200___config_a75035e2fbbae7a387c9af597c26b2d77}
+Interrupt priority used for call back interrupts. Setting $\sim$0 will configure the lowest possible priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_c_c3200_8h}{G\+P\+I\+O\+C\+C3200.\+h}\end{DoxyCompactItemize}

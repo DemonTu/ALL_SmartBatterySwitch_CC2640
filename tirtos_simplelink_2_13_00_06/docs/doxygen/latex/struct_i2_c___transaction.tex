@@ -1,0 +1,62 @@
+\subsection{I2\+C\+\_\+\+Transaction Struct Reference}
+\label{struct_i2_c___transaction}\index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+
+
+I2\+C transaction.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{struct_i2_c___transaction_aa3490c2af4b443a7a4ec13f57aec6d20}{write\+Buf}
+\item 
+size\+\_\+t \hyperlink{struct_i2_c___transaction_a08959a9f098163d02d6002e73b3a4606}{write\+Count}
+\item 
+void $\ast$ \hyperlink{struct_i2_c___transaction_a804b918d5cb08bb75a39866d0b89e01e}{read\+Buf}
+\item 
+size\+\_\+t \hyperlink{struct_i2_c___transaction_a2085d4c943f0d8617365b7c427e6a0de}{read\+Count}
+\item 
+unsigned char \hyperlink{struct_i2_c___transaction_a165300f1959631edfccd21f0ae052e1b}{slave\+Address}
+\item 
+void $\ast$ \hyperlink{struct_i2_c___transaction_a29ec65addac2d4ef5d1235c2329e2fc1}{arg}
+\item 
+void $\ast$ \hyperlink{struct_i2_c___transaction_a21755edd4d999d6041d303e269596371}{next\+Ptr}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C transaction. 
+
+This structure defines the nature of the I2\+C transaction. This structure specifies the buffer and buffer\textquotesingle{}s size that is to be written to or read from the I2\+C slave peripheral. arg is an optional user supplied argument that will be passed to the callback function when the I2\+C driver is in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K. next\+Ptr is to be only used by the I2\+C driver. 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!write\+Buf@{write\+Buf}}
+\index{write\+Buf@{write\+Buf}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{write\+Buf}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+\_\+\+Transaction\+::write\+Buf}\label{struct_i2_c___transaction_aa3490c2af4b443a7a4ec13f57aec6d20}
+buffer containing data to be written \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!write\+Count@{write\+Count}}
+\index{write\+Count@{write\+Count}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{write\+Count}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+C\+\_\+\+Transaction\+::write\+Count}\label{struct_i2_c___transaction_a08959a9f098163d02d6002e73b3a4606}
+Number of bytes to be written to the slave \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!read\+Buf@{read\+Buf}}
+\index{read\+Buf@{read\+Buf}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{read\+Buf}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+\_\+\+Transaction\+::read\+Buf}\label{struct_i2_c___transaction_a804b918d5cb08bb75a39866d0b89e01e}
+buffer to which data is to be read into \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!read\+Count@{read\+Count}}
+\index{read\+Count@{read\+Count}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{read\+Count}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+C\+\_\+\+Transaction\+::read\+Count}\label{struct_i2_c___transaction_a2085d4c943f0d8617365b7c427e6a0de}
+Number of bytes to be read from the slave \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!slave\+Address@{slave\+Address}}
+\index{slave\+Address@{slave\+Address}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{slave\+Address}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char I2\+C\+\_\+\+Transaction\+::slave\+Address}\label{struct_i2_c___transaction_a165300f1959631edfccd21f0ae052e1b}
+Address of the I2\+C slave device \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!arg@{arg}}
+\index{arg@{arg}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+\_\+\+Transaction\+::arg}\label{struct_i2_c___transaction_a29ec65addac2d4ef5d1235c2329e2fc1}
+argument to be passed to the callback function \index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!next\+Ptr@{next\+Ptr}}
+\index{next\+Ptr@{next\+Ptr}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\paragraph[{next\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+\_\+\+Transaction\+::next\+Ptr}\label{struct_i2_c___transaction_a21755edd4d999d6041d303e269596371}
+used for queuing in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K mode 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h}{I2\+C.\+h}\end{DoxyCompactItemize}

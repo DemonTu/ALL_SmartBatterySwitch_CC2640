@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.drivers.SPI</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> * Copyright (c) 2015, Texas Instruments Incorporated
+</span>     3    <span class="comment"> * All rights reserved.
+</span>     4    <span class="comment"> *
+</span>     5    <span class="comment"> * Redistribution and use in source and binary forms, with or without
+</span>     6    <span class="comment"> * modification, are permitted provided that the following conditions
+</span>     7    <span class="comment"> * are met:
+</span>     8    <span class="comment"> *
+</span>     9    <span class="comment"> * *  Redistributions of source code must retain the above copyright
+</span>    10    <span class="comment"> *    notice, this list of conditions and the following disclaimer.
+</span>    11    <span class="comment"> *
+</span>    12    <span class="comment"> * *  Redistributions in binary form must reproduce the above copyright
+</span>    13    <span class="comment"> *    notice, this list of conditions and the following disclaimer in the
+</span>    14    <span class="comment"> *    documentation and/or other materials provided with the distribution.
+</span>    15    <span class="comment"> *
+</span>    16    <span class="comment"> * *  Neither the name of Texas Instruments Incorporated nor the names of
+</span>    17    <span class="comment"> *    its contributors may be used to endorse or promote products derived
+</span>    18    <span class="comment"> *    from this software without specific prior written permission.
+</span>    19    <span class="comment"> *
+</span>    20    <span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+</span>    21    <span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+</span>    22    <span class="comment"> * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+</span>    23    <span class="comment"> * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+</span>    24    <span class="comment"> * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+</span>    25    <span class="comment"> * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+</span>    26    <span class="comment"> * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+</span>    27    <span class="comment"> * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+</span>    28    <span class="comment"> * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+</span>    29    <span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+</span>    30    <span class="comment"> * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</span>    31    <span class="comment"> */</span>
+    32    <span class="comment">/*
+</span>    33    <span class="comment"> *  ======== SPI.xdc ========
+</span>    34    <span class="comment"> */</span>
+    35    <span class=key>package</span> ti.drivers;
+    36    import xdc.rov.ViewInfo;
+    37    
+    38    <span class="xdoc">/*!
+</span>    39    <span class="xdoc"> *  ======== SPI ========
+</span>    40    <span class="xdoc"> */</span>
+    41    @NoRuntime
+    42    @HeaderName(<span class="string">""</span>)
+    43    <span class=key>module</span> SPI {
+    44    
+    45        <span class="xdoc">/*!
+</span>    46    <span class="xdoc">     *  ======== LibType ========
+</span>    47    <span class="xdoc">     *  SPI library selection options
+</span>    48    <span class="xdoc">     *
+</span>    49    <span class="xdoc">     *  This enumeration defines all the SPI library type
+</span>    50    <span class="xdoc">     *  provided by the product.  You can select the library type by setting
+</span>    51    <span class="xdoc">     *  the {<b>@link</b> #libType SPI.libType} configuration parameter.
+</span>    52    <span class="xdoc">     *
+</span>    53    <span class="xdoc">     *  <b>@field(LibType_Instrumented)</b> The library supplied is prebuilt with
+</span>    54    <span class="xdoc">     *  logging and assertions enabled.
+</span>    55    <span class="xdoc">     *  Diags_USER1 mask logs basic information
+</span>    56    <span class="xdoc">     *  Diags_USER2 mask logs more detailed information
+</span>    57    <span class="xdoc">     *
+</span>    58    <span class="xdoc">     *  <b>@field(LibType_NonInstrumented)</b> The library supplied is prebuilt
+</span>    59    <span class="xdoc">     *  with logging and assertions disabled.
+</span>    60    <span class="xdoc">     */</span>
+    61        <span class=key>enum</span> LibType {
+    62            LibType_Instrumented,           <span class="xdoc">/*! instrumented */</span>
+    63            LibType_NonInstrumented         <span class="xdoc">/*! non-instrumented */</span>
+    64        };
+    65    
+    66        <span class="xdoc">/*!
+</span>    67    <span class="xdoc">     *  ======== libType ========
+</span>    68    <span class="xdoc">     *  SPI Library type
+</span>    69    <span class="xdoc">     *
+</span>    70    <span class="xdoc">     *  Deprecated: Please use ti.tirtos.TIRTOS.libType instead.
+</span>    71    <span class="xdoc">     *
+</span>    72    <span class="xdoc">     *  The SPI runtime is provided in the form of a library that is
+</span>    73    <span class="xdoc">     *  linked with your application.  Several forms of this library are
+</span>    74    <span class="xdoc">     *  provided with the SPI product. This configuration parameter
+</span>    75    <span class="xdoc">     *  allows you to select the form of SPI to use.
+</span>    76    <span class="xdoc">     *
+</span>    77    <span class="xdoc">     *  The default value of libType is
+</span>    78    <span class="xdoc">     *  {<b>@link</b> #LibType_Instrumented SPI_LibType_Instrumented}.  For a
+</span>    79    <span class="xdoc">     *  complete list of options and what they offer see {<b>@link</b> #LibType}.
+</span>    80    <span class="xdoc">     */</span>
+    81        <span class=key>metaonly</span> <span class=key>config</span> LibType libType = LibType_Instrumented;
+    82    
+    83        <span class="xdoc">/*!
+</span>    84    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    85    <span class="xdoc">     *  ======== maxPeripheralCount ========
+</span>    86    <span class="xdoc">     */</span>
+    87        <span class=key>metaonly</span> <span class=key>config</span> UInt maxPeripheralCount = 32;
+    88    
+    89        <span class="xdoc">/*!
+</span>    90    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    91    <span class="xdoc">     *  ======== SPI_Config ========
+</span>    92    <span class="xdoc">     *  Structure must match the SPI_Config structure defined in SPI.h
+</span>    93    <span class="xdoc">     */</span>
+    94        <span class=key>struct</span> SPI_Config {
+    95            Void               *fxnTablePtr; <span class=comment>//Used to determine the implementation</span>
+    96            Void               *object;      <span class=comment>//Used to access the data</span>
+    97            Void               *hwAttrs;     <span class=comment>//Used to get the attributes</span>
+    98        };
+    99    
+   100        <span class="xdoc">/*!
+</span>   101    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   102    <span class="xdoc">     *  ======== SPI callback ========
+</span>   103    <span class="xdoc">     *  SPI Callback function
+</span>   104    <span class="xdoc">     */</span>
+   105        <span class=key>typedef</span> Void (*CallbackFxn) (SPI_Config *, SPI_Transaction *);
+   106    
+   107        <span class="xdoc">/*!
+</span>   108    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   109    <span class="xdoc">     *  ======== SPI_TransferMode ========
+</span>   110    <span class="xdoc">     *  Structure must match the SPI_TransferMode structure defined in SPI.h
+</span>   111    <span class="xdoc">     */</span>
+   112        <span class=key>enum</span> TransferMode  {
+   113            SPI_MODE_BLOCKING,
+   114            SPI_MODE_CALLBACK
+   115        };
+   116    
+   117        <span class="xdoc">/*!
+</span>   118    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   119    <span class="xdoc">     *  ======== SPI_Transaction ========
+</span>   120    <span class="xdoc">     *  Structure must match the SPI_Transaction structure defined in SPI.h
+</span>   121    <span class="xdoc">     */</span>
+   122        <span class=key>struct</span> SPI_Transaction {
+   123            UInt                count;
+   124            Ptr                 txBuf;
+   125            Ptr                 rxBuf;
+   126            UArg                arg;
+   127        };
+   128    
+   129        <span class="xdoc">/*!
+</span>   130    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   131    <span class="xdoc">     *  To avoid creating other modules (and adding a xdc.useModule) with driver
+</span>   132    <span class="xdoc">     *  specific implementations, the object structs are all listed in here.
+</span>   133    <span class="xdoc">     */</span>
+   134        <span class="xdoc">/*! ======== SPITivaDMA ======== */</span>
+   135        <span class=key>enum</span> SPITivaDMA_FrameSize {
+   136            SPITivaDMA_8bit  = 0,
+   137            SPITivaDMA_16bit = 1
+   138        };
+   139    
+   140        <span class="xdoc">/*!
+</span>   141    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   142    <span class="xdoc">     *  ======== SPITivaDMA_hwAttrs ========
+</span>   143    <span class="xdoc">     *  Structure must match the SPITivaDMA_hwAttrs structure defined in spi/SPITivaDMA.h
+</span>   144    <span class="xdoc">     */</span>
+   145        <span class=key>struct</span> SPITivaDMA_HWAttrs {
+   146            Bits32  baseAddr;
+   147            Bits32  intNum;
+   148    
+   149            Bits32  rxChannelIndex;
+   150            Bits32  txChannelIndex;
+   151    
+   152            Void  (*channelMappingFxn)(ULong);
+   153            Bits32  rxChannelMappingFxnArg;
+   154            Bits32  txChannelMappingFxnArg;
+   155        };
+   156    
+   157        <span class="xdoc">/*!
+</span>   158    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   159    <span class="xdoc">     *  ======== SPITivaDMA_Object ========
+</span>   160    <span class="xdoc">     *  Structure must match the SPITivaDMA_Object structure defined in
+</span>   161    <span class="xdoc">     *  spi/SPITivaDMA.h
+</span>   162    <span class="xdoc">     */</span>
+   163        <span class=key>struct</span> SPITivaDMA_Object {
+   164            Ptr                    transferComplete;
+   165            Ptr                    hwi;
+   166            TransferMode           transferMode;
+   167            CallbackFxn            transferCallbackFxn;
+   168            SPI_Transaction       *transaction;
+   169            SPITivaDMA_FrameSize   frameSize;
+   170            Bool                   isOpen;
+   171        };
+   172    
+   173        <span class="xdoc">/*!
+</span>   174    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   175    <span class="xdoc">     *  To avoid creating other modules (and adding a xdc.useModule) with driver
+</span>   176    <span class="xdoc">     *  specific implementations, the object structs are all listed in here.
+</span>   177    <span class="xdoc">     */</span>
+   178        <span class=key>enum</span> SPICC3200DMA_FrameSize {
+   179            SPICC3200DMA_8bit = 0,
+   180            SPICC3200DMA_16bit = 1,
+   181            SPICC3200DMA_32bit = 2
+   182        };
+   183    
+   184        <span class="xdoc">/*!
+</span>   185    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   186    <span class="xdoc">     *  ======== SPICC3200DMA_hwAttrs ========
+</span>   187    <span class="xdoc">     *  Structure must match the SPICC3200DMA_hwAttrs structure defined in spi/SPICC3200DMA.h
+</span>   188    <span class="xdoc">     */</span>
+   189        <span class=key>struct</span> SPICC3200DMA_HWAttrs {
+   190            Bits32   baseAddr;
+   191            Bits32   intNum;
+   192            Bits32   spiPRCM;
+   193            Bits32   csControl;
+   194            Bits32   csPolarity;
+   195            Bits32   pinMode;
+   196            Bits32   turboMode;
+   197            Ptr      scratchBufPtr;
+   198            Bits32   defaultTxBufValue;
+   199            Bits32   rxChannelIndex;
+   200            Bits32   txChannelIndex;
+   201        };
+   202    
+   203        <span class="xdoc">/*!
+</span>   204    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   205    <span class="xdoc">     *  ======== SPICC3200DMA_Object ========
+</span>   206    <span class="xdoc">     *  Structure must match the SPICC3200DMA_Object structure defined in
+</span>   207    <span class="xdoc">     *  spi/SPICC3200DMA.h
+</span>   208    <span class="xdoc">     */</span>
+   209        <span class=key>struct</span> SPICC3200DMA_Object {
+   210            Ptr                     transferComplete;
+   211            Ptr                     hwi;
+   212            TransferMode            transferMode;
+   213            CallbackFxn             transferCallbackFxn;
+   214            SPI_Transaction        *transaction;
+   215            SPICC3200DMA_FrameSize  frameSize;
+   216            ULong                   spiMode;
+   217            ULong                   rxFifoTrigger;
+   218            ULong                   txFifoTrigger;
+   219            <span class=key>bool</span>                    isOpen;
+   220        };
+   221    
+   222        <span class="xdoc">/*!
+</span>   223    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   224    <span class="xdoc">     *  ======== SPIUSCIADMA_HWAttrs ========
+</span>   225    <span class="xdoc">     *  Structure must match the SPIUSCIADMA_HWAttrs structure defined in
+</span>   226    <span class="xdoc">     *  spi/SPIUSCIADMA.h
+</span>   227    <span class="xdoc">     */</span>
+   228        <span class=key>struct</span> SPIUSCIADMA_HWAttrs {
+   229            Bits32  baseAddr;
+   230            Bits8   clockSource;
+   231            Bits8   bitOrder;
+   232    
+   233            Bits32  dmaBaseAddr;
+   234            Bits8   rxDMAChannelIndex;
+   235            Bits8   rxDMASourceTrigger;
+   236            Bits8   txDMAChannelIndex;
+   237            Bits8   txDMASourceTrigger;
+   238        };
+   239    
+   240        <span class="xdoc">/*!
+</span>   241    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   242    <span class="xdoc">     *  ======== SPIUSCIADMA_Object ========
+</span>   243    <span class="xdoc">     *  Structure must match the SPIUSCIADMA_Object structure defined in
+</span>   244    <span class="xdoc">     *  spi/SPIUSCIADMA.h
+</span>   245    <span class="xdoc">     */</span>
+   246        <span class=key>struct</span> SPIUSCIADMA_Object {
+   247            Bool                isOpen;
+   248    
+   249            Ptr                 transferComplete;
+   250    
+   251            TransferMode        transferMode;
+   252            CallbackFxn         transferCallbackFxn;
+   253    
+   254            SPI_Transaction    *transaction;
+   255        };
+   256    
+   257        <span class="xdoc">/*!
+</span>   258    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   259    <span class="xdoc">     *  ======== SPIUSCIBDMA_HWAttrs ========
+</span>   260    <span class="xdoc">     *  Structure must match the SPIUSCIBDMA_HWAttrs structure defined in
+</span>   261    <span class="xdoc">     *  spi/SPIUSCIBDMA.h
+</span>   262    <span class="xdoc">     */</span>
+   263        <span class=key>struct</span> SPIUSCIBDMA_HWAttrs {
+   264            Bits32  baseAddr;
+   265            Bits8   clockSource;
+   266            Bits8   bitOrder;
+   267    
+   268            Bits32  dmaBaseAddr;
+   269            Bits8   rxDMAChannelIndex;
+   270            Bits8   rxDMASourceTrigger;
+   271            Bits8   txDMAChannelIndex;
+   272            Bits8   txDMASourceTrigger;
+   273        };
+   274    
+   275        <span class="xdoc">/*!
+</span>   276    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   277    <span class="xdoc">     *  ======== SPIUSCIBDMA_Object ========
+</span>   278    <span class="xdoc">     *  Structure must match the SPIUSCIBDMA_Object structure defined in
+</span>   279    <span class="xdoc">     *  spi/SPIUSCIBDMA.h
+</span>   280    <span class="xdoc">     */</span>
+   281        <span class=key>struct</span> SPIUSCIBDMA_Object {
+   282            Bool                isOpen;
+   283    
+   284            Ptr                 transferComplete;
+   285    
+   286            TransferMode        transferMode;
+   287            CallbackFxn         transferCallbackFxn;
+   288    
+   289            SPI_Transaction    *transaction;
+   290        };
+   291    
+   292         <span class="xdoc">/*!
+</span>   293    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   294    <span class="xdoc">     *  ======== SPIEUSCIADMA_HWAttrs ========
+</span>   295    <span class="xdoc">     *  Structure must match the SPIEUSCIADMA_HWAttrs structure defined in
+</span>   296    <span class="xdoc">     *  spi/SPIEUSCIADMA.h
+</span>   297    <span class="xdoc">     */</span>
+   298        <span class=key>struct</span> SPIEUSCIADMA_HWAttrs {
+   299            Bits32  baseAddr;
+   300            Bits8   clockSource;
+   301            Bits16  BitOrder;
+   302    
+   303            Bits32  dmaBaseAddr;
+   304            Bits8   rxDMAChannelIndex;
+   305            Bits8   rxDMASourceTrigger;
+   306            Bits8   txDMAChannelIndex;
+   307            Bits8   txDMASourceTrigger;
+   308        };
+   309    
+   310        <span class="xdoc">/*!
+</span>   311    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   312    <span class="xdoc">     *  ======== SPIEUSCIADMA_Object ========
+</span>   313    <span class="xdoc">     *  Structure must match the SPIEUSCIADMA_Object structure defined in
+</span>   314    <span class="xdoc">     *  spi/SPIEUSCIADMA.h
+</span>   315    <span class="xdoc">     */</span>
+   316        <span class=key>struct</span> SPIEUSCIADMA_Object {
+   317            Bool                isOpen;
+   318    
+   319            Ptr                 transferComplete;
+   320    
+   321            TransferMode        transferMode;
+   322            CallbackFxn         transferCallbackFxn;
+   323    
+   324            SPI_Transaction    *transaction;
+   325        };
+   326    
+   327         <span class="xdoc">/*!
+</span>   328    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   329    <span class="xdoc">     *  ======== SPIEUSCIBDMA_HWAttrs ========
+</span>   330    <span class="xdoc">     *  Structure must match the SPIEUSCIBDMA_HWAttrs structure defined in
+</span>   331    <span class="xdoc">     *  spi/SPIEUSCIBDMA.h
+</span>   332    <span class="xdoc">     */</span>
+   333        <span class=key>struct</span> SPIEUSCIBDMA_HWAttrs {
+   334            Bits32  baseAddr;
+   335            Bits8   clockSource;
+   336            Bits16  BitOrder;
+   337    
+   338            Bits32  dmaBaseAddr;
+   339            Bits8   rxDMAChannelIndex;
+   340            Bits8   rxDMASourceTrigger;
+   341            Bits8   txDMAChannelIndex;
+   342            Bits8   txDMASourceTrigger;
+   343        };
+   344    
+   345        <span class="xdoc">/*!
+</span>   346    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   347    <span class="xdoc">     *  ======== SPIEUSCIBDMA_Object ========
+</span>   348    <span class="xdoc">     *  Structure must match the SPIEUSCIBDMA_Object structure defined in
+</span>   349    <span class="xdoc">     *  spi/SPIEUSCIBDMA.h
+</span>   350    <span class="xdoc">     */</span>
+   351        <span class=key>struct</span> SPIEUSCIBDMA_Object {
+   352            Bool                isOpen;
+   353    
+   354            Ptr                 transferComplete;
+   355    
+   356            TransferMode        transferMode;
+   357            CallbackFxn         transferCallbackFxn;
+   358    
+   359            SPI_Transaction    *transaction;
+   360        };
+   361    
+   362        <span class="xdoc">/*!
+</span>   363    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   364    <span class="xdoc">     *  ======== SPIMSP432DMA_HWAttrs ========
+</span>   365    <span class="xdoc">     *  Structure must match the SPIMSP432DMA_HWAttrs structure defined in spi/SPIMSP432DMA.h
+</span>   366    <span class="xdoc">     */</span>
+   367        <span class=key>struct</span> SPIMSP432DMA_HWAttrs {
+   368            Bits32   baseAddr;
+   369            Bits16   bitOrder;
+   370            Bits8    clockSource;
+   371            Ptr      scratchBufPtr;
+   372            Bits8    defaultTxBufValue;
+   373            Bits8    dmaIntNum;
+   374            Bits32   rxDMAChannelIndex;
+   375            Bits32   txDMAChannelIndex;
+   376        };
+   377    
+   378        <span class="xdoc">/*!
+</span>   379    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   380    <span class="xdoc">     *  ======== SPIMSP432DMA_Object ========
+</span>   381    <span class="xdoc">     *  Structure must match the SPIMSP432DMA_Object structure defined in
+</span>   382    <span class="xdoc">     *  spi/SPIMSP432DMA.h
+</span>   383    <span class="xdoc">     */</span>
+   384        <span class=key>struct</span> SPIMSP432DMA_Object {
+   385            Ptr                     transferComplete;
+   386            TransferMode            transferMode;
+   387            CallbackFxn             transferCallbackFxn;
+   388            SPI_Transaction        *transaction;
+   389            <span class=key>bool</span>                    isOpen;
+   390        };
+   391    
+   392        <span class="xdoc">/*!
+</span>   393    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   394    <span class="xdoc">     *  ======== BasicView ========
+</span>   395    <span class="xdoc">     */</span>
+   396        <span class=key>metaonly</span> <span class=key>struct</span> BasicView {
+   397            String              spiHandle;
+   398            String              baseAddr;
+   399            String              functionTable;
+   400        };
+   401    
+   402        <span class="xdoc">/*!
+</span>   403    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   404    <span class="xdoc">     *  ======== rovViewInfo ========
+</span>   405    <span class="xdoc">     */</span>
+   406        @Facet
+   407        <span class=key>metaonly</span> <span class=key>config</span> ViewInfo.Instance rovViewInfo =
+   408            ViewInfo.create({
+   409                viewMap: [
+   410                    [<span class="string">'Basic'</span>,
+   411                        {
+   412                            type: ViewInfo.MODULE_DATA,
+   413                            viewInitFxn: <span class="string">'viewInitBasic'</span>,
+   414                            structName: <span class="string">'BasicView'</span>
+   415                        }
+   416                    ],
+   417                ]
+   418            });
+   419    
+   420    }
+</pre>
+</body></html>

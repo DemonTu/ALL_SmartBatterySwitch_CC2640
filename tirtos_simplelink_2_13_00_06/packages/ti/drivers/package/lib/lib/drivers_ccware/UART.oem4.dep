@@ -1,0 +1,5 @@
+package/lib/lib/drivers_ccware/UART.oem4: UART.c /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h UART.h /db/vendors/ti/arm/5.2.2/Linux/include/stddef.h 
+UART.c:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+UART.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stddef.h:

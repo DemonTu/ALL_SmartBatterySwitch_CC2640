@@ -1,0 +1,63 @@
+\subsection{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_c_m_s_p432___h_w_attrs}\index{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+C\+M\+S\+P432 Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+M\+S\+P432.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_m_s_p432___h_w_attrs_af6b7344c40ce9dbe5a729f4bdb9d5aea}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_m_s_p432___h_w_attrs_a7340a590cf64eb1f8d19182886ff570d}{int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_m_s_p432___h_w_attrs_acc897c0f3c4af3fd5320836c1d9b7f43}{int\+Priority}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_m_s_p432___h_w_attrs_a228090214e295c525a96470d87c8a40c}{clock\+Source}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+M\+S\+P432 Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+: 
+
+
+\begin{DoxyItemize}
+\item i2c.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CMSP432_HWAttrs i2cMSP432HWAttrs[] = \{
+    \{
+        .baseAddr = EUSCI\_B0\_BASE,
+        .intNum = INT\_EUSCIB0,
+        .intPriority = ~0,
+        .clockSource = EUSCI\_B\_I2C\_CLOCKSOURCE\_SMCLK
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_c_m_s_p432___h_w_attrs_af6b7344c40ce9dbe5a729f4bdb9d5aea}
+\index{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_i2_c_m_s_p432___h_w_attrs_a7340a590cf64eb1f8d19182886ff570d}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_i2_c_m_s_p432___h_w_attrs_acc897c0f3c4af3fd5320836c1d9b7f43}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+I2\+C Peripheral\textquotesingle{}s interrupt vector \index{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_i2_c_m_s_p432___h_w_attrs_a228090214e295c525a96470d87c8a40c}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+I2\+C Peripheral\textquotesingle{}s interrupt priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_m_s_p432_8h}{I2\+C\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

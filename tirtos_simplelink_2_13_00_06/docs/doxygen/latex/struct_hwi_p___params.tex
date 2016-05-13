@@ -1,0 +1,42 @@
+\subsection{Hwi\+P\+\_\+\+Params Struct Reference}
+\label{struct_hwi_p___params}\index{Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}}
+
+
+Basic Hwi\+P Parameters.  
+
+
+
+
+{\ttfamily \#include $<$Hwi\+P.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_hwi_p___params_a4af0aabe86da85ef5912f697aa4ec9a1}{name}
+\item 
+uintptr\+\_\+t \hyperlink{struct_hwi_p___params_ae59e7df38314177a3817f11cfad0ce26}{arg}
+\item 
+uint32\+\_\+t \hyperlink{struct_hwi_p___params_ac4977525e0bda265e8bbe2980dc16eda}{priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Basic Hwi\+P Parameters. 
+
+Structure that contains the parameters passed into \hyperlink{_hwi_p_8h_a3d80df47f0bdcbb6e562ee7b96a40af5}{Hwi\+P\+\_\+create} when creating a Hwi\+P instance. The \hyperlink{_hwi_p_8h_a33f02161b1837b41f08ba064f1001045}{Hwi\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Hwi\+P default parameters are noted in Hwi\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Field Documentation}
+\index{Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}!name@{name}}
+\index{name@{name}!Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}}
+\paragraph[{name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ Hwi\+P\+\_\+\+Params\+::name}\label{struct_hwi_p___params_a4af0aabe86da85ef5912f697aa4ec9a1}
+Name of the clock instance. Memory must persist for the life of the clock instance. This can be used for debugging purposes, or set to N\+U\+L\+L if not needed. \index{Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}!arg@{arg}}
+\index{arg@{arg}!Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t Hwi\+P\+\_\+\+Params\+::arg}\label{struct_hwi_p___params_ae59e7df38314177a3817f11cfad0ce26}
+Argument passed into the Hwi function. \index{Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}!priority@{priority}}
+\index{priority@{priority}!Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}}
+\paragraph[{priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Hwi\+P\+\_\+\+Params\+::priority}\label{struct_hwi_p___params_ac4977525e0bda265e8bbe2980dc16eda}
+Device specific priority. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_hwi_p_8h}{Hwi\+P.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,11 @@
+package/lib/lib/drivers_cc26xxware/I2C.oem3: I2C.c /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h /db/vendors/ti/arm/5.2.2/Linux/include/stdbool.h /db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h I2C.h /db/vendors/ti/arm/5.2.2/Linux/include/yvals.h /db/vendors/ti/arm/5.2.2/Linux/include/linkage.h /db/vendors/ti/arm/5.2.2/Linux/include/stddef.h /db/vendors/ti/arm/5.2.2/Linux/include/stdarg.h /db/vendors/ti/arm/5.2.2/Linux/include/_lock.h 
+I2C.c:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdbool.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h:
+I2C.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/yvals.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/linkage.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stddef.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdarg.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/_lock.h:

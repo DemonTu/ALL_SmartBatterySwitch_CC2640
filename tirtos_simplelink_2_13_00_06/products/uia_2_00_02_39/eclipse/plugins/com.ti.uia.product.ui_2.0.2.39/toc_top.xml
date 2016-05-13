@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="System Analyzer (UIA Target) 2.00.02.39"
+>
+    <topic label="UIA Release Notes" href="uia_2_00_02_39_release_notes.html"/>            
+    <topic label="UIA Getting Started" href="SystemAnalyzer_Getting_Started_Guide.pdf"/>            
+    <topic label="System Analyzer User's Guide" href="spruh43d.pdf"/>            
+    <topic label="System Analyzer WIKI" href="http://processors.wiki.ti.com/index.php/Multicore_System_Analyzer"/>            
+    <topic label="UIA API Reference (cdoc)">
+        <link toc="uia_eclipse_cdoc_toc.xml"/>
+    </topic>
+</toc>

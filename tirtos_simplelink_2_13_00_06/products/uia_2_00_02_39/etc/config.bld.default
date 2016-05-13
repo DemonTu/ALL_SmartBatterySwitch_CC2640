@@ -1,0 +1,57 @@
+/*
+ *  ======== config.bld ========
+ *  Sample Build configuration script
+ */
+
+var rootDirPre = "C:/ti/ccsv5/tools/compiler/";
+var rootDirPost = "";
+
+/* Common ccopts suffix used for all C6x targets */
+var c6xSuffix = "-mi10 -mo -pdr -pden -pds=238 -pds=880 -pds1110 ";
+
+//Setup for C64P target
+var C64P = xdc.useModule('ti.targets.C64P');
+C64P.rootDir = rootDirPre + "c6000";
+C64P.ccOpts.suffix += " -mi10 -mo ";
+C64P.platforms = [
+                     "ti.platforms.evm6472:core0",
+                 ];
+C64P.platform = C64P.platforms[0];
+
+var C674 = xdc.useModule('ti.targets.C674');
+C674.rootDir = rootDirPre + "c6000";
+C674.ccOpts.suffix = c6xSuffix;
+C674.platforms = [
+                  "ti.uia.examples.platforms.evmTI816X.dsp",
+                  "ti.platforms.evmDA830",
+               ];
+C674.platform = C674.platforms[0];
+
+//Setup for C66 target
+var C66_elf = xdc.useModule('ti.targets.elf.C66');
+C66_elf.rootDir = rootDirPre + "c6000";
+C66_elf.platform = "ti.platforms.simTCI6616";
+C66_elf.ccOpts.suffix = c6xSuffix;
+C66_elf.ccOpts.suffix += " --embed_inline_assembly ";
+
+var C66_elf_big_endian = xdc.useModule('ti.targets.elf.C66_big_endian');
+C66_elf_big_endian.rootDir = rootDirPre + "c6000";
+C66_elf_big_endian.platform = "ti.platforms.simTCI6616";
+C66_elf_big_endian.ccOpts.suffix = c6xSuffix;
+C66_elf_big_endian.ccOpts.suffix += " --embed_inline_assembly ";
+
+var M3 = xdc.useModule('ti.targets.arm.elf.M3');
+M3.rootDir =  rootDirPre + "tms470" + rootDirPost;
+M3.ccOpts.suffix += " -ms ";
+M3.platforms = [
+                  "ti.uia.examples.platforms.evmTI816X.video",
+                  "ti.uia.examples.platforms.evmTI816X.vpss",
+               ];
+M3.platform = M3.platforms[0];
+Build.targets = [
+                    C64P,
+                    C674,
+                    C66_elf,
+                    C66_elf_big_endian,
+                    M3,
+                ];

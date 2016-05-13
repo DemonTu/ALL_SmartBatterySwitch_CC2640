@@ -1,0 +1,72 @@
+\subsection{L\+C\+D\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_l_c_d___h_w_attrs}\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+
+
+L\+C\+D Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$L\+C\+D\+Dogm1286.\+h$>$}
+
+
+
+Collaboration diagram for L\+C\+D\+\_\+\+H\+W\+Attrs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=143pt]{struct_l_c_d___h_w_attrs__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_l_c_d___command}{L\+C\+D\+\_\+\+Command} const $\ast$ \hyperlink{struct_l_c_d___h_w_attrs_a04de8f9bfd92ed872bbd447177eba7a1}{L\+C\+D\+\_\+init\+Cmd}
+\item 
+uint8\+\_\+t \hyperlink{struct_l_c_d___h_w_attrs_af2b2c62d70137e4f8727136001e69718}{lcd\+Mode\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_l_c_d___h_w_attrs_a5a9db2fc62d4c34511507e5843ff82a1}{lcd\+Reset\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_l_c_d___h_w_attrs_af9926a7b6972357506299ff4893a5ffc}{lcd\+Csn\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_l_c_d___h_w_attrs_aad817df3726cc746fd22075f4510e9d6}{spi\+Index}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+L\+C\+D Hardware attributes. 
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} LCD_HWAttrs lcdHWAttrs = \{
+    .LCD_initCmd = &LCD_initCmd,
+    .lcdResetPin = Board\_LCD\_RST,
+    .lcdModePin = Board\_LCD\_MODE,
+    .lcdCsnPin = Board\_LCD\_CSN,
+    .spiIndex = Board\_SPI0
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!L\+C\+D\+\_\+init\+Cmd@{L\+C\+D\+\_\+init\+Cmd}}
+\index{L\+C\+D\+\_\+init\+Cmd@{L\+C\+D\+\_\+init\+Cmd}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\paragraph[{L\+C\+D\+\_\+init\+Cmd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+C\+D\+\_\+\+Command} const$\ast$ L\+C\+D\+\_\+\+H\+W\+Attrs\+::\+L\+C\+D\+\_\+init\+Cmd}\label{struct_l_c_d___h_w_attrs_a04de8f9bfd92ed872bbd447177eba7a1}
+L\+C\+D initialization command \index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!lcd\+Mode\+Pin@{lcd\+Mode\+Pin}}
+\index{lcd\+Mode\+Pin@{lcd\+Mode\+Pin}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\paragraph[{lcd\+Mode\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t L\+C\+D\+\_\+\+H\+W\+Attrs\+::lcd\+Mode\+Pin}\label{struct_l_c_d___h_w_attrs_af2b2c62d70137e4f8727136001e69718}
+\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!lcd\+Reset\+Pin@{lcd\+Reset\+Pin}}
+\index{lcd\+Reset\+Pin@{lcd\+Reset\+Pin}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\paragraph[{lcd\+Reset\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t L\+C\+D\+\_\+\+H\+W\+Attrs\+::lcd\+Reset\+Pin}\label{struct_l_c_d___h_w_attrs_a5a9db2fc62d4c34511507e5843ff82a1}
+\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!lcd\+Csn\+Pin@{lcd\+Csn\+Pin}}
+\index{lcd\+Csn\+Pin@{lcd\+Csn\+Pin}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\paragraph[{lcd\+Csn\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t L\+C\+D\+\_\+\+H\+W\+Attrs\+::lcd\+Csn\+Pin}\label{struct_l_c_d___h_w_attrs_af9926a7b6972357506299ff4893a5ffc}
+\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!spi\+Index@{spi\+Index}}
+\index{spi\+Index@{spi\+Index}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\paragraph[{spi\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t L\+C\+D\+\_\+\+H\+W\+Attrs\+::spi\+Index}\label{struct_l_c_d___h_w_attrs_aad817df3726cc746fd22075f4510e9d6}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_l_c_d_dogm1286_8h}{L\+C\+D\+Dogm1286.\+h}\end{DoxyCompactItemize}

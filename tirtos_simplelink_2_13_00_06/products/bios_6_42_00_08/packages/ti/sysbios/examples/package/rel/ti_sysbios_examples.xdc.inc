@@ -1,0 +1,10 @@
+package/package.bld.xml
+package/build.cfg
+package/package.xdc.inc
+package.bld
+makefile.defs
+makefile.libs
+msp430
+c28
+generic
+package/package.cfg.xdc.inc

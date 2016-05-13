@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin
+    name="System Analyzer (UIA Target) IDE Support"
+    id="com.ti.uia.product.ui"
+    version="2.0.2.39"
+    provider-name="Texas Instruments">
+
+    <extension point="org.eclipse.help.toc">
+      <toc file="toc_top.xml" primary="true"/>
+      <toc file="uia_eclipse_cdoc_toc.xml"/>
+    </extension>
+
+    <extension point="org.eclipse.help.contentProducer">
+        <contentProducer>
+            <producer class="org.eclipse.rtsc.xdctools.ui.help.HelpContentProducer"/>
+        </contentProducer>
+    </extension>
+
+    <extension
+         point="org.eclipse.core.variables.dynamicVariables">
+     <variable 
+        name="COM_TI_UIA_INSTALL_DIR"
+        resolver="org.eclipse.rtsc.xdctools.ui.macros.MacroResolver"
+        description="Installation directory for System Analyzer (UIA Target)">
+     </variable>
+   </extension>
+
+    <extension point="com.ti.common.project.core.projectTemplates">
+        <templateGroup
+            id="ti.uia.examples.root"
+            description="System Analyzer (UIA) Tutorials, Templates and Examples"
+            name="System Analyzer (UIA)">
+            <property name="productType" value="com.ti.uia"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia"
+            description="Instrumentation Example Projects"
+            name="Instrumentation Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsTI"
+            description="System Analyzer (UIA) Examples for TI targets."
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsGNU"
+            description="System Analyzer (UIA) Examples for GNU targets."
+            name="GNU Target Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"
+            description="System Analyzer (UIA) Single-core Examples"
+            name="Single-core Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"
+            description="System Analyzer (UIA) Single-core Examples"
+            name="Single-core Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia.targetsGNU"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsTI.multicoreTI"
+            description="System Analyzer (UIA) Multi-core Examples"
+            name="Multi-core Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="ti.uia.examples.root.uia.targetsGNU.multicoreGNU"
+            description="System Analyzer (UIA) Multi-core Examples"
+            name="Multi-core Examples">
+            <property name="productType" value="com.ti.uia"/>
+            <group id="ti.uia.examples.root.uia.targetsGNU"/>
+        </templateGroup>
+
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(Cortex A|TM4C|TM4E|LM3|F28M3|LM4|RM4|TMS570LS|ARM7|ARM11|Generic|EVMDMRX45X|CC25|CM25|CC26|CC32|TMS470M|DM350|DM357|DM368|P401R).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_0_title"
+                 id="com.ti.uia.example_0"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_0_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(Cortex A|TM4C|TM4E|LM3|F28M3|LM4|RM4|TMS570LS|ARM7|ARM11|Generic|EVMDMRX45X|CC25|CM25|CC26|CC32|TMS470M|DM350|DM357|DM368|P401R).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_1_title"
+                 id="com.ti.uia.example_1"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_1_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA8"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_2_title"
+                 id="com.ti.uia.example_2"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_2_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA8"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_3_title"
+                 id="com.ti.uia.example_3"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_3_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*LM3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_4_title"
+                 id="com.ti.uia.example_4"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_4_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.stellaris:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*LM3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_5_title"
+                 id="com.ti.uia.example_5"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_5_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.stellaris:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC26.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_6_title"
+                 id="com.ti.uia.example_6"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_6_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.cc26xx:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cc26xx/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC26.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_7_title"
+                 id="com.ti.uia.example_7"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_7_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.cc26xx:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cc26xx/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*F28M3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_8_title"
+                 id="com.ti.uia.example_8"
+                 linkerCommandFile="ti/platforms/concertoM3/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_8_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.concertoM3:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*F28M3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_9_title"
+                 id="com.ti.uia.example_9"
+                 linkerCommandFile="ti/platforms/concertoM3/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_9_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.concertoM3:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_10_title"
+                 id="com.ti.uia.example_10"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_10_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_11_title"
+                 id="com.ti.uia.example_11"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_11_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*(LM4|TM4C|TM4E|P401R).*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_12_title"
+                 id="com.ti.uia.example_12"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_12_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*(LM4|TM4C|TM4E|P401R).*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_13_title"
+                 id="com.ti.uia.example_13"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_13_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C2000"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(F28M3|Generic|G00883).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_14_title"
+                 id="com.ti.uia.example_14"
+                 linkerCommandFile="ti/platforms/tms320x28/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_14_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.tms320x28:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/c28/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C2000"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(F28M3|Generic|G00883).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_15_title"
+                 id="com.ti.uia.example_15"
+                 linkerCommandFile="ti/platforms/tms320x28/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_15_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.tms320x28:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/c28/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C2000"
+                       deviceId=".*F28M3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_16_title"
+                 id="com.ti.uia.example_16"
+                 linkerCommandFile="ti/platforms/concertoC28/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_16_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.concertoC28:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/c28/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C2000"
+                       deviceId=".*F28M3.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_17_title"
+                 id="com.ti.uia.example_17"
+                 linkerCommandFile="ti/platforms/concertoC28/include/$DeviceId$.cmd"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_17_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.concertoC28:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/c28/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C6000"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(TMS320C670|TMS320C671|TMS320C672|DSK6713|GenericC62xxDevice|GenericC64xxDevice|GenericC67xxDevice|GenericC67xPlusDevice|C641).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_18_title"
+                 id="com.ti.uia.example_18"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_18_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C6000"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(TMS320C670|TMS320C671|TMS320C672|DSK6713|GenericC62xxDevice|GenericC64xxDevice|GenericC67xxDevice|GenericC67xPlusDevice|C641).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_19_title"
+                 id="com.ti.uia.example_19"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_19_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C6000"
+                       toolChain="TI"
+                    />
+               </when>
+                <except>
+                    <context 
+                       deviceId=".*(TMS320C670|TMS320C671|TMS320C672|DSK6713|GenericC62xxDevice|GenericC64xxDevice|GenericC67xxDevice|GenericC67xPlusDevice|C641).*"
+                    />
+               </except>
+            </applicability>
+             <template
+                 title="%example_20_title"
+                 id="com.ti.uia.example_20"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_20_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/c6000/stairstep_JTAGRunMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C6000"
+                       deviceId=".*6472.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_21_title"
+                 id="com.ti.uia.example_21"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_21_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS;com.ti.rtsc.NDK"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/evm6472/stairstep_Ethernet.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="C6000"
+                       deviceId=".*6472.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_22_title"
+                 id="com.ti.uia.example_22"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_22_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS;com.ti.rtsc.NDK;com.ti.rtsc.IPC"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.multicoreTI"/>
+                 <file path="resources/./evm6472/message.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./evm6472/evm6472/message.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="EVE"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_23_title"
+                 id="com.ti.uia.example_23"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_23_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="EVE"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_24_title"
+                 id="com.ti.uia.example_24"
+                 linkerCommandFile=""
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_24_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="MSP430"
+                       deviceId="CC430F5137|CC430F6127|CC430F6137|MSP430BT5190|MSP430F5212|MSP430F5214|MSP430F5217|MSP430F5219|MSP430F5222|MSP430F5224|MSP430F5227|MSP430F5229|MSP430F5310|MSP430F5324|MSP430F5325|MSP430F5326|MSP430F5327|MSP430F5328|MSP430F5329|MSP430F5333|MSP430F5335|MSP430F5336|MSP430F5338|MSP430F5340|MSP430F5341|MSP430F5342|MSP430F5358|MSP430F5359|MSP430F5418|MSP430F5418A|MSP430F5419|MSP430F5419A|MSP430F5435|MSP430F5435A|MSP430F5436|MSP430F5436A|MSP430F5437|MSP430F5437A|MSP430F5438|MSP430F5438A|MSP430F5503|MSP430F5507|MSP430F5510|MSP430F5513|MSP430F5514|MSP430F5515|MSP430F5517|MSP430F5519|MSP430F5521|MSP430F5522|MSP430F5524|MSP430F5525|MSP430F5526|MSP430F5527|MSP430F5528|MSP430F5529|MSP430F5630|MSP430F5631|MSP430F5632|MSP430F5633|MSP430F5634|MSP430F5635|MSP430F5636|MSP430F5637|MSP430F5638|MSP430F5658|MSP430F5659|MSP430F6433|MSP430F6435|MSP430F6436|MSP430F6438|MSP430F6458|MSP430F6459|MSP430F6630|MSP430F6631|MSP430F6632|MSP430F6633|MSP430F6634|MSP430F6635|MSP430F6636|MSP430F6637|MSP430F6638|MSP430F6658|MSP430F6659|MSP430F6723|MSP430F6724|MSP430F6725|MSP430F6726|MSP430F6733|MSP430F6734|MSP430F6735|MSP430F6736|MSP430F6745|MSP430F6746|MSP430F6747|MSP430F6748|MSP430F6749|MSP430F6765|MSP430F6766|MSP430F6767|MSP430F6768|MSP430F6769|MSP430F6775|MSP430F6776|MSP430F6777|MSP430F6778|MSP430F6779|MSP430F67451|MSP430F67461|MSP430F67471|MSP430F67481|MSP430F67491|MSP430F67651|MSP430F67661|MSP430F67671|MSP430F67681|MSP430F67691|MSP430F67751|MSP430F67761|MSP430F67771|MSP430F67781|MSP430F67791|MSP430FR5847|MSP430FR5848|MSP430FR5849|MSP430FR5857|MSP430FR5858|MSP430FR5859|MSP430FR5867|MSP430FR5868|MSP430FR5869|MSP430FR5947|MSP430FR5948|MSP430FR5949|MSP430FR5957|MSP430FR5958|MSP430FR5959|MSP430FR5967|MSP430FR5968|MSP430FR5969"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_25_title"
+                 id="com.ti.uia.example_25"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_25_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.msp430:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/msp430/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="MSP430"
+                       deviceId="CC430F5137|CC430F6127|CC430F6137|MSP430BT5190|MSP430F5212|MSP430F5214|MSP430F5217|MSP430F5219|MSP430F5222|MSP430F5224|MSP430F5227|MSP430F5229|MSP430F5310|MSP430F5324|MSP430F5325|MSP430F5326|MSP430F5327|MSP430F5328|MSP430F5329|MSP430F5333|MSP430F5335|MSP430F5336|MSP430F5338|MSP430F5340|MSP430F5341|MSP430F5342|MSP430F5358|MSP430F5359|MSP430F5418|MSP430F5418A|MSP430F5419|MSP430F5419A|MSP430F5435|MSP430F5435A|MSP430F5436|MSP430F5436A|MSP430F5437|MSP430F5437A|MSP430F5438|MSP430F5438A|MSP430F5503|MSP430F5507|MSP430F5510|MSP430F5513|MSP430F5514|MSP430F5515|MSP430F5517|MSP430F5519|MSP430F5521|MSP430F5522|MSP430F5524|MSP430F5525|MSP430F5526|MSP430F5527|MSP430F5528|MSP430F5529|MSP430F5630|MSP430F5631|MSP430F5632|MSP430F5633|MSP430F5634|MSP430F5635|MSP430F5636|MSP430F5637|MSP430F5638|MSP430F5658|MSP430F5659|MSP430F6433|MSP430F6435|MSP430F6436|MSP430F6438|MSP430F6458|MSP430F6459|MSP430F6630|MSP430F6631|MSP430F6632|MSP430F6633|MSP430F6634|MSP430F6635|MSP430F6636|MSP430F6637|MSP430F6638|MSP430F6658|MSP430F6659|MSP430F6723|MSP430F6724|MSP430F6725|MSP430F6726|MSP430F6733|MSP430F6734|MSP430F6735|MSP430F6736|MSP430F6745|MSP430F6746|MSP430F6747|MSP430F6748|MSP430F6749|MSP430F6765|MSP430F6766|MSP430F6767|MSP430F6768|MSP430F6769|MSP430F6775|MSP430F6776|MSP430F6777|MSP430F6778|MSP430F6779|MSP430F67451|MSP430F67461|MSP430F67471|MSP430F67481|MSP430F67491|MSP430F67651|MSP430F67661|MSP430F67671|MSP430F67681|MSP430F67691|MSP430F67751|MSP430F67761|MSP430F67771|MSP430F67781|MSP430F67791|MSP430FR5847|MSP430FR5848|MSP430FR5849|MSP430FR5857|MSP430FR5858|MSP430FR5859|MSP430FR5867|MSP430FR5868|MSP430FR5869|MSP430FR5947|MSP430FR5948|MSP430FR5949|MSP430FR5957|MSP430FR5958|MSP430FR5959|MSP430FR5967|MSP430FR5968|MSP430FR5969"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_26_title"
+                 id="com.ti.uia.example_26"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_26_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="platform" value="ti.platforms.msp430:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/msp430/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA8"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_27_title"
+                 id="com.ti.uia.example_27"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_27_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A8F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA8"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_28_title"
+                 id="com.ti.uia.example_28"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_28_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A8F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA9"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_29_title"
+                 id="com.ti.uia.example_29"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_29_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A9F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA9"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_30_title"
+                 id="com.ti.uia.example_30"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_30_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A9F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA15"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_31_title"
+                 id="com.ti.uia.example_31"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_31_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A15F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceVariant="CortexA15"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_32_title"
+                 id="com.ti.uia.example_32"
+                 linkerCommandFile=""
+                 compilerBuildOptions="-mfloat-abi=hard"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/fpu"
+                 description="%example_32_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.A15F"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*LM3.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_33_title"
+                 id="com.ti.uia.example_33"
+                 compilerBuildOptions="-mthumb -march=armv7-m"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7-m"
+                 description="%example_33_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M3"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*LM3.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_34_title"
+                 id="com.ti.uia.example_34"
+                 compilerBuildOptions="-mthumb -march=armv7-m"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7-m"
+                 description="%example_34_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M3"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC26.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_35_title"
+                 id="com.ti.uia.example_35"
+                 linkerCommandFile="ti/platforms/cc26xx/include_gnu/cc2650.lds"
+                 compilerBuildOptions="-mthumb -march=armv7-m"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7-m"
+                 description="%example_35_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M3"/>
+                 <property name="platform" value="ti.platforms.cc26xx:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cc26xx/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC26.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_36_title"
+                 id="com.ti.uia.example_36"
+                 linkerCommandFile="ti/platforms/cc26xx/include_gnu/cc2650.lds"
+                 compilerBuildOptions="-mthumb -march=armv7-m"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7-m"
+                 description="%example_36_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M3"/>
+                 <property name="platform" value="ti.platforms.cc26xx:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cc26xx/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_37_title"
+                 id="com.ti.uia.example_37"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_37_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_38_title"
+                 id="com.ti.uia.example_38"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_38_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*(LM4|TM4C|TM4E|P401R).*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_39_title"
+                 id="com.ti.uia.example_39"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m/fpu"
+                 description="%example_39_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M4F"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*(LM4|TM4C|TM4E|P401R).*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_40_title"
+                 id="com.ti.uia.example_40"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${BIOS_CG_ROOT}/packages/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m/fpu"
+                 description="%example_40_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+                 <property name="target" value="gnu.targets.arm.M4F"/>
+                 <property name="platform" value="ti.platforms.tiva:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="ti.uia.examples.root.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+    </extension>
+
+
+</plugin>

@@ -1,0 +1,341 @@
+\subsection{U\+D\+M\+A\+C\+C26\+X\+X.\+h File Reference}
+\label{_u_d_m_a_c_c26_x_x_8h}\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+D\+M\+A\+C\+C26\+X\+X driver implementation. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The U\+D\+M\+A\+C\+C26\+X\+X header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/dma/UDMACC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+The U\+D\+M\+A\+C\+C26\+X\+X driver currently only supports being used by the \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h}. module. In other words, the application should never call any of the functions in this file.
+
+\subsubsection*{General Behavior}
+
+This driver is used implicitly by the \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h} driver so user should not have to interface to this driver from the application. The u\+D\+M\+A H\+W makes use of a control table in R\+A\+M which must be 1024 bytes aligned. The default base address of this control table is 0x20000400, however this can be changed by simply changing U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E. The \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h} supports S\+P\+I0 and S\+P\+I1, and uses both T\+X and R\+X D\+M\+A channels. Each control table entry is 16 bytes, so if an application uses both S\+S\+I0 and S\+S\+I1 the total R\+A\+M usage will be 4$\ast$16=64 bytes. If only one S\+S\+I module is used only 2$\ast$16=32 bytes of R\+A\+M is used. Please see \hyperlink{_u_d_m_a_c_c26_x_x_8h_USE_CASE}{Use cases} for example.
+
+\subsubsection*{Error handling}
+
+Error handling is handled by the overlying driver which uses the D\+M\+A, currently this is only \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h}
+
+\subsubsection*{Power management}
+
+Power management is handled by the overlying driver which uses the D\+M\+A, currently this is only \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h}
+
+\subsubsection*{Supported functions}
+
+Note that these functions should never be called from the application, they are only called from other drivers. They are however included here for completeness\+:
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open()} &Initialize and enable the u\+D\+M\+A H\+W and set system dependencies. \\\cline{1-2}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_a5529a47329f27d70c490c5ed1c1b19f0}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close()} &Disable u\+U\+D\+M\+A H\+W and release system dependencies \\\cline{1-2}
+\end{TabularC}
+\begin{DoxyNote}{Note}
+These functions should not be called by code. These functions are called by drivers who\textquotesingle{}re using the D\+M\+A.
+\end{DoxyNote}
+\subsubsection*{Unsupported Functionality}
+
+No known limitations
+
+\subsubsection*{Use Cases\label{_u_d_m_a_c_c26_x_x_8h_USE_CASE}%
+\hypertarget{_u_d_m_a_c_c26_x_x_8h_USE_CASE}{}%
+}
+
+The D\+M\+A is only used together with the \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h} driver, so the application should never call any of the functions in this driver directly. The only thing that the application is allowed to modify is the base address of the D\+M\+A control table in R\+A\+M. (Default value is 0x2000\+\_\+0400) Remember it must be 1024 bytes aligned. 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define UDMACC26XX\_CONFIG\_BASE 0x2000\_0400}
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item If only S\+S\+I0 is used, this will allocate 2$\ast$16=32 R\+A\+M bytes at address\+:~\newline
+\mbox{[}0x2000\+\_\+0430-\/0x2000\+\_\+044\+F\mbox{]} = S\+S\+I0 R\+X/\+T\+X D\+M\+A channels
+\item If only S\+S\+I1 is used, this will allocate 2$\ast$16=32 R\+A\+M bytes at address\+:~\newline
+\mbox{[}0x2000\+\_\+0500-\/0x2000\+\_\+051\+F\mbox{]} = S\+S\+I1 R\+X/\+T\+X D\+M\+A channels
+\item If both S\+S\+I0 and S\+S\+I1 are used, this will allocate 4$\ast$16=64 R\+A\+M bytes at addresses\+:~\newline
+\mbox{[}0x2000\+\_\+0430-\/0x2000\+\_\+044\+F\mbox{]} = S\+S\+I0 R\+X/\+T\+X D\+M\+A channels~\newline
+\mbox{[}0x2000\+\_\+0500-\/0x2000\+\_\+051\+F\mbox{]} = S\+S\+I1 R\+X/\+T\+X D\+M\+A channels
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The S\+P\+I driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic S\+P\+I operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed S\+P\+I operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}driverlib/udma.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inc/hw\+\_\+types.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/cc26xx/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/cc26xx/\+Power\+C\+C2650.\+h$>$}\\*
+Include dependency graph for U\+D\+M\+A\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_u_d_m_a_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{_u_d_m_a_c_c26_x_x_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_d_m_a_c_c26_x_x___object}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X object. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_d_m_a_c_c26_x_x___h_w_attrs}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_d_m_a_c_c26_x_x___config}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_u_d_m_a_c_c26_x_x_8h_ab956c64f89045e5c6546115ec6062a7f}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E}~0x20000400
+\item 
+\#define \hyperlink{_u_d_m_a_c_c26_x_x_8h_a5c7843573980a2380bd0adf65f58a433}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}(S\+I\+Z\+E)~(((S\+I\+Z\+E -\/ 1) $<$$<$ U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+S) \& U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+M)
+\item 
+\#define \hyperlink{_u_d_m_a_c_c26_x_x_8h_af51cbac1b7f6cc86b9ea0db72426dade}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}(C\+O\+N\+T\+R\+O\+L)~(((C\+O\+N\+T\+R\+O\+L \& U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+M) $>$$>$ U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+S) + 1)
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_d_m_a_c_c26_x_x___object}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_u_d_m_a_c_c26_x_x_8h_a3645577cacce45f1ad3b4879e3ef5afc}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_d_m_a_c_c26_x_x___h_w_attrs}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_u_d_m_a_c_c26_x_x_8h_ac9e26a57f30a829b5b2e3174e1df812f}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_d_m_a_c_c26_x_x___config}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config} \hyperlink{_u_d_m_a_c_c26_x_x_8h_a59acc64eb8db50a7a37b44fb4fa5fad1}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+D\+M\+A\+C\+C26\+X\+X Global configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_d_m_a_c_c26_x_x___config}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config} $\ast$ \hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open()} call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a279762f77bf9dc5e5e12f14db1fdbaba}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn} (U\+Arg callbacks)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a8bb3d9eff25abd3378f9cbc3189440bf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to initialize the C\+C26\+X\+X D\+M\+A driver. \end{DoxyCompactList}\item 
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} \hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open} ()
+\begin{DoxyCompactList}\small\item\em Function to initialize the C\+C26\+X\+X D\+M\+A peripheral. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a1eec9bde0731a07b492a9f483b0c554b}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle, uint32\+\_\+t channel\+Bit\+Mask)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E bool \hyperlink{_u_d_m_a_c_c26_x_x_8h_a5725e1db13295ef9096723f2b7c6364c}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle, uint32\+\_\+t channel\+Bit\+Mask)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a1571fcbf7f44fca000fef38d8955eae6}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle, uint32\+\_\+t channel\+Bit\+Mask)
+\item 
+\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a0cd214fa0e13f1ddb1a519a30acfe30c}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle, uint32\+\_\+t channel\+Bit\+Mask)
+\item 
+void \hyperlink{_u_d_m_a_c_c26_x_x_8h_a5529a47329f27d70c490c5ed1c1b19f0}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close} (\hyperlink{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close the D\+M\+A driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+B\+A\+S\+E~0x20000400}\label{_u_d_m_a_c_c26_x_x_8h_ab956c64f89045e5c6546115ec6062a7f}
+Base address for the D\+M\+A control table, must be 1024 bytes aligned \index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+S\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E(
+\begin{DoxyParamCaption}
+\item[{}]{S\+I\+Z\+E}
+\end{DoxyParamCaption}
+)~(((S\+I\+Z\+E -\/ 1) $<$$<$ U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+S) \& U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+M)}\label{_u_d_m_a_c_c26_x_x_8h_a5c7843573980a2380bd0adf65f58a433}
+Make sure D\+M\+A control table base address is 1024 bytes aligned
+
+Compiler specific macros to allocate control table entries
+
+Sets the D\+M\+A transfer size in number of items \index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+I\+Z\+E(
+\begin{DoxyParamCaption}
+\item[{}]{C\+O\+N\+T\+R\+O\+L}
+\end{DoxyParamCaption}
+)~(((C\+O\+N\+T\+R\+O\+L \& U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+M) $>$$>$ U\+D\+M\+A\+\_\+\+X\+F\+E\+R\+\_\+\+S\+I\+Z\+E\+\_\+\+S) + 1)}\label{_u_d_m_a_c_c26_x_x_8h_af51cbac1b7f6cc86b9ea0db72426dade}
+Gets the D\+M\+A transfer size in number of items 
+
+\subsubsection{Typedef Documentation}
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}  {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Object}}\label{_u_d_m_a_c_c26_x_x_8h_a3645577cacce45f1ad3b4879e3ef5afc}
+
+
+U\+D\+M\+A\+C\+C26\+X\+X object. 
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_u_d_m_a_c_c26_x_x_8h_ac9e26a57f30a829b5b2e3174e1df812f}
+
+
+U\+D\+M\+A\+C\+C26\+X\+X hardware attributes. 
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}  {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}}\label{_u_d_m_a_c_c26_x_x_8h_a59acc64eb8db50a7a37b44fb4fa5fad1}
+
+
+U\+D\+M\+A\+C\+C26\+X\+X Global configuration. 
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config}$\ast$ {\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_u_d_m_a_c_c26_x_x_8h_a969a9feb0f822c4764ef1da2ff5066cf}
+
+
+A handle that is returned from a \hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open()} call. 
+
+
+
+\subsubsection{Function Documentation}
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+hwi\+Int\+Fxn (
+\begin{DoxyParamCaption}
+\item[{U\+Arg}]{callbacks}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a279762f77bf9dc5e5e12f14db1fdbaba}
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a8bb3d9eff25abd3378f9cbc3189440bf}
+
+
+Function to initialize the C\+C26\+X\+X D\+M\+A driver. 
+
+The function will set the is\+Open flag to false, and should be called prior to opening the D\+M\+A driver.
+
+\begin{DoxyPrecond}{Precondition}
+Calling context\+: Hwi, Swi, Task
+\end{DoxyPrecond}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open()} 
+\end{DoxySeeAlso}
+
+
+References U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config\+::object.
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle} U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}
+
+
+Function to initialize the C\+C26\+X\+X D\+M\+A peripheral. 
+
+The function will set a dependency on the peripheral power domain, i.\+e. power up the module and enable the clock. Note this function always uses the first D\+M\+A entry in the global U\+D\+M\+A\+C\+C26\+X\+X\+\_\+config list.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_a8bb3d9eff25abd3378f9cbc3189440bf}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+init()} has to be called first. Calling context\+: Task
+\end{DoxyPrecond}
+\begin{DoxyReturn}{Returns}
+U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been already opened
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_a5529a47329f27d70c490c5ed1c1b19f0}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Enable (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{channel\+Bit\+Mask}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a1eec9bde0731a07b492a9f483b0c554b}
+
+
+References U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr, and U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config\+::hw\+Attrs.
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E bool U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Done (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{channel\+Bit\+Mask}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a5725e1db13295ef9096723f2b7c6364c}
+
+
+References U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr, and U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config\+::hw\+Attrs.
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+clear\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{channel\+Bit\+Mask}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a1571fcbf7f44fca000fef38d8955eae6}
+
+
+References U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr, and U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config\+::hw\+Attrs.
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable}]{\setlength{\rightskip}{0pt plus 5cm}\+\_\+\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+I\+N\+L\+I\+N\+E void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+channel\+Disable (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{channel\+Bit\+Mask}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a0cd214fa0e13f1ddb1a519a30acfe30c}
+
+
+References U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr, and U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Config\+::hw\+Attrs.
+
+\index{U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}!U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close}}
+\index{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close@{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close}!U\+D\+M\+A\+C\+C26\+X\+X.\+h@{U\+D\+M\+A\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void U\+D\+M\+A\+C\+C26\+X\+X\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+D\+M\+A\+C\+C26\+X\+X\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_d_m_a_c_c26_x_x_8h_a5529a47329f27d70c490c5ed1c1b19f0}
+
+
+Function to close the D\+M\+A driver. 
+
+Will disable the D\+M\+A hardware, release the power dependency and destruct the H\+W\+I interrupt.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_d_m_a_c_c26_x_x_8h_aa7a244c7cfec8551f11ad5d4b5afa0ff}{U\+D\+M\+A\+C\+C26\+X\+X\+\_\+open()} has to be called first. Calling context\+: Task
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I\+\_\+\+Handle returned from \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+S\+P\+I\+C\+C26\+X\+X\+D\+M\+A\+\_\+open 
+\end{DoxySeeAlso}

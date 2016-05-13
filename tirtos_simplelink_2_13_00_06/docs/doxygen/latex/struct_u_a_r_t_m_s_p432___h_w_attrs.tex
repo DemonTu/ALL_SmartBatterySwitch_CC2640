@@ -1,0 +1,119 @@
+\subsection{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_m_s_p432___h_w_attrs}\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+M\+S\+P432 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+M\+S\+P432.\+h$>$}
+
+
+
+Collaboration diagram for U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{struct_u_a_r_t_m_s_p432___h_w_attrs__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a3ac9284cf6c983c0e6d06c913cb3f8fb}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_acb0e04c3738195c0cebbe0cc14c99690}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a977f993c696b57397f56405e4ecb9be6}{int\+Priority}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a22ca5e160df007a74cfa304adf69d893}{clock\+Source}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a6a67f0ec8bba9bf2cd3ff6532d8225d4}{bit\+Order}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a0908dc397eb5bea6958cf3e4d29d82d7}{num\+Baudrate\+Entries}
+\item 
+\hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config} const $\ast$ \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a1752fdae9f05081ab11d72357f3faaa5}{baudrate\+L\+U\+T}
+\item 
+unsigned char $\ast$ \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a6c07951f956137b108d8deb56a941162}{ring\+Buf\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs_a345815030a7e198c64cefee76189dcf9}{ring\+Buf\+Size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+M\+S\+P432 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} uartMSP432RingBuffer0[32];
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} uartMSP432RingBuffer1[32];
+
+\textcolor{keyword}{const} UARTMSP432_HWAttrs uartMSP432HWAttrs[MSP\_EXP432P401RLP\_UARTCOUNT] = \{
+    \{
+        .baseAddr = EUSCI\_A0\_BASE,
+        .intNum = INT\_EUSCIA0,
+        .intPriority = ~0,
+        .clockSource = EUSCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+        .bitOrder = EUSCI\_A\_UART\_LSB\_FIRST,
+        .numBaudrateEntries = \textcolor{keyword}{sizeof}(uartMSP432Baudrates) /
+                              \textcolor{keyword}{sizeof}(UARTMSP432_BaudrateConfig),
+        .baudrateLUT = uartMSP432Baudrates,
+        .ringBufPtr  = uartMSP432RingBuffer0,
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartMSP432RingBuffer0)
+    \},
+    \{
+        .baseAddr = EUSCI\_A2\_BASE,
+        .intNum = INT\_EUSCIA2,
+        .intPriority = ~0,
+        .clockSource = EUSCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+        .bitOrder = EUSCI\_A\_UART\_LSB\_FIRST,
+        .numBaudrateEntries = \textcolor{keyword}{sizeof}(uartMSP432Baudrates) /
+                              \textcolor{keyword}{sizeof}(UARTMSP432_BaudrateConfig),
+        .baudrateLUT = uartMSP432Baudrates
+        .ringBufPtr  = uartMSP432RingBuffer1,
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartMSP432RingBuffer1)
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a3ac9284cf6c983c0e6d06c913cb3f8fb}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_acb0e04c3738195c0cebbe0cc14c99690}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a977f993c696b57397f56405e4ecb9be6}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a22ca5e160df007a74cfa304adf69d893}
+U\+A\+R\+T Clock source U\+A\+R\+T Bit order \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!bit\+Order@{bit\+Order}}
+\index{bit\+Order@{bit\+Order}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{bit\+Order}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::bit\+Order}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a6a67f0ec8bba9bf2cd3ff6532d8225d4}
+Number of \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config} entries \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!num\+Baudrate\+Entries@{num\+Baudrate\+Entries}}
+\index{num\+Baudrate\+Entries@{num\+Baudrate\+Entries}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{num\+Baudrate\+Entries}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::num\+Baudrate\+Entries}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a0908dc397eb5bea6958cf3e4d29d82d7}
+Pointer to a table of possible \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config} entries \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!baudrate\+L\+U\+T@{baudrate\+L\+U\+T}}
+\index{baudrate\+L\+U\+T@{baudrate\+L\+U\+T}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{baudrate\+L\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config} const$\ast$ U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::baudrate\+L\+U\+T}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a1752fdae9f05081ab11d72357f3faaa5}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Ptr@{ring\+Buf\+Ptr}}
+\index{ring\+Buf\+Ptr@{ring\+Buf\+Ptr}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Ptr}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a6c07951f956137b108d8deb56a941162}
+Pointer to a application ring buffer \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Size@{ring\+Buf\+Size}}
+\index{ring\+Buf\+Size@{ring\+Buf\+Size}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Size}\label{struct_u_a_r_t_m_s_p432___h_w_attrs_a345815030a7e198c64cefee76189dcf9}
+Size of ring\+Buf\+Ptr 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_m_s_p432_8h}{U\+A\+R\+T\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

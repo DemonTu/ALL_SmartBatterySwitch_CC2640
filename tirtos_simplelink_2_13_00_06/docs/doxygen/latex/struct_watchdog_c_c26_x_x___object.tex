@@ -1,0 +1,87 @@
+\subsection{Watchdog\+C\+C26\+X\+X\+\_\+\+Object Struct Reference}
+\label{struct_watchdog_c_c26_x_x___object}\index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+
+
+Watchdog Object for C\+C26\+X\+X.  
+
+
+
+
+{\ttfamily \#include $<$Watchdog\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{struct_watchdog_c_c26_x_x___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{struct_watchdog_c_c26_x_x___object_a841c8d0d31d1579a93b252a1fa0f24ee}{is\+Open}
+\item 
+unsigned long \hyperlink{struct_watchdog_c_c26_x_x___object_ab52a49d15bf7f8a977a173557f065513}{reload\+Value}
+\item 
+\hyperlink{_watchdog_8h_abb9d5f385013e9950884200d8d05fd05}{Watchdog\+\_\+\+Callback} \hyperlink{struct_watchdog_c_c26_x_x___object_aa6c9f831aad4ab34f61bf323aa3c0b51}{callback\+Fxn}
+\item 
+\hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88}{Watchdog\+\_\+\+Reset\+Mode} \hyperlink{struct_watchdog_c_c26_x_x___object_a6d5b931599fbf0753e7cba317d638385}{reset\+Mode}
+\item 
+\hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51e}{Watchdog\+\_\+\+Debug\+Mode} \hyperlink{struct_watchdog_c_c26_x_x___object_a1d7fd3a5482cda6047764bdd4d5c81e3}{debug\+Stall\+Mode}
+\item 
+void $\ast$ \hyperlink{struct_watchdog_c_c26_x_x___object_ade43c12f9201eaff5a7a5d59ae0ce7c1}{watchdog\+Pre\+Fxn}
+\item 
+void $\ast$ \hyperlink{struct_watchdog_c_c26_x_x___object_a663b81191d1d54360173b15ad9598948}{watchdog\+Post\+Fxn}
+\item 
+\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} \hyperlink{struct_watchdog_c_c26_x_x___object_a93d0a7f9f1de80b9e7873c57ad9c8d71}{watchdog\+Pre\+Obj}
+\item 
+\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} \hyperlink{struct_watchdog_c_c26_x_x___object_aca086d9794c9fef4091969e76de0847c}{watchdog\+Post\+Obj}
+\item 
+ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct \hyperlink{struct_watchdog_c_c26_x_x___object_ae678273b5e2e747dfb6a36bfca820f0a}{hwi}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Watchdog Object for C\+C26\+X\+X. 
+
+Not to be accessed by the user. 
+
+\subsubsection{Field Documentation}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::is\+Open}\label{struct_watchdog_c_c26_x_x___object_a841c8d0d31d1579a93b252a1fa0f24ee}
+Flag for open/close status \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!reload\+Value@{reload\+Value}}
+\index{reload\+Value@{reload\+Value}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{reload\+Value}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::reload\+Value}\label{struct_watchdog_c_c26_x_x___object_ab52a49d15bf7f8a977a173557f065513}
+Reload value for Watchdog \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!callback\+Fxn@{callback\+Fxn}}
+\index{callback\+Fxn@{callback\+Fxn}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Callback} Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::callback\+Fxn}\label{struct_watchdog_c_c26_x_x___object_aa6c9f831aad4ab34f61bf323aa3c0b51}
+Pointer to callback. Not supported on all targets. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!reset\+Mode@{reset\+Mode}}
+\index{reset\+Mode@{reset\+Mode}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{reset\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Reset\+Mode} Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::reset\+Mode}\label{struct_watchdog_c_c26_x_x___object_a6d5b931599fbf0753e7cba317d638385}
+Mode to enable resets. Not supported on all targets. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!debug\+Stall\+Mode@{debug\+Stall\+Mode}}
+\index{debug\+Stall\+Mode@{debug\+Stall\+Mode}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{debug\+Stall\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Debug\+Mode} Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::debug\+Stall\+Mode}\label{struct_watchdog_c_c26_x_x___object_a1d7fd3a5482cda6047764bdd4d5c81e3}
+Mode to stall W\+D\+T at breakpoints. Not supported on all targets. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!watchdog\+Pre\+Fxn@{watchdog\+Pre\+Fxn}}
+\index{watchdog\+Pre\+Fxn@{watchdog\+Pre\+Fxn}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{watchdog\+Pre\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::watchdog\+Pre\+Fxn}\label{struct_watchdog_c_c26_x_x___object_ade43c12f9201eaff5a7a5d59ae0ce7c1}
+Watchdog Pre-\/notify function pointer. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!watchdog\+Post\+Fxn@{watchdog\+Post\+Fxn}}
+\index{watchdog\+Post\+Fxn@{watchdog\+Post\+Fxn}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{watchdog\+Post\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::watchdog\+Post\+Fxn}\label{struct_watchdog_c_c26_x_x___object_a663b81191d1d54360173b15ad9598948}
+Watchdog Post-\/notify function pointer. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!watchdog\+Pre\+Obj@{watchdog\+Pre\+Obj}}
+\index{watchdog\+Pre\+Obj@{watchdog\+Pre\+Obj}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{watchdog\+Pre\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Notify\+Obj} Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::watchdog\+Pre\+Obj}\label{struct_watchdog_c_c26_x_x___object_a93d0a7f9f1de80b9e7873c57ad9c8d71}
+Watchdog Pre-\/notify object. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!watchdog\+Post\+Obj@{watchdog\+Post\+Obj}}
+\index{watchdog\+Post\+Obj@{watchdog\+Post\+Obj}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{watchdog\+Post\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Notify\+Obj} Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::watchdog\+Post\+Obj}\label{struct_watchdog_c_c26_x_x___object_aca086d9794c9fef4091969e76de0847c}
+Watchdog Post-\/notify object. \index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct Watchdog\+C\+C26\+X\+X\+\_\+\+Object\+::hwi}\label{struct_watchdog_c_c26_x_x___object_ae678273b5e2e747dfb6a36bfca820f0a}
+Embedded Hwi Object 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_watchdog_c_c26_x_x_8h}{Watchdog\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

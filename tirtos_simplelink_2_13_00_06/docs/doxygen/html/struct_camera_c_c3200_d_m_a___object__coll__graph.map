@@ -1,0 +1,4 @@
+<map id="CameraCC3200DMA_Object" name="CameraCC3200DMA_Object">
+<area shape="rect" href="$struct_camera___config.html" title="Camera Global configuration. " alt="" coords="175,9,290,33" />
+<area shape="rect" href="$struct_camera___fxn_table.html" title="The definition of a Camera function table that contains the required set of functions to control a sp..." alt="" coords="243,158,374,182" />
+</map>

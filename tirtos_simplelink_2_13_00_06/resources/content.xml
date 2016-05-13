@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource.explorer version="1.0" name="%NAME%" dir="" href="http://processors.wiki.ti.com/index.php/TI-RTOS">
+
+    <content name="Release Notes" href="./tirtos_2_13_00_06_release_notes.html">
+	<type>weblink</type>
+    </content>
+    <content name="Documentation Links" href="./tirtos_docs_overview.html">
+	<type>weblink</type>
+    </content>
+    <!-- DEVICE-BASED-CONTENT -->
+
+</resource.explorer>

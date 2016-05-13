@@ -1,0 +1,87 @@
+\subsection{Crypto\+C\+C26\+X\+X\+\_\+\+Object Struct Reference}
+\label{struct_crypto_c_c26_x_x___object}\index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+
+
+Crypto\+C\+C26\+X\+X Object.  
+
+
+
+
+{\ttfamily \#include $<$Crypto\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for Crypto\+C\+C26\+X\+X\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{struct_crypto_c_c26_x_x___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{struct_crypto_c_c26_x_x___object_aed6ed8c1a1fb38542f0a66bac8b207d1}{open\+Cnt}
+\item 
+uint32\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___object_a7bf2c514e22988c397d2b49e5a7be53b}{timeout}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h_a30e647b6ad6b608b60990929200686e0}{Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store} \hyperlink{struct_crypto_c_c26_x_x___object_a73d676dd4ff0815b55058c15c6315bb9}{key\+Store}
+\item 
+\hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$ \hyperlink{struct_crypto_c_c26_x_x___object_a6ebc5fa5ae8455db12e9a01b34a75dbf}{current\+Transact}
+\item 
+\hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$ \hyperlink{struct_crypto_c_c26_x_x___object_a6723e9a4eb86f36e8860c5ef541466fc}{head\+Ptr}
+\item 
+\hyperlink{struct_crypto_c_c26_x_x___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction} $\ast$ \hyperlink{struct_crypto_c_c26_x_x___object_a7474f4d229f4f9274dbfa2b0766b52ce}{tail\+Ptr}
+\item 
+\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} \hyperlink{struct_crypto_c_c26_x_x___object_ac6f020255e0552838fa662df76bfdb8e}{crypto\+Noti\+Obj}
+\item 
+ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct \hyperlink{struct_crypto_c_c26_x_x___object_ade45a49db795267b21c108926d3a69a2}{hwi}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_crypto_c_c26_x_x___object_add5ff652a01c8f755f9ffc6da8ff7781}{trans\+Sem}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_crypto_c_c26_x_x___object_a5845db71c0440f667b9ab19e22ee8fd5}{wait\+Sem}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Crypto\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Field Documentation}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!open\+Cnt@{open\+Cnt}}
+\index{open\+Cnt@{open\+Cnt}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{open\+Cnt}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::open\+Cnt}\label{struct_crypto_c_c26_x_x___object_aed6ed8c1a1fb38542f0a66bac8b207d1}
+Counting number of clients \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!timeout@{timeout}}
+\index{timeout@{timeout}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::timeout}\label{struct_crypto_c_c26_x_x___object_a7bf2c514e22988c397d2b49e5a7be53b}
+Timeout for encrypt/decrypt operation \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!key\+Store@{key\+Store}}
+\index{key\+Store@{key\+Store}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{key\+Store}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Key\+Store} Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::key\+Store}\label{struct_crypto_c_c26_x_x___object_a73d676dd4ff0815b55058c15c6315bb9}
+Key store for Crypto \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!current\+Transact@{current\+Transact}}
+\index{current\+Transact@{current\+Transact}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{current\+Transact}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}$\ast$ Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::current\+Transact}\label{struct_crypto_c_c26_x_x___object_a6ebc5fa5ae8455db12e9a01b34a75dbf}
+Pointer to ongoing transaction \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!head\+Ptr@{head\+Ptr}}
+\index{head\+Ptr@{head\+Ptr}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{head\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}$\ast$ Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::head\+Ptr}\label{struct_crypto_c_c26_x_x___object_a6723e9a4eb86f36e8860c5ef541466fc}
+head pointer for queued transactions \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!tail\+Ptr@{tail\+Ptr}}
+\index{tail\+Ptr@{tail\+Ptr}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{tail\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}$\ast$ Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::tail\+Ptr}\label{struct_crypto_c_c26_x_x___object_a7474f4d229f4f9274dbfa2b0766b52ce}
+tail pointer for queued transactions \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!crypto\+Noti\+Obj@{crypto\+Noti\+Obj}}
+\index{crypto\+Noti\+Obj@{crypto\+Noti\+Obj}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{crypto\+Noti\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Notify\+Obj} Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::crypto\+Noti\+Obj}\label{struct_crypto_c_c26_x_x___object_ac6f020255e0552838fa662df76bfdb8e}
+Crypto notification object \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::hwi}\label{struct_crypto_c_c26_x_x___object_ade45a49db795267b21c108926d3a69a2}
+Hwi object \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!trans\+Sem@{trans\+Sem}}
+\index{trans\+Sem@{trans\+Sem}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{trans\+Sem}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::trans\+Sem}\label{struct_crypto_c_c26_x_x___object_add5ff652a01c8f755f9ffc6da8ff7781}
+Crypto\+C\+C26\+X\+X transaction semaphore \index{Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}!wait\+Sem@{wait\+Sem}}
+\index{wait\+Sem@{wait\+Sem}!Crypto\+C\+C26\+X\+X\+\_\+\+Object@{Crypto\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{wait\+Sem}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct Crypto\+C\+C26\+X\+X\+\_\+\+Object\+::wait\+Sem}\label{struct_crypto_c_c26_x_x___object_a5845db71c0440f667b9ab19e22ee8fd5}
+Semaphore for use in blocking mode 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h}{Crypto\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

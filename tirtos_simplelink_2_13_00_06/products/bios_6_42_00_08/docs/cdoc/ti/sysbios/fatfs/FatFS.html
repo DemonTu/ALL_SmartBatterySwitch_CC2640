@@ -1,0 +1,267 @@
+<html>
+<head>
+<title>module ti.sysbios.fatfs.FatFS</title>
+<meta name="description" content="Configuration and integration of the open-source FAT filesystem project, FatFs, with SYS/BIOS">
+<link rel="stylesheet" type="text/css" href="../../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.sysbios.fatfs.</span><span class="xdoc-id">FatFS</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/package.html" title="package ti.sysbios.fatfs"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html">index URL</a></div>
+<p class="xdocHdrSummary">Configuration and integration of the open-source FAT filesystem project,
+  FatFs, with SYS/BIOS</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">Configuration settings</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocMetaElems">Individual elements</a></li>
+</ul>
+<div class="xdocBrief">
+The FatFs project homepage: http://elm-chan.org/fsw/ff/00index_e.html
+[&nbsp;<a class="xdocBrief" href="#xdoc-desc">more</a>&nbsp;...&nbsp;]
+</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../../ti/sysbios/fatfs/FatFS-src.html"><span class="xdocLabelFile">ti/sysbios/fatfs/FatFS.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> FatFS = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.sysbios.fatfs.FatFS'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#fatfs.Prefix">FatFS.<span class="xdoc-id">fatfsPrefix</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;File name prefix for this filesystem for use with TI C RTS</span></span></a> = <i><span class="xdoc-kw2">String</span></i> "fat";
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#get.Fat.Time.Hook">FatFS.<span class="xdoc-id">getFatTimeHook</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;User defined hook function to return the time from a real time clock</span></span></a> = <i><span class="xdoc-kw2">Int32</span>(*)()</i> <span class="xdoc-kw2">null</span>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#ramdisk.Drive.Id">FatFS.<span class="xdoc-id">ramdiskDriveId</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Disable the ramdisk or select the drive ID for a ramdisk (-1 to disable)</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> -1;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#ramdisk.Size">FatFS.<span class="xdoc-id">ramdiskSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Size of the FAT filesystem in bytes</span></span></a> = <i><span class="xdoc-kw2">UInt</span></i> 512 * 256;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#ramdisk.Symbol.Name">FatFS.<span class="xdoc-id">ramdiskSymbolName</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;Symbol name or address of a pre-existing FAT File System</span></span></a> = <i><span class="xdoc-kw2">String</span></i> "";
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<span id="xdoc-desc"></span>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The FatFs project homepage: http://elm-chan.org/fsw/ff/00index_e.html</div>
+<div class="xdocText">This initial integration supports (only) a simple RAM disk. The FatFs source
+  is included and pre-built, together with support for SYS/BIOS
+  synchronization. Also included is an implementation of the "device I/O"
+  model for the TI compiler C runtime support (RTS) library. This provides
+  transparent support for using the C stdio.h library functions (fopen,
+  fwrite, fclose) instead of the raw, project-specific, API functions
+  provided by FatFs (f_open, f_write).</div>
+<div class="xdocText">The configuration options initially defined here are subject to change
+  as more device driver support is added, such as MMC/SD, SATA, and USB.</div>
+<div class="xdocText">To incorporate the FatFs functionality into an application, simply "use"
+  this module in a SYS/BIOS configuration. This will automatically generate
+  a startup function to "plug in" the filesystem into the TI RTS, and provide
+  the needed libraries for linking. xgconf users can simply right-click on
+  the module icon and select "Use Module". Script users simply add a
+  xdc.useModule("ti.sysbios.fatfs.FatFS") to their .cfg file.</div>
+<div class="xdocText">There are currently three configuration options, one related to the C
+  RTS stdio implementation, and two for the ramdisk support. First, the
+  fatfsPrefix parameter is used as the namespace "prefix" for the C RTS
+  fopen() function. See the TI C Compiler User's Guide (such as spru187)
+  for more details. Basically, this prefix must be supplied as part of the
+  filename when calling fopen(). For example, with the default value of
+  "fat", an application would use:</div>
+<div class="xdocText"><PRE class="Example">  FILE * fp = fopen("fat:/signal.dat", "w");
+</PRE></div>
+<div class="xdocText">Note the ":" as a separator. This must be part of the fopen() call, but
+  is not specified as part of the fatfsPrefix configuration parameter.</div>
+<div class="xdocText">The other parameters control how the RAM disk is configured into the
+  system. The ramdiskSymbolName parameter can be used to specify an
+  address of a pre-initialized (formatted) filesystem. This would be
+  typically provided by linking in a (large) C data array. When using this
+  parameter, the other configuration parameter, ramdiskSize, should be set
+  to the size of the data array in units of bytes.</div>
+<div class="xdocText">For example, assume a FAT filesystem that has been "serialized"
+  into the file ramdisk.c that contains the following:</div>
+<div class="xdocText"><PRE class="Example">  unsigned int ramdiskData[32768] = {
+</PRE></div>
+<div class="xdocText">then the values for these two configuration parameters should be:</div>
+<div class="xdocText"><PRE class="Example">  var FatFS = xdc.useModule("ti.sysbios.fatfs.FatFS");
+  FatFS.ramdiskSymbolName = "ramdiskData";
+  FatFS.ramdiskSize = 32768 * 4;
+</PRE></div>
+<div class="xdocText">When the ramdiskSymbolName parameter is left "empty", .ie., "",
+  then the ramdiskSize
+  parameter is used to create an empty FAT filesystem at boot time of size
+  ramdiskSize.</div>
+<div class="xdocText">User Defined Hook For get_fattime()</div>
+<div class="xdocText">The default implementation of the get_fattime() function uses the SYS/BIOS
+  <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html" title="ti.sysbios.hal.Seconds">Seconds</a> module to get the current time.
+  The user must have called <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html#set" title="ti.sysbios.hal.Seconds.set">Seconds_set</a>
+  early on (e.g., from main()) to initialize the
+  <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html" title="ti.sysbios.hal.Seconds">Seconds</a> module's clock with the number of
+  seconds since 1970.  However, it is possible to override the use of the
+  <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html" title="ti.sysbios.hal.Seconds">Seconds</a> module by defining a hook
+  function instead.  This function will then be called from get_fattime().</div>
+<div class="xdocText">A hook function must be defined using the following format:</div>
+<div class="xdocText"><PRE class="Example">      Int32 &lt;functionName&gt;(Void)
+</PRE></div>
+<div class="xdocText">Note if the user specifies a hook function in the RTSC configuration
+  script, but does not define this function in their C code, a linker error
+  will result.</div>
+<div id="xdocSep">
+</div>
+<div id="xdocMetaElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="fatfs.Prefix"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">FatFS.</span><span class="xdoc-id">fatfsPrefix</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/FatFS.html" title="module FatFS"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html#fatfs.Prefix">index URL</a></div>
+<p class="xdocHdrSummaryDcl">File name prefix for this filesystem for use with TI C RTS</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>FatFS.<span class="xdoc-id">fatfsPrefix</span> = <i><span class="xdoc-kw2">String</span></i> "fat";
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This prefix should be supplied as part of the filename passed when
+ calling fopen().  For example:</div>
+<div class="xdocText"><PRE class="Example">  FILE * fp = fopen("fat:/signal.dat", "w");
+</PRE></div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="get.Fat.Time.Hook"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">FatFS.</span><span class="xdoc-id">getFatTimeHook</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/FatFS.html" title="module FatFS"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html#get.Fat.Time.Hook">index URL</a></div>
+<p class="xdocHdrSummaryDcl">User defined hook function to return the time from a real time clock</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>FatFS.<span class="xdoc-id">getFatTimeHook</span> = <i><span class="xdoc-kw2">Int32</span>(*)()</i> <span class="xdoc-kw2">null</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">By default, get_fattime() uses the SYS/BIOS
+  <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html" title="ti.sysbios.hal.Seconds">Seconds</a> module to get the current time.
+  By default, a hard coded time is returned from get_fattime(). Although,
+  it should not be necessary, it is possible to override the use of
+  the <a class="xdoc-link" href="../../../ti/sysbios/hal/Seconds.html" title="ti.sysbios.hal.Seconds">Seconds</a> module time with a user
+  defined hook function.  This hook function will then be called from
+  the get_fattime() function.</div>
+<div class="xdocText">As an example, to configure a hook function called "myTimeFxn", you
+  would first need to implement "myTimeFxn" in C to get the time from
+  the real time clock on your hardware.  Then, in your RTSC configuration
+  script, set "getFatTimeHook" to point to "myTimeFxn":</div>
+<div class="xdocText"><PRE class="Example">  var FatFS = xdc.useModule('ti.sysbios.fatfs.FatFS");
+  FatFS.getFatTimeHook = '&amp;myTimeFxn';
+</PRE></div>
+<div class="xdocText">Note if the user specifies a hook function in the RTSC configuration
+  script, but does not define this function in their C code, a linker
+  error will result.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="ramdisk.Drive.Id"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">FatFS.</span><span class="xdoc-id">ramdiskDriveId</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/FatFS.html" title="module FatFS"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html#ramdisk.Drive.Id">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Disable the ramdisk or select the drive ID for a ramdisk (-1 to disable)</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>FatFS.<span class="xdoc-id">ramdiskDriveId</span> = <i><span class="xdoc-kw2">Int</span></i> -1;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">Parameter used to specify whether to create a ramdisk or not, and if so,
+ specify the drive ID to use for the ramdisk.  Valid ID numbers are in the
+ set [0, 1, 2, 3].  If using a ramdisk in combination with other media,
+ the user is responsible for managing these drive IDs so that they do not
+ conflict with one another.</div>
+<div class="xdocText">By default, no ramdisk is created.</div>
+<div class="xdocText">-1 : do not create a ramdisk
+  0 : create a ramdisk with drive ID 0
+  1 : create a ramdisk with drive ID 1
+  2 : create a ramdisk with drive ID 2
+  3 : create a ramdisk with drive ID 3</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="ramdisk.Size"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">FatFS.</span><span class="xdoc-id">ramdiskSize</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/FatFS.html" title="module FatFS"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html#ramdisk.Size">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Size of the FAT filesystem in bytes</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>FatFS.<span class="xdoc-id">ramdiskSize</span> = <i><span class="xdoc-kw2">UInt</span></i> 512 * 256;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="ramdisk.Symbol.Name"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">FatFS.</span><span class="xdoc-id">ramdiskSymbolName</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../ti/sysbios/fatfs/FatFS.html" title="module FatFS"><img class="xdocHdrArrow" src="../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../index.html#ti/sysbios/fatfs/FatFS.html#ramdisk.Symbol.Name">index URL</a></div>
+<p class="xdocHdrSummaryDcl">Symbol name or address of a pre-existing FAT File System</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>FatFS.<span class="xdoc-id">ramdiskSymbolName</span> = <i><span class="xdoc-kw2">String</span></i> "";
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The ramdisk allows for the loading of an existing file system image
+ stored in an C array or at a particular address.  The value of this
+ parameter should be the name of this array or the address of where the
+ file system image is located. If left empty, an empty filesystem will be
+ created at boot time.</div>
+</div>
+<div id="xdocDate">generated on Tue, 05 May 2015 00:53:18 GMT</div>
+</div></div></body>
+</html>

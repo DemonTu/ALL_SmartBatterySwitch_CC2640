@@ -1,0 +1,510 @@
+\subsection{Watchdog.\+h File Reference}
+\label{_watchdog_8h}\index{Watchdog.\+h@{Watchdog.\+h}}
+
+
+\subsubsection{Detailed Description}
+Watchdog driver interface. 
+
+===========================================================================
+
+The Watchdog header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Watchdog.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The Watchdog driver simplifies configuring and starting the Watchdog peripherals. The Watchdog can be set up to produce a reset signal after a timeout, or simply cause a hardware interrupt at a programmable interval. The driver provides the ability to specify a callback function that is called when the Watchdog causes an interrupt.
+
+When resets are turned on, it is the user application\textquotesingle{}s responsibility to call \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} in order to clear the Watchdog and prevent a reset. \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} can be called at any time.
+
+The Watchdog driver does not configure the board peripherals. This must be done before any calls to the Watchdog driver. The examples include a board-\/specific {\itshape Board\+\_\+init\+Watchdog()} functions in the board .c and .h files.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+Watchdog_Handle     handle;
+Watchdog_Params     params;
+
+Watchdog_Params_init(&params);
+params.resetMode = Watchdog_RESET_OFF;
+handle = Watchdog_open(Watchdog\_configIndex, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"Watchdog did not open"});
+\}
+
+\textcolor{comment}{// handle may now be used to interact with the Watchdog just created}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table}.
+
+The Watchdog driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config} data structures named {\itshape Watchdog\+\_\+config}. {\itshape Watchdog\+\_\+config} is implemented in the application with each entry being an instance of a Watchdog peripheral. Each entry in {\itshape Watchdog\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a Watchdog peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following Watchdog implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_watchdog_c_c3200_8h}{Watchdog\+C\+C3200.\+h}
+\item \hyperlink{_watchdog_m_s_p430_8h}{Watchdog\+M\+S\+P430.\+h}
+\item \hyperlink{_watchdog_m_s_p432_8h}{Watchdog\+M\+S\+P432.\+h}
+\item \hyperlink{_watchdog_tiva_8h}{Watchdog\+Tiva.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The Watchdog driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic Watchdog operations to be performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for Watchdog.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=105pt]{_watchdog_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_watchdog_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Watchdog Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Watchdog function table that contains the required set of functions to control a specific Watchdog driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Watchdog Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_watchdog_8h_a4d1b16e67bf555b8fe49182eb8a28b97}{Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_watchdog_8h_af7d1273929fd4d1f630c31b90def9684}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_watchdog_8h_aa8dd490de97398b1da33798d8e54b53f}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_watchdog_8h_a7cc28c1119ebecae88a5ae0735228489}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_watchdog_8h_a589be79a7f8ce642863f231e1dae7577}{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config} $\ast$ \hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em Watchdog Handle. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51e}{Watchdog\+\_\+\+Debug\+Mode} \hyperlink{_watchdog_8h_a369f0c40c3acb08f0ad21df99aedd42f}{Watchdog\+\_\+\+Debug\+Mode}
+\begin{DoxyCompactList}\small\item\em Watchdog debug stall settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88}{Watchdog\+\_\+\+Reset\+Mode} \hyperlink{_watchdog_8h_a49befb9cfb12eb30c8832809bcbaa3a4}{Watchdog\+\_\+\+Reset\+Mode}
+\begin{DoxyCompactList}\small\item\em Watchdog reset mode settings. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_watchdog_8h_abb9d5f385013e9950884200d8d05fd05}{Watchdog\+\_\+\+Callback}) (uintptr\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Watchdog callback pointer. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} \hyperlink{_watchdog_8h_a001003d331ef831675e9a8388a81041c}{Watchdog\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Watchdog Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_watchdog_8h_a0315c4931ba68423472f47c23c86f296}{Watchdog\+\_\+\+Clear\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_watchdog_8h_a2d13686bc3dd7fdb05ec97d63be489ee}{Watchdog\+\_\+\+Close\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_watchdog_8h_afb5bd0153345db8f4a7a6a8756b90447}{Watchdog\+\_\+\+Control\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_watchdog_8h_a6401b1a23d9048efb4ed69a074ea60f9}{Watchdog\+\_\+\+Init\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle}($\ast$ \hyperlink{_watchdog_8h_a05ae778da809a34e4d84c95d35ba5f58}{Watchdog\+\_\+\+Open\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle, \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_watchdog_8h_ab6ef6008c6bbc7d34b5638458e1ae5c1}{Watchdog\+\_\+\+Set\+Reload\+Fxn}) (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle, uint32\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} \hyperlink{_watchdog_8h_ad3e804ec79af5e10e8ef3af301860ef5}{Watchdog\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a Watchdog function table that contains the required set of functions to control a specific Watchdog driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config} \hyperlink{_watchdog_8h_ad8c9eb8a1cd2934965d385293fc38647}{Watchdog\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Watchdog Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51e}{Watchdog\+\_\+\+Debug\+Mode} \{ \\*
+\hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51ea787c87976091a6f294070dadd1747ed0}{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}, 
+\\*
+\hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51ea745be9d89bc0c15eda5c4082020f8bb2}{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F}
+ \}
+\begin{DoxyCompactList}\small\item\em Watchdog debug stall settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88}{Watchdog\+\_\+\+Reset\+Mode} \{ \\*
+\hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88a78ba6b49345f0116143f4d4e7a9ec488}{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F}, 
+\\*
+\hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88aafccd6330c396d9ffc2786524625bf1f}{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N}
+ \}
+\begin{DoxyCompactList}\small\item\em Watchdog reset mode settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear} (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Clears the Watchdog. \end{DoxyCompactList}\item 
+void \hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close} (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a Watchdog peripheral specified by the Watchdog handle.\+It stops (holds) the Watchdog counting on applicable platforms. \end{DoxyCompactList}\item 
+int \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control} (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given Watchdog\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initializes the Watchdog module. \end{DoxyCompactList}\item 
+\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open} (unsigned int index, \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Opens a Watchdog. \end{DoxyCompactList}\item 
+void \hyperlink{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}{Watchdog\+\_\+\+Params\+\_\+init} (\hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} structure to its defaults. \end{DoxyCompactList}\item 
+void \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload} (\hyperlink{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}{Watchdog\+\_\+\+Handle} handle, uint32\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Sets the Watchdog reload value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_watchdog_8h_a4d1b16e67bf555b8fe49182eb8a28b97}
+Common Watchdog\+\_\+control command code reservation offset. Watchdog driver implementations should offset command codes with Watchdog\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define WatchdogXYZ\_COMMAND0         Watchdog\_CMD\_RESERVED + 0
+2 #define WatchdogXYZ\_COMMAND1         Watchdog\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_watchdog_8h_af7d1273929fd4d1f630c31b90def9684}
+Common Watchdog\+\_\+control status code reservation offset. Watchdog driver implementations should offset status codes with Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define WatchdogXYZ\_STATUS\_ERROR0    Watchdog\_STATUS\_RESERVED - 0
+2 #define WatchdogXYZ\_STATUS\_ERROR1    Watchdog\_STATUS\_RESERVED - 1
+3 #define WatchdogXYZ\_STATUS\_ERROR2    Watchdog\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_watchdog_8h_aa8dd490de97398b1da33798d8e54b53f}
+
+
+Successful status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_watchdog_8h_a7cc28c1119ebecae88a5ae0735228489}
+
+
+Generic error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_watchdog_8h_a589be79a7f8ce642863f231e1dae7577}
+
+
+An error status code returned by \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()} returns Watchdog\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 
+
+\subsubsection{Typedef Documentation}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Handle@{Watchdog\+\_\+\+Handle}}
+\index{Watchdog\+\_\+\+Handle@{Watchdog\+\_\+\+Handle}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+\_\+\+Config}$\ast$ {\bf Watchdog\+\_\+\+Handle}}\label{_watchdog_8h_a00ed22749c947ef200434eeec507f90d}
+
+
+Watchdog Handle. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Debug\+Mode@{Watchdog\+\_\+\+Debug\+Mode}}
+\index{Watchdog\+\_\+\+Debug\+Mode@{Watchdog\+\_\+\+Debug\+Mode}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Debug\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Watchdog\+\_\+\+Debug\+Mode}  {\bf Watchdog\+\_\+\+Debug\+Mode}}\label{_watchdog_8h_a369f0c40c3acb08f0ad21df99aedd42f}
+
+
+Watchdog debug stall settings. 
+
+This enumeration defines the debug stall modes for the Watchdog. On some targets, the Watchdog timer will continue to count down while a debugging session is halted. To avoid unwanted resets, the Watchdog can be set to stall while the processor is stopped by the debugger. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Reset\+Mode@{Watchdog\+\_\+\+Reset\+Mode}}
+\index{Watchdog\+\_\+\+Reset\+Mode@{Watchdog\+\_\+\+Reset\+Mode}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Reset\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Watchdog\+\_\+\+Reset\+Mode}  {\bf Watchdog\+\_\+\+Reset\+Mode}}\label{_watchdog_8h_a49befb9cfb12eb30c8832809bcbaa3a4}
+
+
+Watchdog reset mode settings. 
+
+This enumeration defines the reset modes for the Watchdog. The Watchdog can be configured to either generate a reset upon timeout or simply produce a periodic interrupt. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Callback@{Watchdog\+\_\+\+Callback}}
+\index{Watchdog\+\_\+\+Callback@{Watchdog\+\_\+\+Callback}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Watchdog\+\_\+\+Callback) (uintptr\+\_\+t)}\label{_watchdog_8h_abb9d5f385013e9950884200d8d05fd05}
+
+
+Watchdog callback pointer. 
+
+This is the typedef for the function pointer that will allow a callback function to be specified in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} structure. The function will take a Watchdog\+\_\+\+Handle of the Watchdog causing the interrupt (cast as a uintptr\+\_\+t) as an argument. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+\index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+\_\+\+Params}  {\bf Watchdog\+\_\+\+Params}}\label{_watchdog_8h_a001003d331ef831675e9a8388a81041c}
+
+
+Watchdog Parameters. 
+
+Watchdog parameters are used to with the \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}{Watchdog\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}{Watchdog\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Clear\+Fxn@{Watchdog\+\_\+\+Clear\+Fxn}}
+\index{Watchdog\+\_\+\+Clear\+Fxn@{Watchdog\+\_\+\+Clear\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Clear\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Watchdog\+\_\+\+Clear\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle)}\label{_watchdog_8h_a0315c4931ba68423472f47c23c86f296}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Close\+Fxn@{Watchdog\+\_\+\+Close\+Fxn}}
+\index{Watchdog\+\_\+\+Close\+Fxn@{Watchdog\+\_\+\+Close\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Watchdog\+\_\+\+Close\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle)}\label{_watchdog_8h_a2d13686bc3dd7fdb05ec97d63be489ee}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Control\+Fxn@{Watchdog\+\_\+\+Control\+Fxn}}
+\index{Watchdog\+\_\+\+Control\+Fxn@{Watchdog\+\_\+\+Control\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Watchdog\+\_\+\+Control\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_watchdog_8h_afb5bd0153345db8f4a7a6a8756b90447}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_aa98a75361edb1e476432669169f2950e}{Watchdog\+\_\+control()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Init\+Fxn@{Watchdog\+\_\+\+Init\+Fxn}}
+\index{Watchdog\+\_\+\+Init\+Fxn@{Watchdog\+\_\+\+Init\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Watchdog\+\_\+\+Init\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle)}\label{_watchdog_8h_a6401b1a23d9048efb4ed69a074ea60f9}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Open\+Fxn@{Watchdog\+\_\+\+Open\+Fxn}}
+\index{Watchdog\+\_\+\+Open\+Fxn@{Watchdog\+\_\+\+Open\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Watchdog\+\_\+\+Handle}($\ast$ Watchdog\+\_\+\+Open\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle, {\bf Watchdog\+\_\+\+Params} $\ast$params)}\label{_watchdog_8h_a05ae778da809a34e4d84c95d35ba5f58}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Set\+Reload\+Fxn@{Watchdog\+\_\+\+Set\+Reload\+Fxn}}
+\index{Watchdog\+\_\+\+Set\+Reload\+Fxn@{Watchdog\+\_\+\+Set\+Reload\+Fxn}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Set\+Reload\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Watchdog\+\_\+\+Set\+Reload\+Fxn) ({\bf Watchdog\+\_\+\+Handle} handle, uint32\+\_\+t value)}\label{_watchdog_8h_ab6ef6008c6bbc7d34b5638458e1ae5c1}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload()}. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Fxn\+Table@{Watchdog\+\_\+\+Fxn\+Table}}
+\index{Watchdog\+\_\+\+Fxn\+Table@{Watchdog\+\_\+\+Fxn\+Table}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+\_\+\+Fxn\+Table}  {\bf Watchdog\+\_\+\+Fxn\+Table}}\label{_watchdog_8h_ad3e804ec79af5e10e8ef3af301860ef5}
+
+
+The definition of a Watchdog function table that contains the required set of functions to control a specific Watchdog driver implementation. 
+
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}}
+\index{Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+\_\+\+Config}  {\bf Watchdog\+\_\+\+Config}}\label{_watchdog_8h_ad8c9eb8a1cd2934965d385293fc38647}
+
+
+Watchdog Global configuration. 
+
+The \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config} structure contains a set of pointers used to characterize the Watchdog driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Debug\+Mode@{Watchdog\+\_\+\+Debug\+Mode}}
+\index{Watchdog\+\_\+\+Debug\+Mode@{Watchdog\+\_\+\+Debug\+Mode}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Debug\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Watchdog\+\_\+\+Debug\+Mode}}\label{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51e}
+
+
+Watchdog debug stall settings. 
+
+This enumeration defines the debug stall modes for the Watchdog. On some targets, the Watchdog timer will continue to count down while a debugging session is halted. To avoid unwanted resets, the Watchdog can be set to stall while the processor is stopped by the debugger. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N@{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}!Watchdog.\+h@{Watchdog.\+h}}\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N@{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N}}\item[{\em 
+Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N\label{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51ea787c87976091a6f294070dadd1747ed0}
+}]Watchdog will be stalled at breakpoints \index{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F@{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F}!Watchdog.\+h@{Watchdog.\+h}}\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F@{Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F}}\item[{\em 
+Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+F\+F\label{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51ea745be9d89bc0c15eda5c4082020f8bb2}
+}]Watchdog will keep running at breakpoints \end{description}
+\end{Desc}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Reset\+Mode@{Watchdog\+\_\+\+Reset\+Mode}}
+\index{Watchdog\+\_\+\+Reset\+Mode@{Watchdog\+\_\+\+Reset\+Mode}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Reset\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Watchdog\+\_\+\+Reset\+Mode}}\label{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88}
+
+
+Watchdog reset mode settings. 
+
+This enumeration defines the reset modes for the Watchdog. The Watchdog can be configured to either generate a reset upon timeout or simply produce a periodic interrupt. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F@{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F}!Watchdog.\+h@{Watchdog.\+h}}\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F@{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F}}\item[{\em 
+Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+F\+F\label{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88a78ba6b49345f0116143f4d4e7a9ec488}
+}]Timeouts generate interrupts only \index{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N@{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N}!Watchdog.\+h@{Watchdog.\+h}}\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N@{Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N}}\item[{\em 
+Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N\label{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88aafccd6330c396d9ffc2786524625bf1f}
+}]Generates reset after timeout \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+clear@{Watchdog\+\_\+clear}}
+\index{Watchdog\+\_\+clear@{Watchdog\+\_\+clear}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+clear}]{\setlength{\rightskip}{0pt plus 5cm}void Watchdog\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{{\bf Watchdog\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}
+
+
+Clears the Watchdog. 
+
+Clears the Watchdog to to prevent a reset signal from being generated if the module is in Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N reset mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Watchdog Handle \\
+\hline
+\end{DoxyParams}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+close@{Watchdog\+\_\+close}}
+\index{Watchdog\+\_\+close@{Watchdog\+\_\+close}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void Watchdog\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf Watchdog\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}
+
+
+Function to close a Watchdog peripheral specified by the Watchdog handle.\+It stops (holds) the Watchdog counting on applicable platforms. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Watchdog\+\_\+\+Handle returned from Watchdog\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+control@{Watchdog\+\_\+control}}
+\index{Watchdog\+\_\+control@{Watchdog\+\_\+control}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int Watchdog\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf Watchdog\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_aa98a75361edb1e476432669169f2950e}
+
+
+Function performs implementation specific features on a given Watchdog\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Watchdog handle returned from \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+init@{Watchdog\+\_\+init}}
+\index{Watchdog\+\_\+init@{Watchdog\+\_\+init}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Watchdog\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}
+
+
+Initializes the Watchdog module. 
+
+The application-\/provided Watchdog\+\_\+config must be present before the Watchdog\+\_\+init function is called. The Watchdog\+\_\+config must be persistent and not changed after Watchdog\+\_\+init is called. This function must be called before any of the other Watchdog driver A\+P\+Is. \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+open@{Watchdog\+\_\+open}}
+\index{Watchdog\+\_\+open@{Watchdog\+\_\+open}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Handle} Watchdog\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf Watchdog\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}
+
+
+Opens a Watchdog. 
+
+Opens a Watchdog object with the index and parameters specified, and returns a Watchdog\+\_\+\+Handle.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the Watchdog indexed into the Watchdog\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Watchdog\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} 
+
+\hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+\+Params\+\_\+init@{Watchdog\+\_\+\+Params\+\_\+init}}
+\index{Watchdog\+\_\+\+Params\+\_\+init@{Watchdog\+\_\+\+Params\+\_\+init}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Watchdog\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Watchdog\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}
+
+
+Function to initialize the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} structure to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Default parameters\+: callback\+Fxn = N\+U\+L\+L reset\+Mode = Watchdog\+\_\+\+R\+E\+S\+E\+T\+\_\+\+O\+N debug\+Stall\+Mode = Watchdog\+\_\+\+D\+E\+B\+U\+G\+\_\+\+S\+T\+A\+L\+L\+\_\+\+O\+N \index{Watchdog.\+h@{Watchdog.\+h}!Watchdog\+\_\+set\+Reload@{Watchdog\+\_\+set\+Reload}}
+\index{Watchdog\+\_\+set\+Reload@{Watchdog\+\_\+set\+Reload}!Watchdog.\+h@{Watchdog.\+h}}
+\paragraph[{Watchdog\+\_\+set\+Reload}]{\setlength{\rightskip}{0pt plus 5cm}void Watchdog\+\_\+set\+Reload (
+\begin{DoxyParamCaption}
+\item[{{\bf Watchdog\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{value}
+\end{DoxyParamCaption}
+)}\label{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}
+
+
+Sets the Watchdog reload value. 
+
+Sets the value from which the Watchdog will countdown after it reaches zero. This is how the reload value can be changed after the Watchdog has already been opened. The new reload value will be loaded into the Watchdog timer when this function is called. Watchdog\+\_\+set\+Reload is not reentrant.
+
+This A\+P\+I is not applicable for all platforms. See the page for your specific driver implementation for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & Watchdog Handle\\
+\hline
+{\em value} & Value to be loaded into Watchdog timer \\
+\hline
+\end{DoxyParams}

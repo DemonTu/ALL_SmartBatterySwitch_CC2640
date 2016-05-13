@@ -1,0 +1,11 @@
+package.xdc
+package/ti.uia.examples.evm6472.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/ti_uia_examples_evm6472.java
+package/ti_uia_examples_evm6472.class
+package/package_ti.uia.examples.evm6472.c
+package/package.defs.h
+package/ti.uia.examples.evm6472.ccs

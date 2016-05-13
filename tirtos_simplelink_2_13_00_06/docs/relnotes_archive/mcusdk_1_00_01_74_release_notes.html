@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><!-- saved from url=(0120)http://wiki.sanb.design.ti.com/twiki/bin/viewfile/Process/ReleaseNotesTemplate?rev=1;filename=example_release_notes.html --><!-- saved from url=(0113)file://C:\Documents and Settings\a0323759\Local Settings\Temporary Internet Files\OLKC\example_release_notes.html --><!-- /* * Copyright 2007 by Texas Instruments Incorporated . * * All rights reserved. Property of Texas Instruments Incorporated. * Restricted rights to use, duplicate or disclose this code are * granted through contract. * */ -->
+
+
+<title>MCU SDK 1.00.01 Release Notes</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><!-- For now, we use the doxygen style sheet -->
+
+<link href="release_notes_template_files/css.htm" type="text/css" rel="stylesheet">
+<meta content="MSHTML 6.00.2900.3395" name="GENERATOR"></head>
+<body>
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com/"><img style="border: 0px solid ; width: 222px; height: 54px;" alt="Texas Instruments" src="docs/tilogo.gif"> </a></td>
+<td bgcolor="red"><img style="width: 314px; height: 26px;" alt="Technology for Innovators(tm)" src="docs/titagline.gif">
+</td>
+</tr>
+</tbody>
+</table>
+<h1 style="text-align: left;">MCU SDK 1.00.01.74
+Release
+Notes</h1>
+This release note is divided into the following sections:<br>
+<br>
+<a href="#General_Info">Introduction</a>,
+<a href="#Documentation">Documentation</a>,
+<a href="#Products">Products Included</a>,
+<a href="#Whats_New">What's New</a>, <a href="#Compatibility">Upgrade &amp;
+Compatibility
+Information</a>, <a href="#Host_Support">Host
+Support</a>, <a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>, <a href="#Validation">Validation Info</a>, <a href="#Known_Issues">Known Issues</a>, <a href="#Examples">Examples</a>, <a href="#Version">Version
+Information</a>, <a href="#Support">Technical
+Support</a>.
+<hr>
+<h2><a name="General_Info">Introduction</a></h2>
+<p>This is an GA release of MCU SDK.&nbsp;</p>
+The
+MCU SDK (Micro-controller Software Development Kit) delivers components
+that enable engineers to develop applications on Texas Instruments
+micro-controller devices. The SDK is composed of multiple software
+components and examples of how to use these components together. <br>
+<br>
+The
+MCU SDK gives developers a one-stop RTOS solution for developing
+applications for TI embedded microcontrollers. It provides an OS
+kernel, communications support, drivers, and more. It is tightly
+integrated with TI&#8217;s Code Composer Studio development environment. In
+addition, examples are provided to demonstrate the use of each
+functional area and each supported device and as a starting point for
+your own projects.<br>
+<br>
+<hr>
+<h2><a name="Documentation">Documentation</a></h2>
+<p>The
+following documentation is available:</p>
+<ul>
+<li><a href="docs/spruhd3c.pdf">Getting
+Started
+Guide</a></li>
+<li><a href="docs/spruhd4a.pdf">User
+Guide</a></li>
+<li><a href="mcusdk_1_00_01_74_manifest.html">MCU
+SDK Manifest</a></li><li>For information about installing ICDI drivers for LM4F boards, please refer to:<br><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><a href="http://e2e.ti.com/support/microcontrollers/stellaris_arm_cortex-m3_microcontroller/f/471/t/188029.aspx">http://e2e.ti.com/support/microcontrollers/stellaris_arm_cortex-m3_microcontroller/f/471/t/188029.aspx</a><o:p></o:p></span>
+</li></ul>
+<hr>
+<h2><a name="Products">Products Included</a></h2>
+The following is a list of all the products bundled into the MCU SDK
+zip.
+Note these products only support ARM and C2xxx devices (this was done
+to reduce installer and installation size).<br>
+<ul>
+<li>XDCtools 3.23.05.61</li>
+<li>SYS/BIOS 6.33.04.39</li>
+<li>IPC 1.24.02.27<br>
+</li>
+<li>UIA 1.01.00.14</li>
+<li>NDK 2.21.01.38</li>
+<li>MWare v140x (defined RTOS_SUPPLIED_INTERRUPT and rebuilt
+driverLib)</li>
+<li>StellarisWare revision 9107</li>
+<li>Drivers and examples for TMDXDOCKH52C1, DK-LM3S9D96, EKS-LM4F232 and LM4F120H5QR.</li>
+</ul>
+<hr>
+<h2><a name="Whats_New">What's New</a><br></h2><span style="font-size: 11pt; color: rgb(31, 73, 125); font-family: 'Calibri','sans-serif';"></span><h2>1.00.01.74</h2>
+<ul><li>Added examples for Launchpad (LM4F120H5QR)</li><li>Used Arm Compiler Tools version 4.9.7</li></ul>
+<span style="font-weight: bold;">Defects Fixed since
+1.00.00.68<br>
+<br>
+</span>
+<table style="width: 842px; height: 53px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td><b>ID</b></td>
+<td><b>Headline</b></td>
+</tr>
+
+
+<tr>
+<td>SDOCM00095695</td>
+<td>Assert_isTrue() don't work in examples</td>
+</tr>
+<tr><td>SDOCM00094212</td><td>I2C ROV needs to show write/read instead of transmit/receive modes</td></tr><tr>
+<td>SDOCM00094108</td>
+<td>Missing doxygen information on driver objects</td>
+</tr>
+<tr>
+<td>SDOCM00094053</td>
+<td>MCUSDK sub-products (e.g. UIA, IPC) are not linked into CCS Help</td>
+</tr>
+<tr><td>SDOCM00094026</td><td>Stability issue with USB Host MSC on LM4F232</td></tr></tbody></table><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><br>
+<big><span style="font-weight: bold;"></span></big>
+<hr>
+<h2><a name="Compatibility">Upgrade and
+Compatibility Information</a></h2>
+N/A
+<ul>
+</ul>
+<ul>
+</ul>
+<hr>
+
+<h2><a name="Host_Support">Host Support</a></h2><ul><li><font face="Times New Roman" size="3">Supported Operating Systems</font> 
+<ul type="circle"><li><font face="Times New Roman" size="3">Windows 7, Windows XP, Windows 
+Vista</font> 
+</li><li><font face="Times New Roman" size="3">Linux [RH4], Ubuntu [10.04]</font> 
+</li></ul></li></ul><p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Dependencies">Dependencies</a>
+</h2>
+<p>This release requires the following other software components
+and tools versions to successfully function:&nbsp;</p>
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.2.0
++ System Analyzer 1.1 (details in </span><a href="docs/spruhd3c.pdf">Getting
+Started
+Guide</a><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">)</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Used
+Arm Compiler Tools version 4.9.7 to build product. Recommended that
+customer use 4.9.7 or higher also. This can be done within CCS via
+Help-&gt;Check for Updates.<br></span></li>
+</ul>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+<ul>
+<li>TMDXDOCKH52C1 (Concerto)</li>
+<li>DK-LM3S9D96</li><li>EKS-LM4F232</li><li>LM4F120H5QR</li>
+</ul>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+This release was validated using the following components:
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.2.1&nbsp;</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(details in </span><a href="docs/spruhd3c.pdf">Getting
+Started
+Guide</a><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">)</span></li>
+</ul>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+There are several know issues with this release.<br>
+<br>
+<table style="width: 1214px; height: 278px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td style="height: 31px;"><b>ID</b></td>
+<td style="height: 31px;"><b>Headline</b></td>
+</tr>
+<tr><td>SDOCM00095910</td><td>Build error after a build gmake clean</td></tr><tr><td>SDOCM00094100</td><td>Concerto demo fails when using chrome to enable SD card</td></tr><tr><td>SDOCM00094054</td><td>tcpEcho does not handle more than connections well</td></tr><tr><td>SDOCM00094033</td><td>Windows install is too slow</td></tr><tr><td>SDOCM00093967</td><td>MCUSDK Windows install will fail if installed in multiple or single directory that contains more than 38 characters in path</td></tr><tr><td>SDOCM00093868</td><td>USB Service Task pend mechanism needed</td></tr><tr>
+<td>SDOCM00092487</td>
+<td>C28 has problems when the pre-fetch is enabled</td>
+</tr>
+
+<tr>
+<td>SDOCM00091368</td>
+<td>MCUSDK: Add backspace functionality to UART driver text
+mode</td>
+</tr>
+
+<tr>
+<td>SDOCM00090537</td>
+<td>DK-LM3S9D96&nbsp;fwrite to stdout (console) reports Invalid
+CIO command.</td>
+</tr>
+
+<tr>
+<td>SDOCM00088931</td>
+<td>I2C Needs a Timeout feature</td>
+</tr>
+<tr>
+<td>SDOCM00088081</td>
+<td>SD Card driver lacks CRC support</td>
+</tr>
+<tr>
+<td>SDOCM00087597</td>
+<td>MCU SDK should enhance top-level make to build
+sub-products (e.g. SYS/BIOS, IPC, etc)</td>
+</tr>
+
+</tbody>
+</table>
+<br>
+<hr>
+<h2><a name="Examples">Examples</a></h2>
+There are examples in the packages\examples\TMDXDOCKH52C1,
+packages\examples\DK_LM3S9D96,
+and&nbsp;packages\examples\EKS_LM4F232
+directories.
+Please refer to the Getting Started Guide for more details.<br>
+<hr><big><span style="font-weight: bold;"></span></big>
+<h2><a name="Version">Version Information</a></h2>
+<p>All releases&nbsp;have 4 digits (<b>M.mm.pp.bb</b>).
+This includes GA and pre-releases (engineering, EA, beta, etc.).
+Pre-releases are denoted with a&nbsp;suffix (e.g. 1.01.00.15_eng or
+1.01.00.21-beta). </p>
+<p>This product's version follows a version format, <b>M.mm.pp.bb</b>,
+where <b>M</b> is a single digit Major number, <b>mm</b>
+is 2 digit minor number, <b>pp</b> is a 2 digit patch
+number, and <b>b</b> is an unrestricted set of digits used
+as an incrementing build counter. </p>
+<p>To support multiple side-by-side installations of the product,
+the product version is encoded in the top level directory, ex. <span style="font-weight: bold;">mcusdk</span><b>_1_00_01_11</b>.
+</p>
+<p>Subsequent releases of patch upgrades will be identified by
+the patch number, ex. MCUSDK 1.00.00.68 with directory&nbsp;<span style="font-weight: bold;">mcusdk</span><b>_1_00_01_74</b>.
+Typically, these patches only include critical bug fixes. </p>
+<p>Please note that version numbers and compatibility keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section. </p>
+<hr>
+<h2><a name="Support">Technical Support</a></h2>
+<p>For technical support, contact <a href="https://www-a.ti.com/downloads/sds_support/targetcontent/FC/index.html">softwaresupport@ti.com<br>
+</a> </p>
+<hr>
+<p>Last updated: Sept 27, 2012 </p>
+</body></html>

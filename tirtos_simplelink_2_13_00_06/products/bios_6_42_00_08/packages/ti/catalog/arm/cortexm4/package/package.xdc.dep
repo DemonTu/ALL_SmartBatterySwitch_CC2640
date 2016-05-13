@@ -1,0 +1,90 @@
+clean::
+	$(RM) package/ti.catalog.arm.cortexm4.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_catalog_arm_cortexm4.java
+	$(RM) package/ti_catalog_arm_cortexm4.class
+	$(RM) package/package_ti.catalog.arm.cortexm4.c
+	$(RM) package/package.defs.h
+	$(RM) package/ti.catalog.arm.cortexm4.ccs
+
+.interfaces: package/ti.catalog.arm.cortexm4.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_catalog_arm_cortexm4.java package/package_ti.catalog.arm.cortexm4.c package/package.defs.h package/ti.catalog.arm.cortexm4.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Stellaris.xdc Tiva.xdc OMAP5430.xdc Vayu.xdc DRA7XX.xdc TDA3XX.xdc CC32xx.xdc MSP432.xdc 
+
+# schema include file dependencies
+Stellaris.xs:
+package/package.xdc.inc: Stellaris.xs
+Tiva.xs:
+package/package.xdc.inc: Tiva.xs
+OMAP5430.xs:
+package/package.xdc.inc: OMAP5430.xs
+Vayu.xs:
+package/package.xdc.inc: Vayu.xs
+DRA7XX.xs:
+package/package.xdc.inc: DRA7XX.xs
+TDA3XX.xs:
+package/package.xdc.inc: TDA3XX.xs
+CC32xx.xs:
+package/package.xdc.inc: CC32xx.xs
+MSP432.xs:
+package/package.xdc.inc: MSP432.xs
+
+# schema update dependencies
+package/package.xdc.inc: Stellaris.xdc
+package/package.xdc.inc: Tiva.xdc
+package/package.xdc.inc: OMAP5430.xdc
+package/package.xdc.inc: Vayu.xdc
+package/package.xdc.inc: DRA7XX.xdc
+package/package.xdc.inc: TDA3XX.xdc
+package/package.xdc.inc: CC32xx.xdc
+package/package.xdc.inc: MSP432.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/catalog/ICpuDataSheet.xdc
+ti/catalog/ICpuDataSheet.xdc:
+vpath ti/catalog/ICpuDataSheet.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/ICpuDataSheet.xdc
+xdc/platform/ICpuDataSheet.xdc:
+vpath xdc/platform/ICpuDataSheet.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/IPeripheral.xdc
+xdc/platform/IPeripheral.xdc:
+vpath xdc/platform/IPeripheral.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/catalog/peripherals/hdvicp2/HDVICP2.xdc
+ti/catalog/peripherals/hdvicp2/HDVICP2.xdc:
+vpath ti/catalog/peripherals/hdvicp2/HDVICP2.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/IPlatform.xdc
+xdc/platform/IPlatform.xdc:
+vpath xdc/platform/IPlatform.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+

@@ -1,0 +1,37 @@
+<map id="drivers" name="drivers">
+<area shape="rect" href="dir_6a021109eee292c572f9bd13b3b1bb0c.html" title="camera" alt="" coords="1101,76,1173,124" />
+<area shape="rect" href="dir_48feca565b02475938ec5531d6e9635b.html" title="ports" alt="" coords="525,172,597,220" />
+<area shape="rect" href="dir_000004_000005.html" title="2" alt="" coords="612,195,619,210" />
+<area shape="rect" href="dir_000004_000005.html" title="2" alt="" coords="593,190,601,198" />
+<area shape="rect" href="dir_3a38945cad20ef564e72642b4d37e146.html" title="crypto" alt="" coords="1005,76,1077,124" />
+<area shape="rect" href="dir_21a0c9d486943857364a519c7b91d02a.html" title="dma" alt="" coords="39,172,111,220" />
+<area shape="rect" href="dir_fa84d3984843d6793bb3462042564560.html" title="gpio" alt="" coords="909,76,981,124" />
+<area shape="rect" href="dir_7f11b7105d32a1e996bda272d9ee8afd.html" title="i2c" alt="" coords="813,76,885,124" />
+<area shape="rect" href="dir_000008_000005.html" title="4" alt="" coords="613,184,620,199" />
+<area shape="rect" href="dir_000008_000005.html" title="4" alt="" coords="593,182,601,190" />
+<area shape="rect" href="dir_9291a2fd02cdc69926ab855d12f4ed59.html" title="i2s" alt="" coords="717,76,789,124" />
+<area shape="rect" href="dir_000009_000005.html" title="3" alt="" coords="613,168,620,183" />
+<area shape="rect" href="dir_000009_000005.html" title="3" alt="" coords="593,173,601,181" />
+<area shape="rect" href="dir_33166de4d01126f67f0d3f22ed870d72.html" title="lcd" alt="" coords="621,76,693,124" />
+<area shape="rect" href="dir_46f7f2f4474e301c815b85e987532acf.html" title="pin" alt="" coords="135,172,207,220" />
+<area shape="rect" href="dir_bd6b5667c675ef84f92abadb1342ff53.html" title="power" alt="" coords="525,76,597,124" />
+<area shape="rect" href="dir_000012_000005.html" title="2" alt="" coords="565,146,572,160" />
+<area shape="rect" href="dir_000012_000005.html" title="2" alt="" coords="557,168,565,176" />
+<area shape="rect" href="dir_cad17b9f769a17e178b8a9a80c710d7b.html" title="pwm" alt="" coords="429,76,501,124" />
+<area shape="rect" href="dir_a597750ad08f17252718b0c5302c803c.html" title="sdspi" alt="" coords="333,76,405,124" />
+<area shape="rect" href="dir_06c335b5d26ee58949e52d1dc1675348.html" title="spi" alt="" coords="39,76,111,124" />
+<area shape="rect" href="dir_000015_000017.html" title="1" alt="" coords="80,146,87,160" />
+<area shape="rect" href="dir_000015_000017.html" title="1" alt="" coords="71,168,79,176" />
+<area shape="rect" href="dir_000015_000011.html" title="1" alt="" coords="137,146,144,160" />
+<area shape="rect" href="dir_000015_000011.html" title="1" alt="" coords="143,168,151,176" />
+<area shape="rect" href="dir_000015_000005.html" title="4" alt="" coords="504,175,511,190" />
+<area shape="rect" href="dir_000015_000005.html" title="4" alt="" coords="521,189,529,197" />
+<area shape="rect" href="dir_58d9b6b9b6c44ee981befb907bf69e99.html" title="uart" alt="" coords="237,76,309,124" />
+<area shape="rect" href="dir_000016_000005.html" title="11" alt="" coords="501,167,516,182" />
+<area shape="rect" href="dir_000016_000005.html" title="11" alt="" coords="521,182,529,190" />
+<area shape="rect" href="dir_0528fc9ad0c1fcc312759d3069f7868c.html" title="watchdog" alt="" coords="135,76,213,124" />
+<area shape="rect" href="dir_000018_000005.html" title="1" alt="" coords="504,172,511,187" />
+<area shape="rect" href="dir_000018_000005.html" title="1" alt="" coords="521,186,529,194" />
+<area shape="rect" href="dir_91d6028ef0aa1035242bfefa07cd806e.html" alt="" coords="29,54,1279,230" />
+<area shape="rect" href="dir_abd11468e5a5b51896344ba99410f96c.html" title="ti" alt="" coords="18,18,1290,241" />
+</map>

@@ -1,0 +1,64 @@
+\subsection{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_camera_c_c3200_d_m_a___h_w_attrs}\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+Camera\+C\+C3200\+D\+M\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$Camera\+C\+C3200\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___h_w_attrs_acfa7bb614d325041585520abc4070e92}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___h_w_attrs_ac87823c26e765b7e830b003d2873450c}{int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___h_w_attrs_a734b7a176507e123d43627c12e0c1d35}{int\+Priority}
+\item 
+unsigned long \hyperlink{struct_camera_c_c3200_d_m_a___h_w_attrs_ae26fea6bcda14af807d5ae1a080ba706}{channel\+Index}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Camera\+C\+C3200\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} CameraCC3200DMA_HWAttrs CameraCC3200DMAHWAttrs[] = \{
+    \{
+        CAMERA\_BASE,
+        INT\_CAMERA,
+        ~0,                   \textcolor{comment}{// Interrupt priority}
+        UDMA\_CH22\_CAMERA
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_camera_c_c3200_d_m_a___h_w_attrs_acfa7bb614d325041585520abc4070e92}
+Camera Peripheral\textquotesingle{}s base address \index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_camera_c_c3200_d_m_a___h_w_attrs_ac87823c26e765b7e830b003d2873450c}
+Camera Peripheral\textquotesingle{}s interrupt vector \index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_camera_c_c3200_d_m_a___h_w_attrs_a734b7a176507e123d43627c12e0c1d35}
+Camera Peripheral\textquotesingle{}s interrupt priority \index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!channel\+Index@{channel\+Index}}
+\index{channel\+Index@{channel\+Index}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Camera\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::channel\+Index}\label{struct_camera_c_c3200_d_m_a___h_w_attrs_ae26fea6bcda14af807d5ae1a080ba706}
+u\+D\+M\+A control\+Table channel index 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_c_c3200_d_m_a_8h}{Camera\+C\+C3200\+D\+M\+A.\+h}\end{DoxyCompactItemize}

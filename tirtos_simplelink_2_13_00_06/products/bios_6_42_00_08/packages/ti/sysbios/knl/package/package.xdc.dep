@@ -1,0 +1,164 @@
+clean::
+	$(RM) package/ti.sysbios.knl.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_knl.java
+	$(RM) package/ti_sysbios_knl.class
+	$(RM) package/package_ti.sysbios.knl.c
+	$(RM) package/package.defs.h
+	$(RM) Clock.h
+	$(RM) package/internal/Clock.xdc.h
+	$(RM) Idle.h
+	$(RM) package/internal/Idle.xdc.h
+	$(RM) Intrinsics.h
+	$(RM) package/internal/Intrinsics.xdc.h
+	$(RM) Event.h
+	$(RM) package/internal/Event.xdc.h
+	$(RM) Mailbox.h
+	$(RM) package/internal/Mailbox.xdc.h
+	$(RM) Queue.h
+	$(RM) package/internal/Queue.xdc.h
+	$(RM) Semaphore.h
+	$(RM) package/internal/Semaphore.xdc.h
+	$(RM) Swi.h
+	$(RM) package/internal/Swi.xdc.h
+	$(RM) Task.h
+	$(RM) package/internal/Task.xdc.h
+	$(RM) package/Clock_TimerProxy.h
+	$(RM) package/internal/Clock_TimerProxy.xdc.h
+	$(RM) package/Intrinsics_SupportProxy.h
+	$(RM) package/internal/Intrinsics_SupportProxy.xdc.h
+	$(RM) package/Task_SupportProxy.h
+	$(RM) package/internal/Task_SupportProxy.xdc.h
+	$(RM) package/ti.sysbios.knl.ccs
+
+.interfaces: package/ti.sysbios.knl.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_knl.java package/package_ti.sysbios.knl.c package/package.defs.h Clock.h package/internal/Clock.xdc.h Idle.h package/internal/Idle.xdc.h Intrinsics.h package/internal/Intrinsics.xdc.h Event.h package/internal/Event.xdc.h Mailbox.h package/internal/Mailbox.xdc.h Queue.h package/internal/Queue.xdc.h Semaphore.h package/internal/Semaphore.xdc.h Swi.h package/internal/Swi.xdc.h Task.h package/internal/Task.xdc.h package/Clock_TimerProxy.h package/internal/Clock_TimerProxy.xdc.h package/Intrinsics_SupportProxy.h package/internal/Intrinsics_SupportProxy.xdc.h package/Task_SupportProxy.h package/internal/Task_SupportProxy.xdc.h package/ti.sysbios.knl.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Clock.xdc Idle.xdc Intrinsics.xdc Event.xdc Mailbox.xdc Queue.xdc Semaphore.xdc Swi.xdc Task.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+Clock.xs:
+package/package.xdc.inc: Clock.xs
+Idle.xs:
+package/package.xdc.inc: Idle.xs
+Intrinsics.xs:
+package/package.xdc.inc: Intrinsics.xs
+Event.xs:
+package/package.xdc.inc: Event.xs
+Mailbox.xs:
+package/package.xdc.inc: Mailbox.xs
+Queue.xs:
+package/package.xdc.inc: Queue.xs
+Semaphore.xs:
+package/package.xdc.inc: Semaphore.xs
+Swi.xs:
+package/package.xdc.inc: Swi.xs
+Task.xs:
+package/package.xdc.inc: Task.xs
+
+# schema update dependencies
+package/package.xdc.inc: Clock.xdc
+package/package.xdc.inc: Idle.xdc
+package/package.xdc.inc: Intrinsics.xdc
+package/package.xdc.inc: Event.xdc
+package/package.xdc.inc: Mailbox.xdc
+package/package.xdc.inc: Queue.xdc
+package/package.xdc.inc: Semaphore.xdc
+package/package.xdc.inc: Swi.xdc
+package/package.xdc.inc: Task.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IIntrinsicsSupport.xdc
+ti/sysbios/interfaces/IIntrinsicsSupport.xdc:
+vpath ti/sysbios/interfaces/IIntrinsicsSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITaskSupport.xdc
+ti/sysbios/interfaces/ITaskSupport.xdc:
+vpath ti/sysbios/interfaces/ITaskSupport.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: Clock.h
+Clock.h:
+package/package.xdc.inc: package/internal/Clock.xdc.h
+package/internal/Clock.xdc.h:
+package/package.xdc.inc: Idle.h
+Idle.h:
+package/package.xdc.inc: package/internal/Idle.xdc.h
+package/internal/Idle.xdc.h:
+package/package.xdc.inc: Intrinsics.h
+Intrinsics.h:
+package/package.xdc.inc: package/internal/Intrinsics.xdc.h
+package/internal/Intrinsics.xdc.h:
+package/package.xdc.inc: Event.h
+Event.h:
+package/package.xdc.inc: package/internal/Event.xdc.h
+package/internal/Event.xdc.h:
+package/package.xdc.inc: Mailbox.h
+Mailbox.h:
+package/package.xdc.inc: package/internal/Mailbox.xdc.h
+package/internal/Mailbox.xdc.h:
+package/package.xdc.inc: Queue.h
+Queue.h:
+package/package.xdc.inc: package/internal/Queue.xdc.h
+package/internal/Queue.xdc.h:
+package/package.xdc.inc: Semaphore.h
+Semaphore.h:
+package/package.xdc.inc: package/internal/Semaphore.xdc.h
+package/internal/Semaphore.xdc.h:
+package/package.xdc.inc: Swi.h
+Swi.h:
+package/package.xdc.inc: package/internal/Swi.xdc.h
+package/internal/Swi.xdc.h:
+package/package.xdc.inc: Task.h
+Task.h:
+package/package.xdc.inc: package/internal/Task.xdc.h
+package/internal/Task.xdc.h:
+package/package.xdc.inc: package/Clock_TimerProxy.h
+package/Clock_TimerProxy.h:
+package/package.xdc.inc: package/internal/Clock_TimerProxy.xdc.h
+package/internal/Clock_TimerProxy.xdc.h:
+package/package.xdc.inc: package/Intrinsics_SupportProxy.h
+package/Intrinsics_SupportProxy.h:
+package/package.xdc.inc: package/internal/Intrinsics_SupportProxy.xdc.h
+package/internal/Intrinsics_SupportProxy.xdc.h:
+package/package.xdc.inc: package/Task_SupportProxy.h
+package/Task_SupportProxy.h:
+package/package.xdc.inc: package/internal/Task_SupportProxy.xdc.h
+package/internal/Task_SupportProxy.xdc.h:
+

@@ -1,0 +1,107 @@
+%%{
+    var Board           = $args[0];
+    var toolchain       = $args[1];
+    var tirtos          = $args[2];
+    var xdctools        = $args[3];
+    var bios            = $args[4];
+    var uia             = $args[5];
+    var ipc             = $args[6];
+    var ndk             = $args[7];
+    var tivaware        = $args[8];
+    var mware           = $args[9];
+    var ccware          = $args[10];
+    var cc13xxware      = $args[11];
+    var cc26xxware      = $args[12];
+    var mspware         = $args[13];
+    var toolChaindir    = $args[14];
+    var externalCopts   = $args[15];
+    var externalLopts   = $args[16];
+    var xdcpath         = $args[17];
+%%}
+###### CHANGE LOCATION TO YOUR CODEGEN TOOLS INSTALLATION DIR. UNIX PATH (no backslashes) #######
+CODEGEN_INSTALLATION_DIR = `toolChaindir`
+
+%if(toolchain == "IAR"){
+%    if(Board.variant == "msp430"){
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/icc430"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/xlink"
+%}
+%    else{
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/iccarm"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/ilinkarm"
+%}
+%}
+%if(toolchain == "GNU"){
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/arm-none-eabi-gcc"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/arm-none-eabi-gcc"
+%}
+%if(toolchain == "TI"){
+%    if(Board.variant == "msp430"){
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/cl430"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/cl430"
+%}
+%    else{
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/armcl"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/armcl"
+%}
+%}
+
+XDCTOOLS_INSTALLATION_DIR := `xdctools`
+# The following is ignored if xdctools has the JRE
+export XDCTOOLS_JAVA_HOME := `java.lang.System.getenv("XDCTOOLS_JAVA_HOME")`
+TIRTOS_INSTALLATION_DIR := `tirtos`
+
+BIOS_INSTALLATION_DIR  ?= `bios`
+UIA_INSTALLATION_DIR   ?= `uia`
+IPC_INSTALLATION_DIR   ?= `ipc`
+NDK_INSTALLATION_DIR   ?= `ndk`
+OPTIONAL_XDCPATH       ?= `xdcpath`
+
+XDCPATH = $(TIRTOS_INSTALLATION_DIR);$(UIA_INSTALLATION_DIR);$(IPC_INSTALLATION_DIR);$(NDK_INSTALLATION_DIR);$(BIOS_INSTALLATION_DIR);$(OPTIONAL_XDCPATH);
+
+%if(Board.type == "TivaWare"){
+TIVAWARE_INSTALLATION_DIR ?= `tivaware`
+%}
+%if(Board.type == "MWare"){
+MWARE_INSTALLATION_DIR ?= `mware`
+%}
+%if(Board.type == "CCWare"){
+CCWARE_INSTALLATION_DIR ?= `ccware`
+%}
+%if(Board.type == "CC13XXWare"){
+CC13XXWARE_INSTALLATION_DIR ?= `cc13xxware`
+%}
+%if(Board.type == "CC26XXWare"){
+CC26XXWARE_INSTALLATION_DIR ?= `cc26xxware`
+%}
+%if(Board.type == "MSPWare"){
+MSPWARE_INSTALLATION_DIR ?= `mspware`
+%}
+
+CFLAGS = `externalCopts + Board.compilerBuildOptions[toolchain+"_makefile"]`
+
+LFLAGS = `externalLopts + Board.linkerBuildOptions[toolchain+"_makefile"]`
+
+###################### SHOULD NOT MODIFY BELOW THIS LINE ############################
+export XDCPATH
+
+XDCTARGET = `Board.targets[toolchain]`
+
+PLATFORM = `Board.platforms[toolchain]`
+
+ifeq ("$(SHELL)","sh.exe")
+#For Windows
+        RMDIR  = -rmdir /S /Q
+        remove = -del $(subst /,\,$1)
+        pwd    = cd
+else
+#For Linux
+        RMDIR  = rm -rf
+        remove = rm -f $(subst /,\,$1)
+        pwd    = pwd
+endif

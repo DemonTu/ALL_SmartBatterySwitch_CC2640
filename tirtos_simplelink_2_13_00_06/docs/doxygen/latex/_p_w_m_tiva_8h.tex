@@ -1,0 +1,146 @@
+\subsection{P\+W\+M\+Tiva.\+h File Reference}
+\label{_p_w_m_tiva_8h}\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M driver implementation for Tiva P\+W\+M perhiperals. 
+
+============================================================================
+
+The P\+W\+M header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/PWM.h>}
+\textcolor{preprocessor}{#include <ti/drivers/pwm/PWMTiva.h>}
+\end{DoxyCode}
+
+
+\paragraph*{Operation}
+
+This driver implementation uses the Pulse Width Modulator (P\+W\+M) peripherals present on Tiva devices to generate P\+W\+M signals. Each P\+W\+M peripheral instance contains 4 P\+W\+M signal generators, each controling 2 P\+W\+M outputs (8 P\+W\+M outputs total). This driver manages each P\+W\+M output individually (each output has it\textquotesingle{}s own P\+W\+M handle/instance). However since a single clock prescalar is available for a peripheral and a generator is responsable for producing 2 outputs, there are some limitations in place to ensure proper operation\+:
+\begin{DoxyEnumerate}
+\item The peripheral prescalar will be set according to the period of the first P\+W\+M instance opened. Any subsequent outputs will fail to open if a greater prescalar is required to generate the P\+W\+M period.
+\item A P\+W\+M generators period is set to the period of the instance opened. Opening the second output will fail if the period used is not the same as what was set by the first output.
+\item A P\+W\+M generators options are set by the first instance opened. Opening the second output will fail if the options are not the same as what was set by the first output.
+\end{DoxyEnumerate}
+
+Since the period and duty registers are 16 bits wide the prescalar is used to divide the input clock and allow for larger periods. The maximum period supported is calculated as\+: M\+A\+X\+\_\+\+P\+E\+R\+I\+O\+D = (M\+A\+X\+\_\+\+P\+R\+E\+S\+C\+A\+L\+A\+R $\ast$ M\+A\+X\+\_\+\+M\+A\+T\+C\+H\+\_\+\+V\+A\+L\+U\+E) / C\+Y\+C\+L\+E\+S\+\_\+\+P\+E\+R\+\_\+\+U\+S 80 M\+Hz clock\+: (64 $\ast$ 65535) / 80 = 52428 microseconds 120 M\+Hz clock\+: (64 $\ast$ 65535) / 120 = 34952 microseconds
+
+After opening, the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} A\+P\+I can be used to change a P\+W\+M generator period. However, the clock prescalar is shared by all generators so the new period must be a value that can generated with the same prescaler. Also keep in mind that changing a period affects both generator outputs. The equation below can be used to determine the prescalar for a given period\+: The prescalar will be the following power of 2 number (2$^\wedge$x)\+: prescalar = (period $\ast$ C\+Y\+C\+L\+E\+S\+\_\+\+P\+E\+R\+\_\+\+U\+S) / M\+A\+X\+\_\+\+M\+A\+T\+C\+H\+\_\+\+V\+A\+L\+U\+E 100 microseconds = (100 $\ast$ 80) / 65535 = (0.\+1220) = 1 10000 microseconds = (10000 $\ast$ 80) / 65535 = (12.\+20) = 16
+
+Below is an example of how to use the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} A\+P\+I to change a period\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/pwm/PWMTiva.h>}
+\textcolor{preprocessor}{#include <driverlib/pwm.h>}
+
+\textcolor{keywordtype}{int} rc = 0;
+\textcolor{keywordtype}{int} newPeriod = 2000;
+
+rc = PWM_control(pwmHandle, PWMTiva_CHANGE_GEN_PERIOD, &newPeriod);
+\textcolor{keywordflow}{if} (rc < 0) \{
+    \textcolor{comment}{// handle error condition}
+\}
+\end{DoxyCode}
+
+
+Finally, if the duty supplied is greater than the period; the output will remain in active state. 
+
+{\ttfamily \#include $<$ti/drivers/\+P\+W\+M.\+h$>$}\\*
+Include dependency graph for P\+W\+M\+Tiva.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_p_w_m_tiva_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_w_m_tiva___h_w_attrs}{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Tiva Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m_tiva___status}{P\+W\+M\+Tiva\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_p_w_m_tiva___status}{P\+W\+M\+Tiva\+\_\+\+Status}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m_tiva___object}{P\+W\+M\+Tiva\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Tiva Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_w_m_tiva_8h_ad09ddba586142f79c3c6ad6eae017374}{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S}~2
+\item 
+\#define \hyperlink{_p_w_m_tiva_8h_a3b71203004a2bad6632936ac4d7274de}{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S}~4
+\item 
+\#define \hyperlink{_p_w_m_tiva_8h_ae8518cd9113b2c8c7d671f391d0f82fd}{P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D}~\hyperlink{_p_w_m_8h_ad731f4db58c72d280900da4be6e3434c}{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_p_w_m_tiva___h_w_attrs}{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs} \hyperlink{_p_w_m_tiva_8h_a9dc35e1e545e80c16d6ac60c101e2143}{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Tiva Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m_tiva___status}{P\+W\+M\+Tiva\+\_\+\+Status} \hyperlink{_p_w_m_tiva_8h_a76a48f3f7fa2bec8b163b5dc1e5301ee}{P\+W\+M\+Tiva\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_p_w_m_tiva___status}{P\+W\+M\+Tiva\+\_\+\+Status}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m_tiva___object}{P\+W\+M\+Tiva\+\_\+\+Object} \hyperlink{_p_w_m_tiva_8h_a6a177b361dfd0da20d6fa735b680b5c5}{P\+W\+M\+Tiva\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Tiva Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table} \hyperlink{_p_w_m_tiva_8h_ae9b8f538f1e9e857629220104addd24a}{P\+W\+M\+Tiva\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S@{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S}}
+\index{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S@{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+P\+E\+R\+I\+P\+H\+E\+R\+A\+L\+S~2}\label{_p_w_m_tiva_8h_ad09ddba586142f79c3c6ad6eae017374}
+\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S@{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S}}
+\index{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S@{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Tiva\+\_\+\+N\+U\+M\+\_\+\+P\+W\+M\+\_\+\+G\+E\+N\+E\+R\+A\+T\+O\+R\+S~4}\label{_p_w_m_tiva_8h_a3b71203004a2bad6632936ac4d7274de}
+\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D}}
+\index{P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Tiva\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+G\+E\+N\+\_\+\+P\+E\+R\+I\+O\+D~{\bf P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{_p_w_m_tiva_8h_ae8518cd9113b2c8c7d671f391d0f82fd}
+
+
+\subsubsection{Typedef Documentation}
+\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}
+\index{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}  {\bf P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}\label{_p_w_m_tiva_8h_a9dc35e1e545e80c16d6ac60c101e2143}
+
+
+P\+W\+M\+Tiva Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item driverlib/pwm.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const PWMTiva\_HWAttrs PWMTivaHWAttrs[] = \{
+2     \{
+3         PWM0\_BASE,
+4         PWM\_OUT\_0,
+5         PWM\_GEN\_MODE\_DOWN | PWM\_GEN\_MODE\_DBG\_RUN
+6     \}
+7 \};
+\end{DoxyCode}
+ \index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+Status@{P\+W\+M\+Tiva\+\_\+\+Status}}
+\index{P\+W\+M\+Tiva\+\_\+\+Status@{P\+W\+M\+Tiva\+\_\+\+Status}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Tiva\+\_\+\+Status}  {\bf P\+W\+M\+Tiva\+\_\+\+Status}}\label{_p_w_m_tiva_8h_a76a48f3f7fa2bec8b163b5dc1e5301ee}
+
+
+\hyperlink{struct_p_w_m_tiva___status}{P\+W\+M\+Tiva\+\_\+\+Status}. 
+
+The application must not access any member variables of this structure! \index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+\+Object@{P\+W\+M\+Tiva\+\_\+\+Object}}
+\index{P\+W\+M\+Tiva\+\_\+\+Object@{P\+W\+M\+Tiva\+\_\+\+Object}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Tiva\+\_\+\+Object}  {\bf P\+W\+M\+Tiva\+\_\+\+Object}}\label{_p_w_m_tiva_8h_a6a177b361dfd0da20d6fa735b680b5c5}
+
+
+P\+W\+M\+Tiva Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Variable Documentation}
+\index{P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}!P\+W\+M\+Tiva\+\_\+fxn\+Table@{P\+W\+M\+Tiva\+\_\+fxn\+Table}}
+\index{P\+W\+M\+Tiva\+\_\+fxn\+Table@{P\+W\+M\+Tiva\+\_\+fxn\+Table}!P\+W\+M\+Tiva.\+h@{P\+W\+M\+Tiva.\+h}}
+\paragraph[{P\+W\+M\+Tiva\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+W\+M\+\_\+\+Fxn\+Table} P\+W\+M\+Tiva\+\_\+fxn\+Table}\label{_p_w_m_tiva_8h_ae9b8f538f1e9e857629220104addd24a}

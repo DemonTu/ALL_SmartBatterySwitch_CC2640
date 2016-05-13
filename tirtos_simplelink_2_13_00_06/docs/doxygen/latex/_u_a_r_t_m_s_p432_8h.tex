@@ -1,0 +1,159 @@
+\subsection{U\+A\+R\+T\+M\+S\+P432.\+h File Reference}
+\label{_u_a_r_t_m_s_p432_8h}\index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T driver implementation for a E\+U\+S\+C\+I\+A peripheral for M\+S\+P432. 
+
+============================================================================
+
+The U\+A\+R\+T header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/UART.h>}
+\textcolor{preprocessor}{#include <ti/drivers/uart/UARTMSP432.h>}
+\end{DoxyCode}
+
+
+This U\+A\+R\+T driver implementation is designed to operate on a E\+U\+S\+C\+I controller in U\+A\+R\+T mode for M\+S\+P432 devices. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Clock\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Semaphore\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+U\+A\+R\+T.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/uart/\+Ring\+Buf.\+h$>$}\\*
+Include dependency graph for U\+A\+R\+T\+M\+S\+P432.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_u_a_r_t_m_s_p432_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_a_r_t_m_s_p432___fxn_set}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}
+\begin{DoxyCompactList}\small\item\em Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+M\+S\+P432\+\_\+read(). Internal use only. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Baudrate configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_m_s_p432___object}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_a_r_t_m_s_p432___fxn_set}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set} \hyperlink{_u_a_r_t_m_s_p432_8h_abe16bba058f09acef62973f6bb9498d5}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}
+\begin{DoxyCompactList}\small\item\em Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+M\+S\+P432\+\_\+read(). Internal use only. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config} \hyperlink{_u_a_r_t_m_s_p432_8h_a928164bf503e9f2e23b9ed0c0f4a0ae7}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Baudrate configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_m_s_p432___h_w_attrs}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs} \hyperlink{_u_a_r_t_m_s_p432_8h_aa0eb8afac37f3295fff965a57465d353}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_m_s_p432___object}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object} \hyperlink{_u_a_r_t_m_s_p432_8h_a033bd8e3088bba16d5b001a647330d88}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+M\+S\+P432 Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_m_s_p432___object}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object} $\ast$ \hyperlink{_u_a_r_t_m_s_p432_8h_a507727808b1fc4b980a69bdf4ec54b53}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} \hyperlink{_u_a_r_t_m_s_p432_8h_af8c4e502226de31497aa3aa8224ffd76}{U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}  {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set}}\label{_u_a_r_t_m_s_p432_8h_abe16bba058f09acef62973f6bb9498d5}
+
+
+Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+M\+S\+P432\+\_\+read(). Internal use only. 
+
+These functions should not be used by the user and are solely intended for the U\+A\+R\+T\+M\+S\+P432 driver. The \hyperlink{struct_u_a_r_t_m_s_p432___fxn_set}{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Fxn\+Set} is a pair of complement functions that are design to operate with one another in a task context and in an I\+S\+R context. The read\+Task\+Fxn is called by U\+A\+R\+T\+M\+S\+P432\+\_\+read() to drain a circular buffer, whereas the read\+Isr\+Fxn is used by the U\+A\+R\+T\+M\+S\+P432\+\_\+hwi\+Int\+Fxn to fill up the circular buffer.
+
+read\+Task\+Fxn\+: Function called by U\+A\+R\+T read These variables are set and available for use to the read\+Task\+Fxn. object-\/$>$read\+Buf = buffer; //\+Pointer to a user buffer object-\/$>$read\+Size = size; //\+Desired no. of bytes to read object-\/$>$read\+Count = size; //\+Remaining no. of bytes to read
+
+read\+Isr\+Fxn\+: The required I\+S\+R counterpart to read\+Task\+Fxn \index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}  {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}\label{_u_a_r_t_m_s_p432_8h_a928164bf503e9f2e23b9ed0c0f4a0ae7}
+
+
+U\+A\+R\+T\+M\+S\+P432 Baudrate configuration. 
+
+This structure is used to specifiy the E\+U\+S\+C\+I controller\textquotesingle{}s clock divider settings to achieve the desired baudrate given the a clock input frequency. Divider values can be determined by referring to the M\+S\+P430 baudrate calculator. \href{http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSP430BaudRateConverter/index.html}{\tt http\+://software-\/dl.\+ti.\+com/msp430/msp430\+\_\+public\+\_\+sw/mcu/msp430/\+M\+S\+P430\+Baud\+Rate\+Converter/index.\+html}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const UARTMSP432\_BaudrateConfig uartBaudrates[] = \{
+2     // \{baudrate, input clock, prescalar, UCBRFx, UCBRSx, oversampling\}
+3     \{115200, 12000000,  6,  8,  32, 1\},
+4     \{115200, 6000000,   3,  4,   2, 1\},
+5     \{115200, 3000000,   1, 10,   0, 1\},
+6     \{9600,   12000000, 78,  2,   0, 1\},
+7     \{9600,   6000000,  39,  1,   0, 1\},
+8     \{9600,   3000000,  19,  8,  85, 1\},
+9     \{9600,   32768,     3,  0, 146, 0\}
+10 \};
+\end{DoxyCode}
+ \index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}  {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}\label{_u_a_r_t_m_s_p432_8h_aa0eb8afac37f3295fff965a57465d353}
+
+
+U\+A\+R\+T\+M\+S\+P432 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 unsigned char uartMSP432RingBuffer0[32];
+2 unsigned char uartMSP432RingBuffer1[32];
+3 
+4 const UARTMSP432\_HWAttrs uartMSP432HWAttrs[MSP\_EXP432P401RLP\_UARTCOUNT] = \{
+5     \{
+6         .baseAddr = EUSCI\_A0\_BASE,
+7         .intNum = INT\_EUSCIA0,
+8         .intPriority = ~0,
+9         .clockSource = EUSCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+10         .bitOrder = EUSCI\_A\_UART\_LSB\_FIRST,
+11         .numBaudrateEntries = sizeof(uartMSP432Baudrates) /
+12                               sizeof(UARTMSP432\_BaudrateConfig),
+13         .baudrateLUT = uartMSP432Baudrates,
+14         .ringBufPtr  = uartMSP432RingBuffer0,
+15         .ringBufSize = sizeof(uartMSP432RingBuffer0)
+16     \},
+17     \{
+18         .baseAddr = EUSCI\_A2\_BASE,
+19         .intNum = INT\_EUSCIA2,
+20         .intPriority = ~0,
+21         .clockSource = EUSCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+22         .bitOrder = EUSCI\_A\_UART\_LSB\_FIRST,
+23         .numBaudrateEntries = sizeof(uartMSP432Baudrates) /
+24                               sizeof(UARTMSP432\_BaudrateConfig),
+25         .baudrateLUT = uartMSP432Baudrates
+26         .ringBufPtr  = uartMSP432RingBuffer1,
+27         .ringBufSize = sizeof(uartMSP432RingBuffer1)
+28     \}
+29 \};
+\end{DoxyCode}
+ \index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}  {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object}}\label{_u_a_r_t_m_s_p432_8h_a033bd8e3088bba16d5b001a647330d88}
+
+
+U\+A\+R\+T\+M\+S\+P432 Object. 
+
+The application must not access any member variables of this structure! \index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Object} $\ast$ {\bf U\+A\+R\+T\+M\+S\+P432\+\_\+\+Handle}}\label{_u_a_r_t_m_s_p432_8h_a507727808b1fc4b980a69bdf4ec54b53}
+
+
+\subsubsection{Variable Documentation}
+\index{U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}!U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table@{U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table}}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table@{U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table}!U\+A\+R\+T\+M\+S\+P432.\+h@{U\+A\+R\+T\+M\+S\+P432.\+h}}
+\paragraph[{U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf U\+A\+R\+T\+\_\+\+Fxn\+Table} U\+A\+R\+T\+M\+S\+P432\+\_\+fxn\+Table}\label{_u_a_r_t_m_s_p432_8h_af8c4e502226de31497aa3aa8224ffd76}

@@ -1,0 +1,489 @@
+\subsection{U\+A\+R\+T\+C\+C26\+X\+X.\+h File Reference}
+\label{_u_a_r_t_c_c26_x_x_8h}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T driver implementation for a C\+C26\+X\+X U\+A\+R\+T controller. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The U\+A\+R\+T header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/UART.h>}
+\textcolor{preprocessor}{#include <ti/drivers/uart/UARTCC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+The general U\+A\+R\+T A\+P\+I should used in application code, i.\+e. \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} is used instead of U\+A\+R\+T\+C\+C26\+X\+X\+\_\+open(). The board file will define the device specific config, and casting in the general A\+P\+I will ensure that the correct device specific functions are called. This is also reflected in the example code in \hyperlink{_u_a_r_t_c_c26_x_x_8h_USE_CASES}{Use Cases}.
+
+\subsubsection*{General Behavior}
+
+Before using the U\+A\+R\+T in C\+C26\+X\+X\+:
+\begin{DoxyItemize}
+\item The U\+A\+R\+T driver is initialized by calling \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()}.
+\item The U\+A\+R\+T H\+W is configured and flags system dependencies (e.\+g. I\+Os, power, etc.) by calling \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()}.
+\item The R\+X and T\+X can operate independently of each other.
+\end{DoxyItemize}The following is true for receive operation\+:
+\begin{DoxyItemize}
+\item R\+X is enabled by calling \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}.
+\item All received bytes are ignored after \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} is called, until the first \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}.
+\item If an R\+X error occur, R\+X is turned off and all bytes received before the error occured are returned.
+\item After a successful read, R\+X remains on. \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} must be called again before F\+I\+F\+O goes full in order to avoid overflow. It is safe to call another \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} from the read callback, See \hyperlink{_u_a_r_t_c_c26_x_x_8h_USE_CASE_CB}{Receive Continously} use case below.
+\item If a read times out (in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} mode), R\+X will remain on. \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} must be called again before F\+I\+F\+O goes full in order to avoid overflow.
+\item The \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} supports partial return, that can be used if the receive size is unknown. See \hyperlink{_u_a_r_t_c_c26_x_x_8h_USE_CASES}{Use Cases} below.
+\end{DoxyItemize}The following apply for transmit operation\+:
+\begin{DoxyItemize}
+\item T\+X is enabled by calling \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()}.
+\item If the \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()} succeeds, the T\+X is disabled.
+\end{DoxyItemize}If U\+A\+R\+T is no longer needed by application\+:
+\begin{DoxyItemize}
+\item Release system dependencies for U\+A\+R\+T by calling \hyperlink{_u_a_r_t_8h_a6b49b65f3db709c408dc4db23a68895d}{U\+A\+R\+T\+\_\+close()}.
+\end{DoxyItemize}
+
+\subsubsection*{Error handling}
+
+\paragraph*{Read errors}
+
+If an error occurs during read operation\+:
+\begin{DoxyItemize}
+\item All bytes received up until an error occurs will be returned, with the error signaled in the \hyperlink{struct_u_a_r_t_c_c26_x_x___object_a10ff4c367c40263e72d3494f78b9ce07}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object.\+status} field. The R\+X is then turned off and all bytes will be ignored until a new read is issued. Note that only the read is cancelled when the error occurs. If a write was active while the R\+X error occurred, it will complete.
+\item If a R\+X break error occurs, an extra 0 byte will also be returned by the \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}.
+\end{DoxyItemize}\paragraph*{Write errors}
+
+If a timeout occurs during a write, an U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R will be returned and the U\+A\+R\+T\+\_\+\+Object.\+status will be set to \hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aa965b1df388dcc5c87f1bb51120877c7}{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T}. All bytes that are not transmitted, will be flushed. If flow control is not enabled, the \hyperlink{struct_u_a_r_t_c_c26_x_x___object_a55b3ddd718d4de0aeffd2426c3f14efd}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object.\+write\+Timeout} should be kept at default value, B\+I\+O\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R. The write call will return after all bytes are transmitted. If flow control is enabled, the timeout should be set by the application in order to recover if the receiver gets stuck.
+
+\paragraph*{General timeout}
+
+A timeout value can only be specified for reads and writes in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}. If a timeout occurs during a read when in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, the number of bytes received will be returned and the U\+A\+R\+T\+\_\+\+Object.\+status will be set to \hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aa965b1df388dcc5c87f1bb51120877c7}{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T}. After a read timeout, R\+X will remain on, but device is allowed to enter standby. For more details see \hyperlink{_u_a_r_t_c_c26_x_x_8h_POWER_MANAGEMENT}{Power Management} chapter below.
+
+In \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} there is no timeout and the application must call \hyperlink{_u_a_r_t_8h_a51ed7e94d5b409ca1fcb2d65c5a25c3c}{U\+A\+R\+T\+\_\+read\+Cancel()} or \hyperlink{_u_a_r_t_8h_a0482cd0ab9ee7e802c8e785a5754d16d}{U\+A\+R\+T\+\_\+write\+Cancel()} to abort the operation.
+
+\begin{DoxyNote}{Note}
+A new read or write will reset the U\+A\+R\+T\+\_\+\+Object.\+status to U\+A\+R\+T\+\_\+\+O\+K. Caution must be taken when doing parallell reads and writes.
+\end{DoxyNote}
+\subsubsection*{Power Management\label{_u_a_r_t_c_c26_x_x_8h_POWER_MANAGEMENT}%
+\hypertarget{_u_a_r_t_c_c26_x_x_8h_POWER_MANAGEMENT}{}%
+}
+
+The T\+I-\/\+R\+T\+O\+S power management framework will try to put the device into the most power efficient mode whenever possible. Please see the technical reference manual for further details on each power mode.
+
+The U\+A\+R\+T\+C\+C26\+X\+X driver is setting a power constraint during operation to keep the device out of standby. When the operation has finished, the power constraint is released. The following statements are valid\+:
+\begin{DoxyItemize}
+\item After \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()}\+: the device is still allowed to enter standby.
+\item During \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}\+: the device cannot enter standby.
+\item After an R\+X error (overrun, break, parity, framing)\+: device is allowed to enter standby.
+\item After a successful \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}\+: The device is allowed to enter standby, but R\+X remains on.
+\begin{DoxyItemize}
+\item {\itshape Note}\+: Device might enter standby while a byte is being received if \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} is not called again after a successful read. This could result in corrupt data being received.
+\item {\itshape Note}\+: Application thread should typically either issue another read after \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} completes successfully, or call \hyperlink{_u_a_r_t_8h_a51ed7e94d5b409ca1fcb2d65c5a25c3c}{U\+A\+R\+T\+\_\+read\+Cancel()} to disable R\+X and thus assuring that no data is received while entering standby.
+\end{DoxyItemize}
+\item After \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} times out in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}\+: The device is allowed to enter standby, but R\+X remains on.
+\begin{DoxyItemize}
+\item {\itshape Note}\+: Device might enter standby while a byte is being received if \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} is not called again after a timeout. This could result in corrupt data being received.
+\item {\itshape Note}\+: Application thread should typically either issue another read after \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} times out to continue reception.
+\end{DoxyItemize}
+\item During \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()}\+: the device cannot enter standby.
+\item After \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()} succeeds\+: the device can enter standby.
+\item If \hyperlink{_u_a_r_t_8h_a0482cd0ab9ee7e802c8e785a5754d16d}{U\+A\+R\+T\+\_\+write\+Cancel()} is called\+: the device can enter standby.
+\item After write timeout\+: the device can enter standby.
+\end{DoxyItemize}
+
+\subsubsection*{Flow Control}
+
+To enable Flow Control, the R\+T\+S and C\+T\+S pins must be assigned in the \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTCC26XX_HWAttrs uartCC26xxHWAttrs[] = \{
+    \{
+        .baseAddr    = UART0\_BASE,
+        .intNum      = INT\_UART0,
+        .powerMngrId = PERIPH\_UART0,
+        .txPin       = Board\_UART\_TX,
+        .rxPin       = Board\_UART\_RX,
+        .ctsPin      = Board\_UART\_CTS,
+        .rtsPin      = Board\_UART\_RTS
+    \}
+\};
+\end{DoxyCode}
+
+
+If the R\+T\+S and C\+T\+S pins are set to \hyperlink{_p_i_n_8h_aba219226dfdc9ea2fb82d6a7995395bf}{P\+I\+N\+\_\+\+U\+N\+A\+S\+S\+I\+G\+N\+E\+D}, the flow control is disabled. An example is shown in the \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} description.
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Generic A\+P\+I function }&{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+init() &Initialize U\+A\+R\+T driver \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+open() &Initialize U\+A\+R\+T H\+W and set system dependencies \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a6b49b65f3db709c408dc4db23a68895d}{U\+A\+R\+T\+\_\+close()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+close() &Disable U\+A\+R\+T H\+W and release system dependencies \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+control() &Configure an already opened U\+A\+R\+T handle \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+read() &Start read from U\+A\+R\+T \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a51ed7e94d5b409ca1fcb2d65c5a25c3c}{U\+A\+R\+T\+\_\+read\+Cancel()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+read\+Cancel() &Cancel ongoing read from U\+A\+R\+T \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+write() &Start write to U\+A\+R\+T \\\cline{1-3}
+\hyperlink{_u_a_r_t_8h_a0482cd0ab9ee7e802c8e785a5754d16d}{U\+A\+R\+T\+\_\+write\+Cancel()} &U\+A\+R\+T\+C\+C26\+X\+X\+\_\+write\+Cancel() &Cancel ongoing write to U\+A\+R\+T \\\cline{1-3}
+\end{TabularC}
+\begin{DoxyNote}{Note}
+All calls should go through the generic A\+P\+I
+\end{DoxyNote}
+\subsubsection*{Not Supported Functionality}
+
+The C\+C26\+X\+X U\+A\+R\+T driver currently does not support\+:
+\begin{DoxyItemize}
+\item \hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2a6c4d8a2d4e30c22cf9fa45cd1bf79306}{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N}
+\item \hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8a87fdfb7ca981eab7f56c51380fd7094e}{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T}
+\item \hyperlink{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}{U\+A\+R\+T\+\_\+read\+Polling()}
+\item \hyperlink{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}{U\+A\+R\+T\+\_\+write\+Polling()}
+\item Configurable T\+X F\+I\+F\+O Threshold (currently set to 1/8 full, i.\+e. 4 bytes)
+\item Configurable R\+X F\+I\+F\+O Threshold (currently set to 4/8 full, i.\+e. 16 bytes)
+\end{DoxyItemize}
+
+\subsubsection*{Use Cases\label{_u_a_r_t_c_c26_x_x_8h_USE_CASES}%
+\hypertarget{_u_a_r_t_c_c26_x_x_8h_USE_CASES}{}%
+}
+
+\paragraph*{Basic Receive}
+
+Receive 100 bytes over U\+A\+R\+T in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}. 
+\begin{DoxyCode}
+UART_Handle handle;
+UART_Params params;
+uint8\_t rxBuf[100];         \textcolor{comment}{// Receive buffer}
+uint32\_t timeoutUs = 5000;  \textcolor{comment}{// 5ms timeout, default timeout is no timeout (BIOS\_WAIT\_FOREVER)}
+
+\textcolor{comment}{// Init UART and specify non-default parameters}
+UART_Params_init(&params);
+params.baudRate      = 9600;
+params.writeDataMode = UART_DATA_BINARY;
+params.readTimeout   = timeoutUs / Clock\_tickPeriod; \textcolor{comment}{// Default tick period is 10us}
+
+\textcolor{comment}{// Open the UART and do the read}
+handle = UART_open(Board\_UART, &params);
+\textcolor{keywordtype}{int} rxBytes = UART_read(handle, rxBuf, 100);
+\end{DoxyCode}
+
+
+\paragraph*{Receive with Return Partial}
+
+This use case will read in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} until the wanted amount of bytes is received or until a started reception is inactive for a 32-\/bit period. This \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} call can also be used when unknown amount of bytes shall be read. Note\+: The partial return is also possible in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} mode. 
+\begin{DoxyCode}
+UART_Handle handle;
+UART_Params params;
+uint8\_t rxBuf[100];      \textcolor{comment}{// Receive buffer}
+
+\textcolor{comment}{// Init UART and specify non-default parameters}
+UART_Params_init(&params);
+params.baudRate      = 9600;
+params.writeDataMode = UART_DATA_BINARY;
+
+\textcolor{comment}{// Open the UART and initiate the partial read}
+handle = UART_open(Board\_UART, &params);
+\textcolor{comment}{// Enable RETURN\_PARTIAL}
+UART_control(handle, UARTCC26XX_CMD_RETURN_PARTIAL_ENABLE, NULL);
+\textcolor{comment}{// Begin read}
+\textcolor{keywordtype}{int} rxBytes = UART_read(handle, rxBuf, 100));
+\end{DoxyCode}
+
+
+\paragraph*{Basic Transmit}
+
+This case will configure the U\+A\+R\+T to send the data in tx\+Buf in B\+L\+O\+C\+K\+I\+N\+G\+\_\+\+M\+O\+D\+E. 
+\begin{DoxyCode}
+UART_Handle handle;
+UART_Params params;
+uint8\_t txBuf[] = \textcolor{stringliteral}{"Hello World"};    \textcolor{comment}{// Transmit buffer}
+
+\textcolor{comment}{// Init UART and specify non-default parameters}
+UART_Params_init(&params);
+params.baudRate      = 9600;
+params.writeDataMode = UART_DATA_BINARY;
+
+\textcolor{comment}{// Open the UART and do the write}
+handle = UART_open(Board\_UART, &params);
+UART_write(handle, txBuf, \textcolor{keyword}{sizeof}(txBuf));
+\end{DoxyCode}
+
+
+\paragraph*{Receive Continously in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}\label{_u_a_r_t_c_c26_x_x_8h_USE_CASE_CB}%
+\hypertarget{_u_a_r_t_c_c26_x_x_8h_USE_CASE_CB}{}%
+}
+
+This case will configure the U\+A\+R\+T to receive continously in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}, 16 bytes at the time and transmit them back via U\+A\+R\+T T\+X. Note that \hyperlink{struct_u_a_r_t___params_a10875d91873fb77106bde0b799f961e2}{U\+A\+R\+T\+\_\+\+Params.\+read\+Timeout} is not in use when using \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} mode. 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#define MAX\_NUM\_RX\_BYTES    1000   // Maximum RX bytes to receive in one go}
+\textcolor{preprocessor}{#define MAX\_NUM\_TX\_BYTES    1000   // Maximum TX bytes to send in one go}
+
+uint32\_t wantedRxBytes;            \textcolor{comment}{// Number of bytes received so far}
+uint8\_t rxBuf[MAX\_NUM\_RX\_BYTES];   \textcolor{comment}{// Receive buffer}
+uint8\_t txBuf[MAX\_NUM\_TX\_BYTES];   \textcolor{comment}{// Transmit buffer}
+
+\textcolor{comment}{// Callback function}
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} readCallback(UART_Handle handle, \textcolor{keywordtype}{void} *rxBuf, \textcolor{keywordtype}{size\_t} size)
+\{
+    \textcolor{comment}{// Copy bytes from RX buffer to TX buffer}
+    \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < size; i++)
+        txBuf[i] = ((uint8\_t*)rxBuf)[i];
+
+    \textcolor{comment}{// Echo the bytes received back to transmitter}
+    UART_write(handle, txBuf, size);
+
+    \textcolor{comment}{// Start another read, with size the same as it was during first call to}
+    \textcolor{comment}{// UART\_read()}
+    UART_read(handle, rxBuf, wantedRxBytes);
+\}
+
+\textcolor{keyword}{static} \textcolor{keywordtype}{void} taskFxn(UArg a0, UArg a1)
+\{
+    UART_Handle handle;
+    UART_Params params;
+
+    \textcolor{comment}{// Init UART and specify non-default parameters}
+    UART_Params_init(&params);
+    params.baudRate      = 9600;
+    params.writeDataMode = UART_DATA_BINARY;
+    params.readMode      = UART_MODE_CALLBACK;
+    params.readDataMode  = UART_DATA_BINARY;
+    params.readCallback  = readCallback;
+
+    \textcolor{comment}{// Open the UART and initiate the first read}
+    handle = UART_open(Board\_UART, &params);
+    wantedRxBytes = 16;
+    \textcolor{keywordtype}{int} rxBytes = UART_read(handle, rxBuf, wantedRxBytes);
+
+    \textcolor{keywordflow}{while}(\textcolor{keyword}{true}); \textcolor{comment}{// Wait forever}
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Instrumentation}
+
+The U\+A\+R\+T driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic U\+A\+R\+T operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed U\+A\+R\+T operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+U\+A\+R\+T.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/cc26xx/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/uart.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Clock.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+Include dependency graph for U\+A\+R\+T\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_u_a_r_t_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_c_c26_x_x___object}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C26\+X\+X Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_a90f59d674fd3b290c3dd711128413014}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}~\hyperlink{_u_a_r_t_8h_a0f5a809e0884da33fef102236eb51644}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_a7cc7c1551022a60bd310c79acb6b26b8}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}~\hyperlink{_u_a_r_t_8h_a0f5a809e0884da33fef102236eb51644}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 1
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_aa3cbdad922e595319c76870add0d41e6}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E}~32
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_a681da30c89054d687603b864792894f7}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}~\hyperlink{_u_a_r_t_c_c26_x_x_8h_a90f59d674fd3b290c3dd711128413014}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}
+\item 
+\#define \hyperlink{_u_a_r_t_c_c26_x_x_8h_a973b0815d1f88dc3f3e7191625783b99}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}~\hyperlink{_u_a_r_t_c_c26_x_x_8h_a7cc7c1551022a60bd310c79acb6b26b8}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_u_a_r_t_c_c26_x_x_8h_a779ad8f4640de879a0cdf41f4274206d}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4}{U\+A\+R\+T\+\_\+\+Status} \hyperlink{_u_a_r_t_c_c26_x_x_8h_a27818b82da9cf35d1f0f228b1f69b036}{U\+A\+R\+T\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T status. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99}{U\+A\+R\+T\+\_\+\+Fifo\+Threshold} \hyperlink{_u_a_r_t_c_c26_x_x_8h_a9169576296a1811855ec75dce0f8e316}{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T F\+I\+F\+O threshold. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c26_x_x___object}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_u_a_r_t_c_c26_x_x_8h_a41437180bc6a286da889dc2aae1c001c}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C26\+X\+X Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c26_x_x___object}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object} $\ast$ \hyperlink{_u_a_r_t_c_c26_x_x_8h_a276d493f1689ad8c16b5cfb4dada194a}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4}{U\+A\+R\+T\+\_\+\+Status} \{ \\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aa965b1df388dcc5c87f1bb51120877c7}{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T} = 0x10, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a505840052f6bf71374b427575c23e929}{U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R} = U\+A\+R\+T\+\_\+\+R\+X\+E\+R\+R\+O\+R\+\_\+\+P\+A\+R\+I\+T\+Y, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aeadc3b97f933501a079b1f300a92a01a}{U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R} = U\+A\+R\+T\+\_\+\+R\+X\+E\+R\+R\+O\+R\+\_\+\+B\+R\+E\+A\+K, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a261d411fd495e2312aad0c43a01fc050}{U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R} = U\+A\+R\+T\+\_\+\+R\+X\+E\+R\+R\+O\+R\+\_\+\+O\+V\+E\+R\+R\+U\+N, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a2e97f20086d32b1d2c9f276351bcc100}{U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R} = U\+A\+R\+T\+\_\+\+R\+X\+E\+R\+R\+O\+R\+\_\+\+F\+R\+A\+M\+I\+N\+G, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a525187963c0aaa465f2a35b30b894d07}{U\+A\+R\+T\+\_\+\+O\+K} = 0x0
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T status. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99}{U\+A\+R\+T\+\_\+\+Fifo\+Threshold} \{ \\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a56bece2b58d0dab3674c00ece3197fff}{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8} = 4, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a3c1979202b738122bab4924378108a42}{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8} = 8, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99ae34abfc239ba6e60a1aca5d6819b4a18}{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8} = 16, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a43dc712fd0f011504b0b4492981bd0fd}{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8} = 24, 
+\\*
+\hyperlink{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a5626e06eacec74562c303427dd33a95b}{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8} = 28
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T F\+I\+F\+O threshold. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} \hyperlink{_u_a_r_t_c_c26_x_x_8h_abd5f1691efe38764c7ef10750e407e5e}{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_u_a_r_t_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E~{\bf U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{_u_a_r_t_c_c26_x_x_8h_a90f59d674fd3b290c3dd711128413014}
+Enable R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L, used as cmd to \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E~{\bf U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 1}\label{_u_a_r_t_c_c26_x_x_8h_a7cc7c1551022a60bd310c79acb6b26b8}
+Disable R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L, used as cmd to \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E~32}\label{_u_a_r_t_c_c26_x_x_8h_aa3cbdad922e595319c76870add0d41e6}
+Size of the T\+X and R\+X F\+I\+F\+Os is 32 items \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E~{\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+E\+N\+A\+B\+L\+E}}\label{_u_a_r_t_c_c26_x_x_8h_a681da30c89054d687603b864792894f7}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E~{\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+C\+M\+D\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+P\+A\+R\+T\+I\+A\+L\+\_\+\+D\+I\+S\+A\+B\+L\+E}}\label{_u_a_r_t_c_c26_x_x_8h_a973b0815d1f88dc3f3e7191625783b99}
+
+
+\subsubsection{Typedef Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_u_a_r_t_c_c26_x_x_8h_a779ad8f4640de879a0cdf41f4274206d}
+
+
+U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const UARTCC26XX\_HWAttrs uartCC26xxHWAttrs[] = \{
+2     \{
+3         .baseAddr = UART0\_BASE,
+4         .intNum = INT\_UART0,
+5         .powerMngrId = PERIPH\_UART0,
+6         .txPin = Board\_UART\_TX,
+7         .rxPin = Board\_UART\_RX,
+8         .ctsPin = PIN\_UNASSIGNED,
+9         .rtsPin = PIN\_UNASSIGNED
+10     \}
+11 \};
+\end{DoxyCode}
+
+
+The .cts\+Pin and .rts\+Pin must be assigned to enable flow control. \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+Status@{U\+A\+R\+T\+\_\+\+Status}}
+\index{U\+A\+R\+T\+\_\+\+Status@{U\+A\+R\+T\+\_\+\+Status}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Status}  {\bf U\+A\+R\+T\+\_\+\+Status}}\label{_u_a_r_t_c_c26_x_x_8h_a27818b82da9cf35d1f0f228b1f69b036}
+
+
+U\+A\+R\+T status. 
+
+The U\+A\+R\+T Status is used to flag the different Receive Errors. \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+Fifo\+Threshold@{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}}
+\index{U\+A\+R\+T\+\_\+\+Fifo\+Threshold@{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Fifo\+Threshold}  {\bf U\+A\+R\+T\+\_\+\+Fifo\+Threshold}}\label{_u_a_r_t_c_c26_x_x_8h_a9169576296a1811855ec75dce0f8e316}
+
+
+U\+A\+R\+T F\+I\+F\+O threshold. 
+
+Mapping of F\+I\+F\+O thresholds from level to number of bytes. \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}  {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object}}\label{_u_a_r_t_c_c26_x_x_8h_a41437180bc6a286da889dc2aae1c001c}
+
+
+U\+A\+R\+T\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! \index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Object} $\ast$ {\bf U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+Handle}}\label{_u_a_r_t_c_c26_x_x_8h_a276d493f1689ad8c16b5cfb4dada194a}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+Status@{U\+A\+R\+T\+\_\+\+Status}}
+\index{U\+A\+R\+T\+\_\+\+Status@{U\+A\+R\+T\+\_\+\+Status}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Status}}\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4}
+
+
+U\+A\+R\+T status. 
+
+The U\+A\+R\+T Status is used to flag the different Receive Errors. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T@{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T@{U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+I\+M\+E\+D\+\_\+\+O\+U\+T\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aa965b1df388dcc5c87f1bb51120877c7}
+}]U\+A\+R\+T timed out \index{U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+I\+T\+Y\+\_\+\+E\+R\+R\+O\+R\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a505840052f6bf71374b427575c23e929}
+}]U\+A\+R\+T Parity error \index{U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+U\+A\+R\+T\+\_\+\+B\+R\+A\+K\+E\+\_\+\+E\+R\+R\+O\+R\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4aeadc3b97f933501a079b1f300a92a01a}
+}]U\+A\+R\+T Break error \index{U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+U\+A\+R\+T\+\_\+\+O\+V\+E\+R\+R\+U\+N\+\_\+\+E\+R\+R\+O\+R\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a261d411fd495e2312aad0c43a01fc050}
+}]U\+A\+R\+T overrun error \index{U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+U\+A\+R\+T\+\_\+\+F\+R\+A\+M\+I\+N\+G\+\_\+\+E\+R\+R\+O\+R\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a2e97f20086d32b1d2c9f276351bcc100}
+}]U\+A\+R\+T Framing error \index{U\+A\+R\+T\+\_\+\+O\+K@{U\+A\+R\+T\+\_\+\+O\+K}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+O\+K@{U\+A\+R\+T\+\_\+\+O\+K}}\item[{\em 
+U\+A\+R\+T\+\_\+\+O\+K\label{_u_a_r_t_c_c26_x_x_8h_a778bbef5f4b52a5651552136715f53c4a525187963c0aaa465f2a35b30b894d07}
+}]U\+A\+R\+T O\+K \end{description}
+\end{Desc}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+Fifo\+Threshold@{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}}
+\index{U\+A\+R\+T\+\_\+\+Fifo\+Threshold@{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Fifo\+Threshold}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Fifo\+Threshold}}\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99}
+
+
+U\+A\+R\+T F\+I\+F\+O threshold. 
+
+Mapping of F\+I\+F\+O thresholds from level to number of bytes. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+1\+\_\+8\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a56bece2b58d0dab3674c00ece3197fff}
+}]R\+X F\+I\+F\+O threshold of 1/8 = 4 bytes \index{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+2\+\_\+8\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a3c1979202b738122bab4924378108a42}
+}]R\+X F\+I\+F\+O threshold of 2/8 = 8 bytes \index{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+4\+\_\+8\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99ae34abfc239ba6e60a1aca5d6819b4a18}
+}]R\+X F\+I\+F\+O threshold of 4/8 = 16 bytes \index{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+6\+\_\+8\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a43dc712fd0f011504b0b4492981bd0fd}
+}]R\+X F\+I\+F\+O threshold of 6/8 = 24 bytes \index{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8@{U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+T\+H\+\_\+\+F\+I\+F\+O\+\_\+7\+\_\+8\label{_u_a_r_t_c_c26_x_x_8h_a292a5e751577698b215f5e8aa1c79e99a5626e06eacec74562c303427dd33a95b}
+}]R\+X F\+I\+F\+O threshold of 7/8 = 28 bytes \end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table}}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table}!U\+A\+R\+T\+C\+C26\+X\+X.\+h@{U\+A\+R\+T\+C\+C26\+X\+X.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf U\+A\+R\+T\+\_\+\+Fxn\+Table} U\+A\+R\+T\+C\+C26\+X\+X\+\_\+fxn\+Table}\label{_u_a_r_t_c_c26_x_x_8h_abd5f1691efe38764c7ef10750e407e5e}

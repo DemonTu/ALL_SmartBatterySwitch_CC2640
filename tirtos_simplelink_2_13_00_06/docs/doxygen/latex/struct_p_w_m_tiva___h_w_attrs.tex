@@ -1,0 +1,57 @@
+\subsection{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_w_m_tiva___h_w_attrs}\index{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}
+
+
+P\+W\+M\+Tiva Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_tiva___h_w_attrs_a12270fd5eca318763aab674472954692}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_tiva___h_w_attrs_a125b0d4868fff9b2e30624fbbdc67df9}{pwm\+Output}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_tiva___h_w_attrs_a000c25643c0e7aff1422a6a7b812193f}{pwm\+Gen\+Opts}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Tiva Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item driverlib/pwm.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PWMTiva_HWAttrs PWMTivaHWAttrs[] = \{
+    \{
+        PWM0\_BASE,
+        PWM\_OUT\_0,
+        PWM\_GEN\_MODE\_DOWN | PWM\_GEN\_MODE\_DBG\_RUN
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_p_w_m_tiva___h_w_attrs_a12270fd5eca318763aab674472954692}
+P\+W\+M peripheral base address \index{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}!pwm\+Output@{pwm\+Output}}
+\index{pwm\+Output@{pwm\+Output}!P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pwm\+Output}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs\+::pwm\+Output}\label{struct_p_w_m_tiva___h_w_attrs_a125b0d4868fff9b2e30624fbbdc67df9}
+Encoded P\+W\+M offset address \index{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}!pwm\+Gen\+Opts@{pwm\+Gen\+Opts}}
+\index{pwm\+Gen\+Opts@{pwm\+Gen\+Opts}!P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pwm\+Gen\+Opts}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Tiva\+\_\+\+H\+W\+Attrs\+::pwm\+Gen\+Opts}\label{struct_p_w_m_tiva___h_w_attrs_a000c25643c0e7aff1422a6a7b812193f}
+Generator options for P\+W\+M 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_tiva_8h}{P\+W\+M\+Tiva.\+h}\end{DoxyCompactItemize}

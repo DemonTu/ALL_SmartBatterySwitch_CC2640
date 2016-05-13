@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="configPkg" version="" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/cfg/appBLE_prm3.c"/>
+    </sources>
+    <configscripts>
+        <srcFile name="C:/work/source/ALL_SmartBatterySwitch_CC2640/simplelink/ble_cc26xx_2_01_01_44627/Projects/ble/SimpleBLEPeripheral/CC26xx/IAR/Config/appBLE.cfg"/>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/cfg/appBLE_prm3.mak" src="package.bld"/>
+        <srcFile name="package/cfg/appBLE_prm3.orm3.dep" src="package/cfg/appBLE_prm3.c"/>
+        <srcFile name="package/cfg/appBLE_prm3.dep" src="package/cfg/appBLE_prm3.cfg"/>
+        <srcFile name="package/cfg/appBLE.xrm3.mak" src="package.bld"/>
+        <srcFile name="package/rel/configPkg.tar.dep" src="package/rel/configPkg.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="iar.targets.arm.M3"
+            version="iar.targets.arm.M3{1,0,7.40,3"
+            rawVersion="7.40.3.8902"
+            platform="ti.platforms.tiva:LM3S9B92:1"
+            isa="v7M"
+            suffix="rm3"
+            rootDir="C:/PROGRA~2/IARSYS~1/EMBEDD~1.2/arm"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    <configuration name="appBLE"
+        pname="appBLE.prm3"
+        target="iar.targets.arm.M3"
+        platform="ti.platforms.simplelink:CC2640F128"
+        profile="release"
+        isPartial="false"
+        xCfgScript="package/cfg/appBLE_prm3.cfg"
+        xCfgPrefix="package/cfg/appBLE_prm3"
+        cfgScript="C:/work/source/ALL_SmartBatterySwitch_CC2640/simplelink/ble_cc26xx_2_01_01_44627/Projects/ble/SimpleBLEPeripheral/CC26xx/IAR/Config/appBLE.cfg"
+        cfgArgs="null"
+        />
+    </configurations>
+    <executables>
+    <executable name="appBLE"
+        pname="appBLE.xrm3"
+        target="iar.targets.arm.M3"
+        platform="ti.platforms.simplelink:CC2640F128"
+        profile="release"
+        xCfgScript="package/cfg/appBLE_prm3.cfg"
+        xCfgPrefix="package/cfg/appBLE_prm3"
+        cfgScript="C:/work/source/ALL_SmartBatterySwitch_CC2640/simplelink/ble_cc26xx_2_01_01_44627/Projects/ble/SimpleBLEPeripheral/CC26xx/IAR/Config/appBLE.cfg"
+        cfgArgs="null"
+        />
+    </executables>
+    <tests>
+    <test exeName="appBLE.xrm3"
+        args=""
+        groupName="appBLE.xrm3"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="configPkg"
+        pname="configPkg.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

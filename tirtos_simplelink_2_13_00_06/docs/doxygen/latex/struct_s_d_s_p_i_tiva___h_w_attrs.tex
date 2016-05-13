@@ -1,0 +1,110 @@
+\subsection{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_d_s_p_i_tiva___h_w_attrs}\index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+
+
+S\+D\+S\+P\+I\+Tiva Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$S\+D\+S\+P\+I\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_d_s_p_i_c_c3200_8h_ad2ee2f6fbdb79c0577161ae92a7f1650}{S\+D\+S\+P\+I\+Base\+Addr\+Type} \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a4e51479529ad50f9ecb38b73b7f12178}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_ada428b116f5c2ff434bc8b42fe3fce67}{port\+S\+C\+K}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a669a419841ff7c5ba81778ed94488f25}{pin\+S\+C\+K}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a5586b260f63484ba6a17e17df3b55cd8}{port\+M\+I\+S\+O}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a4f9e453efc436b6085d60958c4e35621}{pin\+M\+I\+S\+O}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_ab3777b1b021adab95b084a184c52190c}{port\+M\+O\+S\+I}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a9cd1616a8428a2a12986a77d43b74870}{pin\+M\+O\+S\+I}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a280c343673240705674b67fd32c4affc}{port\+C\+S}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_tiva___h_w_attrs_a50cd7f2bd849a73e055283d3a302f3fe}{pin\+C\+S}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+D\+S\+P\+I\+Tiva Hardware attributes. 
+
+The S\+D\+S\+P\+I\+Tiva configuration structure describes to the S\+D\+S\+P\+I\+Tiva driver implementation hardware specifies on which S\+P\+I peripheral, G\+P\+I\+O Pins and Ports are to be used.
+
+The S\+D\+S\+P\+I\+Tiva driver uses this information to\+:
+\begin{DoxyItemize}
+\item configure and reconfigure specific ports/pins to initialize the S\+D Card for S\+P\+I mode
+\item identify which S\+P\+I peripheral is used for data communications
+\item identify which G\+P\+I\+O port and pin is used for the S\+P\+I chip select mechanism
+\item identify which G\+P\+I\+O port and pin is concurrently located on the S\+P\+I\textquotesingle{}s M\+O\+S\+I (T\+X) pin.
+\end{DoxyItemize}
+
+\begin{DoxyRemark}{Remarks}
+To initialize the S\+D Card into S\+P\+I mode, the S\+D\+S\+P\+I driver changes the S\+P\+I\textquotesingle{}s M\+O\+S\+I pin into a G\+P\+I\+O pin so it can kept driven H\+I\+G\+H while the S\+P\+I S\+C\+K pin can toggle. After the initialization, the T\+X pin is reverted back to the S\+P\+I M\+O\+S\+I mode.
+\end{DoxyRemark}
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\end{DoxyItemize}
+
+An example configuration structure could look as the following\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SDSPITiva_HWAttrs sdspiTivaHWattrs = \{
+    \{
+         SSI2\_BASE, \textcolor{comment}{// SPI Peripheral's base address}
+
+         GPIO\_PORTD\_BASE, \textcolor{comment}{// SPI SCK PORT}
+         GPIO\_PIN\_3,      \textcolor{comment}{// SPI SCK PIN}
+
+         GPIO\_PORTD\_BASE, \textcolor{comment}{// SPI MISO PORT}
+         GPIO\_PIN\_0,      \textcolor{comment}{// SPI MIS0 PIN}
+
+         GPIO\_PORTD\_BASE, \textcolor{comment}{// SPI MOSI PORT}
+         GPIO\_PIN\_1,      \textcolor{comment}{// SPI MOSI PIN}
+
+         GPIO\_PORTC\_BASE, \textcolor{comment}{// CPIO Chip select port}
+         GPIO\_PIN\_7,      \textcolor{comment}{// GPIO Chip select pin}
+     \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+S\+P\+I\+Base\+Addr\+Type} S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a4e51479529ad50f9ecb38b73b7f12178}
+$<$ S\+S\+I Peripheral\textquotesingle{}s base address S\+S\+I port S\+C\+K \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!port\+S\+C\+K@{port\+S\+C\+K}}
+\index{port\+S\+C\+K@{port\+S\+C\+K}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+S\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::port\+S\+C\+K}\label{struct_s_d_s_p_i_tiva___h_w_attrs_ada428b116f5c2ff434bc8b42fe3fce67}
+S\+S\+I S\+C\+K pin \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!pin\+S\+C\+K@{pin\+S\+C\+K}}
+\index{pin\+S\+C\+K@{pin\+S\+C\+K}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+S\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::pin\+S\+C\+K}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a669a419841ff7c5ba81778ed94488f25}
+S\+S\+I port M\+I\+S\+O \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!port\+M\+I\+S\+O@{port\+M\+I\+S\+O}}
+\index{port\+M\+I\+S\+O@{port\+M\+I\+S\+O}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+M\+I\+S\+O}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::port\+M\+I\+S\+O}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a5586b260f63484ba6a17e17df3b55cd8}
+S\+S\+I M\+I\+S\+O pin \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!pin\+M\+I\+S\+O@{pin\+M\+I\+S\+O}}
+\index{pin\+M\+I\+S\+O@{pin\+M\+I\+S\+O}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+M\+I\+S\+O}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::pin\+M\+I\+S\+O}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a4f9e453efc436b6085d60958c4e35621}
+S\+S\+I port M\+O\+S\+I \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!port\+M\+O\+S\+I@{port\+M\+O\+S\+I}}
+\index{port\+M\+O\+S\+I@{port\+M\+O\+S\+I}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+M\+O\+S\+I}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::port\+M\+O\+S\+I}\label{struct_s_d_s_p_i_tiva___h_w_attrs_ab3777b1b021adab95b084a184c52190c}
+S\+S\+I M\+O\+S\+I pin \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!pin\+M\+O\+S\+I@{pin\+M\+O\+S\+I}}
+\index{pin\+M\+O\+S\+I@{pin\+M\+O\+S\+I}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+M\+O\+S\+I}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::pin\+M\+O\+S\+I}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a9cd1616a8428a2a12986a77d43b74870}
+G\+P\+I\+O Port used for the chip select \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!port\+C\+S@{port\+C\+S}}
+\index{port\+C\+S@{port\+C\+S}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+C\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::port\+C\+S}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a280c343673240705674b67fd32c4affc}
+G\+P\+I\+O Pin used for the chip select \index{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}!pin\+C\+S@{pin\+C\+S}}
+\index{pin\+C\+S@{pin\+C\+S}!S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+C\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+Tiva\+\_\+\+H\+W\+Attrs\+::pin\+C\+S}\label{struct_s_d_s_p_i_tiva___h_w_attrs_a50cd7f2bd849a73e055283d3a302f3fe}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_d_s_p_i_tiva_8h}{S\+D\+S\+P\+I\+Tiva.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gep name="M3/Boot" title="M3 Boot" version="1">
+<page name="Basic" title="Boot/Startup Options">
+<html><body><table>
+  <tr><td colspan="2">
+    <control type="checkbox" label="Add LM3-specific Boot management to my configuration" value="value:this.$used" bold="true"/></td>
+  </tr>
+  <tr></tr>
+  <tr>
+    <td>
+      <h1>Clock Configuration</h1>
+        <table>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Automatically configure clock" 
+                       value="value:this.configureClock" 
+                       tooltip="value:this.configureClock.$summary"/></td>
+        </tr>
+        <tr>
+          <td><control type="label" 
+                       label="Oscillator source" 
+                       align="left"/></td>
+          <td><control type="droplist"
+                       value="value:this.oscSrc" 
+                       tooltip="value:this.oscSrc.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="label" 
+                       label="Crystal value"
+                       align="left"/></td>
+          <td><control type="droplist"
+                       value="value:this.xtal" 
+                       tooltip="value:this.xtal.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>        
+        <tr>
+          <td><control type="label" 
+                       label="SYS clock divisor" 
+                       align="left"/></td>
+          <td><control type="droplist"
+                       value="value:this.sysClockDiv" 
+                       tooltip="value:this.sysClockDiv.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="label" 
+                       label="PWM clock divisor" 
+                       align="left"/></td>
+          <td><control type="droplist"
+                       value="value:this.pwmClockDiv" 
+                       tooltip="value:this.pwmClockDiv.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Bypass PLL" 
+                       value="value:this.pllBypass"
+                       tooltip="value:this.pllBypass.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Enable PLL output" 
+                       value="value:this.pllOutEnable"
+                       tooltip="value:this.pllOutEnable.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Disable internal oscillator" 
+                       value="value:this.ioscDisable"
+                       tooltip="value:this.ioscDisable.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Disable main oscillator" 
+                       value="value:this.moscDisable"
+                       tooltip="value:this.moscDisable.$summary"
+                       enabled="value:this.configureClock"/></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+	  <td><control type="label" label="Computed CPU clock frequency (Hz) " align="left"/></td>
+	  <td><control type="label" label="value:this.cpuFreq" bold="true"/></td>
+        </tr>
+        <tr>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h1>Low Dropout Voltage (LDO) Configuration</h1>
+      <table>
+        <tr>
+          <td><control type="checkbox" 
+                       label="Automatically configure the LDO" 
+                       value="value:this.configureLdo"
+                       tooltip="value:this.configureLdo.$summary"/></td>
+        </tr>
+        <tr>
+          <td><control type="label" 
+                       label="LDO VADJ setting" 
+                       align="left"/></td>
+          <td><control type="droplist"
+                       value="value:this.ldoOut" 
+                       tooltip="value:this.ldoOut.$summary"
+                       enabled="value:this.configureLdo"/></td>
+        </tr>      
+      </table>
+    </td>
+  </tr>
+</table></body></html>
+</page>
+
+<properties name="Advanced" title="All Options" enabled="true" visible="true" link="this"/>
+
+</gep>

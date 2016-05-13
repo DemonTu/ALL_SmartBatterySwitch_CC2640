@@ -1,0 +1,1651 @@
+\subsection{L\+C\+D\+Dogm1286.\+h File Reference}
+\label{_l_c_d_dogm1286_8h}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+
+
+\subsubsection{Detailed Description}
+L\+C\+D driver implementation for a D\+O\+G\+M128\+W-\/6 L\+C\+D display. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The L\+C\+D header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/lcd/LCDDogm1286.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+This L\+C\+D driver implementation is designed to operate on a D\+O\+G\+M128\+W-\/6 L\+C\+D display. This display is the one used on the Smart\+R\+F06 E\+B (Evaluation Board). The L\+C\+D display can be written to by first writing the data to display to an internal buffer, and then sending the buffer content to the L\+C\+D display. The L\+C\+D driver will make use of the S\+P\+I driver for updating the display. The driver contains different functions for both modifying the internal buffer and for updating the display with the buffer content.
+
+The D\+O\+G\+M128\+W-\/6 L\+C\+D display contains 128 pixel columns and 64 pixel rows. The (x,y) coordinate system is as described below\+: \begin{DoxyVerb}*
+*       X ----->
+*   Y   +---------------------------------------------+
+*   |   |(0,0)              PAGE 0             (127,0)|
+*   |   |                   PAGE 1                    |
+*   v   |                   PAGE 2                    |
+*       |                   PAGE 3                    |
+*       |                   PAGE 4                    |
+*       |                   PAGE 5                    |
+*       |                   PAGE 6                    |
+*       |(0,63)             PAGE 7            (127,63)|
+*       +---------------------------------------------+
+*  \end{DoxyVerb}
+
+
+This L\+C\+D driver uses a 5x7 font, thus each character takes up 5 pixels width and 7 pixels height. Each line of text will take up one page of the display. The difference between the defined variables \hyperlink{_l_c_d_dogm1286_8h_a4fad5c4c39b66358c5ab60f53d26ac86}{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H} and \hyperlink{_l_c_d_dogm1286_8h_a311c85b23f68d1ae7b4c242c9fa14159}{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H} equals the character spacing on the L\+C\+D display.
+
+\subsubsection*{General Behavior}
+
+Before using L\+C\+D\+:
+\begin{DoxyItemize}
+\item In order to use the D\+O\+G\+M128\+W-\/6 L\+C\+D display on the Smart\+R\+F06 E\+B, the application needs to first drive the Board\+\_\+3\+V3\+\_\+\+E\+N pin high to enable the 3.\+3\+V domain on the board.
+\item The L\+C\+D display is configured by calling \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()}. This function will in turn open the S\+P\+I driver and allocate the 2 additional control signals (through the P\+I\+N driver) required to operate the L\+C\+D.
+\end{DoxyItemize}
+
+In total the following pins are required to operate the L\+C\+D on the Smart\+R\+F06\+E\+B\+: \begin{DoxyVerb}*  Board_SPI0_MOSI     (Serial peripheral interface, Master-Out-Slave-In, controlled by LCD driver)
+*  Board_SPI0_MISO     (Serial peripheral interface, Master-In-Slave-Out, controlled by LCD driver)
+*  Board_SPI0_CLK      (Serial peripheral interface, Clock, controlled by LCD driver)
+*  Board_LCD_CSN       (Serial peripheral interface, Chip select, controlled by LCD driver)
+*  Board_LCD_RST       (LCD reset signal, active low, controlled by LCD driver)
+*  Board_LCD_MODE      (LCD mode signal, controlled by LCD driver)
+*  Board_3V3_EN        (Enable the 3.3V domain. NOTE: Must be set by application, NOT controlled by LCD driver)
+*  \end{DoxyVerb}
+
+
+The following S\+P\+I parameters will be fixed by the L\+C\+D driver\+:
+\begin{DoxyItemize}
+\item transfer\+Mode = \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}
+\item transfer\+Timeout = B\+I\+O\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R
+\item mode = \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942a84379dc90398ca075038c8d5ee465f6a}{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R}
+\item data\+Size = 8
+\end{DoxyItemize}
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+After L\+C\+D operation has ended\+:
+\begin{DoxyItemize}
+\item Release system dependencies for L\+C\+D by calling \hyperlink{_l_c_d_dogm1286_8h_a9a6a62dcb23c554201420e7e555e6ecc}{L\+C\+D\+\_\+close()}.
+\end{DoxyItemize}
+
+\subsubsection*{Error handling}
+
+Please refer to the S\+P\+I driver documentation for information about error handling during a S\+P\+I transaction.
+
+If an error occurs when modifying the internal buffers, the functions are return without completing the buffer modification.
+
+\subsubsection*{Power Management}
+
+The T\+I-\/\+R\+T\+O\+S power management framework will try to put the device into the most power efficient mode whenever possible. Please see the technical reference manual for further details on each power mode.
+
+The L\+C\+D driver makes use of the S\+P\+I\+C\+C26\+X\+X\+D\+M\+A driver, which is setting a power constraint during transfers to keep the device out of standby. I.\+e. device will enter idle mode when no tasks are active. When the transfer has finished, the power constraint is released.
+
+\subsubsection*{L\+C\+D Details}
+
+\paragraph*{Allocating space to internal buffers}
+
+The L\+C\+D driver joined (at link time) to an array of \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structures named {\itshape lcd\+Buffers}. {\itshape lcd\+Buffers} is implemented in the application with each entry being an instance of a \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer}. The number of buffers availible must be passed as an argument to \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()}. Each entry in {\itshape lcd\+Buffers} contains a\+:
+\begin{DoxyItemize}
+\item (Char $\ast$) which points to a buffer with data to be printed on the L\+C\+D
+\item (unsigned int) which is the size of the buffer
+\item (Semaphore\+\_\+\+Struct) which is a semaphore to be associated with the buffer. The Semaphores will be constructed by the L\+C\+D driver when it is being opened, and is being used to block task execution while the associated buffer is in use.
+\end{DoxyItemize}
+
+\paragraph*{Modifying internal buffers and updating L\+C\+D display}
+
+Before the L\+C\+D screen can be filled, the data to display must be written to the internal buffers. All functions called L\+C\+D\+\_\+bufferxxxx are only modifying the internal buffers. To send the buffer content to the L\+C\+D display, one must use the functions \hyperlink{_l_c_d_dogm1286_8h_a6974d1de55526b98c6af02c90fd34185}{L\+C\+D\+\_\+update()} or \hyperlink{_l_c_d_dogm1286_8h_abd9b38254fab63ff90f3b4b93d4c8d8b}{L\+C\+D\+\_\+update\+Part()}. The only exception from this is the function \hyperlink{_l_c_d_dogm1286_8h_a1208372099f0929bbbd1a5ec8621afce}{L\+C\+D\+\_\+write\+Line()}, which both modifies a buffer and send the content to the L\+C\+D display.
+
+\subsubsection*{Supported Functions}
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf A\+P\+I function }&{\bf Description  }\\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} &Initialize L\+C\+D display and configure S\+P\+I driver \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a9a6a62dcb23c554201420e7e555e6ecc}{L\+C\+D\+\_\+close()} &Disable L\+C\+D operation \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a1208372099f0929bbbd1a5ec8621afce}{L\+C\+D\+\_\+write\+Line()} &Write a string and a number to a page on the L\+C\+D display \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a6974d1de55526b98c6af02c90fd34185}{L\+C\+D\+\_\+update()} &Write the content of a L\+C\+D buffer to the display \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_abd9b38254fab63ff90f3b4b93d4c8d8b}{L\+C\+D\+\_\+update\+Part()} &Write part of a L\+C\+D buffer to the display \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a3f274bf5496eaf924a2eda563b753d1b}{L\+C\+D\+\_\+buffer\+Clear()} &Empty an entire L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a0f9a680f8ddc7a8c3bee766530246fcb}{L\+C\+D\+\_\+buffer\+Clear\+Page()} &Empty an entire page in a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a13d5b0ec129280f820b07501cafd9247}{L\+C\+D\+\_\+buffer\+Clear\+Part()} &Empty part of a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_af2908b510d4b4ae4ab1fc1a1620d66b0}{L\+C\+D\+\_\+buffer\+Invert()} &Invert the pixels of a part of a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a513135f9dc91ff5fbd6175e0c3c392ed}{L\+C\+D\+\_\+buffer\+Invert\+Page()} &Invert the pixels of a page in a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a6f1ed502ab103ba04643798985dbcb11}{L\+C\+D\+\_\+buffer\+Print\+String()} &Write a string to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a91b19df1b66a71acbe38ec9dcd76d5c1}{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned()} &Write an aligned string to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_ae67a1e76c36a173a26a1f617ed7cb86e}{L\+C\+D\+\_\+buffer\+Print\+Int()} &Write an integer to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_ae446df10e9b11284d958350bafb01956}{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned()} &Write an aligned integer to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a3e57bb5655ffd5a694f251fcbeccc610}{L\+C\+D\+\_\+buffer\+Print\+Float()} &Write a floating point number to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a5342a001698e39fe6443cbcadf61e3f7}{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned()} &Write an aligned floating point number to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_ae5fcaac1c5d5ce2fafecf38c8c78bb15}{L\+C\+D\+\_\+buffer\+Set\+Line()} &Draw a line to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a5520daaaedbda09ccb4e1f804cb6387f}{L\+C\+D\+\_\+buffer\+Clear\+Line()} &Clear a line from a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_abac67849744509fc2ace41db2eda90e1}{L\+C\+D\+\_\+buffer\+Set\+H\+Line()} &Draw a horizontal line to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a33d49a7d0a49f12bf8ec12288404eb82}{L\+C\+D\+\_\+buffer\+Clear\+H\+Line()} &Clear a horizontal line from a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a6cd9439691ab890bdc12cb61739c71c1}{L\+C\+D\+\_\+buffer\+Set\+V\+Line()} &Draw a vertical line to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_af099bb3569888e86f758958d814bb58f}{L\+C\+D\+\_\+buffer\+Clear\+V\+Line()} &Clear a vertical line from a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_ad9460c9ec6519a340e36d26d365bbed5}{L\+C\+D\+\_\+buffer\+H\+Arrow()} &Draw a horizontal arrow to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a40b3e9e6a7086787047a174815dfeb70}{L\+C\+D\+\_\+buffer\+V\+Arrow()} &Draw a vertical arrow to a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_a028108d7554d62733d00295fd150a2a6}{L\+C\+D\+\_\+buffer\+Set\+Px()} &Set a pixel in a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_aa99fc0e617619d6f7b9befd56ffac26c}{L\+C\+D\+\_\+buffer\+Clear\+Px()} &Clear a pixel in a L\+C\+D buffer \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_afa33971216c7767eb3f3790615fa9a31}{L\+C\+D\+\_\+buffer\+Copy()} &Copy content of one L\+C\+D buffer into another \\\cline{1-2}
+\hyperlink{_l_c_d_dogm1286_8h_ac159f265608d80bd4baff4c3a4d30959}{L\+C\+D\+\_\+set\+Contrast()} &Set the contrast of the L\+C\+D display \\\cline{1-2}
+\end{TabularC}
+\paragraph*{Use Cases\label{_l_c_d_dogm1286_8h_USE_CASES_LCD}%
+\hypertarget{_l_c_d_dogm1286_8h_USE_CASES_LCD}{}%
+}
+
+The most basic use cases discribed are described below. A complete L\+C\+D example can also be found in the T\+I-\/\+R\+T\+O\+S simplelink distribution.
+
+\subparagraph*{Configuring the L\+C\+D display}
+
+
+\begin{DoxyCode}
+LCD_Handle lcdHandle;
+LCD_Params lcdParams;
+PIN_State  pinState;
+PIN_Handle hPins;
+
+\textcolor{comment}{// This application supports two LCD buffers}
+Char lcdBuffer0[LCD_BYTES] = \{0\};
+Char lcdBuffer1[LCD_BYTES] = \{0\};
+
+\textcolor{comment}{// Populate LCD\_Buffer structure with buffer pointers and buffer sizes.}
+\textcolor{comment}{// The Semaphore structure will be constructed when opening the LCD.}
+LCD_Buffer lcdBuffers[] = \{
+    \{lcdBuffer0, LCD_BYTES, NULL\},
+    \{lcdBuffer1, LCD_BYTES, NULL\},
+\};
+
+\textcolor{comment}{// Application pin table.}
+\textcolor{comment}{// Drive Board\_3V3\_EN high to enble 3.3V domain on SRF06EB}
+PIN_Config pinList[] = \{
+     Board\_3V3\_EN     | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH  | PIN_PUSHPULL,
+     PIN_TERMINATE
+\};
+
+\textcolor{comment}{// Open PIN driver}
+hPins = PIN_open(&pinState, pinList);
+
+\textcolor{comment}{// Initialize LCD parameters}
+LCD_Params_init(&lcdParams);
+
+\textcolor{comment}{// Optionally override default bit rate}
+lcdParams.spiBitRate = someNewSpiBitRate;
+
+\textcolor{comment}{// Open LCD driver, using 2 buffers}
+lcdHandle = LCD_open(&lcdBuffers[0], 2, &lcdParams);
+
+\textcolor{comment}{// Make sure it was successful}
+\textcolor{keywordflow}{if} (!lcdHandle)
+\{
+    System\_abort(\textcolor{stringliteral}{"Error initializing LCD\(\backslash\)n"});
+\}
+\end{DoxyCode}
+
+
+\subparagraph*{Writing to the internal buffer}
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// Clear and write to buffer 0}
+LCD_bufferClear(lcdHandle, 0);
+LCD_bufferPrintString(lcdHandle, 0, \textcolor{stringliteral}{"Writing to Buffer 0"}, 24, LCD_PAGE0);
+LCD_bufferSetHLine(lcdHandle, 0, LCD_X_FIRST, LCD_X_LAST, 20);
+\end{DoxyCode}
+
+
+\subparagraph*{Updating L\+C\+D display with buffer content}
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// Update display with content of buffer 0}
+LCD_update(lcdHandle, 0);
+\end{DoxyCode}
+
+
+\subsubsection*{Instrumentation}
+
+The L\+C\+D driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$xdc/std.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+S\+P\+I.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+Include dependency graph for L\+C\+D\+Dogm1286.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_l_c_d_dogm1286_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Parameters are used to with the \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_l_c_d_dogm1286_8h_a65cc6910ac18d5d823205870acaf3dc3}{L\+C\+D\+\_\+\+Params\+\_\+init()}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_c_d___command}{L\+C\+D\+\_\+\+Command}
+\begin{DoxyCompactList}\small\item\em Format of L\+C\+D commands used by the L\+C\+D controller. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} used to store data to be printed on the L\+C\+D display. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_c_d___object}{L\+C\+D\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Object. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_c_d___h_w_attrs}{L\+C\+D\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config} structure contains a set of pointers used to characterize the L\+C\+D driver implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a928104e5f675d3440ea7d9ed58ac70e1}{L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S}~8192
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a934cfbac97ccffd2447bafc8738ee9f2}{L\+C\+D\+\_\+\+B\+Y\+T\+E\+S}~1024
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a0afb537ac0813a7acc2f797a4d3baa0b}{L\+C\+D\+\_\+\+C\+O\+L\+S}~128
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_ada0fff460272d8b44f3b469d208de0b3}{L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N}~0
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a1d9ba2d8f9cc2124ff29e24abbe2c90d}{L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X}~(\hyperlink{_l_c_d_dogm1286_8h_a0afb537ac0813a7acc2f797a4d3baa0b}{L\+C\+D\+\_\+\+C\+O\+L\+S}-\/1)
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a9a59fc4d524d3519a6bd0cb451850a65}{L\+C\+D\+\_\+\+R\+O\+W\+S}~64
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a57d5310c857f96d5315b04fda2f87a1e}{L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N}~0
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_ad14583f7d91ea48ff9f3e6ec9a920a11}{L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X}~(\hyperlink{_l_c_d_dogm1286_8h_a9a59fc4d524d3519a6bd0cb451850a65}{L\+C\+D\+\_\+\+R\+O\+W\+S}-\/1)
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a52bb29a342e1892b197f2d2b0a705550}{L\+C\+D\+\_\+\+P\+A\+G\+E\+S}~8
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a8bacac7b7c712d9dd1a3bb85bb90ae84}{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S}~8
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a4fad5c4c39b66358c5ab60f53d26ac86}{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H}~6
+\item 
+\#define \hyperlink{_l_c_d_dogm1286_8h_a311c85b23f68d1ae7b4c242c9fa14159}{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H}~5
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config} $\ast$ \hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}{L\+C\+D\+\_\+\+Align} \hyperlink{_l_c_d_dogm1286_8h_a37efe29deb0009a1cd4891a969cf8775}{L\+C\+D\+\_\+\+Align}
+\begin{DoxyCompactList}\small\item\em L\+C\+D alignment enum. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} \hyperlink{_l_c_d_dogm1286_8h_a3d74c82d360d6881797c2b48fc5b4265}{L\+C\+D\+\_\+\+Page}
+\begin{DoxyCompactList}\small\item\em L\+C\+D page enum. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083ce}{L\+C\+D\+\_\+\+X\+\_\+\+Limit} \hyperlink{_l_c_d_dogm1286_8h_a998837ae7184adee6527cb2a51ac3598}{L\+C\+D\+\_\+\+X\+\_\+\+Limit}
+\begin{DoxyCompactList}\small\item\em L\+C\+D x-\/axis enum. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200}{L\+C\+D\+\_\+\+Y\+\_\+\+Limit} \hyperlink{_l_c_d_dogm1286_8h_a3b3b2479aa52ec0991c6712bb3ba7ed5}{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}
+\begin{DoxyCompactList}\small\item\em L\+C\+D y-\/axis enum. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params} \hyperlink{_l_c_d_dogm1286_8h_ae0bf31ded7b0402797216a9151be1ea3}{L\+C\+D\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Parameters are used to with the \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_l_c_d_dogm1286_8h_a65cc6910ac18d5d823205870acaf3dc3}{L\+C\+D\+\_\+\+Params\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___command}{L\+C\+D\+\_\+\+Command} \hyperlink{_l_c_d_dogm1286_8h_aec810392c2a7c224a91179a5f36496c1}{L\+C\+D\+\_\+\+Command}
+\begin{DoxyCompactList}\small\item\em Format of L\+C\+D commands used by the L\+C\+D controller. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} \hyperlink{_l_c_d_dogm1286_8h_a091af8426beb91861af26dd202ddc3d0}{L\+C\+D\+\_\+\+Buffer}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} used to store data to be printed on the L\+C\+D display. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___object}{L\+C\+D\+\_\+\+Object} \hyperlink{_l_c_d_dogm1286_8h_aad7cfd1bc0b0593efef10fb73efdf148}{L\+C\+D\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___h_w_attrs}{L\+C\+D\+\_\+\+H\+W\+Attrs} \hyperlink{_l_c_d_dogm1286_8h_ac52079af6c7a6e8db90b350f5267e590}{L\+C\+D\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em L\+C\+D Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config} \hyperlink{_l_c_d_dogm1286_8h_a4cefc793530eae238dcce72c9335319b}{L\+C\+D\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em The \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config} structure contains a set of pointers used to characterize the L\+C\+D driver implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}{L\+C\+D\+\_\+\+Align} \{ \\*
+\hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5a3d311dab5c4b18d56c5e15390e3ed694}{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5aefc05bcf179874ea14871f33617f55e7}{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5a51b08200ccddb00bb9157ac2031f3e1a}{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T}
+ \}
+\begin{DoxyCompactList}\small\item\em L\+C\+D alignment enum. \end{DoxyCompactList}\item 
+enum \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} \{ \\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea5d088e98870705e757c0d10fd95771cd}{L\+C\+D\+\_\+\+P\+A\+G\+E0} = 0, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea44f463bf5e5c1fb3609c1c73c650b2f4}{L\+C\+D\+\_\+\+P\+A\+G\+E1}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea7fa6486b29fd4f5b5d2265cb8abacd10}{L\+C\+D\+\_\+\+P\+A\+G\+E2}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea587de21d67e48c862ada8f6a2a35a753}{L\+C\+D\+\_\+\+P\+A\+G\+E3}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea0e386b6cb40d97bda67368627336b3de}{L\+C\+D\+\_\+\+P\+A\+G\+E4}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea0e99c30f6d4196f06b9a927d0d8d45dd}{L\+C\+D\+\_\+\+P\+A\+G\+E5}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea940495b5652f76c73d87f5380dd6e4d9}{L\+C\+D\+\_\+\+P\+A\+G\+E6}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023beae54a3dc2f4b343a49f8ba6ea0a57480b}{L\+C\+D\+\_\+\+P\+A\+G\+E7}, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023beaef545e9e07dfe38c80b59bd18d742189}{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T}
+ \}
+\begin{DoxyCompactList}\small\item\em L\+C\+D page enum. \end{DoxyCompactList}\item 
+enum \hyperlink{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083ce}{L\+C\+D\+\_\+\+X\+\_\+\+Limit} \{ \\*
+\hyperlink{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083cea1a9fc733f2ec111453b3435aa8d94a8f}{L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T} = 0, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083ceacd6a56f537d8e29eea6f7a2c3bf93ab9}{L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T} = (L\+C\+D\+\_\+\+C\+O\+L\+S-\/1)
+ \}
+\begin{DoxyCompactList}\small\item\em L\+C\+D x-\/axis enum. \end{DoxyCompactList}\item 
+enum \hyperlink{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200}{L\+C\+D\+\_\+\+Y\+\_\+\+Limit} \{ \\*
+\hyperlink{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200ab61b667439ad4a352bc60d5b801f0e25}{L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T} = 0, 
+\\*
+\hyperlink{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200ac8b3b0727bb45101afcc3493cebb72fd}{L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T} = (L\+C\+D\+\_\+\+R\+O\+W\+S-\/1)
+ \}
+\begin{DoxyCompactList}\small\item\em L\+C\+D y-\/axis enum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a9a6a62dcb23c554201420e7e555e6ecc}{L\+C\+D\+\_\+close} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close the L\+C\+D instance specified by the L\+C\+D handle. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a301a0b73016a44e015dbd374c08243d4}{L\+C\+D\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the L\+C\+D driver module. \end{DoxyCompactList}\item 
+\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open} (\hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} $\ast$buffers, uint8\+\_\+t n\+Buffers, \hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to set up the D\+O\+G\+M128\+W-\/6 L\+C\+D display. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a65cc6910ac18d5d823205870acaf3dc3}{L\+C\+D\+\_\+\+Params\+\_\+init} (\hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a1208372099f0929bbbd1a5ec8621afce}{L\+C\+D\+\_\+write\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, char $\ast$str, unsigned int ui\+Value, unsigned char uc\+Format, unsigned char uc\+Line)
+\begin{DoxyCompactList}\small\item\em Function that writes a string and value to a buffer and sends it to the L\+C\+D display. The written page is being cleared before it is written to. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a6974d1de55526b98c6af02c90fd34185}{L\+C\+D\+\_\+update} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index)
+\begin{DoxyCompactList}\small\item\em Function that writes the specified buffer to the L\+C\+D display. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_abd9b38254fab63ff90f3b4b93d4c8d8b}{L\+C\+D\+\_\+update\+Part} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page\+From, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page\+To)
+\begin{DoxyCompactList}\small\item\em Function that sends the specified part of the given buffer to the corresponding part on the L\+C\+D. This function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To} and {\itshape i\+Page\+From} $<$= {\itshape i\+Page\+To}. The resolution is given in columns \mbox{[}0--127\mbox{]} and pages \mbox{[}0--7\mbox{]}. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a3f274bf5496eaf924a2eda563b753d1b}{L\+C\+D\+\_\+buffer\+Clear} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index)
+\begin{DoxyCompactList}\small\item\em Function that empties the specified L\+C\+D buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a0f9a680f8ddc7a8c3bee766530246fcb}{L\+C\+D\+\_\+buffer\+Clear\+Page} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function clears the page specified by {\itshape i\+Page} in the given buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a13d5b0ec129280f820b07501cafd9247}{L\+C\+D\+\_\+buffer\+Clear\+Part} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page\+From, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page\+To)
+\begin{DoxyCompactList}\small\item\em This function clears the pixels in a given piece of a page. Resolution is given in coulmns \mbox{[}0--127\mbox{]} and pages \mbox{[}0--7\mbox{]}. The function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To} and {\itshape i\+Page\+From} $<$= {\itshape i\+Page\+To}. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_af2908b510d4b4ae4ab1fc1a1620d66b0}{L\+C\+D\+\_\+buffer\+Invert} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+Y\+From, unsigned char uc\+X\+To, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function inverts the pixels (bits) in a given region of the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a513135f9dc91ff5fbd6175e0c3c392ed}{L\+C\+D\+\_\+buffer\+Invert\+Page} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function inverts a range of columns in the display buffer on a specified page (for example, {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0}). This function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To}. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a6f1ed502ab103ba04643798985dbcb11}{L\+C\+D\+\_\+buffer\+Print\+String} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, const char $\ast$pc\+Str, unsigned char uc\+X, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em Function that writes a string to the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a91b19df1b66a71acbe38ec9dcd76d5c1}{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, const char $\ast$pc\+Str, \hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}{L\+C\+D\+\_\+\+Align} i\+Alignment, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function writes a string to the given buffer specified by the {\itshape i\+Alignment} argument. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_ae67a1e76c36a173a26a1f617ed7cb86e}{L\+C\+D\+\_\+buffer\+Print\+Int} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, int i32\+Number, unsigned char uc\+X, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em Function that writes an integer to the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_ae446df10e9b11284d958350bafb01956}{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, int i32\+Number, \hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}{L\+C\+D\+\_\+\+Align} i\+Alignment, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function writes an integer to the given buffer as specified by the {\itshape i\+Alignment} argument. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a3e57bb5655ffd5a694f251fcbeccc610}{L\+C\+D\+\_\+buffer\+Print\+Float} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, float f\+Number, unsigned char uc\+Decimals, unsigned char uc\+X, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function writes a number of data type float to the given buffer at a specified column and page. Use this function instead of performing a float to c-\/string conversion and then using \hyperlink{_l_c_d_dogm1286_8h_a6f1ed502ab103ba04643798985dbcb11}{L\+C\+D\+\_\+buffer\+Print\+String()}. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a5342a001698e39fe6443cbcadf61e3f7}{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, float f\+Number, unsigned char uc\+Decimals, \hyperlink{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}{L\+C\+D\+\_\+\+Align} i\+Alignment, \hyperlink{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}{L\+C\+D\+\_\+\+Page} i\+Page)
+\begin{DoxyCompactList}\small\item\em This function writes a float number to the given buffer as specified by the {\itshape i\+Alignment} argument. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_ae5fcaac1c5d5ce2fafecf38c8c78bb15}{L\+C\+D\+\_\+buffer\+Set\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+Y\+From, unsigned char uc\+X\+To, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function draws a line in the specified buffer from ({\itshape uc\+X\+From},{\itshape uc\+Y\+From}) to ({\itshape uc\+X\+To},{\itshape uc\+Y\+To}). The function uses Bresenham\textquotesingle{}s line algorithm. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a5520daaaedbda09ccb4e1f804cb6387f}{L\+C\+D\+\_\+buffer\+Clear\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+Y\+From, unsigned char uc\+X\+To, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function clears a line in the specified buffer from ({\itshape uc\+X\+From},{\itshape uc\+Y\+From}) to ({\itshape uc\+X\+To},{\itshape uc\+Y\+To}). The function uses Bresenham\textquotesingle{}s line algorithm. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_abac67849744509fc2ace41db2eda90e1}{L\+C\+D\+\_\+buffer\+Set\+H\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, unsigned char uc\+Y)
+\begin{DoxyCompactList}\small\item\em This function draws a horizontal line from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) into the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a33d49a7d0a49f12bf8ec12288404eb82}{L\+C\+D\+\_\+buffer\+Clear\+H\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, unsigned char uc\+Y)
+\begin{DoxyCompactList}\small\item\em This function clears a horizontal line from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) from the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a6cd9439691ab890bdc12cb61739c71c1}{L\+C\+D\+\_\+buffer\+Set\+V\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X, unsigned char uc\+Y\+From, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function draws a vertical line from (uc\+X,uc\+Y\+From) to (uc\+X,uc\+Y\+To) into the specified buffer. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_af099bb3569888e86f758958d814bb58f}{L\+C\+D\+\_\+buffer\+Clear\+V\+Line} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X, unsigned char uc\+Y\+From, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function clears a vertical line from ({\itshape uc\+X},{\itshape uc\+Y\+From}) to ({\itshape uc\+X},{\itshape uc\+Y\+To}) from the buffer specified. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_ad9460c9ec6519a340e36d26d365bbed5}{L\+C\+D\+\_\+buffer\+H\+Arrow} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X\+From, unsigned char uc\+X\+To, unsigned char uc\+Y)
+\begin{DoxyCompactList}\small\item\em This function draws a horizontal arrow from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) to buffer specified. The function assumes {\itshape uc\+Y} to be in the range \mbox{[}2--61\mbox{]} in order for arrowhead to fit on the L\+C\+D. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a40b3e9e6a7086787047a174815dfeb70}{L\+C\+D\+\_\+buffer\+V\+Arrow} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X, unsigned char uc\+Y\+From, unsigned char uc\+Y\+To)
+\begin{DoxyCompactList}\small\item\em This function draws a vertical arrow from ({\itshape uc\+X},{\itshape uc\+Y\+From}) to ({\itshape uc\+X},{\itshape uc\+Y\+To}) to the buffer specified. The function assumes that {\itshape uc\+X} is in the range \mbox{[}2--125\mbox{]} for the arrowhead to fit on the L\+C\+D. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_a028108d7554d62733d00295fd150a2a6}{L\+C\+D\+\_\+buffer\+Set\+Px} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X, unsigned char uc\+Y)
+\begin{DoxyCompactList}\small\item\em This function sets a pixel on ({\itshape uc\+X},{\itshape uc\+Y}). \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_aa99fc0e617619d6f7b9befd56ffac26c}{L\+C\+D\+\_\+buffer\+Clear\+Px} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int buf\+Index, unsigned char uc\+X, unsigned char uc\+Y)
+\begin{DoxyCompactList}\small\item\em This function clears the pixel at ({\itshape uc\+X},{\itshape uc\+Y}). \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_afa33971216c7767eb3f3790615fa9a31}{L\+C\+D\+\_\+buffer\+Copy} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned int from\+Buf\+Index, unsigned int to\+Buf\+Index)
+\begin{DoxyCompactList}\small\item\em This function copies the content of {\itshape from\+Buf\+Index} to {\itshape to\+Buf\+Index}. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_dogm1286_8h_ac159f265608d80bd4baff4c3a4d30959}{L\+C\+D\+\_\+set\+Contrast} (\hyperlink{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}{L\+C\+D\+\_\+\+Handle} handle, unsigned char uc\+Contrast)
+\begin{DoxyCompactList}\small\item\em This Function sets the L\+C\+D contrast. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_l_c_d_dogm1286_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S@{L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S}}
+\index{L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S@{L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+P\+I\+X\+E\+L\+S~8192}\label{_l_c_d_dogm1286_8h_a928104e5f675d3440ea7d9ed58ac70e1}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+B\+Y\+T\+E\+S@{L\+C\+D\+\_\+\+B\+Y\+T\+E\+S}}
+\index{L\+C\+D\+\_\+\+B\+Y\+T\+E\+S@{L\+C\+D\+\_\+\+B\+Y\+T\+E\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+B\+Y\+T\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+B\+Y\+T\+E\+S~1024}\label{_l_c_d_dogm1286_8h_a934cfbac97ccffd2447bafc8738ee9f2}
+Number of bytes needed in L\+C\+D buffer \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+C\+O\+L\+S@{L\+C\+D\+\_\+\+C\+O\+L\+S}}
+\index{L\+C\+D\+\_\+\+C\+O\+L\+S@{L\+C\+D\+\_\+\+C\+O\+L\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+C\+O\+L\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+C\+O\+L\+S~128}\label{_l_c_d_dogm1286_8h_a0afb537ac0813a7acc2f797a4d3baa0b}
+Number of pixel columns \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N@{L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N}}
+\index{L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N@{L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+X\+\_\+\+M\+I\+N~0}\label{_l_c_d_dogm1286_8h_ada0fff460272d8b44f3b469d208de0b3}
+First pixel on L\+C\+D x-\/axis \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X@{L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X}}
+\index{L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X@{L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+X\+\_\+\+M\+A\+X~({\bf L\+C\+D\+\_\+\+C\+O\+L\+S}-\/1)}\label{_l_c_d_dogm1286_8h_a1d9ba2d8f9cc2124ff29e24abbe2c90d}
+Last pixel on L\+C\+D x-\/axis \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+R\+O\+W\+S@{L\+C\+D\+\_\+\+R\+O\+W\+S}}
+\index{L\+C\+D\+\_\+\+R\+O\+W\+S@{L\+C\+D\+\_\+\+R\+O\+W\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+R\+O\+W\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+R\+O\+W\+S~64}\label{_l_c_d_dogm1286_8h_a9a59fc4d524d3519a6bd0cb451850a65}
+Number of pixel rows \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N@{L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N}}
+\index{L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N@{L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+Y\+\_\+\+M\+I\+N~0}\label{_l_c_d_dogm1286_8h_a57d5310c857f96d5315b04fda2f87a1e}
+First pixel on L\+C\+D y-\/axis \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X@{L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X}}
+\index{L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X@{L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+Y\+\_\+\+M\+A\+X~({\bf L\+C\+D\+\_\+\+R\+O\+W\+S}-\/1)}\label{_l_c_d_dogm1286_8h_ad14583f7d91ea48ff9f3e6ec9a920a11}
+Last pixel on L\+C\+D y-\/axis \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E\+S@{L\+C\+D\+\_\+\+P\+A\+G\+E\+S}}
+\index{L\+C\+D\+\_\+\+P\+A\+G\+E\+S@{L\+C\+D\+\_\+\+P\+A\+G\+E\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+P\+A\+G\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+P\+A\+G\+E\+S~8}\label{_l_c_d_dogm1286_8h_a52bb29a342e1892b197f2d2b0a705550}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S@{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S}}
+\index{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S@{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+R\+O\+W\+S~8}\label{_l_c_d_dogm1286_8h_a8bacac7b7c712d9dd1a3bb85bb90ae84}
+Number of pixel rows per L\+C\+D page \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H@{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H}}
+\index{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H@{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+C\+H\+A\+R\+\_\+\+W\+I\+D\+T\+H~6}\label{_l_c_d_dogm1286_8h_a4fad5c4c39b66358c5ab60f53d26ac86}
+Space used for each character \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H@{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H}}
+\index{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H@{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+F\+O\+N\+T\+\_\+\+W\+I\+D\+T\+H~5}\label{_l_c_d_dogm1286_8h_a311c85b23f68d1ae7b4c242c9fa14159}
+Actual font character width 
+
+\subsubsection{Typedef Documentation}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Handle@{L\+C\+D\+\_\+\+Handle}}
+\index{L\+C\+D\+\_\+\+Handle@{L\+C\+D\+\_\+\+Handle}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Config}$\ast$ {\bf L\+C\+D\+\_\+\+Handle}}\label{_l_c_d_dogm1286_8h_a72910a78c343543f1610fd082d17d803}
+
+
+A handle that is returned from a \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} call. 
+
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Align@{L\+C\+D\+\_\+\+Align}}
+\index{L\+C\+D\+\_\+\+Align@{L\+C\+D\+\_\+\+Align}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Align}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf L\+C\+D\+\_\+\+Align}  {\bf L\+C\+D\+\_\+\+Align}}\label{_l_c_d_dogm1286_8h_a37efe29deb0009a1cd4891a969cf8775}
+
+
+L\+C\+D alignment enum. 
+
+This enumeration defines the text alignment. It is used by L\+C\+D\+\_\+buffer\+Printxxx\+Aligned functions. \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Page@{L\+C\+D\+\_\+\+Page}}
+\index{L\+C\+D\+\_\+\+Page@{L\+C\+D\+\_\+\+Page}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Page}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf L\+C\+D\+\_\+\+Page}  {\bf L\+C\+D\+\_\+\+Page}}\label{_l_c_d_dogm1286_8h_a3d74c82d360d6881797c2b48fc5b4265}
+
+
+L\+C\+D page enum. 
+
+This enumeration defines the L\+C\+D pages. It is used by L\+C\+D\+\_\+bufferxxx functions \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+Limit@{L\+C\+D\+\_\+\+X\+\_\+\+Limit}}
+\index{L\+C\+D\+\_\+\+X\+\_\+\+Limit@{L\+C\+D\+\_\+\+X\+\_\+\+Limit}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+X\+\_\+\+Limit}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf L\+C\+D\+\_\+\+X\+\_\+\+Limit}  {\bf L\+C\+D\+\_\+\+X\+\_\+\+Limit}}\label{_l_c_d_dogm1286_8h_a998837ae7184adee6527cb2a51ac3598}
+
+
+L\+C\+D x-\/axis enum. 
+
+This enumeration defines x axis limit It is used for x argument in L\+C\+D\+\_\+bufferxxx functions \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+Limit@{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}}
+\index{L\+C\+D\+\_\+\+Y\+\_\+\+Limit@{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf L\+C\+D\+\_\+\+Y\+\_\+\+Limit}  {\bf L\+C\+D\+\_\+\+Y\+\_\+\+Limit}}\label{_l_c_d_dogm1286_8h_a3b3b2479aa52ec0991c6712bb3ba7ed5}
+
+
+L\+C\+D y-\/axis enum. 
+
+This enumeration defines y axis limit It is used for y argument in L\+C\+D\+\_\+bufferxxx functions \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Params@{L\+C\+D\+\_\+\+Params}}
+\index{L\+C\+D\+\_\+\+Params@{L\+C\+D\+\_\+\+Params}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Params}  {\bf L\+C\+D\+\_\+\+Params}}\label{_l_c_d_dogm1286_8h_ae0bf31ded7b0402797216a9151be1ea3}
+
+
+L\+C\+D Parameters are used to with the \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_l_c_d_dogm1286_8h_a65cc6910ac18d5d823205870acaf3dc3}{L\+C\+D\+\_\+\+Params\+\_\+init()}. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init} 
+\end{DoxySeeAlso}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Command@{L\+C\+D\+\_\+\+Command}}
+\index{L\+C\+D\+\_\+\+Command@{L\+C\+D\+\_\+\+Command}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Command}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Command}  {\bf L\+C\+D\+\_\+\+Command}}\label{_l_c_d_dogm1286_8h_aec810392c2a7c224a91179a5f36496c1}
+
+
+Format of L\+C\+D commands used by the L\+C\+D controller. 
+
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}}
+\index{L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Buffer}  {\bf L\+C\+D\+\_\+\+Buffer}}\label{_l_c_d_dogm1286_8h_a091af8426beb91861af26dd202ddc3d0}
+
+
+\hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} used to store data to be printed on the L\+C\+D display. 
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 LCD\_Buffer lcdBuffers[] = \{
+2     \{lcdBuffer0, LCD\_BYTES, NULL\},
+3     \{lcdBuffer1, LCD\_BYTES, NULL\},
+4 \};
+\end{DoxyCode}
+ \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Object@{L\+C\+D\+\_\+\+Object}}
+\index{L\+C\+D\+\_\+\+Object@{L\+C\+D\+\_\+\+Object}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Object}  {\bf L\+C\+D\+\_\+\+Object}}\label{_l_c_d_dogm1286_8h_aad7cfd1bc0b0593efef10fb73efdf148}
+
+
+L\+C\+D Object. 
+
+The application must not access any member variables of this structure! \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}}
+\index{L\+C\+D\+\_\+\+H\+W\+Attrs@{L\+C\+D\+\_\+\+H\+W\+Attrs}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+H\+W\+Attrs}  {\bf L\+C\+D\+\_\+\+H\+W\+Attrs}}\label{_l_c_d_dogm1286_8h_ac52079af6c7a6e8db90b350f5267e590}
+
+
+L\+C\+D Hardware attributes. 
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const LCD\_HWAttrs lcdHWAttrs = \{
+2     .LCD\_initCmd = &LCD\_initCmd,
+3     .lcdResetPin = Board\_LCD\_RST,
+4     .lcdModePin = Board\_LCD\_MODE,
+5     .lcdCsnPin = Board\_LCD\_CSN,
+6     .spiIndex = Board\_SPI0
+7 \};
+\end{DoxyCode}
+ \index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Config@{L\+C\+D\+\_\+\+Config}}
+\index{L\+C\+D\+\_\+\+Config@{L\+C\+D\+\_\+\+Config}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf L\+C\+D\+\_\+\+Config}  {\bf L\+C\+D\+\_\+\+Config}}\label{_l_c_d_dogm1286_8h_a4cefc793530eae238dcce72c9335319b}
+
+
+The \hyperlink{struct_l_c_d___config}{L\+C\+D\+\_\+\+Config} structure contains a set of pointers used to characterize the L\+C\+D driver implementation. 
+
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Align@{L\+C\+D\+\_\+\+Align}}
+\index{L\+C\+D\+\_\+\+Align@{L\+C\+D\+\_\+\+Align}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Align}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf L\+C\+D\+\_\+\+Align}}\label{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5}
+
+
+L\+C\+D alignment enum. 
+
+This enumeration defines the text alignment. It is used by L\+C\+D\+\_\+buffer\+Printxxx\+Aligned functions. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T}}\item[{\em 
+L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T\label{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5a3d311dab5c4b18d56c5e15390e3ed694}
+}]Text is aligned to the left \index{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R}}\item[{\em 
+L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R\label{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5aefc05bcf179874ea14871f33617f55e7}
+}]Text is aligned in the center \index{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T@{L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T}}\item[{\em 
+L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T\label{_l_c_d_dogm1286_8h_abd8709188c7b3da9995941f70249f6d5a51b08200ccddb00bb9157ac2031f3e1a}
+}]Text is aligned to the right \end{description}
+\end{Desc}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Page@{L\+C\+D\+\_\+\+Page}}
+\index{L\+C\+D\+\_\+\+Page@{L\+C\+D\+\_\+\+Page}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Page}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf L\+C\+D\+\_\+\+Page}}\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023be}
+
+
+L\+C\+D page enum. 
+
+This enumeration defines the L\+C\+D pages. It is used by L\+C\+D\+\_\+bufferxxx functions \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+C\+D\+\_\+\+P\+A\+G\+E0@{L\+C\+D\+\_\+\+P\+A\+G\+E0}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E0@{L\+C\+D\+\_\+\+P\+A\+G\+E0}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E0\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea5d088e98870705e757c0d10fd95771cd}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E1@{L\+C\+D\+\_\+\+P\+A\+G\+E1}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E1@{L\+C\+D\+\_\+\+P\+A\+G\+E1}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E1\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea44f463bf5e5c1fb3609c1c73c650b2f4}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E2@{L\+C\+D\+\_\+\+P\+A\+G\+E2}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E2@{L\+C\+D\+\_\+\+P\+A\+G\+E2}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E2\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea7fa6486b29fd4f5b5d2265cb8abacd10}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E3@{L\+C\+D\+\_\+\+P\+A\+G\+E3}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E3@{L\+C\+D\+\_\+\+P\+A\+G\+E3}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E3\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea587de21d67e48c862ada8f6a2a35a753}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E4@{L\+C\+D\+\_\+\+P\+A\+G\+E4}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E4@{L\+C\+D\+\_\+\+P\+A\+G\+E4}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E4\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea0e386b6cb40d97bda67368627336b3de}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E5@{L\+C\+D\+\_\+\+P\+A\+G\+E5}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E5@{L\+C\+D\+\_\+\+P\+A\+G\+E5}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E5\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea0e99c30f6d4196f06b9a927d0d8d45dd}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E6@{L\+C\+D\+\_\+\+P\+A\+G\+E6}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E6@{L\+C\+D\+\_\+\+P\+A\+G\+E6}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E6\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023bea940495b5652f76c73d87f5380dd6e4d9}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E7@{L\+C\+D\+\_\+\+P\+A\+G\+E7}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E7@{L\+C\+D\+\_\+\+P\+A\+G\+E7}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E7\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023beae54a3dc2f4b343a49f8ba6ea0a57480b}
+}]\index{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T@{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T@{L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T}}\item[{\em 
+L\+C\+D\+\_\+\+P\+A\+G\+E\+\_\+\+C\+O\+U\+N\+T\label{_l_c_d_dogm1286_8h_aa44cf10c63a7f9e8d3fc52bdb03023beaef545e9e07dfe38c80b59bd18d742189}
+}]\end{description}
+\end{Desc}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+Limit@{L\+C\+D\+\_\+\+X\+\_\+\+Limit}}
+\index{L\+C\+D\+\_\+\+X\+\_\+\+Limit@{L\+C\+D\+\_\+\+X\+\_\+\+Limit}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+X\+\_\+\+Limit}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf L\+C\+D\+\_\+\+X\+\_\+\+Limit}}\label{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083ce}
+
+
+L\+C\+D x-\/axis enum. 
+
+This enumeration defines x axis limit It is used for x argument in L\+C\+D\+\_\+bufferxxx functions \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T@{L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T@{L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T}}\item[{\em 
+L\+C\+D\+\_\+\+X\+\_\+\+F\+I\+R\+S\+T\label{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083cea1a9fc733f2ec111453b3435aa8d94a8f}
+}]\index{L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T@{L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T@{L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T}}\item[{\em 
+L\+C\+D\+\_\+\+X\+\_\+\+L\+A\+S\+T\label{_l_c_d_dogm1286_8h_a705e435e0177093225824d75041083ceacd6a56f537d8e29eea6f7a2c3bf93ab9}
+}]\end{description}
+\end{Desc}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+Limit@{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}}
+\index{L\+C\+D\+\_\+\+Y\+\_\+\+Limit@{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Y\+\_\+\+Limit}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf L\+C\+D\+\_\+\+Y\+\_\+\+Limit}}\label{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200}
+
+
+L\+C\+D y-\/axis enum. 
+
+This enumeration defines y axis limit It is used for y argument in L\+C\+D\+\_\+bufferxxx functions \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T@{L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T@{L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T}}\item[{\em 
+L\+C\+D\+\_\+\+Y\+\_\+\+F\+I\+R\+S\+T\label{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200ab61b667439ad4a352bc60d5b801f0e25}
+}]\index{L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T@{L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T@{L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T}}\item[{\em 
+L\+C\+D\+\_\+\+Y\+\_\+\+L\+A\+S\+T\label{_l_c_d_dogm1286_8h_a63ea0c2951a06bf871ddfa3a0fe34200ac8b3b0727bb45101afcc3493cebb72fd}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+close@{L\+C\+D\+\_\+close}}
+\index{L\+C\+D\+\_\+close@{L\+C\+D\+\_\+close}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a9a6a62dcb23c554201420e7e555e6ecc}
+
+
+Function to close the L\+C\+D instance specified by the L\+C\+D handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} has to be called first. Function assumes that the handle is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D handle returned from \hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}{L\+C\+D\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}}
+\index{L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a301a0b73016a44e015dbd374c08243d4}
+
+
+This function initializes the L\+C\+D driver module. 
+
+\begin{DoxyPrecond}{Precondition}
+The L\+C\+D\+\_\+config structure must exist and be persistent before this function can be called. This function must be called before any other L\+C\+D driver A\+P\+Is. Calling context\+: Hwi, Swi, Task, Main. 
+\end{DoxyPrecond}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+open@{L\+C\+D\+\_\+open}}
+\index{L\+C\+D\+\_\+open@{L\+C\+D\+\_\+open}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf L\+C\+D\+\_\+\+Handle} L\+C\+D\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Buffer} $\ast$}]{buffers, }
+\item[{uint8\+\_\+t}]{n\+Buffers, }
+\item[{{\bf L\+C\+D\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a7eda62cc528319af943746da6b5d7688}
+
+
+Function to set up the D\+O\+G\+M128\+W-\/6 L\+C\+D display. 
+
+\begin{DoxyPrecond}{Precondition}
+L\+C\+D controller has been initialized using \hyperlink{_l_c_d_dogm1286_8h_a301a0b73016a44e015dbd374c08243d4}{L\+C\+D\+\_\+init()}. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em buffers} & Pointer to a buffer block.\\
+\hline
+{\em n\+Buffers} & Number of buffers in the buffer block.\\
+\hline
+{\em params} & Pointer to a parameter block, if N\+U\+L\+L it will use default values\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to a L\+C\+D\+\_\+\+Handle on success or a N\+U\+L\+L it was already opened
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_l_c_d_dogm1286_8h_a9a6a62dcb23c554201420e7e555e6ecc}{L\+C\+D\+\_\+close()} 
+
+\hyperlink{_l_c_d_dogm1286_8h_a301a0b73016a44e015dbd374c08243d4}{L\+C\+D\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+\+Params\+\_\+init@{L\+C\+D\+\_\+\+Params\+\_\+init}}
+\index{L\+C\+D\+\_\+\+Params\+\_\+init@{L\+C\+D\+\_\+\+Params\+\_\+init}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a65cc6910ac18d5d823205870acaf3dc3}
+
+
+Function to initialize the \hyperlink{struct_l_c_d___params}{L\+C\+D\+\_\+\+Params} struct to its defaults. 
+
+Defaults values are\+: 
+\begin{DoxyCode}
+1 lcdWriteTimeout = BIOS\_WAIT\_FOREVER;
+2 spiBitRate      = 1000000;
+3 spiFrameFormat  = SPI\_POL0\_PHA0;
+\end{DoxyCode}
+
+
+\begin{DoxyPrecond}{Precondition}
+Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Parameter structure to initialize \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+write\+Line@{L\+C\+D\+\_\+write\+Line}}
+\index{L\+C\+D\+\_\+write\+Line@{L\+C\+D\+\_\+write\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+write\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+write\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{char $\ast$}]{str, }
+\item[{unsigned int}]{ui\+Value, }
+\item[{unsigned char}]{uc\+Format, }
+\item[{unsigned char}]{uc\+Line}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a1208372099f0929bbbd1a5ec8621afce}
+
+
+Function that writes a string and value to a buffer and sends it to the L\+C\+D display. The written page is being cleared before it is written to. 
+
+L\+C\+D\+\_\+write will block task execution until all the data in buffer has been written to the L\+C\+D.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em str} & A pointer to the string to print.\\
+\hline
+{\em ui\+Value} & Value to print\\
+\hline
+{\em uc\+Format} & Base of the value to print – 2,8,16 etc. uc\+Format must be between 2 and 36, where 10 means decimal base, 16 hexadecimal, 8 octal, and 2 binary. If uc\+Format is zero, only the string will get printed.\\
+\hline
+{\em uc\+Line} & The page to write. Must be a value from 0-\/7. \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+update@{L\+C\+D\+\_\+update}}
+\index{L\+C\+D\+\_\+update@{L\+C\+D\+\_\+update}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+update}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+update (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a6974d1de55526b98c6af02c90fd34185}
+
+
+Function that writes the specified buffer to the L\+C\+D display. 
+
+L\+C\+D\+\_\+update will block task execution until all the data in buffer has been written to the L\+C\+D.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure. \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+update\+Part@{L\+C\+D\+\_\+update\+Part}}
+\index{L\+C\+D\+\_\+update\+Part@{L\+C\+D\+\_\+update\+Part}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+update\+Part}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+update\+Part (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page\+From, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_abd9b38254fab63ff90f3b4b93d4c8d8b}
+
+
+Function that sends the specified part of the given buffer to the corresponding part on the L\+C\+D. This function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To} and {\itshape i\+Page\+From} $<$= {\itshape i\+Page\+To}. The resolution is given in columns \mbox{[}0--127\mbox{]} and pages \mbox{[}0--7\mbox{]}. 
+
+L\+C\+D\+\_\+update\+Part will block task execution until all the data has been written to the L\+C\+D.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The lowest x-\/position (column) to write \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The highest x-\/position to write \mbox{[}uc\+X\+From--127\mbox{]}.\\
+\hline
+{\em i\+Page\+From} & The first page to write. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+{\em i\+Page\+To} & The last page to write \mbox{[}i\+Page\+From--L\+C\+D\+\_\+\+P\+A\+G\+E7\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear@{L\+C\+D\+\_\+buffer\+Clear}}
+\index{L\+C\+D\+\_\+buffer\+Clear@{L\+C\+D\+\_\+buffer\+Clear}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a3f274bf5496eaf924a2eda563b753d1b}
+
+
+Function that empties the specified L\+C\+D buffer. 
+
+L\+C\+D\+\_\+buffer\+Clear will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure. \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+Page@{L\+C\+D\+\_\+buffer\+Clear\+Page}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+Page@{L\+C\+D\+\_\+buffer\+Clear\+Page}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+Page}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+Page (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a0f9a680f8ddc7a8c3bee766530246fcb}
+
+
+This function clears the page specified by {\itshape i\+Page} in the given buffer. 
+
+L\+C\+D\+\_\+buffer\+Clear\+Page will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em i\+Page} & The page to clear. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+Part@{L\+C\+D\+\_\+buffer\+Clear\+Part}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+Part@{L\+C\+D\+\_\+buffer\+Clear\+Part}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+Part}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+Part (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page\+From, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a13d5b0ec129280f820b07501cafd9247}
+
+
+This function clears the pixels in a given piece of a page. Resolution is given in coulmns \mbox{[}0--127\mbox{]} and pages \mbox{[}0--7\mbox{]}. The function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To} and {\itshape i\+Page\+From} $<$= {\itshape i\+Page\+To}. 
+
+L\+C\+D\+\_\+buffer\+Clear\+Part will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The lowest x-\/position (column) to be cleared \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The highest x-\/position to be cleared \mbox{[}uc\+X\+From--127\mbox{]}.\\
+\hline
+{\em i\+Page\+From} & The first page cleared. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+{\em i\+Page\+To} & The last page cleared \mbox{[}i\+Page\+From--L\+C\+D\+\_\+\+P\+A\+G\+E7\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Invert@{L\+C\+D\+\_\+buffer\+Invert}}
+\index{L\+C\+D\+\_\+buffer\+Invert@{L\+C\+D\+\_\+buffer\+Invert}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Invert}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Invert (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_af2908b510d4b4ae4ab1fc1a1620d66b0}
+
+
+This function inverts the pixels (bits) in a given region of the specified buffer. 
+
+L\+C\+D\+\_\+buffer\+Invert will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The first x-\/position (column) to invert \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & is the first y-\/position (row) to invert \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The last x-\/position (column) to invert \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The last y-\/position (row) to invert \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Invert\+Page@{L\+C\+D\+\_\+buffer\+Invert\+Page}}
+\index{L\+C\+D\+\_\+buffer\+Invert\+Page@{L\+C\+D\+\_\+buffer\+Invert\+Page}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Invert\+Page}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Invert\+Page (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a513135f9dc91ff5fbd6175e0c3c392ed}
+
+
+This function inverts a range of columns in the display buffer on a specified page (for example, {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0}). This function assumes {\itshape uc\+X\+From} $<$= {\itshape uc\+X\+To}. 
+
+L\+C\+D\+\_\+buffer\+Invert\+Page will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The first x-\/position (column) to invert \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The last x-\/position (column) to invert \mbox{[}uc\+X\+From--127\mbox{]}.\\
+\hline
+{\em i\+Page} & The page on which to invert. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+String@{L\+C\+D\+\_\+buffer\+Print\+String}}
+\index{L\+C\+D\+\_\+buffer\+Print\+String@{L\+C\+D\+\_\+buffer\+Print\+String}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+String}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{const char $\ast$}]{pc\+Str, }
+\item[{unsigned char}]{uc\+X, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a6f1ed502ab103ba04643798985dbcb11}
+
+
+Function that writes a string to the specified buffer. 
+
+L\+C\+D\+\_\+buffer\+Print\+String will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em pc\+Str} & A pointer to the string to print.\\
+\hline
+{\em uc\+X} & The x-\/position (column) to begin printing \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+String\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned}}
+\index{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+String\+Aligned}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+String\+Aligned (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{const char $\ast$}]{pc\+Str, }
+\item[{{\bf L\+C\+D\+\_\+\+Align}}]{i\+Alignment, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a91b19df1b66a71acbe38ec9dcd76d5c1}
+
+
+This function writes a string to the given buffer specified by the {\itshape i\+Alignment} argument. 
+
+L\+C\+D\+\_\+buffer\+Print\+String\+Aligned will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em pc\+Str} & A pointer to the string to print.\\
+\hline
+{\em i\+Alignment} & The text alignment. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T} \end{DoxyItemize}
+\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+Int@{L\+C\+D\+\_\+buffer\+Print\+Int}}
+\index{L\+C\+D\+\_\+buffer\+Print\+Int@{L\+C\+D\+\_\+buffer\+Print\+Int}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+Int}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+Int (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{int}]{i32\+Number, }
+\item[{unsigned char}]{uc\+X, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_ae67a1e76c36a173a26a1f617ed7cb86e}
+
+
+Function that writes an integer to the specified buffer. 
+
+L\+C\+D\+\_\+buffer\+Print\+Int will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em i32\+Number} & The number to print.\\
+\hline
+{\em uc\+X} & The x-\/position (column) to begin printing \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned}}
+\index{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{int}]{i32\+Number, }
+\item[{{\bf L\+C\+D\+\_\+\+Align}}]{i\+Alignment, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_ae446df10e9b11284d958350bafb01956}
+
+
+This function writes an integer to the given buffer as specified by the {\itshape i\+Alignment} argument. 
+
+L\+C\+D\+\_\+buffer\+Print\+Int\+Aligned will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em i32\+Number} & The number to be printed.\\
+\hline
+{\em i\+Alignment} & The text alignment. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T} \end{DoxyItemize}
+\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+Float@{L\+C\+D\+\_\+buffer\+Print\+Float}}
+\index{L\+C\+D\+\_\+buffer\+Print\+Float@{L\+C\+D\+\_\+buffer\+Print\+Float}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+Float}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+Float (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{float}]{f\+Number, }
+\item[{unsigned char}]{uc\+Decimals, }
+\item[{unsigned char}]{uc\+X, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a3e57bb5655ffd5a694f251fcbeccc610}
+
+
+This function writes a number of data type float to the given buffer at a specified column and page. Use this function instead of performing a float to c-\/string conversion and then using \hyperlink{_l_c_d_dogm1286_8h_a6f1ed502ab103ba04643798985dbcb11}{L\+C\+D\+\_\+buffer\+Print\+String()}. 
+
+L\+C\+D\+\_\+buffer\+Print\+Float will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em f\+Number} & The number to print.\\
+\hline
+{\em uc\+Decimals} & The number of decimals to print, M\+A\+X = 10.\\
+\hline
+{\em uc\+X} & The x-\/position (column) to begin printing \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned}}
+\index{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned@{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{float}]{f\+Number, }
+\item[{unsigned char}]{uc\+Decimals, }
+\item[{{\bf L\+C\+D\+\_\+\+Align}}]{i\+Alignment, }
+\item[{{\bf L\+C\+D\+\_\+\+Page}}]{i\+Page}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a5342a001698e39fe6443cbcadf61e3f7}
+
+
+This function writes a float number to the given buffer as specified by the {\itshape i\+Alignment} argument. 
+
+L\+C\+D\+\_\+buffer\+Print\+Float\+Aligned will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em f\+Number} & The number to be printed.\\
+\hline
+{\em uc\+Decimals} & The number of decimals to be printed, M\+A\+X = 10.\\
+\hline
+{\em i\+Alignment} & The text alignment. Can be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+L\+E\+F\+T} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+C\+E\+N\+T\+E\+R} \item {\bfseries L\+C\+D\+\_\+\+A\+L\+I\+G\+N\+\_\+\+R\+I\+G\+H\+T} \end{DoxyItemize}
+\\
+\hline
+{\em i\+Page} & The page on which to print. Must be one of the following enumerated values\+: \begin{DoxyItemize}
+\item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E0} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E1} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E2} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E3} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E4} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E5} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E6} \item {\bfseries L\+C\+D\+\_\+\+P\+A\+G\+E7} \end{DoxyItemize}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Set\+Line@{L\+C\+D\+\_\+buffer\+Set\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Set\+Line@{L\+C\+D\+\_\+buffer\+Set\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Set\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Set\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_ae5fcaac1c5d5ce2fafecf38c8c78bb15}
+
+
+This function draws a line in the specified buffer from ({\itshape uc\+X\+From},{\itshape uc\+Y\+From}) to ({\itshape uc\+X\+To},{\itshape uc\+Y\+To}). The function uses Bresenham\textquotesingle{}s line algorithm. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The start column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The end column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & The start row \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The end row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+Line@{L\+C\+D\+\_\+buffer\+Clear\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+Line@{L\+C\+D\+\_\+buffer\+Clear\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a5520daaaedbda09ccb4e1f804cb6387f}
+
+
+This function clears a line in the specified buffer from ({\itshape uc\+X\+From},{\itshape uc\+Y\+From}) to ({\itshape uc\+X\+To},{\itshape uc\+Y\+To}). The function uses Bresenham\textquotesingle{}s line algorithm. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The start column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The end column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & The start row \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The end row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Set\+H\+Line@{L\+C\+D\+\_\+buffer\+Set\+H\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Set\+H\+Line@{L\+C\+D\+\_\+buffer\+Set\+H\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Set\+H\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Set\+H\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_abac67849744509fc2ace41db2eda90e1}
+
+
+This function draws a horizontal line from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) into the specified buffer. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The start column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The end column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y} & The row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+H\+Line@{L\+C\+D\+\_\+buffer\+Clear\+H\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+H\+Line@{L\+C\+D\+\_\+buffer\+Clear\+H\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+H\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+H\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a33d49a7d0a49f12bf8ec12288404eb82}
+
+
+This function clears a horizontal line from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) from the specified buffer. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The start column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The end column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y} & The row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Set\+V\+Line@{L\+C\+D\+\_\+buffer\+Set\+V\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Set\+V\+Line@{L\+C\+D\+\_\+buffer\+Set\+V\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Set\+V\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Set\+V\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a6cd9439691ab890bdc12cb61739c71c1}
+
+
+This function draws a vertical line from (uc\+X,uc\+Y\+From) to (uc\+X,uc\+Y\+To) into the specified buffer. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X} & The x-\/position (column) of the line \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & The start row \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The end row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+V\+Line@{L\+C\+D\+\_\+buffer\+Clear\+V\+Line}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+V\+Line@{L\+C\+D\+\_\+buffer\+Clear\+V\+Line}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+V\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+V\+Line (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_af099bb3569888e86f758958d814bb58f}
+
+
+This function clears a vertical line from ({\itshape uc\+X},{\itshape uc\+Y\+From}) to ({\itshape uc\+X},{\itshape uc\+Y\+To}) from the buffer specified. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X} & The x-\/position (column) of the line \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & The start row \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The end row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+H\+Arrow@{L\+C\+D\+\_\+buffer\+H\+Arrow}}
+\index{L\+C\+D\+\_\+buffer\+H\+Arrow@{L\+C\+D\+\_\+buffer\+H\+Arrow}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+H\+Arrow}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+H\+Arrow (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X\+From, }
+\item[{unsigned char}]{uc\+X\+To, }
+\item[{unsigned char}]{uc\+Y}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_ad9460c9ec6519a340e36d26d365bbed5}
+
+
+This function draws a horizontal arrow from ({\itshape uc\+X\+From},{\itshape uc\+Y}) to ({\itshape uc\+X\+To},{\itshape uc\+Y}) to buffer specified. The function assumes {\itshape uc\+Y} to be in the range \mbox{[}2--61\mbox{]} in order for arrowhead to fit on the L\+C\+D. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X\+From} & The start column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+X\+To} & The end column \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y} & The the y-\/position (row) of the arrow \mbox{[}2--61\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+V\+Arrow@{L\+C\+D\+\_\+buffer\+V\+Arrow}}
+\index{L\+C\+D\+\_\+buffer\+V\+Arrow@{L\+C\+D\+\_\+buffer\+V\+Arrow}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+V\+Arrow}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+V\+Arrow (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X, }
+\item[{unsigned char}]{uc\+Y\+From, }
+\item[{unsigned char}]{uc\+Y\+To}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a40b3e9e6a7086787047a174815dfeb70}
+
+
+This function draws a vertical arrow from ({\itshape uc\+X},{\itshape uc\+Y\+From}) to ({\itshape uc\+X},{\itshape uc\+Y\+To}) to the buffer specified. The function assumes that {\itshape uc\+X} is in the range \mbox{[}2--125\mbox{]} for the arrowhead to fit on the L\+C\+D. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X} & The the x-\/position (column) of the arrow \mbox{[}2--125\mbox{]}.\\
+\hline
+{\em uc\+Y\+From} & The start row \mbox{[}0--63\mbox{]}.\\
+\hline
+{\em uc\+Y\+To} & The end row \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Set\+Px@{L\+C\+D\+\_\+buffer\+Set\+Px}}
+\index{L\+C\+D\+\_\+buffer\+Set\+Px@{L\+C\+D\+\_\+buffer\+Set\+Px}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Set\+Px}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Set\+Px (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X, }
+\item[{unsigned char}]{uc\+Y}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_a028108d7554d62733d00295fd150a2a6}
+
+
+This function sets a pixel on ({\itshape uc\+X},{\itshape uc\+Y}). 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X} & The pixel x-\/position (column) \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y} & The pixel y-\/position (row) \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Clear\+Px@{L\+C\+D\+\_\+buffer\+Clear\+Px}}
+\index{L\+C\+D\+\_\+buffer\+Clear\+Px@{L\+C\+D\+\_\+buffer\+Clear\+Px}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Clear\+Px}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Clear\+Px (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{buf\+Index, }
+\item[{unsigned char}]{uc\+X, }
+\item[{unsigned char}]{uc\+Y}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_aa99fc0e617619d6f7b9befd56ffac26c}
+
+
+This function clears the pixel at ({\itshape uc\+X},{\itshape uc\+Y}). 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffer is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em buf\+Index} & The buffer to use, specified by its index in the \hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} structure.\\
+\hline
+{\em uc\+X} & The pixel x-\/position (column) \mbox{[}0--127\mbox{]}.\\
+\hline
+{\em uc\+Y} & The pixel y-\/position (row) \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+buffer\+Copy@{L\+C\+D\+\_\+buffer\+Copy}}
+\index{L\+C\+D\+\_\+buffer\+Copy@{L\+C\+D\+\_\+buffer\+Copy}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+buffer\+Copy}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+buffer\+Copy (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{from\+Buf\+Index, }
+\item[{unsigned int}]{to\+Buf\+Index}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_afa33971216c7767eb3f3790615fa9a31}
+
+
+This function copies the content of {\itshape from\+Buf\+Index} to {\itshape to\+Buf\+Index}. 
+
+This function will block task execution until all the buffer modification has finished.
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle and buffers are not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em from\+Buf\+Index} & A pointer to the destination buffer.\\
+\hline
+{\em to\+Buf\+Index} & A pointer to the target buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\index{L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}!L\+C\+D\+\_\+set\+Contrast@{L\+C\+D\+\_\+set\+Contrast}}
+\index{L\+C\+D\+\_\+set\+Contrast@{L\+C\+D\+\_\+set\+Contrast}!L\+C\+D\+Dogm1286.\+h@{L\+C\+D\+Dogm1286.\+h}}
+\paragraph[{L\+C\+D\+\_\+set\+Contrast}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+set\+Contrast (
+\begin{DoxyParamCaption}
+\item[{{\bf L\+C\+D\+\_\+\+Handle}}]{handle, }
+\item[{unsigned char}]{uc\+Contrast}
+\end{DoxyParamCaption}
+)}\label{_l_c_d_dogm1286_8h_ac159f265608d80bd4baff4c3a4d30959}
+
+
+This Function sets the L\+C\+D contrast. 
+
+\begin{DoxyPrecond}{Precondition}
+Function assumes that the handle is not N\+U\+L\+L. Calling context\+: Task.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A L\+C\+D\+\_\+\+Handle\\
+\hline
+{\em uc\+Contrast} & The contrast value \mbox{[}0--63\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}

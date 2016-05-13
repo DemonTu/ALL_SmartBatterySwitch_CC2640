@@ -1,0 +1,194 @@
+clean::
+	$(RM) package/ti.targets.arm.elf.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_targets_arm_elf.java
+	$(RM) package/ti_targets_arm_elf.class
+	$(RM) package/package_ti.targets.arm.elf.c
+	$(RM) package/package.defs.h
+	$(RM) IArm.h
+	$(RM) Arm7.h
+	$(RM) Arm7_big_endian.h
+	$(RM) Arm9.h
+	$(RM) Arm9t.h
+	$(RM) IM0.h
+	$(RM) M0.h
+	$(RM) IM3.h
+	$(RM) M3.h
+	$(RM) IM3_big_endian.h
+	$(RM) M3_big_endian.h
+	$(RM) IM4.h
+	$(RM) M4.h
+	$(RM) M4F.h
+	$(RM) IA8.h
+	$(RM) A8F.h
+	$(RM) A8Ft.h
+	$(RM) A8Fv.h
+	$(RM) A8Fnv.h
+	$(RM) IA15.h
+	$(RM) A15Fnv.h
+	$(RM) IR4.h
+	$(RM) R4.h
+	$(RM) IR4_big_endian.h
+	$(RM) R4_big_endian.h
+	$(RM) R4t.h
+	$(RM) R4t_big_endian.h
+	$(RM) R4F.h
+	$(RM) R4F_big_endian.h
+	$(RM) R4Ft.h
+	$(RM) R4Ft_big_endian.h
+	$(RM) package/ti.targets.arm.elf.ccs
+
+.interfaces: package/ti.targets.arm.elf.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_targets_arm_elf.java package/package_ti.targets.arm.elf.c package/package.defs.h IArm.h Arm7.h Arm7_big_endian.h Arm9.h Arm9t.h IM0.h M0.h IM3.h M3.h IM3_big_endian.h M3_big_endian.h IM4.h M4.h M4F.h IA8.h A8F.h A8Ft.h A8Fv.h A8Fnv.h IA15.h A15Fnv.h IR4.h R4.h IR4_big_endian.h R4_big_endian.h R4t.h R4t_big_endian.h R4F.h R4F_big_endian.h R4Ft.h R4Ft_big_endian.h package/ti.targets.arm.elf.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Arm7.xdc Arm7_big_endian.xdc Arm9.xdc Arm9t.xdc M0.xdc M3.xdc M3_big_endian.xdc M4.xdc M4F.xdc A8F.xdc A8Ft.xdc A8Fv.xdc A8Fnv.xdc A15Fnv.xdc R4.xdc R4_big_endian.xdc R4t.xdc R4t_big_endian.xdc R4F.xdc R4F_big_endian.xdc R4Ft.xdc R4Ft_big_endian.xdc IArm.xdc IR4.xdc IR4_big_endian.xdc IA15.xdc IA8.xdc IM3.xdc IM3_big_endian.xdc IM4.xdc IM0.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+IArm.xs:
+package/package.xdc.inc: IArm.xs
+
+# schema update dependencies
+package/package.xdc.inc: Arm7.xdc
+package/package.xdc.inc: Arm7_big_endian.xdc
+package/package.xdc.inc: Arm9.xdc
+package/package.xdc.inc: Arm9t.xdc
+package/package.xdc.inc: M0.xdc
+package/package.xdc.inc: M3.xdc
+package/package.xdc.inc: M3_big_endian.xdc
+package/package.xdc.inc: M4.xdc
+package/package.xdc.inc: M4F.xdc
+package/package.xdc.inc: A8F.xdc
+package/package.xdc.inc: A8Ft.xdc
+package/package.xdc.inc: A8Fv.xdc
+package/package.xdc.inc: A8Fnv.xdc
+package/package.xdc.inc: A15Fnv.xdc
+package/package.xdc.inc: R4.xdc
+package/package.xdc.inc: R4_big_endian.xdc
+package/package.xdc.inc: R4t.xdc
+package/package.xdc.inc: R4t_big_endian.xdc
+package/package.xdc.inc: R4F.xdc
+package/package.xdc.inc: R4F_big_endian.xdc
+package/package.xdc.inc: R4Ft.xdc
+package/package.xdc.inc: R4Ft_big_endian.xdc
+package/package.xdc.inc: IArm.xdc
+package/package.xdc.inc: IR4.xdc
+package/package.xdc.inc: IR4_big_endian.xdc
+package/package.xdc.inc: IA15.xdc
+package/package.xdc.inc: IA8.xdc
+package/package.xdc.inc: IM3.xdc
+package/package.xdc.inc: IM3_big_endian.xdc
+package/package.xdc.inc: IM4.xdc
+package/package.xdc.inc: IM0.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/targets/ITarget.xdc
+ti/targets/ITarget.xdc:
+vpath ti/targets/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget3.xdc
+xdc/bld/ITarget3.xdc:
+vpath xdc/bld/ITarget3.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget2.xdc
+xdc/bld/ITarget2.xdc:
+vpath xdc/bld/ITarget2.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget.xdc
+xdc/bld/ITarget.xdc:
+vpath xdc/bld/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITargetFilter.xdc
+xdc/bld/ITargetFilter.xdc:
+vpath xdc/bld/ITargetFilter.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: IArm.h
+IArm.h:
+package/package.xdc.inc: Arm7.h
+Arm7.h:
+package/package.xdc.inc: Arm7_big_endian.h
+Arm7_big_endian.h:
+package/package.xdc.inc: Arm9.h
+Arm9.h:
+package/package.xdc.inc: Arm9t.h
+Arm9t.h:
+package/package.xdc.inc: IM0.h
+IM0.h:
+package/package.xdc.inc: M0.h
+M0.h:
+package/package.xdc.inc: IM3.h
+IM3.h:
+package/package.xdc.inc: M3.h
+M3.h:
+package/package.xdc.inc: IM3_big_endian.h
+IM3_big_endian.h:
+package/package.xdc.inc: M3_big_endian.h
+M3_big_endian.h:
+package/package.xdc.inc: IM4.h
+IM4.h:
+package/package.xdc.inc: M4.h
+M4.h:
+package/package.xdc.inc: M4F.h
+M4F.h:
+package/package.xdc.inc: IA8.h
+IA8.h:
+package/package.xdc.inc: A8F.h
+A8F.h:
+package/package.xdc.inc: A8Ft.h
+A8Ft.h:
+package/package.xdc.inc: A8Fv.h
+A8Fv.h:
+package/package.xdc.inc: A8Fnv.h
+A8Fnv.h:
+package/package.xdc.inc: IA15.h
+IA15.h:
+package/package.xdc.inc: A15Fnv.h
+A15Fnv.h:
+package/package.xdc.inc: IR4.h
+IR4.h:
+package/package.xdc.inc: R4.h
+R4.h:
+package/package.xdc.inc: IR4_big_endian.h
+IR4_big_endian.h:
+package/package.xdc.inc: R4_big_endian.h
+R4_big_endian.h:
+package/package.xdc.inc: R4t.h
+R4t.h:
+package/package.xdc.inc: R4t_big_endian.h
+R4t_big_endian.h:
+package/package.xdc.inc: R4F.h
+R4F.h:
+package/package.xdc.inc: R4F_big_endian.h
+R4F_big_endian.h:
+package/package.xdc.inc: R4Ft.h
+R4Ft.h:
+package/package.xdc.inc: R4Ft_big_endian.h
+R4Ft_big_endian.h:
+

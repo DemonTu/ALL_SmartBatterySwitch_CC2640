@@ -1,0 +1,59 @@
+\subsection{Camera\+\_\+\+Config Struct Reference}
+\label{struct_camera___config}\index{Camera\+\_\+\+Config@{Camera\+\_\+\+Config}}
+
+
+Camera Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
+
+
+Collaboration diagram for Camera\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{struct_camera___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_camera___fxn_table}{Camera\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_camera___config_a84046ad770e27d51563877f874ab7e13}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_camera___config_a68276cf9733b156cd7eb22a2634388a6}{object}
+\item 
+void const $\ast$ \hyperlink{struct_camera___config_a8b228c55707f9f0735c1fc525a66b351}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Camera Global configuration. 
+
+The \hyperlink{struct_camera___config}{Camera\+\_\+\+Config} structure contains a set of pointers used to characterize the Camera driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_ab0208c74b70ac5b50cb26c36f1f3ebad}{Camera\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{Camera\+\_\+\+Config@{Camera\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!Camera\+\_\+\+Config@{Camera\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Fxn\+Table} const$\ast$ Camera\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_camera___config_a84046ad770e27d51563877f874ab7e13}
+Pointer to a table of driver-\/specific implementations of Camera A\+P\+Is \index{Camera\+\_\+\+Config@{Camera\+\_\+\+Config}!object@{object}}
+\index{object@{object}!Camera\+\_\+\+Config@{Camera\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Camera\+\_\+\+Config\+::object}\label{struct_camera___config_a68276cf9733b156cd7eb22a2634388a6}
+Pointer to a driver specific data object \index{Camera\+\_\+\+Config@{Camera\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!Camera\+\_\+\+Config@{Camera\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ Camera\+\_\+\+Config\+::hw\+Attrs}\label{struct_camera___config_a8b228c55707f9f0735c1fc525a66b351}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_8h}{Camera.\+h}\end{DoxyCompactItemize}

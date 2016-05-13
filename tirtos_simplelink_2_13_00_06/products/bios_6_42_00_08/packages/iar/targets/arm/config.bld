@@ -1,0 +1,14 @@
+/*
+ *  Copyright 2015 by Texas Instruments Incorporated.
+ *
+ */
+
+xdc.loadCapsule("common.bld");
+
+Build.useTargets = null;    /* force the set of build targets to be empty */
+
+/*
+ *  @(#) iar.targets.arm; 1, 0, 0,5; 2-27-2015 12:11:27; /db/ztree/library/trees/xdctargets/xdctargets-i02/src/ xlibrary
+
+ */
+

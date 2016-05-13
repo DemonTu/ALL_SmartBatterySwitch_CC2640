@@ -1,0 +1,161 @@
+clean::
+	$(RM) package/ti.sysbios.xdcruntime.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_xdcruntime.java
+	$(RM) package/ti_sysbios_xdcruntime.class
+	$(RM) package/package_ti.sysbios.xdcruntime.c
+	$(RM) package/package.defs.h
+	$(RM) GateThreadSupport.h
+	$(RM) package/internal/GateThreadSupport.xdc.h
+	$(RM) GateProcessSupport.h
+	$(RM) package/internal/GateProcessSupport.xdc.h
+	$(RM) SemThreadSupport.h
+	$(RM) package/internal/SemThreadSupport.xdc.h
+	$(RM) SemProcessSupport.h
+	$(RM) package/internal/SemProcessSupport.xdc.h
+	$(RM) ThreadSupport.h
+	$(RM) package/internal/ThreadSupport.xdc.h
+	$(RM) CacheSupport.h
+	$(RM) package/internal/CacheSupport.xdc.h
+	$(RM) package/ti.sysbios.xdcruntime.ccs
+
+.interfaces: package/ti.sysbios.xdcruntime.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_xdcruntime.java package/package_ti.sysbios.xdcruntime.c package/package.defs.h GateThreadSupport.h package/internal/GateThreadSupport.xdc.h GateProcessSupport.h package/internal/GateProcessSupport.xdc.h SemThreadSupport.h package/internal/SemThreadSupport.xdc.h SemProcessSupport.h package/internal/SemProcessSupport.xdc.h ThreadSupport.h package/internal/ThreadSupport.xdc.h CacheSupport.h package/internal/CacheSupport.xdc.h package/ti.sysbios.xdcruntime.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: GateThreadSupport.xdc GateProcessSupport.xdc SemThreadSupport.xdc SemProcessSupport.xdc ThreadSupport.xdc CacheSupport.xdc Settings.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+GateThreadSupport.xs:
+package/package.xdc.inc: GateThreadSupport.xs
+GateProcessSupport.xs:
+package/package.xdc.inc: GateProcessSupport.xs
+SemThreadSupport.xs:
+package/package.xdc.inc: SemThreadSupport.xs
+SemProcessSupport.xs:
+package/package.xdc.inc: SemProcessSupport.xs
+ThreadSupport.xs:
+package/package.xdc.inc: ThreadSupport.xs
+CacheSupport.xs:
+package/package.xdc.inc: CacheSupport.xs
+Settings.xs:
+package/package.xdc.inc: Settings.xs
+
+# schema update dependencies
+package/package.xdc.inc: GateThreadSupport.xdc
+package/package.xdc.inc: GateProcessSupport.xdc
+package/package.xdc.inc: SemThreadSupport.xdc
+package/package.xdc.inc: SemProcessSupport.xdc
+package/package.xdc.inc: ThreadSupport.xdc
+package/package.xdc.inc: CacheSupport.xdc
+package/package.xdc.inc: Settings.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/gates/GateMutexPri.xdc
+ti/sysbios/gates/GateMutexPri.xdc:
+vpath ti/sysbios/gates/GateMutexPri.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Queue.xdc
+ti/sysbios/knl/Queue.xdc:
+vpath ti/sysbios/knl/Queue.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Task.xdc
+ti/sysbios/knl/Task.xdc:
+vpath ti/sysbios/knl/Task.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITaskSupport.xdc
+ti/sysbios/interfaces/ITaskSupport.xdc:
+vpath ti/sysbios/interfaces/ITaskSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Clock.xdc
+ti/sysbios/knl/Clock.xdc:
+vpath ti/sysbios/knl/Clock.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Swi.xdc
+ti/sysbios/knl/Swi.xdc:
+vpath ti/sysbios/knl/Swi.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/IGateThreadSupport.xdc
+xdc/runtime/knl/IGateThreadSupport.xdc:
+vpath xdc/runtime/knl/IGateThreadSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/IGateProcessSupport.xdc
+xdc/runtime/knl/IGateProcessSupport.xdc:
+vpath xdc/runtime/knl/IGateProcessSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/ISemThreadSupport.xdc
+xdc/runtime/knl/ISemThreadSupport.xdc:
+vpath xdc/runtime/knl/ISemThreadSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/ISemaphore.xdc
+xdc/runtime/knl/ISemaphore.xdc:
+vpath xdc/runtime/knl/ISemaphore.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Semaphore.xdc
+ti/sysbios/knl/Semaphore.xdc:
+vpath ti/sysbios/knl/Semaphore.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Event.xdc
+ti/sysbios/knl/Event.xdc:
+vpath ti/sysbios/knl/Event.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/ISemProcessSupport.xdc
+xdc/runtime/knl/ISemProcessSupport.xdc:
+vpath xdc/runtime/knl/ISemProcessSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/IThreadSupport.xdc
+xdc/runtime/knl/IThreadSupport.xdc:
+vpath xdc/runtime/knl/IThreadSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/knl/ICacheSupport.xdc
+xdc/runtime/knl/ICacheSupport.xdc:
+vpath xdc/runtime/knl/ICacheSupport.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: GateThreadSupport.h
+GateThreadSupport.h:
+package/package.xdc.inc: package/internal/GateThreadSupport.xdc.h
+package/internal/GateThreadSupport.xdc.h:
+package/package.xdc.inc: GateProcessSupport.h
+GateProcessSupport.h:
+package/package.xdc.inc: package/internal/GateProcessSupport.xdc.h
+package/internal/GateProcessSupport.xdc.h:
+package/package.xdc.inc: SemThreadSupport.h
+SemThreadSupport.h:
+package/package.xdc.inc: package/internal/SemThreadSupport.xdc.h
+package/internal/SemThreadSupport.xdc.h:
+package/package.xdc.inc: SemProcessSupport.h
+SemProcessSupport.h:
+package/package.xdc.inc: package/internal/SemProcessSupport.xdc.h
+package/internal/SemProcessSupport.xdc.h:
+package/package.xdc.inc: ThreadSupport.h
+ThreadSupport.h:
+package/package.xdc.inc: package/internal/ThreadSupport.xdc.h
+package/internal/ThreadSupport.xdc.h:
+package/package.xdc.inc: CacheSupport.h
+CacheSupport.h:
+package/package.xdc.inc: package/internal/CacheSupport.xdc.h
+package/internal/CacheSupport.xdc.h:
+

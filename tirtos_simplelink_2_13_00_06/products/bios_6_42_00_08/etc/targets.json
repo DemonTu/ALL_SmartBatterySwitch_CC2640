@@ -1,0 +1,348 @@
+[
+    {
+        "CompilerBuildOptionsPattern": "--core=430X.*--data_model=small($|\\s)",
+        "baseTargetName": "MSP430X_small",
+        "packageName": "iar.targets.msp430"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--core=430X.*--data_model=large($|\\s)",
+        "baseTargetName": "MSP430X_large",
+        "packageName": "iar.targets.msp430"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-D__MSP430.*--dlib_config($|\\s)",
+        "baseTargetName": "MSP430",
+        "packageName": "iar.targets.msp430"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--cpu=Cortex-M3($|\\s)",
+        "baseTargetName": "M3",
+        "packageName": "iar.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--cpu=Cortex-M4($|\\s)",
+        "baseTargetName": "M4",
+        "packageName": "iar.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--cpu=Cortex-M4F($|\\s)",
+        "baseTargetName": "M4F",
+        "packageName": "iar.targets.arm"
+    },
+
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "CC430.*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430CG.*|MSP430BT.*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430F2[46]1[6789]",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430FG6[46].*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430F471.*|MSP430FG?46.*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430X",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430X.*|MSP430FR?[56].*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "baseTargetName": "MSP430",
+        "deviceFamilyPattern": "MSP430.*",
+        "deviceNamePattern": "MSP430.*",
+        "packageName": "ti.targets.msp430"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--float_support=fpu32($|\\s)",
+        "baseTargetName": "C28_float",
+        "deviceFamilyPattern": "C2000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--large_memory_model($|\\s)",
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_float",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]283[0-9][0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_float",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "F28M3.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]282[0-9][0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]28[01][0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]2802[0-9][0-9]?$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]2803[0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]2805[0-9][FM]?$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_float",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320[CF]2806[0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceFamilyPattern": "C2000.*",
+        "deviceNamePattern": "TMS320R281[0-9]$",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "~((--float_support=fpu32($|\\s))|(--large_memory_model($|\\s)))",
+        "baseTargetName": "C28",
+        "deviceFamilyPattern": "C2000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C28_large",
+        "deviceVariant": "C28XX",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=7M3($|\\s)",
+        "baseTargetName": "M3",
+        "deviceFamilyPattern": "ARM.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=7A8($|\\s)",
+        "baseTargetName": "A8Fnv",
+        "deviceFamilyPattern": "ARM.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "--float_support=FPv4SPD16($|\\s)",
+        "baseTargetName": "M4F",
+        "deviceFamilyPattern": "ARM.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=7M4($|\\s)",
+        "baseTargetName": "M4",
+        "deviceFamilyPattern": "ARM.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=5e($|\\s)",
+        "baseTargetName": "Arm9",
+        "deviceFamilyPattern": "ARM.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "M3",
+        "deviceFamilyPattern": "ARM.*",
+        "deviceNamePattern": "LM3.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "M3",
+        "deviceFamilyPattern": "ARM.*",
+        "deviceNamePattern": "F28M3.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "M4F",
+        "deviceFamilyPattern": "ARM.*",
+        "deviceNamePattern": "LM4.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "R4Ft",
+        "deviceFamilyPattern": "ARM.*",
+        "deviceNamePattern": "TMS570LS.*",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "Arm7",
+        "deviceVariant": "ARM7",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "Arm9",
+        "deviceVariant": "ARM9",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "A8Fnv",
+        "deviceVariant": "CORTEX_A8",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "M3",
+        "deviceVariant": "CORTEX_M3",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "baseTargetName": "R4",
+        "deviceVariant": "CORTEX_R4",
+        "elf": "true",
+        "packageName": "ti.targets.arm"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=674",
+        "baseTargetName": "C674",
+        "deviceFamilyPattern": "C6000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=64[+Pp]",
+        "baseTargetName": "C64P",
+        "deviceFamilyPattern": "C6000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=640",
+        "baseTargetName": "C64",
+        "deviceFamilyPattern": "C6000.*",
+        "elf": "false",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=670",
+        "baseTargetName": "C67",
+        "deviceFamilyPattern": "C6000.*",
+        "elf": "false",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=67[+Pp]",
+        "baseTargetName": "C67P",
+        "deviceFamilyPattern": "C6000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=66",
+        "baseTargetName": "C66",
+        "deviceFamilyPattern": "C6000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "CompilerBuildOptionsPattern": "-silicon_version=tesla",
+        "baseTargetName": "C64T",
+        "deviceFamilyPattern": "C6000.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C66",
+        "deviceFamilyPattern": "C6000.*",
+        "deviceNamePattern": "TMS320TCI66.*",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C64P",
+        "deviceVariant": "C64XPLUS",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C67P",
+        "deviceVariant": "C67XPLUS",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C64",
+        "deviceVariant": "C64XX",
+        "elf": "false",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C62",
+        "deviceVariant": "C62XX",
+        "elf": "false",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C67",
+        "deviceVariant": "C67XX",
+        "elf": "false",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C674",
+        "deviceVariant": "C674X",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "C66",
+        "deviceVariant": "C66XX",
+        "packageName": "ti.targets"
+    },
+    {
+        "baseTargetName": "ARP32",
+        "deviceFamilyPattern": "ARP32.*",
+        "packageName": "ti.targets.arp32"
+    },
+    {
+        "baseTargetName": "ARP32",
+        "deviceFamilyPattern": "EVE.*",
+        "packageName": "ti.targets.arp32"
+    },
+    {
+        "baseTargetName": "ARP32",
+        "deviceVariant": "ARP32",
+        "packageName": "ti.targets.arp32"
+    }
+]

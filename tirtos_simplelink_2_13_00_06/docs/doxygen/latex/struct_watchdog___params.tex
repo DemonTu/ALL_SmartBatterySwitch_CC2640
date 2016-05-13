@@ -1,0 +1,52 @@
+\subsection{Watchdog\+\_\+\+Params Struct Reference}
+\label{struct_watchdog___params}\index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+
+
+Watchdog Parameters.  
+
+
+
+
+{\ttfamily \#include $<$Watchdog.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_watchdog_8h_abb9d5f385013e9950884200d8d05fd05}{Watchdog\+\_\+\+Callback} \hyperlink{struct_watchdog___params_a710aaa2504356ab3d3f9a27ac19ddb85}{callback\+Fxn}
+\item 
+\hyperlink{_watchdog_8h_ada0db7216129d7dad494bb0cd0169f88}{Watchdog\+\_\+\+Reset\+Mode} \hyperlink{struct_watchdog___params_a94b5d650f8beb7dce719360404039ccf}{reset\+Mode}
+\item 
+\hyperlink{_watchdog_8h_ab1aa5862661c88a16b9d7bc12709d51e}{Watchdog\+\_\+\+Debug\+Mode} \hyperlink{struct_watchdog___params_abe7792eef8afa2972a4625f428b7241b}{debug\+Stall\+Mode}
+\item 
+void $\ast$ \hyperlink{struct_watchdog___params_aa2d75e83d9cb6bf71400934b709ec234}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Watchdog Parameters. 
+
+Watchdog parameters are used to with the \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}{Watchdog\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_a6a6f54cfdac33d3bf33464a212262afc}{Watchdog\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}!callback\+Fxn@{callback\+Fxn}}
+\index{callback\+Fxn@{callback\+Fxn}!Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+\paragraph[{callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Callback} Watchdog\+\_\+\+Params\+::callback\+Fxn}\label{struct_watchdog___params_a710aaa2504356ab3d3f9a27ac19ddb85}
+Pointer to callback. Not supported on all targets. \index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}!reset\+Mode@{reset\+Mode}}
+\index{reset\+Mode@{reset\+Mode}!Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+\paragraph[{reset\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Reset\+Mode} Watchdog\+\_\+\+Params\+::reset\+Mode}\label{struct_watchdog___params_a94b5d650f8beb7dce719360404039ccf}
+Mode to enable resets. Not supported on all targets. \index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}!debug\+Stall\+Mode@{debug\+Stall\+Mode}}
+\index{debug\+Stall\+Mode@{debug\+Stall\+Mode}!Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+\paragraph[{debug\+Stall\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Debug\+Mode} Watchdog\+\_\+\+Params\+::debug\+Stall\+Mode}\label{struct_watchdog___params_abe7792eef8afa2972a4625f428b7241b}
+Mode to stall W\+D\+T at breakpoints. Not supported on all targets. \index{Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!Watchdog\+\_\+\+Params@{Watchdog\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Watchdog\+\_\+\+Params\+::custom}\label{struct_watchdog___params_aa2d75e83d9cb6bf71400934b709ec234}
+Custom argument used by driver implementation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_watchdog_8h}{Watchdog.\+h}\end{DoxyCompactItemize}

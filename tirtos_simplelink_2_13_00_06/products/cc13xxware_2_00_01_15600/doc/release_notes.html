@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+            body {
+                font-family: Arial;
+                font-size: 14px;
+            }
+            h2 {
+                background: #cc0000;
+                padding: 1px;
+                margin-top:0px;
+                color: white;
+                font-size: 16px;
+            }
+            footer {
+                width:100%;
+                height:15px;
+                bottom:0;
+                left:0;
+                background:#ddd;
+                font-size:12px;
+            }
+            div.release-container {
+                border: 1px solid #ccc;
+                margin-bottom: 20px;
+            }
+            div.content-container {
+                padding: 0px 5px 5px 5px;
+            }
+        </style>
+        <title>CC13xxware release notes</title>
+    </head>
+    <body>
+        <h1>CC13xxWare Release Notes</h1>
+        <p>
+            This page lists all relevant changes for all public versions of CC13xxWare, containing:
+            <ul>
+                <li>CC13xxWare driverlib source code <strong>[DRV_SRC]</strong></li>
+                <li>CC13xxWare driverlib documentation <strong>[DRV_DOC]</strong></li>
+                <li>CC13xxWare driverlib prebuilt libraries <strong>[DRV_LIB]</strong></li>
+                <li>CC13xxWare hardware interface description <strong>[HW_INC]</strong></li>
+                <li>CC13xxWare rflib source code <strong>[RF_SRC]</strong></li>
+                <li>CC13xxWare rflib documentation <strong>[RF_DOC]</strong></li>
+            </ul>
+        </p>
+
+        <!-- Start of cc13xxWare entry -->
+        <div class="release-container">
+            <h2>cc13xxware_2_00_01_15600</h2>
+            <div class="content-container">
+                Release date: April 16, 2015 <br />
+
+                <h3>New features</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] PRCM:</strong> Converting warm reset to pin reset (configured in the boot sequence), giving full system reset upon e.g. watchdog resets.</li>
+                    <li><strong>[DRV_SRC] Timer</strong> Added new driverlib timer configuration functions: TimerCcpCombineEnable, TimerCcpCombineDisable, TimerMatchUpdateMode TimerIntervalLoadMode.</li>
+                </ul>
+
+                <h3>Improvements</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] SysCtrl:</strong> Changed adaptive recharge calculation algorithm to adapt faster.</li>
+                    <li><strong>[DRV_SRC] ChipInfo:</strong> Made hardware revision check future proof. Changes relate to functions: ChipInfo_GetChipFamily and ChipInfo_GetHwRevision</li>
+                </ul>
+
+                <h3>Bug fixes</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] AUX_ADC:</strong> Corrected raw ADC sample to millivolt calculation and parameter handling in function AUXADCEnableSync.</li>
+                    <li><strong>[RF_SRC] RFC:</strong> Function enableRadio() is made reentrant.</li>
+                </ul>
+
+                <h3>Known Issues</h3>
+                <ul>
+                    <li><strong>None</strong></li>
+                    <li><strong>For an updated list of known issues (including issues found after the release), see <a href="http://processors.wiki.ti.com/index.php/CC13xxware">CC13xxWare</a> on the Texas Instruments wiki.</strong> (Or on the internal wiki <a href="http://ap-fpdsp-swapps.dal.design.ti.com/index.php/CC13xxware">CC13xxWare-internal</a>)</li>
+                </ul>
+                
+            </div>
+        </div>
+        <div class="release-container">
+            <h2>cc13xxware_2_00_00_15402</h2>
+            <div class="content-container">
+                Release date: March 24, 2015 <br />
+
+                <h3>Bug fixes & New features</h3>
+                <ul>
+                    <li><strong>cc13xxware_2_00_00_15402</strong> is the initial revision and contains as such no bug fixes or new features.</li>
+                </ul>
+                
+                <h3>Known Issues</h3>
+                <ul>
+                    <li><strong>None</strong></li>
+                    <li><strong>For an updated list of known issues (including issues found after the release), see <a href="http://processors.wiki.ti.com/index.php/CC13xxware">CC13xxWare</a> on the Texas Instruments wiki.</strong> (Or on the internal wiki <a href="http://ap-fpdsp-swapps.dal.design.ti.com/index.php/CC13xxware">CC13xxWare-internal</a>)</li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- End of cc13xxware entry -->
+        
+        <footer align="right">
+            &copy 2015. Texas Instruments | All Rights Reserved
+        </footer>
+
+    </body>
+</html>

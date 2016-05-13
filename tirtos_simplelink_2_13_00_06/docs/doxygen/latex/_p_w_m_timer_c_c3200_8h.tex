@@ -1,0 +1,115 @@
+\subsection{P\+W\+M\+Timer\+C\+C3200.\+h File Reference}
+\label{_p_w_m_timer_c_c3200_8h}\index{P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M driver implementation using C\+C3200 General Purpose Timer peripherals. 
+
+============================================================================
+
+The P\+W\+M header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/PWM.h>}
+\textcolor{preprocessor}{#include <ti/drivers/pwm/PWMTimerCC3200.h>}
+\end{DoxyCode}
+
+
+\paragraph*{Operation}
+
+This driver configures a C\+C3200 General Purpose Timer (G\+P\+T) in P\+W\+M mode. Creating a P\+W\+M instance will make the corresponding timer unavailable to the T\+I-\/\+R\+T\+O\+S kernel until the P\+W\+M instance is closed. Additionally, if the required timer is already used by the kernel, the P\+W\+M instance will not be opened.
+
+When in P\+W\+M mode, each G\+P\+T is divided into 2 P\+W\+M outputs. This driver manages each output as independent P\+W\+M instances. The timer is automatically configured in count-\/down mode using the system clock as the source.
+
+The period in the \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} structure must be used to set the intial period. After opening, the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} A\+P\+I can be used to change a period. The period and duty registers are 16 bits wide; thus, prescalars are used to extend period and duty registers. The maximum period supported is calculated as\+: M\+A\+X\+\_\+\+P\+E\+R\+I\+O\+D = (((M\+A\+X\+\_\+\+P\+R\+E\+S\+C\+A\+L\+A\+R + 1) $\ast$ M\+A\+X\+\_\+\+M\+A\+T\+C\+H\+\_\+\+V\+A\+L) / C\+Y\+C\+L\+E\+S\+\_\+\+P\+E\+R\+\_\+\+U\+S) -\/ 1 80 M\+Hz clock\+: (((255 + 1) $\ast$ 65535) / 80) -\/ 1 = 209711 microseconds
+
+Below is an example of how to use the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} to change a period\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} rc = 0;
+\textcolor{keywordtype}{int} newPeriod = 6000;   \textcolor{comment}{// Period in microseconds}
+
+rc = PWM_control(pwmHandle, PWMTimerCC3200_CHANGE_PERIOD, &newPeriod);
+\textcolor{keywordflow}{if} (rc < 0) \{
+  \textcolor{comment}{// handle error condition}
+\}
+\end{DoxyCode}
+
+
+Updates to a P\+W\+M instance will occur instantaneously (i.\+e. G\+P\+T peripherals do not have shadow registers). Finally, if the duty supplied is greater than the period, the output will remain in active state. 
+
+{\ttfamily \#include $<$ti/drivers/\+P\+W\+M.\+h$>$}\\*
+Include dependency graph for P\+W\+M\+Timer\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_p_w_m_timer_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_w_m_timer_c_c3200___h_w_attrs}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m_timer_c_c3200___object}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+C\+C3200 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_w_m_timer_c_c3200_8h_aec237c3c3e2a1f975437d65cae9bf004}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}~\hyperlink{_p_w_m_8h_ad731f4db58c72d280900da4be6e3434c}{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_p_w_m_timer_c_c3200___h_w_attrs}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs} \hyperlink{_p_w_m_timer_c_c3200_8h_aa7bd34f367c1c6cb5b06d68a5942bbec}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m_timer_c_c3200___object}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object} \hyperlink{_p_w_m_timer_c_c3200_8h_aab5de96f9cb61cd9fad8c91c02fb591a}{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+C\+C3200 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table} \hyperlink{_p_w_m_timer_c_c3200_8h_a59acce71ed10f39839edb1a310c6b385}{P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}!P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}}
+\index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}!P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}}
+\paragraph[{P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Timer\+C\+C3200\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D~{\bf P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{_p_w_m_timer_c_c3200_8h_aec237c3c3e2a1f975437d65cae9bf004}
+
+
+\subsubsection{Typedef Documentation}
+\index{P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}!P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}!P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}}
+\paragraph[{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}  {\bf P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}}\label{_p_w_m_timer_c_c3200_8h_aa7bd34f367c1c6cb5b06d68a5942bbec}
+
+
+P\+W\+M\+Timer\+C\+C3200 Hardware attributes. 
+
+These fields are used by C\+C3200 driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200 driverlib these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item driverlib/timer.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const PWMTimerCC3200\_HWAttrs PWMTimerCC3200HWAttrs[] = \{
+2     \{TIMERA3\_BASE, TIMER\_A\},
+3     \{TIMERA3\_BASE, TIMER\_B\},
+4 \};
+\end{DoxyCode}
+ \index{P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}!P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}}
+\index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}!P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}}
+\paragraph[{P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}  {\bf P\+W\+M\+Timer\+C\+C3200\+\_\+\+Object}}\label{_p_w_m_timer_c_c3200_8h_aab5de96f9cb61cd9fad8c91c02fb591a}
+
+
+P\+W\+M\+Timer\+C\+C3200 Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Variable Documentation}
+\index{P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}!P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table@{P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table}}
+\index{P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table@{P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table}!P\+W\+M\+Timer\+C\+C3200.\+h@{P\+W\+M\+Timer\+C\+C3200.\+h}}
+\paragraph[{P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+W\+M\+\_\+\+Fxn\+Table} P\+W\+M\+Timer\+C\+C3200\+\_\+fxn\+Table}\label{_p_w_m_timer_c_c3200_8h_a59acce71ed10f39839edb1a310c6b385}

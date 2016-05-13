@@ -1,0 +1,549 @@
+\subsection{I2\+C.\+h File Reference}
+\label{_i2_c_8h}\index{I2\+C.\+h@{I2\+C.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+C driver interface. 
+
+============================================================================
+
+The I2\+C header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2C.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The I2\+C driver operates as a master on a single-\/master I2\+C bus in either I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G or I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K. In blocking mode, the task\textquotesingle{}s execution is blocked during the I2\+C transaction. When the transfer has completed, code execution will resume. In callback mode, the task\textquotesingle{}s execution is not blocked, allowing for other transactions to be queued up or to process some other code. When the transfer has completed, the I2\+C driver will call a user-\/specified callback function (from a H\+W\+I context).
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+I2C_Handle      handle;
+I2C_Params      params;
+I2C_Transaction i2cTransaction;
+
+I2C_Params_init(&params);
+params.transferMode  = I2C_MODE_CALLBACK;
+params.transferCallbackFxn = someI2CCallbackFunction;
+handle = I2C_open(someI2C\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"I2C did not open"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Transferring data}
+
+A I2\+C transaction with a I2\+C peripheral is started by calling \hyperlink{_i2_c_8h_ac5d827b67fe77d7d179026941cc069d7}{I2\+C\+\_\+transfer()}. The details of the I2\+C transaction is specified with a \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} data structure. This structure allows for any of the three types of transactions\+: Write, Read, or Write/\+Read. Each transfer is performed atomically with the I2\+C slave peripheral.
+
+
+\begin{DoxyCode}
+I2C_Transaction i2cTransaction;
+
+i2cTransaction.writeBuf = someWriteBuffer;
+i2cTransaction.writeCount = numOfBytesToWrite;
+
+i2cTransaction.readBuf = someReadBuffer;
+i2cTransaction.readCount = numOfBytesToRead;
+
+i2cTransaction.slaveAddress = some7BitI2CSlaveAddress;
+
+ret = I2C_transfer(handle, &i2cTransaction);
+\textcolor{keywordflow}{if} (!ret) \{
+    System\_printf(\textcolor{stringliteral}{"Unsuccessful I2C transfer"});
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table}.
+
+The I2\+C driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_i2_c___config}{I2\+C\+\_\+\+Config} data structures named {\itshape I2\+C\+\_\+config}. {\itshape I2\+C\+\_\+config} is implemented in the application with each entry being an instance of a I2\+C peripheral. Each entry in {\itshape I2\+C\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a I2\+C peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following I2\+C peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_i2_c_c_c26_x_x_8h}{I2\+C\+C\+C26\+X\+X.\+h}
+\item \hyperlink{_i2_c_c_c3200_8h}{I2\+C\+C\+C3200.\+h}
+\item \hyperlink{_i2_c_e_u_s_c_i_b_8h}{I2\+C\+E\+U\+S\+C\+I\+B.\+h}
+\item \hyperlink{_i2_c_m_s_p432_8h}{I2\+C\+M\+S\+P432.\+h}
+\item \hyperlink{_i2_c_tiva_8h}{I2\+C\+Tiva.\+h}
+\item \hyperlink{_i2_c_u_s_c_i_b_8h}{I2\+C\+U\+S\+C\+I\+B.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The I2\+C driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for I2\+C.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_i2_c_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_i2_c_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em I2\+C transaction. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em I2\+C Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a I2\+C function table that contains the required set of functions to control a specific I2\+C driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c___config}{I2\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em I2\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_i2_c_8h_a760ec0a6fdb876ccc67b6f06301d53ec}{I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_i2_c_8h_acfd04572fe349d087c2547501cbc7e0a}{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_i2_c_8h_aa0bcf3acd26ac82bd8ff91daba2c78c4}{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_i2_c_8h_a7323fe57c39c46d0da9910e17f5f0b06}{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_i2_c_8h_a11c31c9869ed2441789205d9e5967d66}{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_i2_c___config}{I2\+C\+\_\+\+Config} $\ast$ \hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} \hyperlink{_i2_c_8h_a54d2d506a10628451340a2901bdb6277}{I2\+C\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em I2\+C transaction. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}{I2\+C\+\_\+\+Transfer\+Mode} \hyperlink{_i2_c_8h_a74176ca6d49d4081eeacb270a8e9c800}{I2\+C\+\_\+\+Transfer\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+C transfer mode. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_c_8h_aa7389002843eba77425c73b441358fd1}{I2\+C\+\_\+\+Callback\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle}, \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$, bool)
+\begin{DoxyCompactList}\small\item\em I2\+C callback function. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbe}{I2\+C\+\_\+\+Bit\+Rate} \hyperlink{_i2_c_8h_a4614c71f39459a9cc729b1f183d795f3}{I2\+C\+\_\+\+Bit\+Rate}
+\begin{DoxyCompactList}\small\item\em I2\+C bit\+Rate. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} \hyperlink{_i2_c_8h_ae6b2a2e3bc3716b5716ad6c1f10d7c1d}{I2\+C\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em I2\+C Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_c_8h_a083200108e980a0ef61e458f0b9fb9e7}{I2\+C\+\_\+\+Close\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a12c86d89a687f2ee1eb980d99c32326d}{I2\+C\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_i2_c_8h_a4b15853f98d3d5e5135b8c52b8465fff}{I2\+C\+\_\+\+Control\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_c_8h_adfb2451c8a1ce70402e43e4743c5fedf}{I2\+C\+\_\+\+Init\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle}($\ast$ \hyperlink{_i2_c_8h_add24fcdaaf1bdef1521ce2489bf1d80e}{I2\+C\+\_\+\+Open\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle, \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef bool($\ast$ \hyperlink{_i2_c_8h_aa785484e689c79262f98208689fecd38}{I2\+C\+\_\+\+Transfer\+Fxn}) (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle, \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_ac5d827b67fe77d7d179026941cc069d7}{I2\+C\+\_\+transfer()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table} \hyperlink{_i2_c_8h_abdc2b5945fac9724271b088437881d68}{I2\+C\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a I2\+C function table that contains the required set of functions to control a specific I2\+C driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c___config}{I2\+C\+\_\+\+Config} \hyperlink{_i2_c_8h_a06eeddd0e8a5dd24a18566b65099d588}{I2\+C\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em I2\+C Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}{I2\+C\+\_\+\+Transfer\+Mode} \{ \\*
+\hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26abe065350be2a0ae5c9beb24624626c75}{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26a129731a7edeb285f43a54b2cf9f5ac72}{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+C transfer mode. \end{DoxyCompactList}\item 
+enum \hyperlink{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbe}{I2\+C\+\_\+\+Bit\+Rate} \{ \\*
+\hyperlink{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbea966fd2df13b3a9825615c50335cf1987}{I2\+C\+\_\+100k\+Hz} = 0, 
+\\*
+\hyperlink{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbea83cc3750242e6ae9194cd7ed94f764d9}{I2\+C\+\_\+400k\+Hz} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+C bit\+Rate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_i2_c_8h_a12c86d89a687f2ee1eb980d99c32326d}{I2\+C\+\_\+close} (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a I2\+C peripheral specified by the I2\+C handle. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control} (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given I2\+C\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes the I2\+C module. \end{DoxyCompactList}\item 
+\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open} (unsigned int index, \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given I2\+C peripheral specified by the particular index value. The parameter specifies which mode the I2\+C will operate. \end{DoxyCompactList}\item 
+void \hyperlink{_i2_c_8h_ab11636302074d67180207ab81ceb323c}{I2\+C\+\_\+\+Params\+\_\+init} (\hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+bool \hyperlink{_i2_c_8h_ac5d827b67fe77d7d179026941cc069d7}{I2\+C\+\_\+transfer} (\hyperlink{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}{I2\+C\+\_\+\+Handle} handle, \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Function that handles the I2\+C transfer for S\+Y\+S/\+B\+I\+O\+S. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_i2_c_8h_a760ec0a6fdb876ccc67b6f06301d53ec}
+Common I2\+C\+\_\+control command code reservation offset. I2\+C driver implementations should offset command codes with I2\+C\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define I2CXYZ\_COMMAND0          I2C\_CMD\_RESERVED + 0
+2 #define I2CXYZ\_COMMAND1          I2C\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_i2_c_8h_acfd04572fe349d087c2547501cbc7e0a}
+Common I2\+C\+\_\+control status code reservation offset. I2\+C driver implementations should offset status codes with I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define I2CXYZ\_STATUS\_ERROR0     I2C\_STATUS\_RESERVED - 0
+2 #define I2CXYZ\_STATUS\_ERROR1     I2C\_STATUS\_RESERVED - 1
+3 #define I2CXYZ\_STATUS\_ERROR2     I2C\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_i2_c_8h_aa0bcf3acd26ac82bd8ff91daba2c78c4}
+
+
+Successful status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. 
+
+\hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()} returns I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_i2_c_8h_a7323fe57c39c46d0da9910e17f5f0b06}
+
+
+Generic error status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. 
+
+\hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()} returns I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_i2_c_8h_a11c31c9869ed2441789205d9e5967d66}
+
+
+An error status code returned by \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()} returns I2\+C\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 
+
+\subsubsection{Typedef Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Handle@{I2\+C\+\_\+\+Handle}}
+\index{I2\+C\+\_\+\+Handle@{I2\+C\+\_\+\+Handle}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+\_\+\+Config}$\ast$ {\bf I2\+C\+\_\+\+Handle}}\label{_i2_c_8h_a5809a229f8395c87f59e63128195c1bf}
+
+
+A handle that is returned from a \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} call. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}}
+\index{I2\+C\+\_\+\+Transaction@{I2\+C\+\_\+\+Transaction}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+\_\+\+Transaction}  {\bf I2\+C\+\_\+\+Transaction}}\label{_i2_c_8h_a54d2d506a10628451340a2901bdb6277}
+
+
+I2\+C transaction. 
+
+This structure defines the nature of the I2\+C transaction. This structure specifies the buffer and buffer\textquotesingle{}s size that is to be written to or read from the I2\+C slave peripheral. arg is an optional user supplied argument that will be passed to the callback function when the I2\+C driver is in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K. next\+Ptr is to be only used by the I2\+C driver. \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Transfer\+Mode@{I2\+C\+\_\+\+Transfer\+Mode}}
+\index{I2\+C\+\_\+\+Transfer\+Mode@{I2\+C\+\_\+\+Transfer\+Mode}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+C\+\_\+\+Transfer\+Mode}  {\bf I2\+C\+\_\+\+Transfer\+Mode}}\label{_i2_c_8h_a74176ca6d49d4081eeacb270a8e9c800}
+
+
+I2\+C transfer mode. 
+
+I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G block task execution while a I2\+C transfer is in progress I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K does not block task execution; but calls a callback function when the I2\+C transfer has completed \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Callback\+Fxn@{I2\+C\+\_\+\+Callback\+Fxn}}
+\index{I2\+C\+\_\+\+Callback\+Fxn@{I2\+C\+\_\+\+Callback\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+C\+\_\+\+Callback\+Fxn) ({\bf I2\+C\+\_\+\+Handle}, {\bf I2\+C\+\_\+\+Transaction} $\ast$, bool)}\label{_i2_c_8h_aa7389002843eba77425c73b441358fd1}
+
+
+I2\+C callback function. 
+
+User definable callback function prototype. The I2\+C driver will call the defined function and pass in the I2\+C driver\textquotesingle{}s handle, the pointer to the I2\+C transaction that just completed, and the return value of I2\+C\+\_\+transfer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em I2\+C\+\_\+\+Handle} & I2\+C\+\_\+\+Handle\\
+\hline
+{\em I2\+C\+\_\+\+Transaction$\ast$} & Address of the \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} performed\\
+\hline
+{\em bool} & Results of the I2\+C transaction \\
+\hline
+\end{DoxyParams}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Bit\+Rate@{I2\+C\+\_\+\+Bit\+Rate}}
+\index{I2\+C\+\_\+\+Bit\+Rate@{I2\+C\+\_\+\+Bit\+Rate}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Bit\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+C\+\_\+\+Bit\+Rate}  {\bf I2\+C\+\_\+\+Bit\+Rate}}\label{_i2_c_8h_a4614c71f39459a9cc729b1f183d795f3}
+
+
+I2\+C bit\+Rate. 
+
+Specify one of the standardized I2\+C bus bit rates for I2\+C communications. The default is I2\+C\+\_\+100k\+Hz. \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+\index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+\_\+\+Params}  {\bf I2\+C\+\_\+\+Params}}\label{_i2_c_8h_ae6b2a2e3bc3716b5716ad6c1f10d7c1d}
+
+
+I2\+C Parameters. 
+
+I2\+C parameters are used to with the \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_i2_c_8h_ab11636302074d67180207ab81ceb323c}{I2\+C\+\_\+\+Params\+\_\+init()}.
+
+If I2\+C\+\_\+\+Transfer\+Mode is set to I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G then I2\+C\+\_\+transfer function calls will block thread execution until the transaction has completed.
+
+If I2\+C\+\_\+\+Transfer\+Mode is set to I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K then I2\+C\+\_\+transfer will not block thread execution and it will call the function specified by transfer\+Callback\+Fxn. Sequential calls to I2\+C\+\_\+transfer in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K mode will put the designated transaction onto an internal queue that automatically starts queued transactions after the previous transaction has completed. (regardless of error state).
+
+I2\+C\+\_\+\+Bit\+Rate specifies the I2\+C bus rate used for I2\+C communications.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_ab11636302074d67180207ab81ceb323c}{I2\+C\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Close\+Fxn@{I2\+C\+\_\+\+Close\+Fxn}}
+\index{I2\+C\+\_\+\+Close\+Fxn@{I2\+C\+\_\+\+Close\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+C\+\_\+\+Close\+Fxn) ({\bf I2\+C\+\_\+\+Handle} handle)}\label{_i2_c_8h_a083200108e980a0ef61e458f0b9fb9e7}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a12c86d89a687f2ee1eb980d99c32326d}{I2\+C\+\_\+close()}. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Control\+Fxn@{I2\+C\+\_\+\+Control\+Fxn}}
+\index{I2\+C\+\_\+\+Control\+Fxn@{I2\+C\+\_\+\+Control\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ I2\+C\+\_\+\+Control\+Fxn) ({\bf I2\+C\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_i2_c_8h_a4b15853f98d3d5e5135b8c52b8465fff}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a633003582213a5098467a4e647cc52f9}{I2\+C\+\_\+control()}. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Init\+Fxn@{I2\+C\+\_\+\+Init\+Fxn}}
+\index{I2\+C\+\_\+\+Init\+Fxn@{I2\+C\+\_\+\+Init\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+C\+\_\+\+Init\+Fxn) ({\bf I2\+C\+\_\+\+Handle} handle)}\label{_i2_c_8h_adfb2451c8a1ce70402e43e4743c5fedf}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init()}. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Open\+Fxn@{I2\+C\+\_\+\+Open\+Fxn}}
+\index{I2\+C\+\_\+\+Open\+Fxn@{I2\+C\+\_\+\+Open\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf I2\+C\+\_\+\+Handle}($\ast$ I2\+C\+\_\+\+Open\+Fxn) ({\bf I2\+C\+\_\+\+Handle} handle, {\bf I2\+C\+\_\+\+Params} $\ast$params)}\label{_i2_c_8h_add24fcdaaf1bdef1521ce2489bf1d80e}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()}. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Transfer\+Fxn@{I2\+C\+\_\+\+Transfer\+Fxn}}
+\index{I2\+C\+\_\+\+Transfer\+Fxn@{I2\+C\+\_\+\+Transfer\+Fxn}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Transfer\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef bool($\ast$ I2\+C\+\_\+\+Transfer\+Fxn) ({\bf I2\+C\+\_\+\+Handle} handle, {\bf I2\+C\+\_\+\+Transaction} $\ast$transaction)}\label{_i2_c_8h_aa785484e689c79262f98208689fecd38}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_c_8h_ac5d827b67fe77d7d179026941cc069d7}{I2\+C\+\_\+transfer()}. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+\_\+\+Fxn\+Table}  {\bf I2\+C\+\_\+\+Fxn\+Table}}\label{_i2_c_8h_abdc2b5945fac9724271b088437881d68}
+
+
+The definition of a I2\+C function table that contains the required set of functions to control a specific I2\+C driver implementation. 
+
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Config@{I2\+C\+\_\+\+Config}}
+\index{I2\+C\+\_\+\+Config@{I2\+C\+\_\+\+Config}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+\_\+\+Config}  {\bf I2\+C\+\_\+\+Config}}\label{_i2_c_8h_a06eeddd0e8a5dd24a18566b65099d588}
+
+
+I2\+C Global configuration. 
+
+The \hyperlink{struct_i2_c___config}{I2\+C\+\_\+\+Config} structure contains a set of pointers used to characterize the I2\+C driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Transfer\+Mode@{I2\+C\+\_\+\+Transfer\+Mode}}
+\index{I2\+C\+\_\+\+Transfer\+Mode@{I2\+C\+\_\+\+Transfer\+Mode}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+C\+\_\+\+Transfer\+Mode}}\label{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}
+
+
+I2\+C transfer mode. 
+
+I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G block task execution while a I2\+C transfer is in progress I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K does not block task execution; but calls a callback function when the I2\+C transfer has completed \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!I2\+C.\+h@{I2\+C.\+h}}\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26abe065350be2a0ae5c9beb24624626c75}
+}]I2\+C\+\_\+transfer blocks execution \index{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}!I2\+C.\+h@{I2\+C.\+h}}\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}}\item[{\em 
+I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\label{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26a129731a7edeb285f43a54b2cf9f5ac72}
+}]I2\+C\+\_\+transfer queues transactions and does not block \end{description}
+\end{Desc}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Bit\+Rate@{I2\+C\+\_\+\+Bit\+Rate}}
+\index{I2\+C\+\_\+\+Bit\+Rate@{I2\+C\+\_\+\+Bit\+Rate}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Bit\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+C\+\_\+\+Bit\+Rate}}\label{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbe}
+
+
+I2\+C bit\+Rate. 
+
+Specify one of the standardized I2\+C bus bit rates for I2\+C communications. The default is I2\+C\+\_\+100k\+Hz. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+C\+\_\+100k\+Hz@{I2\+C\+\_\+100k\+Hz}!I2\+C.\+h@{I2\+C.\+h}}\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+100k\+Hz@{I2\+C\+\_\+100k\+Hz}}\item[{\em 
+I2\+C\+\_\+100k\+Hz\label{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbea966fd2df13b3a9825615c50335cf1987}
+}]\index{I2\+C\+\_\+400k\+Hz@{I2\+C\+\_\+400k\+Hz}!I2\+C.\+h@{I2\+C.\+h}}\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+400k\+Hz@{I2\+C\+\_\+400k\+Hz}}\item[{\em 
+I2\+C\+\_\+400k\+Hz\label{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbea83cc3750242e6ae9194cd7ed94f764d9}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+close@{I2\+C\+\_\+close}}
+\index{I2\+C\+\_\+close@{I2\+C\+\_\+close}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+C\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_a12c86d89a687f2ee1eb980d99c32326d}
+
+
+Function to close a I2\+C peripheral specified by the I2\+C handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+C\+\_\+\+Handle returned from I2\+C\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+control@{I2\+C\+\_\+control}}
+\index{I2\+C\+\_\+control@{I2\+C\+\_\+control}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+C\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+C\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_a633003582213a5098467a4e647cc52f9}
+
+
+Function performs implementation specific features on a given I2\+C\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+C handle returned from \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+init@{I2\+C\+\_\+init}}
+\index{I2\+C\+\_\+init@{I2\+C\+\_\+init}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}
+
+
+Function to initializes the I2\+C module. 
+
+\begin{DoxyPrecond}{Precondition}
+The I2\+C\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other I2\+C driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+open@{I2\+C\+\_\+open}}
+\index{I2\+C\+\_\+open@{I2\+C\+\_\+open}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Handle} I2\+C\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf I2\+C\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}
+
+
+Function to initialize a given I2\+C peripheral specified by the particular index value. The parameter specifies which mode the I2\+C will operate. 
+
+\begin{DoxyPrecond}{Precondition}
+I2\+C controller has been initialized
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the I2\+C indexed into the I2\+C\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A I2\+C\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_a9ff51ddf1d325776fef90cce0223772b}{I2\+C\+\_\+init()} 
+
+\hyperlink{_i2_c_8h_a12c86d89a687f2ee1eb980d99c32326d}{I2\+C\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+\+Params\+\_\+init@{I2\+C\+\_\+\+Params\+\_\+init}}
+\index{I2\+C\+\_\+\+Params\+\_\+init@{I2\+C\+\_\+\+Params\+\_\+init}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+C\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_ab11636302074d67180207ab81ceb323c}
+
+
+Function to initialize the \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: transfer\+Mode = I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G transfer\+Callback\+Fxn = N\+U\+L\+L bit\+Rate = I2\+C\+\_\+100k\+Hz \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+transfer@{I2\+C\+\_\+transfer}}
+\index{I2\+C\+\_\+transfer@{I2\+C\+\_\+transfer}!I2\+C.\+h@{I2\+C.\+h}}
+\paragraph[{I2\+C\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}bool I2\+C\+\_\+transfer (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+C\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+C\+\_\+\+Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)}\label{_i2_c_8h_ac5d827b67fe77d7d179026941cc069d7}
+
+
+Function that handles the I2\+C transfer for S\+Y\+S/\+B\+I\+O\+S. 
+
+This function will start a I2\+C transfer and can only be called from a Task context when in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G. The I2\+C transfer procedure starts with evaluating how many bytes are to be written and how many are to be read from the I2\+C peripheral. Due to common I2\+C data transfer processes, to be written will always sent before any data is read.
+
+The data written to the peripheral is preceded with the peripheral\textquotesingle{}s 7-\/bit I2\+C slave address (with the Write bit set). After all the data has been transmitted, the driver will evaluate if any data needs to be read from the device. If so, a Re-\/\+S\+T\+A\+R\+T bit is sent, along with the same 7-\/bit I2\+C slave address (with the Read bit). Else, the transfer is concluded with a S\+T\+O\+P bit. After the specified number of bytes have been read by the I2\+C, the transfer is ended with a N\+A\+C\+K and S\+T\+O\+P bit.
+
+In I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G, I2\+C\+\_\+transfer will block task execution until the transaction has completed.
+
+In I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K, I2\+C\+\_\+transfer does not block task execution and calls a callback function specified by transfer\+Callback\+Fxn. If a transfer is already taking place, the transaction is put on an internal queue. The queue is serviced in a first come first served basis. The \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} structure must stay persistent until the I2\+C\+\_\+transfer function has completed!
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+C\+\_\+\+Handle\\
+\hline
+{\em transaction} & A pointer to a \hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction}. All of the fields within transaction are W\+O (write-\/only) unless otherwise noted in the driver implementations.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on successful transfer false on an error, such as a I2\+C bus fault
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open} 
+\end{DoxySeeAlso}

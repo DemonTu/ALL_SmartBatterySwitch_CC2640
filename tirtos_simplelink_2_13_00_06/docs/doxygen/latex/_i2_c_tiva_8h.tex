@@ -1,0 +1,148 @@
+\subsection{I2\+C\+Tiva.\+h File Reference}
+\label{_i2_c_tiva_8h}\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+C driver implementation for a Tiva I2\+C controller. 
+
+============================================================================
+
+The I2\+C header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2C.h>}
+\textcolor{preprocessor}{#include <ti/drivers/i2c/I2CTiva.h>}
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+I2\+C.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+Include dependency graph for I2\+C\+Tiva.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_i2_c_tiva_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_c_tiva___h_w_attrs}{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c_tiva___object}{I2\+C\+Tiva\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_i2_c_tiva_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85af}{I2\+C\+Tiva\+\_\+\+Mode} \hyperlink{_i2_c_tiva_8h_ae29c199bdb69bc3c7e6b1bf4ebba76f0}{I2\+C\+Tiva\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva mode. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_tiva___h_w_attrs}{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs} \hyperlink{_i2_c_tiva_8h_af20903ad2ff3e34d27132e11aef68ad5}{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_tiva___object}{I2\+C\+Tiva\+\_\+\+Object} \hyperlink{_i2_c_tiva_8h_a56bbf0bf756fabe1c1c6b905a1b88ee7}{I2\+C\+Tiva\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85af}{I2\+C\+Tiva\+\_\+\+Mode} \{ \\*
+\hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaa06bbe8186dddfc847f56bcad723e8c4}{I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E} = 0, 
+\\*
+\hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afa22ae426fd1e9ff0e4c017f92b1c92ee8}{I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaf35ad0158f701dd6310f4e525e8e3ae2}{I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaf016c90849ab8b94d1c6a4dddaf3a498}{I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R} = 0x\+F\+F
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+C\+Tiva mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table} \hyperlink{_i2_c_tiva_8h_aa37c457a45a8fa5451616bdb9cb5ce49}{I2\+C\+Tiva\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_i2_c_tiva_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+
+
+\subsubsection{Typedef Documentation}
+\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+Mode@{I2\+C\+Tiva\+\_\+\+Mode}}
+\index{I2\+C\+Tiva\+\_\+\+Mode@{I2\+C\+Tiva\+\_\+\+Mode}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{I2\+C\+Tiva\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+C\+Tiva\+\_\+\+Mode}  {\bf I2\+C\+Tiva\+\_\+\+Mode}}\label{_i2_c_tiva_8h_ae29c199bdb69bc3c7e6b1bf4ebba76f0}
+
+
+I2\+C\+Tiva mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}
+\index{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}  {\bf I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}\label{_i2_c_tiva_8h_af20903ad2ff3e34d27132e11aef68ad5}
+
+
+I2\+C\+Tiva Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const I2CTiva\_HWAttrs i2cTivaHWAttrs[] = \{
+2     \{
+3         I2C1\_BASE,
+4         INT\_I2C1,
+5         ~0               // Interrupt priority
+6     \},
+7     \{
+8         I2C3\_BASE,
+9         INT\_I2C3,
+10         ~0               // Interrupt priority
+11     \},
+12 \};
+\end{DoxyCode}
+ \index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{I2\+C\+Tiva\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+Tiva\+\_\+\+Object}  {\bf I2\+C\+Tiva\+\_\+\+Object}}\label{_i2_c_tiva_8h_a56bbf0bf756fabe1c1c6b905a1b88ee7}
+
+
+I2\+C\+Tiva Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+Mode@{I2\+C\+Tiva\+\_\+\+Mode}}
+\index{I2\+C\+Tiva\+\_\+\+Mode@{I2\+C\+Tiva\+\_\+\+Mode}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{I2\+C\+Tiva\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+C\+Tiva\+\_\+\+Mode}}\label{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85af}
+
+
+I2\+C\+Tiva mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+Tiva\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaa06bbe8186dddfc847f56bcad723e8c4}
+}]\index{I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+Tiva\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afa22ae426fd1e9ff0e4c017f92b1c92ee8}
+}]\index{I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+Tiva\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E\label{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaf35ad0158f701dd6310f4e525e8e3ae2}
+}]\index{I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+I2\+C\+Tiva\+\_\+\+E\+R\+R\+O\+R\label{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85afaf016c90849ab8b94d1c6a4dddaf3a498}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}!I2\+C\+Tiva\+\_\+fxn\+Table@{I2\+C\+Tiva\+\_\+fxn\+Table}}
+\index{I2\+C\+Tiva\+\_\+fxn\+Table@{I2\+C\+Tiva\+\_\+fxn\+Table}!I2\+C\+Tiva.\+h@{I2\+C\+Tiva.\+h}}
+\paragraph[{I2\+C\+Tiva\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf I2\+C\+\_\+\+Fxn\+Table} I2\+C\+Tiva\+\_\+fxn\+Table}\label{_i2_c_tiva_8h_aa37c457a45a8fa5451616bdb9cb5ce49}

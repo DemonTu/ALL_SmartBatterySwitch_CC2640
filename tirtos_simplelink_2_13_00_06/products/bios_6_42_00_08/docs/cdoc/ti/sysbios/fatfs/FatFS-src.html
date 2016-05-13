@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.sysbios.fatfs.FatFS</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> * Copyright (c) 2012-2014, Texas Instruments Incorporated
+</span>     3    <span class="comment"> * All rights reserved.
+</span>     4    <span class="comment"> *
+</span>     5    <span class="comment"> * Redistribution and use in source and binary forms, with or without
+</span>     6    <span class="comment"> * modification, are permitted provided that the following conditions
+</span>     7    <span class="comment"> * are met:
+</span>     8    <span class="comment"> *
+</span>     9    <span class="comment"> * *  Redistributions of source code must retain the above copyright
+</span>    10    <span class="comment"> *    notice, this list of conditions and the following disclaimer.
+</span>    11    <span class="comment"> *
+</span>    12    <span class="comment"> * *  Redistributions in binary form must reproduce the above copyright
+</span>    13    <span class="comment"> *    notice, this list of conditions and the following disclaimer in the
+</span>    14    <span class="comment"> *    documentation and/or other materials provided with the distribution.
+</span>    15    <span class="comment"> *
+</span>    16    <span class="comment"> * *  Neither the name of Texas Instruments Incorporated nor the names of
+</span>    17    <span class="comment"> *    its contributors may be used to endorse or promote products derived
+</span>    18    <span class="comment"> *    from this software without specific prior written permission.
+</span>    19    <span class="comment"> *
+</span>    20    <span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+</span>    21    <span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+</span>    22    <span class="comment"> * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+</span>    23    <span class="comment"> * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+</span>    24    <span class="comment"> * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+</span>    25    <span class="comment"> * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+</span>    26    <span class="comment"> * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+</span>    27    <span class="comment"> * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+</span>    28    <span class="comment"> * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+</span>    29    <span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+</span>    30    <span class="comment"> * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</span>    31    <span class="comment"> */</span>
+    32    <span class="comment">/*
+</span>    33    <span class="comment"> *  ======== FatFS.xdc ========
+</span>    34    <span class="comment"> */</span>
+    35    
+    36    <span class="xdoc">/*!
+</span>    37    <span class="xdoc"> *  ======== FatFS ========
+</span>    38    <span class="xdoc"> *  Configuration and integration of the open-source FAT filesystem project,
+</span>    39    <span class="xdoc"> *  FatFs, with SYS/BIOS.
+</span>    40    <span class="xdoc"> *
+</span>    41    <span class="xdoc"> *  The FatFs project homepage: http://elm-chan.org/fsw/ff/00index_e.html
+</span>    42    <span class="xdoc"> *
+</span>    43    <span class="xdoc"> *  This initial integration supports (only) a simple RAM disk. The FatFs source
+</span>    44    <span class="xdoc"> *  is included and pre-built, together with support for SYS/BIOS
+</span>    45    <span class="xdoc"> *  synchronization. Also included is an implementation of the "device I/O"
+</span>    46    <span class="xdoc"> *  model for the TI compiler C runtime support (RTS) library. This provides
+</span>    47    <span class="xdoc"> *  transparent support for using the C stdio.h library functions (fopen,
+</span>    48    <span class="xdoc"> *  fwrite, fclose) instead of the raw, project-specific, API functions
+</span>    49    <span class="xdoc"> *  provided by FatFs (f_open, f_write).
+</span>    50    <span class="xdoc"> *
+</span>    51    <span class="xdoc"> *  The configuration options initially defined here are subject to change
+</span>    52    <span class="xdoc"> *  as more device driver support is added, such as MMC/SD, SATA, and USB.
+</span>    53    <span class="xdoc"> *
+</span>    54    <span class="xdoc"> *  To incorporate the FatFs functionality into an application, simply "use"
+</span>    55    <span class="xdoc"> *  this module in a SYS/BIOS configuration. This will automatically generate
+</span>    56    <span class="xdoc"> *  a startup function to "plug in" the filesystem into the TI RTS, and provide
+</span>    57    <span class="xdoc"> *  the needed libraries for linking. xgconf users can simply right-click on
+</span>    58    <span class="xdoc"> *  the module icon and select "Use Module". Script users simply add a
+</span>    59    <span class="xdoc"> *  xdc.useModule("ti.sysbios.fatfs.FatFS") to their .cfg file.
+</span>    60    <span class="xdoc"> *
+</span>    61    <span class="xdoc"> *  There are currently three configuration options, one related to the C
+</span>    62    <span class="xdoc"> *  RTS stdio implementation, and two for the ramdisk support. First, the
+</span>    63    <span class="xdoc"> *  fatfsPrefix parameter is used as the namespace "prefix" for the C RTS
+</span>    64    <span class="xdoc"> *  fopen() function. See the TI C Compiler User's Guide (such as spru187)
+</span>    65    <span class="xdoc"> *  for more details. Basically, this prefix must be supplied as part of the
+</span>    66    <span class="xdoc"> *  filename when calling fopen(). For example, with the default value of
+</span>    67    <span class="xdoc"> *  "fat", an application would use:
+</span>    68    <span class="xdoc"> *
+</span>    69    <span class="xdoc"> *  <b>@p(code)</b>
+</span>    70    <span class="xdoc"> *  FILE * fp = fopen("fat:/signal.dat", "w");
+</span>    71    <span class="xdoc"> *  <b>@p</b>
+</span>    72    <span class="xdoc"> *
+</span>    73    <span class="xdoc"> *  Note the ":" as a separator. This must be part of the fopen() call, but
+</span>    74    <span class="xdoc"> *  is not specified as part of the fatfsPrefix configuration parameter.
+</span>    75    <span class="xdoc"> *
+</span>    76    <span class="xdoc"> *  The other parameters control how the RAM disk is configured into the
+</span>    77    <span class="xdoc"> *  system. The ramdiskSymbolName parameter can be used to specify an
+</span>    78    <span class="xdoc"> *  address of a pre-initialized (formatted) filesystem. This would be
+</span>    79    <span class="xdoc"> *  typically provided by linking in a (large) C data array. When using this
+</span>    80    <span class="xdoc"> *  parameter, the other configuration parameter, ramdiskSize, should be set
+</span>    81    <span class="xdoc"> *  to the size of the data array in units of bytes.
+</span>    82    <span class="xdoc"> *
+</span>    83    <span class="xdoc"> *  For example, assume a FAT filesystem that has been "serialized"
+</span>    84    <span class="xdoc"> *  into the file ramdisk.c that contains the following:
+</span>    85    <span class="xdoc"> *
+</span>    86    <span class="xdoc"> *  <b>@p(code)</b>
+</span>    87    <span class="xdoc"> *  unsigned int ramdiskData[32768] = {
+</span>    88    <span class="xdoc"> *  <b>@p</b>
+</span>    89    <span class="xdoc"> *
+</span>    90    <span class="xdoc"> *  then the values for these two configuration parameters should be:
+</span>    91    <span class="xdoc"> *
+</span>    92    <span class="xdoc"> *  <b>@p(code)</b>
+</span>    93    <span class="xdoc"> *  var FatFS = xdc.useModule("ti.sysbios.fatfs.FatFS");
+</span>    94    <span class="xdoc"> *  FatFS.ramdiskSymbolName = "ramdiskData";
+</span>    95    <span class="xdoc"> *  FatFS.ramdiskSize = 32768 * 4;
+</span>    96    <span class="xdoc"> *  <b>@p</b>
+</span>    97    <span class="xdoc"> *
+</span>    98    <span class="xdoc"> *  When the ramdiskSymbolName parameter is left "empty", .ie., "",
+</span>    99    <span class="xdoc"> *  then the ramdiskSize
+</span>   100    <span class="xdoc"> *  parameter is used to create an empty FAT filesystem at boot time of size
+</span>   101    <span class="xdoc"> *  ramdiskSize.
+</span>   102    <span class="xdoc"> *
+</span>   103    <span class="xdoc"> *  User Defined Hook For get_fattime()
+</span>   104    <span class="xdoc"> *
+</span>   105    <span class="xdoc"> *  The default implementation of the get_fattime() function uses the SYS/BIOS
+</span>   106    <span class="xdoc"> *  {<b>@link</b> ti.sysbios.hal.Seconds Seconds} module to get the current time.
+</span>   107    <span class="xdoc"> *  The user must have called {<b>@link</b> ti.sysbios.hal.Seconds#set Seconds_set}
+</span>   108    <span class="xdoc"> *  early on (e.g., from main()) to initialize the
+</span>   109    <span class="xdoc"> *  {<b>@link</b> ti.sysbios.hal.Seconds Seconds} module's clock with the number of
+</span>   110    <span class="xdoc"> *  seconds since 1970.  However, it is possible to override the use of the
+</span>   111    <span class="xdoc"> *  {<b>@link</b> ti.sysbios.hal.Seconds Seconds} module by defining a hook
+</span>   112    <span class="xdoc"> *  function instead.  This function will then be called from get_fattime().
+</span>   113    <span class="xdoc"> *
+</span>   114    <span class="xdoc"> *  A hook function must be defined using the following format:
+</span>   115    <span class="xdoc"> *
+</span>   116    <span class="xdoc"> *  <b>@p(code)</b>
+</span>   117    <span class="xdoc"> *      Int32 &lt;functionName&gt;(Void)
+</span>   118    <span class="xdoc"> *  <b>@p</b>
+</span>   119    <span class="xdoc"> *
+</span>   120    <span class="xdoc"> *  Note if the user specifies a hook function in the RTSC configuration
+</span>   121    <span class="xdoc"> *  script, but does not define this function in their C code, a linker error
+</span>   122    <span class="xdoc"> *  will result.
+</span>   123    <span class="xdoc"> *
+</span>   124    <span class="xdoc"> */</span>
+   125    
+   126    @Template(<span class="string">"./FatFS.xdt"</span>)
+   127    <span class=key>metaonly</span> <span class=key>module</span> FatFS
+   128    {
+   129        <span class="xdoc">/*! Function signature for user defined get_fattime() hook function */</span>
+   130        <span class=key>typedef</span> Int32 (*fatTimeHookFxn)();
+   131    
+   132        <span class="xdoc">/*!
+</span>   133    <span class="xdoc">     *  User defined hook function to return the time from a real time clock
+</span>   134    <span class="xdoc">     *
+</span>   135    <span class="xdoc">     *  By default, get_fattime() uses the SYS/BIOS
+</span>   136    <span class="xdoc">     *  {<b>@link</b> ti.sysbios.hal.Seconds Seconds} module to get the current time.
+</span>   137    <span class="xdoc">     *  By default, a hard coded time is returned from get_fattime(). Although,
+</span>   138    <span class="xdoc">     *  it should not be necessary, it is possible to override the use of
+</span>   139    <span class="xdoc">     *  the {<b>@link</b> ti.sysbios.hal.Seconds Seconds} module time with a user
+</span>   140    <span class="xdoc">     *  defined hook function.  This hook function will then be called from
+</span>   141    <span class="xdoc">     *  the get_fattime() function.
+</span>   142    <span class="xdoc">     *
+</span>   143    <span class="xdoc">     *  As an example, to configure a hook function called "myTimeFxn", you
+</span>   144    <span class="xdoc">     *  would first need to implement "myTimeFxn" in C to get the time from
+</span>   145    <span class="xdoc">     *  the real time clock on your hardware.  Then, in your RTSC configuration
+</span>   146    <span class="xdoc">     *  script, set "getFatTimeHook" to point to "myTimeFxn":
+</span>   147    <span class="xdoc">     *
+</span>   148    <span class="xdoc">     *  <b>@p(code)</b>
+</span>   149    <span class="xdoc">     *  var FatFS = xdc.useModule('ti.sysbios.fatfs.FatFS");
+</span>   150    <span class="xdoc">     *  FatFS.getFatTimeHook = '&amp;myTimeFxn';
+</span>   151    <span class="xdoc">     *  <b>@p</b>
+</span>   152    <span class="xdoc">     *
+</span>   153    <span class="xdoc">     *  Note if the user specifies a hook function in the RTSC configuration
+</span>   154    <span class="xdoc">     *  script, but does not define this function in their C code, a linker
+</span>   155    <span class="xdoc">     *  error will result.
+</span>   156    <span class="xdoc">     */</span>
+   157        <span class=key>config</span> fatTimeHookFxn getFatTimeHook = <span class=key>null</span>;
+   158    
+   159        <span class="xdoc">/*!
+</span>   160    <span class="xdoc">     * File name prefix for this filesystem for use with TI C RTS
+</span>   161    <span class="xdoc">     *
+</span>   162    <span class="xdoc">     * This prefix should be supplied as part of the filename passed when
+</span>   163    <span class="xdoc">     * calling fopen().  For example:
+</span>   164    <span class="xdoc">     *  <b>@p(code)</b>
+</span>   165    <span class="xdoc">     *  FILE * fp = fopen("fat:/signal.dat", "w");
+</span>   166    <span class="xdoc">     *  <b>@p</b>
+</span>   167    <span class="xdoc">     */</span>
+   168        <span class=key>config</span> String fatfsPrefix = <span class="string">"fat"</span>;
+   169    
+   170        <span class="xdoc">/*!
+</span>   171    <span class="xdoc">     * Symbol name or address of a pre-existing FAT File System.
+</span>   172    <span class="xdoc">     *
+</span>   173    <span class="xdoc">     * The ramdisk allows for the loading of an existing file system image
+</span>   174    <span class="xdoc">     * stored in an C array or at a particular address.  The value of this
+</span>   175    <span class="xdoc">     * parameter should be the name of this array or the address of where the
+</span>   176    <span class="xdoc">     * file system image is located. If left empty, an empty filesystem will be
+</span>   177    <span class="xdoc">     * created at boot time.
+</span>   178    <span class="xdoc">     */</span>
+   179        <span class=key>config</span> String ramdiskSymbolName = <span class="string">""</span>;
+   180    
+   181        <span class="xdoc">/*! Size of the FAT filesystem in bytes. */</span>
+   182        <span class=key>config</span> UInt ramdiskSize = 512 * 256;
+   183    
+   184        <span class="xdoc">/*!
+</span>   185    <span class="xdoc">     * Disable the ramdisk or select the drive ID for a ramdisk (-1 to disable).
+</span>   186    <span class="xdoc">     *
+</span>   187    <span class="xdoc">     * Parameter used to specify whether to create a ramdisk or not, and if so,
+</span>   188    <span class="xdoc">     * specify the drive ID to use for the ramdisk.  Valid ID numbers are in the
+</span>   189    <span class="xdoc">     * set [0, 1, 2, 3].  If using a ramdisk in combination with other media,
+</span>   190    <span class="xdoc">     * the user is responsible for managing these drive IDs so that they do not
+</span>   191    <span class="xdoc">     * conflict with one another.
+</span>   192    <span class="xdoc">     *
+</span>   193    <span class="xdoc">     * By default, no ramdisk is created.
+</span>   194    <span class="xdoc">     *
+</span>   195    <span class="xdoc">     * -1 : do not create a ramdisk
+</span>   196    <span class="xdoc">     *  0 : create a ramdisk with drive ID 0
+</span>   197    <span class="xdoc">     *  1 : create a ramdisk with drive ID 1
+</span>   198    <span class="xdoc">     *  2 : create a ramdisk with drive ID 2
+</span>   199    <span class="xdoc">     *  3 : create a ramdisk with drive ID 3
+</span>   200    <span class="xdoc">     */</span>
+   201        <span class=key>config</span> Int ramdiskDriveId = -1;
+   202    }
+</pre>
+</body></html>

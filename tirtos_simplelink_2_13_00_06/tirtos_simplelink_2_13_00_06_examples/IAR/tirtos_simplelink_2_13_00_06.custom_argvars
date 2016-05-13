@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<iarUserArgVars>
+  <group active="true" name="tirtos_simplelink_2_13_00_06">
+    <variable>
+      <name>XDCROOT</name>
+      <value>c:/ti/xdctools_3_31_01_33_core</value>
+    </variable>
+    <variable>
+      <name>XDCPATH</name>
+      <value>c:/ti/tirtos_simplelink_2_13_00_06/packages;c:/ti/tirtos_simplelink_2_13_00_06/products/uia_2_00_02_39/packages;;c:/ti/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages;</value>
+    </variable>
+    <variable>
+      <name>EXAMPLE_ROOT</name>
+      <value>c:/ti/tirtos_simplelink_2_13_00_06/tirtos_simplelink_2_13_00_06_examples/IAR</value>
+    </variable>
+  </group>
+</iarUserArgVars>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.ti.rtsc.TIRTOSsimplelink.product.ui"
+      version="2.13.0.06"
+      label="TI-RTOS for SimpleLink Wireless MCUs (IDE Client)"
+      provider-name="Texas Instruments">
+
+   <description url="http://processors.wiki.ti.com/index.php/TI-RTOS">
+TI-RTOS for SimpleLink Wireless MCUs product
+   </description>
+
+   <copyright>
+Copyright (c) 2014, Texas Instruments Incorporated
+   </copyright>
+
+   <license>
+      Released under Eclipse public license(EPL).
+Visit http://www.eclipse.org/legal/epl-v10.html for details of license.
+   </license>
+
+
+   <plugin
+        id="com.ti.rtsc.TIRTOSsimplelink.product.ui"
+        version="2.13.0.06"
+        unpack="false" 
+   />  
+    
+
+</feature>

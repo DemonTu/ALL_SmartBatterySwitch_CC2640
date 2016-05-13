@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<gep name="TI-RTOS" title="TI-RTOS" version="1">
+
+<page name="Welcome" title="Welcome" DPI="2540">
+  <instance href="Welcome.html"/>
+</page>
+
+<page name="System Overview" title="System Overview" DPI="2540">
+  <instance href="ti/tirtos/Overview.xml"/>
+</page>
+
+<page name="Driver Options" title="Driver Options">
+<html><body><table>
+  <tr><td>
+    <h1>Library Selection Options</h1>
+    <table>
+      <tr>
+        <td><control type="radiogroup" value="value:ti.tirtos.TIRTOS.libType" label="TI-RTOS Driver Library Type" tooltip="value:ti.tirtos.TIRTOS.libType.$summary" align="left" /></td>
+      </tr>
+    </table>
+    <h1>Driver Usage</h1>
+    <table>
+      <tr>
+        <td colspan="3"><control type="checkbox"
+             label="Use I2C Driver"
+             visible="value:this.supportsI2C"
+             value="value:this.useI2C"/></td>        
+        <td colspan="3"><control type="checkbox"
+             label="Use SDSPI Driver"
+             visible="value:this.supportsSDSPI"
+             value="value:this.useSDSPI"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="Use Watchdog Driver"
+             visible="value:this.supportsWatchdog"
+             value="value:this.useWatchdog"/></td>             
+      </tr>
+      <tr>
+        <td colspan="3"><control type="checkbox"
+             label="Use SPI Driver"
+             visible="value:this.supportsSPI"
+             value="value:this.useSPI"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="Use GPIO Driver"
+             visible="value:this.supportsGPIO"
+             value="value:this.useGPIO"/></td>   
+        <td colspan="3"><control type="checkbox"
+             label="Use USBMSCHFatFs Driver"
+             visible="value:this.supportsUSBMSCHFatFs"
+             value="value:this.useUSBMSCHFatFs"/></td>
+      </tr>
+      <tr>
+        <td colspan="3"><control type="checkbox"
+             label="Use UART Driver"
+             visible="value:this.supportsUART"
+             value="value:this.useUART"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="Use PWM Driver"
+             visible="value:this.supportsPWM"
+             value="value:this.usePWM"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="Use EMAC Driver"
+             visible="value:this.supportsEMAC"
+             value="value:this.useEMAC"/></td>
+      </tr>
+      <tr>
+        <td colspan="3"><control type="checkbox"
+             label="Use Camera Driver"
+             visible="value:this.supportsCamera"
+             value="value:this.useCamera"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="Use I2S Driver"
+             visible="value:this.supportsI2S"
+             value="value:this.useI2S"/></td>
+        <td colspan="3"><control type="checkbox"
+             label="empty"
+             visible="value:false"
+             value="value:false"/></td>
+      </tr>
+    </table>
+    <form><p>The above settings are used to allow the driver to pull in required components and also enables ROV support for selected drivers.</p></form>
+    <form/>
+    <form/>
+    </td>
+  </tr>
+</table></body></html>
+</page>
+
+</gep>

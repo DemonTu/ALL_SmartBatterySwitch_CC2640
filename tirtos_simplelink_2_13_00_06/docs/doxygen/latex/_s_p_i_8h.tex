@@ -1,0 +1,726 @@
+\subsection{S\+P\+I.\+h File Reference}
+\label{_s_p_i_8h}\index{S\+P\+I.\+h@{S\+P\+I.\+h}}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I driver interface. 
+
+============================================================================
+
+The S\+P\+I header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/SPI.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The S\+P\+I driver in T\+I-\/\+R\+T\+O\+S is designed to serve a means to move data between S\+P\+I peripherals. This driver does not interpret any of the data sent to or received from this peripheral.
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+The S\+P\+I driver operates on some key definitions and assumptions\+:
+\begin{DoxyItemize}
+\item The driver operates transparent from the chip select. Some S\+P\+I controllers feature a hardware chip select to assert S\+P\+I slave peripherals. See the specific peripheral implementations on chip select requirements.
+\item The S\+P\+I protocol does not account for a built-\/in handshaking mechanism and neither does this S\+P\+I driver. Therefore, when operating in \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942abc98c1546fe12d3fceb1f86cf670faa9}{S\+P\+I\+\_\+\+S\+L\+A\+V\+E} mode, the application must provide such a mechanism to ensure that the S\+P\+I slave is ready for the S\+P\+I master. The S\+P\+I slave must call \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} {\itshape before} the S\+P\+I master starts transmitting. Some example application mechanisms could include\+:
+\begin{DoxyItemize}
+\item Timed delays on the S\+P\+I master to guarantee the S\+P\+I slave is be ready for a S\+P\+I transaction.
+\item A form of G\+P\+I\+O flow control from the slave to the S\+P\+I master to notify the master when ready.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+SPI_Handle      handle;
+SPI_Params      params;
+SPI_Transaction spiTransaction;
+
+SPI_Params_init(&params);
+params.bitRate  = someNewBitRate;
+handle = SPI_open(someSPI\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"SPI did not open"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Transferring data}
+
+Data transmitted and received by the S\+P\+I peripheral is performed using \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} accepts a pointer to a \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} structure that dictates what quantity of data is sent and received.
+
+
+\begin{DoxyCode}
+SPI_Transaction spiTransaction;
+
+spiTransaction.count = someIntegerValue;
+spiTransaction.txBuf = transmitBufferPointer;
+spiTransaction.rxBuf = receiveBufferPointer;
+
+ret = SPI_transfer(handle, &spiTransaction);
+\textcolor{keywordflow}{if} (!ret) \{
+    System\_printf(\textcolor{stringliteral}{"Unsuccessful SPI transfer"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Canceling a transaction}
+
+\hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel()} is used to cancel a S\+P\+I transaction when the driver is used in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} mode.
+
+Calling this A\+P\+I while no transfer is in progress has no effect. If a transfer is in progress, it canceled and a callback on the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} is performed. The \hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}{S\+P\+I\+\_\+\+Status} status field in the \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} struct can be examined within the callback to determine if the transaction was successful.
+
+
+\begin{DoxyCode}
+SPI_transferCancel(handle);
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table}.
+
+The S\+P\+I driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config} data structures named {\itshape S\+P\+I\+\_\+config}. {\itshape S\+P\+I\+\_\+config} is implemented in the application with each entry being an instance of a S\+P\+I peripheral. Each entry in {\itshape S\+P\+I\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a S\+P\+I peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following S\+P\+I peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_p_i_c_c26_x_x_d_m_a_8h}{S\+P\+I\+C\+C26\+X\+X\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_c_c3200_d_m_a_8h}{S\+P\+I\+C\+C3200\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_e_u_s_c_i_a_d_m_a_8h}{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_e_u_s_c_i_b_d_m_a_8h}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_m_s_p432_d_m_a_8h}{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_tiva_d_m_a_8h}{S\+P\+I\+Tiva\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_u_s_c_i_a_d_m_a_8h}{S\+P\+I\+U\+S\+C\+I\+A\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_u_s_c_i_b_d_m_a_8h}{S\+P\+I\+U\+S\+C\+I\+B\+D\+M\+A.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The S\+P\+I driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for S\+P\+I.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_s_p_i_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_p_i_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} data structure is used with \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. It indicates how many \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format} frames are sent and received from the buffers pointed to tx\+Buf and rx\+Buf. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} when the S\+P\+I driver is in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em S\+P\+I Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a S\+P\+I function table that contains the required set of functions to control a specific S\+P\+I driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em S\+P\+I Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_p_i_8h_a3d23d16525ee76f77276472d8dea80b0}{S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_s_p_i_8h_ae1af8c6ebf5e8fe481649f65e37b1b9f}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_s_p_i_8h_ab38fa90ff62128dbc98b2ecd84ca106f}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_p_i_8h_a2d0020dd673cc28a9e1c20b0ff101073}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_p_i_8h_acfcd15e1eecdb99b4867adc7592a8d6e}{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_p_i_8h_a7cab73b936e6e08392882196df41277e}{S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}~$\sim$(0)
+\begin{DoxyCompactList}\small\item\em Wait forever define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config} $\ast$ \hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}{S\+P\+I\+\_\+\+Status} \hyperlink{_s_p_i_8h_adf1c6e6f919dd9f6887da6590a52fd6a}{S\+P\+I\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the S\+P\+I driver. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} \hyperlink{_s_p_i_8h_a906af7b4126dcfc52dfa905eb08408fc}{S\+P\+I\+\_\+\+Transaction}
+\begin{DoxyCompactList}\small\item\em A \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} data structure is used with \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. It indicates how many \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format} frames are sent and received from the buffers pointed to tx\+Buf and rx\+Buf. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} when the S\+P\+I driver is in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used by the S\+P\+I driver when used in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942}{S\+P\+I\+\_\+\+Mode} \hyperlink{_s_p_i_8h_aa336fc399a0b2b1b5442f8a1e169984f}{S\+P\+I\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Definitions for various S\+P\+I modes of operation. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489}{S\+P\+I\+\_\+\+Frame\+Format} \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format}
+\begin{DoxyCompactList}\small\item\em Definitions for various S\+P\+I data frame formats. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6f}{S\+P\+I\+\_\+\+Transfer\+Mode} \hyperlink{_s_p_i_8h_a03fe641fa0950b2fe6c1b596cc5c235b}{S\+P\+I\+\_\+\+Transfer\+Mode}
+\begin{DoxyCompactList}\small\item\em S\+P\+I transfer mode determines the whether the S\+P\+I controller operates synchronously or asynchronously. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} mode \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} blocks code execution until the S\+P\+I transaction has completed. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block code execution and instead calls a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} callback function when the transaction has completed. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} \hyperlink{_s_p_i_8h_ae69b175346a856bdbb4ee6ed46b59a2f}{S\+P\+I\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em S\+P\+I Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_p_i_8h_aa361d580eb0a5a052d0a1403e0aa5746}{S\+P\+I\+\_\+\+Close\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a0e3448b30b88609fa120915e49560601}{S\+P\+I\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_s_p_i_8h_a48e6e65aa93fbcb2fd2c361e6ec25288}{S\+P\+I\+\_\+\+Control\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_p_i_8h_aa3b32db8f017fd0ce92bf46a089659e6}{S\+P\+I\+\_\+\+Init\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle}($\ast$ \hyperlink{_s_p_i_8h_a7e0786f4c1487f9daec49adbc3ac1cf5}{S\+P\+I\+\_\+\+Open\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_p_i_8h_aeb15890517783b3b646a36a76dbe2070}{S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_aa6f1baa732ebbf0aa7cd5c3f7dfd215a}{S\+P\+I\+\_\+service\+I\+S\+R()}. \end{DoxyCompactList}\item 
+typedef bool($\ast$ \hyperlink{_s_p_i_8h_a470d264d053b30edb0aaafcafd335c26}{S\+P\+I\+\_\+\+Transfer\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_p_i_8h_a33f5b214451ac89ea462083eeba0bf8c}{S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn}) (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table} \hyperlink{_s_p_i_8h_abfe91bed666eb36f3b3fa54f4b9f84bf}{S\+P\+I\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a S\+P\+I function table that contains the required set of functions to control a specific S\+P\+I driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config} \hyperlink{_s_p_i_8h_ae19802ec6efc91414e46af9b2435b942}{S\+P\+I\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em S\+P\+I Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}{S\+P\+I\+\_\+\+Status} \{ \\*
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbabb35466595b950df7e3e3d880336502b}{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D} = 0, 
+\\*
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbad5266453aecb2fdedc0c23cd90921627}{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D}, 
+\\*
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fba78957da92681e8400d84d9d3ede55836}{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}, 
+\\*
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbac01b83da31c34da13025a5b987ef013f}{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D}, 
+\\*
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbaa363cddc53c1f44ca73aa661e6535816}{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T}
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes that are set by the S\+P\+I driver. \end{DoxyCompactList}\item 
+enum \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942}{S\+P\+I\+\_\+\+Mode} \{ \\*
+\hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942a84379dc90398ca075038c8d5ee465f6a}{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R} = 0, 
+\\*
+\hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942abc98c1546fe12d3fceb1f86cf670faa9}{S\+P\+I\+\_\+\+S\+L\+A\+V\+E} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for various S\+P\+I modes of operation. \end{DoxyCompactList}\item 
+enum \hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489}{S\+P\+I\+\_\+\+Frame\+Format} \{ \\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a0396d8c01166ff94e94e0c200261eba3}{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0} = 0, 
+\\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a340efc6d0f6f3b5be1151444c15faabf}{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1} = 1, 
+\\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489ace88daceb628498715aeda698541c95c}{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0} = 2, 
+\\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a4441729b292511628cb1e9f102da9166}{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1} = 3, 
+\\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489ac3cb11b3a833e28368e267161551eb1d}{S\+P\+I\+\_\+\+T\+I} = 4, 
+\\*
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a34dc698e46fc5c1b2b1f0de19a44fdcb}{S\+P\+I\+\_\+\+M\+W} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for various S\+P\+I data frame formats. \end{DoxyCompactList}\item 
+enum \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6f}{S\+P\+I\+\_\+\+Transfer\+Mode} \{ \\*
+\hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}
+ \}
+\begin{DoxyCompactList}\small\item\em S\+P\+I transfer mode determines the whether the S\+P\+I controller operates synchronously or asynchronously. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} mode \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} blocks code execution until the S\+P\+I transaction has completed. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block code execution and instead calls a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} callback function when the transaction has completed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_s_p_i_8h_a0e3448b30b88609fa120915e49560601}{S\+P\+I\+\_\+close} (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a S\+P\+I peripheral specified by the S\+P\+I handle. \end{DoxyCompactList}\item 
+int \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control} (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given S\+P\+I\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the S\+P\+I module. \end{DoxyCompactList}\item 
+\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open} (unsigned int index, \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em This function opens a given S\+P\+I peripheral. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init} (\hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_aa6f1baa732ebbf0aa7cd5c3f7dfd215a}{S\+P\+I\+\_\+service\+I\+S\+R} (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to service the S\+P\+I module\textquotesingle{}s interrupt service routine. \end{DoxyCompactList}\item 
+bool \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer} (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle, \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Function to perform S\+P\+I transactions. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel} (\hyperlink{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}{S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to cancel S\+P\+I transactions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_s_p_i_8h_a3d23d16525ee76f77276472d8dea80b0}
+Common S\+P\+I\+\_\+control command code reservation offset. S\+P\+I driver implementations should offset command codes with S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define SPIXYZ\_COMMAND0         SPI\_CMD\_RESERVED + 0
+2 #define SPIXYZ\_COMMAND1         SPI\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_s_p_i_8h_ae1af8c6ebf5e8fe481649f65e37b1b9f}
+Common S\+P\+I\+\_\+control status code reservation offset. S\+P\+I driver implementations should offset status codes with S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define SPIXYZ\_STATUS\_ERROR0    SPI\_STATUS\_RESERVED - 0
+2 #define SPIXYZ\_STATUS\_ERROR1    SPI\_STATUS\_RESERVED - 1
+3 #define SPIXYZ\_STATUS\_ERROR2    SPI\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_s_p_i_8h_ab38fa90ff62128dbc98b2ecd84ca106f}
+
+
+Successful status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_s_p_i_8h_a2d0020dd673cc28a9e1c20b0ff101073}
+
+
+Generic error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_s_p_i_8h_acfcd15e1eecdb99b4867adc7592a8d6e}
+
+
+An error status code returned by \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()} returns S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}}
+\index{S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R~$\sim$(0)}\label{_s_p_i_8h_a7cab73b936e6e08392882196df41277e}
+
+
+Wait forever define. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Handle@{S\+P\+I\+\_\+\+Handle}}
+\index{S\+P\+I\+\_\+\+Handle@{S\+P\+I\+\_\+\+Handle}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+\_\+\+Config}$\ast$ {\bf S\+P\+I\+\_\+\+Handle}}\label{_s_p_i_8h_a728806534c3c3e8675cfbfb7d8e36f13}
+
+
+A handle that is returned from a \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} call. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Status@{S\+P\+I\+\_\+\+Status}}
+\index{S\+P\+I\+\_\+\+Status@{S\+P\+I\+\_\+\+Status}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf S\+P\+I\+\_\+\+Status}  {\bf S\+P\+I\+\_\+\+Status}}\label{_s_p_i_8h_adf1c6e6f919dd9f6887da6590a52fd6a}
+
+
+Status codes that are set by the S\+P\+I driver. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+\_\+\+Transaction}  {\bf S\+P\+I\+\_\+\+Transaction}}\label{_s_p_i_8h_a906af7b4126dcfc52dfa905eb08408fc}
+
+
+A \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} data structure is used with \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. It indicates how many \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format} frames are sent and received from the buffers pointed to tx\+Buf and rx\+Buf. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} when the S\+P\+I driver is in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Callback\+Fxn@{S\+P\+I\+\_\+\+Callback\+Fxn}}
+\index{S\+P\+I\+\_\+\+Callback\+Fxn@{S\+P\+I\+\_\+\+Callback\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+P\+I\+\_\+\+Callback\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle, {\bf S\+P\+I\+\_\+\+Transaction} $\ast$transaction)}\label{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}
+
+
+The definition of a callback function used by the S\+P\+I driver when used in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em S\+P\+I\+\_\+\+Handle} & S\+P\+I\+\_\+\+Handle \\
+\hline
+{\em S\+P\+I\+\_\+\+Transaction$\ast$} & S\+P\+I\+\_\+\+Transaction$\ast$ \\
+\hline
+\end{DoxyParams}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Mode@{S\+P\+I\+\_\+\+Mode}}
+\index{S\+P\+I\+\_\+\+Mode@{S\+P\+I\+\_\+\+Mode}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf S\+P\+I\+\_\+\+Mode}  {\bf S\+P\+I\+\_\+\+Mode}}\label{_s_p_i_8h_aa336fc399a0b2b1b5442f8a1e169984f}
+
+
+Definitions for various S\+P\+I modes of operation. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Frame\+Format@{S\+P\+I\+\_\+\+Frame\+Format}}
+\index{S\+P\+I\+\_\+\+Frame\+Format@{S\+P\+I\+\_\+\+Frame\+Format}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Frame\+Format}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf S\+P\+I\+\_\+\+Frame\+Format}  {\bf S\+P\+I\+\_\+\+Frame\+Format}}\label{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}
+
+
+Definitions for various S\+P\+I data frame formats. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Transfer\+Mode@{S\+P\+I\+\_\+\+Transfer\+Mode}}
+\index{S\+P\+I\+\_\+\+Transfer\+Mode@{S\+P\+I\+\_\+\+Transfer\+Mode}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf S\+P\+I\+\_\+\+Transfer\+Mode}  {\bf S\+P\+I\+\_\+\+Transfer\+Mode}}\label{_s_p_i_8h_a03fe641fa0950b2fe6c1b596cc5c235b}
+
+
+S\+P\+I transfer mode determines the whether the S\+P\+I controller operates synchronously or asynchronously. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} mode \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} blocks code execution until the S\+P\+I transaction has completed. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block code execution and instead calls a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} callback function when the transaction has completed. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+\_\+\+Params}  {\bf S\+P\+I\+\_\+\+Params}}\label{_s_p_i_8h_ae69b175346a856bdbb4ee6ed46b59a2f}
+
+
+S\+P\+I Parameters. 
+
+S\+P\+I Parameters are used to with the \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Close\+Fxn@{S\+P\+I\+\_\+\+Close\+Fxn}}
+\index{S\+P\+I\+\_\+\+Close\+Fxn@{S\+P\+I\+\_\+\+Close\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+P\+I\+\_\+\+Close\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle)}\label{_s_p_i_8h_aa361d580eb0a5a052d0a1403e0aa5746}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a0e3448b30b88609fa120915e49560601}{S\+P\+I\+\_\+close()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Control\+Fxn@{S\+P\+I\+\_\+\+Control\+Fxn}}
+\index{S\+P\+I\+\_\+\+Control\+Fxn@{S\+P\+I\+\_\+\+Control\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ S\+P\+I\+\_\+\+Control\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_s_p_i_8h_a48e6e65aa93fbcb2fd2c361e6ec25288}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}{S\+P\+I\+\_\+control()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Init\+Fxn@{S\+P\+I\+\_\+\+Init\+Fxn}}
+\index{S\+P\+I\+\_\+\+Init\+Fxn@{S\+P\+I\+\_\+\+Init\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+P\+I\+\_\+\+Init\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle)}\label{_s_p_i_8h_aa3b32db8f017fd0ce92bf46a089659e6}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Open\+Fxn@{S\+P\+I\+\_\+\+Open\+Fxn}}
+\index{S\+P\+I\+\_\+\+Open\+Fxn@{S\+P\+I\+\_\+\+Open\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+P\+I\+\_\+\+Handle}($\ast$ S\+P\+I\+\_\+\+Open\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle, {\bf S\+P\+I\+\_\+\+Params} $\ast$params)}\label{_s_p_i_8h_a7e0786f4c1487f9daec49adbc3ac1cf5}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn@{S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn}}
+\index{S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn@{S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+P\+I\+\_\+\+Service\+I\+S\+R\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle)}\label{_s_p_i_8h_aeb15890517783b3b646a36a76dbe2070}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_aa6f1baa732ebbf0aa7cd5c3f7dfd215a}{S\+P\+I\+\_\+service\+I\+S\+R()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Transfer\+Fxn@{S\+P\+I\+\_\+\+Transfer\+Fxn}}
+\index{S\+P\+I\+\_\+\+Transfer\+Fxn@{S\+P\+I\+\_\+\+Transfer\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Transfer\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef bool($\ast$ S\+P\+I\+\_\+\+Transfer\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle, {\bf S\+P\+I\+\_\+\+Transaction} $\ast$transaction)}\label{_s_p_i_8h_a470d264d053b30edb0aaafcafd335c26}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn@{S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn}}
+\index{S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn@{S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+P\+I\+\_\+\+Transfer\+Cancel\+Fxn) ({\bf S\+P\+I\+\_\+\+Handle} handle)}\label{_s_p_i_8h_a33f5b214451ac89ea462083eeba0bf8c}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel()}. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Fxn\+Table@{S\+P\+I\+\_\+\+Fxn\+Table}}
+\index{S\+P\+I\+\_\+\+Fxn\+Table@{S\+P\+I\+\_\+\+Fxn\+Table}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+\_\+\+Fxn\+Table}  {\bf S\+P\+I\+\_\+\+Fxn\+Table}}\label{_s_p_i_8h_abfe91bed666eb36f3b3fa54f4b9f84bf}
+
+
+The definition of a S\+P\+I function table that contains the required set of functions to control a specific S\+P\+I driver implementation. 
+
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}}
+\index{S\+P\+I\+\_\+\+Config@{S\+P\+I\+\_\+\+Config}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+\_\+\+Config}  {\bf S\+P\+I\+\_\+\+Config}}\label{_s_p_i_8h_ae19802ec6efc91414e46af9b2435b942}
+
+
+S\+P\+I Global configuration. 
+
+The \hyperlink{struct_s_p_i___config}{S\+P\+I\+\_\+\+Config} structure contains a set of pointers used to characterize the S\+P\+I driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Status@{S\+P\+I\+\_\+\+Status}}
+\index{S\+P\+I\+\_\+\+Status@{S\+P\+I\+\_\+\+Status}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+P\+I\+\_\+\+Status}}\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}
+
+
+Status codes that are set by the S\+P\+I driver. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D}}\item[{\em 
+S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+O\+M\+P\+L\+E\+T\+E\+D\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbabb35466595b950df7e3e3d880336502b}
+}]\index{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D}}\item[{\em 
+S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+S\+T\+A\+R\+T\+E\+D\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbad5266453aecb2fdedc0c23cd90921627}
+}]\index{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D}}\item[{\em 
+S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+A\+N\+C\+E\+L\+E\+D\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fba78957da92681e8400d84d9d3ede55836}
+}]\index{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D}}\item[{\em 
+S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+A\+I\+L\+E\+D\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbac01b83da31c34da13025a5b987ef013f}
+}]\index{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T@{S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T}}\item[{\em 
+S\+P\+I\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+C\+S\+N\+\_\+\+D\+E\+A\+S\+S\+E\+R\+T\label{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fbaa363cddc53c1f44ca73aa661e6535816}
+}]\end{description}
+\end{Desc}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Mode@{S\+P\+I\+\_\+\+Mode}}
+\index{S\+P\+I\+\_\+\+Mode@{S\+P\+I\+\_\+\+Mode}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+P\+I\+\_\+\+Mode}}\label{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942}
+
+
+Definitions for various S\+P\+I modes of operation. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R@{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R@{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R}}\item[{\em 
+S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R\label{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942a84379dc90398ca075038c8d5ee465f6a}
+}]S\+P\+I in master mode \index{S\+P\+I\+\_\+\+S\+L\+A\+V\+E@{S\+P\+I\+\_\+\+S\+L\+A\+V\+E}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+S\+L\+A\+V\+E@{S\+P\+I\+\_\+\+S\+L\+A\+V\+E}}\item[{\em 
+S\+P\+I\+\_\+\+S\+L\+A\+V\+E\label{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942abc98c1546fe12d3fceb1f86cf670faa9}
+}]S\+P\+I in slave mode \end{description}
+\end{Desc}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Frame\+Format@{S\+P\+I\+\_\+\+Frame\+Format}}
+\index{S\+P\+I\+\_\+\+Frame\+Format@{S\+P\+I\+\_\+\+Frame\+Format}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Frame\+Format}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+P\+I\+\_\+\+Frame\+Format}}\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489}
+
+
+Definitions for various S\+P\+I data frame formats. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0@{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0@{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0}}\item[{\em 
+S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a0396d8c01166ff94e94e0c200261eba3}
+}]S\+P\+I mode Polarity 0 Phase 0 \index{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1@{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1@{S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1}}\item[{\em 
+S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A1\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a340efc6d0f6f3b5be1151444c15faabf}
+}]S\+P\+I mode Polarity 0 Phase 1 \index{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0@{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0@{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0}}\item[{\em 
+S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A0\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489ace88daceb628498715aeda698541c95c}
+}]S\+P\+I mode Polarity 1 Phase 0 \index{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1@{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1@{S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1}}\item[{\em 
+S\+P\+I\+\_\+\+P\+O\+L1\+\_\+\+P\+H\+A1\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a4441729b292511628cb1e9f102da9166}
+}]S\+P\+I mode Polarity 1 Phase 1 \index{S\+P\+I\+\_\+\+T\+I@{S\+P\+I\+\_\+\+T\+I}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+T\+I@{S\+P\+I\+\_\+\+T\+I}}\item[{\em 
+S\+P\+I\+\_\+\+T\+I\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489ac3cb11b3a833e28368e267161551eb1d}
+}]T\+I mode \index{S\+P\+I\+\_\+\+M\+W@{S\+P\+I\+\_\+\+M\+W}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+M\+W@{S\+P\+I\+\_\+\+M\+W}}\item[{\em 
+S\+P\+I\+\_\+\+M\+W\label{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489a34dc698e46fc5c1b2b1f0de19a44fdcb}
+}]Micro-\/wire mode \end{description}
+\end{Desc}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Transfer\+Mode@{S\+P\+I\+\_\+\+Transfer\+Mode}}
+\index{S\+P\+I\+\_\+\+Transfer\+Mode@{S\+P\+I\+\_\+\+Transfer\+Mode}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+P\+I\+\_\+\+Transfer\+Mode}}\label{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6f}
+
+
+S\+P\+I transfer mode determines the whether the S\+P\+I controller operates synchronously or asynchronously. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G} mode \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} blocks code execution until the S\+P\+I transaction has completed. In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K} \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block code execution and instead calls a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} callback function when the transaction has completed. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}
+}]\hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} blocks execution. This mode can only be used when called within a Task context \index{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}!S\+P\+I.\+h@{S\+P\+I.\+h}}\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}}\item[{\em 
+S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\label{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}
+}]\hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block code execution and will call a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn}. This mode can be used in a Task, Swi, or Hwi context. \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+close@{S\+P\+I\+\_\+close}}
+\index{S\+P\+I\+\_\+close@{S\+P\+I\+\_\+close}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_a0e3448b30b88609fa120915e49560601}
+
+
+Function to close a S\+P\+I peripheral specified by the S\+P\+I handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I handle returned from \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+control@{S\+P\+I\+\_\+control}}
+\index{S\+P\+I\+\_\+control@{S\+P\+I\+\_\+control}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int S\+P\+I\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_ab9d3a23991be2741f382749d3844cc2f}
+
+
+Function performs implementation specific features on a given S\+P\+I\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I handle returned from \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+init@{S\+P\+I\+\_\+init}}
+\index{S\+P\+I\+\_\+init@{S\+P\+I\+\_\+init}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}
+
+
+This function initializes the S\+P\+I module. 
+
+\begin{DoxyPrecond}{Precondition}
+The S\+P\+I\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other S\+P\+I driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+open@{S\+P\+I\+\_\+open}}
+\index{S\+P\+I\+\_\+open@{S\+P\+I\+\_\+open}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Handle} S\+P\+I\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf S\+P\+I\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}
+
+
+This function opens a given S\+P\+I peripheral. 
+
+\begin{DoxyPrecond}{Precondition}
+S\+P\+I controller has been initialized using \hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()}
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the S\+P\+I indexed into the S\+P\+I\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A S\+P\+I\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_afd9b09f58917f0e2d14c61b956eba214}{S\+P\+I\+\_\+init()} 
+
+\hyperlink{_s_p_i_8h_a0e3448b30b88609fa120915e49560601}{S\+P\+I\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+\+Params\+\_\+init@{S\+P\+I\+\_\+\+Params\+\_\+init}}
+\index{S\+P\+I\+\_\+\+Params\+\_\+init@{S\+P\+I\+\_\+\+Params\+\_\+init}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}
+
+
+Function to initialize the \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_s_p_i___params}{S\+P\+I\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: transfer\+Mode = S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G transfer\+Timeout = S\+P\+I\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R transfer\+Callback\+Fxn = N\+U\+L\+L mode = S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R bit\+Rate = 1000000 (Hz) data\+Size = 8 (bits) frame\+Format = S\+P\+I\+\_\+\+P\+O\+L0\+\_\+\+P\+H\+A0 \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+service\+I\+S\+R@{S\+P\+I\+\_\+service\+I\+S\+R}}
+\index{S\+P\+I\+\_\+service\+I\+S\+R@{S\+P\+I\+\_\+service\+I\+S\+R}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+service\+I\+S\+R}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+service\+I\+S\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_aa6f1baa732ebbf0aa7cd5c3f7dfd215a}
+
+
+Function to service the S\+P\+I module\textquotesingle{}s interrupt service routine. 
+
+Currently, this function is only supported with the drivers listed below.
+\begin{DoxyItemize}
+\item \hyperlink{_s_p_i_u_s_c_i_a_d_m_a_8h}{S\+P\+I\+U\+S\+C\+I\+A\+D\+M\+A.\+h}
+\item \hyperlink{_s_p_i_u_s_c_i_b_d_m_a_8h}{S\+P\+I\+U\+S\+C\+I\+B\+D\+M\+A.\+h}
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+transfer@{S\+P\+I\+\_\+transfer}}
+\index{S\+P\+I\+\_\+transfer@{S\+P\+I\+\_\+transfer}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+transfer}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+P\+I\+\_\+transfer (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Handle}}]{handle, }
+\item[{{\bf S\+P\+I\+\_\+\+Transaction} $\ast$}]{transaction}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}
+
+
+Function to perform S\+P\+I transactions. 
+
+If the S\+P\+I is in \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942a84379dc90398ca075038c8d5ee465f6a}{S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R} mode, it will immediately start the transaction. If the S\+P\+I is in \hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942abc98c1546fe12d3fceb1f86cf670faa9}{S\+P\+I\+\_\+\+S\+L\+A\+V\+E} mode, it prepares itself for a transaction with a S\+P\+I master.
+
+In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, S\+P\+I\+\_\+transfer will block task execution until the transaction has completed.
+
+In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}, \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()} does not block task execution and calls a \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn}. This makes the S\+P\+I\+\_\+tranfer() safe to be used within a Task, Swi, or Hwi context. The \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} structure must stay persistent until the S\+P\+I\+\_\+transfer function has completed!
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I\+\_\+\+Handle\\
+\hline
+{\em transaction} & A pointer to a \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction}. All of the fields within transaction except \hyperlink{struct_s_p_i___transaction_ad049d6a900c4bdb59a5ee8ce3d5bced2}{S\+P\+I\+\_\+\+Transaction.\+count} and \hyperlink{struct_s_p_i___transaction_aa244504b2384411f7de17340be62128a}{S\+P\+I\+\_\+\+Transaction.\+status} are W\+O (write-\/only) unless otherwise noted in the driver implementations. If a transaction timeout has occured, \hyperlink{struct_s_p_i___transaction_ad049d6a900c4bdb59a5ee8ce3d5bced2}{S\+P\+I\+\_\+\+Transaction.\+count} will contain the number of frames that were transferred.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if started successfully; else false
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open} 
+
+\hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel} 
+\end{DoxySeeAlso}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+transfer\+Cancel@{S\+P\+I\+\_\+transfer\+Cancel}}
+\index{S\+P\+I\+\_\+transfer\+Cancel@{S\+P\+I\+\_\+transfer\+Cancel}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\paragraph[{S\+P\+I\+\_\+transfer\+Cancel}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+transfer\+Cancel (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+P\+I\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}
+
+
+Function to cancel S\+P\+I transactions. 
+
+In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa0dfb2358e008316426895e7237c398e8}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, S\+P\+I\+\_\+transfer\+Cancel has no effect.
+
+In \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}, \hyperlink{_s_p_i_8h_a6819f7761fc3505c4f885653ff8121f0}{S\+P\+I\+\_\+transfer\+Cancel()} will stop an S\+P\+I transfer if if one is in progress. If a transaction was in progress, its callback function will be called in context from which this A\+P\+I is called from. The \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} function can determine if the transaction was successful or not by reading the \hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}{S\+P\+I\+\_\+\+Status} status value in the \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} structure.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+P\+I\+\_\+\+Handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open} 
+
+\hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer} 
+\end{DoxySeeAlso}

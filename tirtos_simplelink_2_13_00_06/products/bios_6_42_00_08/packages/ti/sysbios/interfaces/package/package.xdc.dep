@@ -1,0 +1,102 @@
+clean::
+	$(RM) package/ti.sysbios.interfaces.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_interfaces.java
+	$(RM) package/ti_sysbios_interfaces.class
+	$(RM) package/package_ti.sysbios.interfaces.c
+	$(RM) package/package.defs.h
+	$(RM) ICore.h
+	$(RM) IHwi.h
+	$(RM) ITaskSupport.h
+	$(RM) ITimer.h
+	$(RM) ITimerSupport.h
+	$(RM) ITimestamp.h
+	$(RM) IIntrinsicsSupport.h
+	$(RM) ICache.h
+	$(RM) IPower.h
+	$(RM) IRomDevice.h
+	$(RM) ISeconds.h
+	$(RM) package/ti.sysbios.interfaces.ccs
+
+.interfaces: package/ti.sysbios.interfaces.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_interfaces.java package/package_ti.sysbios.interfaces.c package/package.defs.h ICore.h IHwi.h ITaskSupport.h ITimer.h ITimerSupport.h ITimestamp.h IIntrinsicsSupport.h ICache.h IPower.h IRomDevice.h ISeconds.h package/ti.sysbios.interfaces.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: ICore.xdc IHwi.xdc ITaskSupport.xdc ITimer.xdc ITimerSupport.xdc ITimestamp.xdc IIntrinsicsSupport.xdc ICache.xdc ISettings.xdc IPower.xdc IRomDevice.xdc ISeconds.xdc 
+
+# schema include file dependencies
+
+# schema update dependencies
+package/package.xdc.inc: ICore.xdc
+package/package.xdc.inc: IHwi.xdc
+package/package.xdc.inc: ITaskSupport.xdc
+package/package.xdc.inc: ITimer.xdc
+package/package.xdc.inc: ITimerSupport.xdc
+package/package.xdc.inc: ITimestamp.xdc
+package/package.xdc.inc: IIntrinsicsSupport.xdc
+package/package.xdc.inc: ICache.xdc
+package/package.xdc.inc: ISettings.xdc
+package/package.xdc.inc: IPower.xdc
+package/package.xdc.inc: IRomDevice.xdc
+package/package.xdc.inc: ISeconds.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampProvider.xdc
+xdc/runtime/ITimestampProvider.xdc:
+vpath xdc/runtime/ITimestampProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampClient.xdc
+xdc/runtime/ITimestampClient.xdc:
+vpath xdc/runtime/ITimestampClient.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: ICore.h
+ICore.h:
+package/package.xdc.inc: IHwi.h
+IHwi.h:
+package/package.xdc.inc: ITaskSupport.h
+ITaskSupport.h:
+package/package.xdc.inc: ITimer.h
+ITimer.h:
+package/package.xdc.inc: ITimerSupport.h
+ITimerSupport.h:
+package/package.xdc.inc: ITimestamp.h
+ITimestamp.h:
+package/package.xdc.inc: IIntrinsicsSupport.h
+IIntrinsicsSupport.h:
+package/package.xdc.inc: ICache.h
+ICache.h:
+package/package.xdc.inc: IPower.h
+IPower.h:
+package/package.xdc.inc: IRomDevice.h
+IRomDevice.h:
+package/package.xdc.inc: ISeconds.h
+ISeconds.h:
+

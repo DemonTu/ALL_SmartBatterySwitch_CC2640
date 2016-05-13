@@ -1,0 +1,50 @@
+\subsection{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_w_m_timer_tiva___h_w_attrs}\index{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs}}
+
+
+P\+W\+M\+Timer\+C\+C3200 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Timer\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_tiva___h_w_attrs_a1514de8d9b83a66fbed22b8427d20655}{base\+Addr}
+\item 
+uint16\+\_\+t \hyperlink{struct_p_w_m_timer_tiva___h_w_attrs_aa14d05c47183c46a7314da656125bbc9}{timer}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Timer\+C\+C3200 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item driverlib/timer.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PWMTimerTiva_HWAttrs PWMTimerTivaHWAttrs[] = \{
+    \{TIMERA3\_BASE, TIMER\_A\},
+    \{TIMERA3\_BASE, TIMER\_B\},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_p_w_m_timer_tiva___h_w_attrs_a1514de8d9b83a66fbed22b8427d20655}
+Timer peripheral base address \index{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs}!timer@{timer}}
+\index{timer@{timer}!P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{timer}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+W\+M\+Timer\+Tiva\+\_\+\+H\+W\+Attrs\+::timer}\label{struct_p_w_m_timer_tiva___h_w_attrs_aa14d05c47183c46a7314da656125bbc9}
+Half-\/timers to generate outputs 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_timer_tiva_8h}{P\+W\+M\+Timer\+Tiva.\+h}\end{DoxyCompactItemize}

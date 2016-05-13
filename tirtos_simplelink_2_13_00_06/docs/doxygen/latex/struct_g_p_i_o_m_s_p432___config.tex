@@ -1,0 +1,52 @@
+\subsection{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config Struct Reference}
+\label{struct_g_p_i_o_m_s_p432___config}\index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+
+
+G\+P\+I\+O device specific driver configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+I\+O\+M\+S\+P432.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}{G\+P\+I\+O\+\_\+\+Pin\+Config} $\ast$ \hyperlink{struct_g_p_i_o_m_s_p432___config_ad61e701f1cb3830a20815378bfeb3f9e}{pin\+Configs}
+\item 
+\hyperlink{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}{G\+P\+I\+O\+\_\+\+Callback\+Fxn} $\ast$ \hyperlink{struct_g_p_i_o_m_s_p432___config_afbe064dac3400a1a2611af3ed82a7861}{callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_m_s_p432___config_a54ddb71ce4159e6ac861d2b55145da3f}{number\+Of\+Pin\+Configs}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_m_s_p432___config_adf1fcd7f8dc5c1b82699519f46ebe85d}{number\+Of\+Callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_m_s_p432___config_a6cfc0b5cac2a793b7c2ff64b05ff0994}{int\+Priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+I\+O device specific driver configuration structure. 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}!pin\+Configs@{pin\+Configs}}
+\index{pin\+Configs@{pin\+Configs}!G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+\paragraph[{pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Pin\+Config}$\ast$ G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config\+::pin\+Configs}\label{struct_g_p_i_o_m_s_p432___config_ad61e701f1cb3830a20815378bfeb3f9e}
+Pointer to the board\textquotesingle{}s G\+P\+I\+O\+\_\+\+Pin\+Config array \index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}!callbacks@{callbacks}}
+\index{callbacks@{callbacks}!G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+\paragraph[{callbacks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Callback\+Fxn}$\ast$ G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config\+::callbacks}\label{struct_g_p_i_o_m_s_p432___config_afbe064dac3400a1a2611af3ed82a7861}
+Pointer to the board\textquotesingle{}s G\+P\+I\+O\+\_\+\+Callback\+Fxn array \index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}!number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}}
+\index{number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}!G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+\paragraph[{number\+Of\+Pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config\+::number\+Of\+Pin\+Configs}\label{struct_g_p_i_o_m_s_p432___config_a54ddb71ce4159e6ac861d2b55145da3f}
+number of G\+P\+I\+O\+\_\+\+Pin\+Configs defined \index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}!number\+Of\+Callbacks@{number\+Of\+Callbacks}}
+\index{number\+Of\+Callbacks@{number\+Of\+Callbacks}!G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+\paragraph[{number\+Of\+Callbacks}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config\+::number\+Of\+Callbacks}\label{struct_g_p_i_o_m_s_p432___config_adf1fcd7f8dc5c1b82699519f46ebe85d}
+number of G\+P\+I\+O\+\_\+\+Callbacks defined \index{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config@{G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+M\+S\+P432\+\_\+\+Config\+::int\+Priority}\label{struct_g_p_i_o_m_s_p432___config_a6cfc0b5cac2a793b7c2ff64b05ff0994}
+interrupt priority used for call back interrupts
+
+a setting of $\sim$0 will configure the lowest possible priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_m_s_p432_8h}{G\+P\+I\+O\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

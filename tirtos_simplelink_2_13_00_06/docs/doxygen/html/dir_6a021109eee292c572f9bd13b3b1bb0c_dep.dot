@@ -1,0 +1,11 @@
+digraph "camera" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_91d6028ef0aa1035242bfefa07cd806e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="drivers" fontname="Helvetica", fontsize="10", URL="dir_91d6028ef0aa1035242bfefa07cd806e.html"]
+  dir_6a021109eee292c572f9bd13b3b1bb0c [shape=box, label="camera", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6a021109eee292c572f9bd13b3b1bb0c.html"];
+  }
+  dir_48feca565b02475938ec5531d6e9635b [shape=box label="ports" URL="dir_48feca565b02475938ec5531d6e9635b.html"];
+  dir_6a021109eee292c572f9bd13b3b1bb0c->dir_48feca565b02475938ec5531d6e9635b [headlabel="2", labeldistance=1.5 headhref="dir_000004_000005.html"];
+}

@@ -1,0 +1,58 @@
+\subsection{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_crypto_c_c26_x_x___h_w_attrs}\index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+Crypto\+C\+C26\+X\+X Hardware Attributes.  
+
+
+
+
+{\ttfamily \#include $<$Crypto\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_a8a6e2dbc65c24f641941ebe3c854e961}{base\+Addr}
+\item 
+int \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_a63cdd84637d1e9acca0315cd96d9891b}{int\+Num}
+\item 
+int \hyperlink{struct_crypto_c_c26_x_x___h_w_attrs_ac5c27633092355d3606d6d0b240b2091}{power\+Mngr\+Id}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Crypto\+C\+C26\+X\+X Hardware Attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26\+X\+X\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} CryptoCC26XX_HWAttrs cryptoCC26XXHWAttrs[] = \{
+    \{
+        CRYPTO\_BASE,
+        INT\_CRYPTO,
+        PERIPH\_CRYPTO
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_crypto_c_c26_x_x___h_w_attrs_a8a6e2dbc65c24f641941ebe3c854e961}
+Crypto Peripheral\textquotesingle{}s base address \index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_crypto_c_c26_x_x___h_w_attrs_a63cdd84637d1e9acca0315cd96d9891b}
+Crypto Peripheral\textquotesingle{}s interrupt vector \index{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}int Crypto\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_crypto_c_c26_x_x___h_w_attrs_ac5c27633092355d3606d6d0b240b2091}
+Crypto Peripheral\textquotesingle{}s power manager I\+D 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h}{Crypto\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

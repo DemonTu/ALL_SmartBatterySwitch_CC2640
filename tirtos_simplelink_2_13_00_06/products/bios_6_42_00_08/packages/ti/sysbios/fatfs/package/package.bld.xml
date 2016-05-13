@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.sysbios.fatfs" version="1, 0, 0" producerId="undefined">
+    <units>
+        <module name="FatFS"/>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="ff.c"/>
+        <srcFile name="diskio.c"/>
+        <srcFile name="ramdisk.c"/>
+        <srcFile name="syncsysbios.c"/>
+        <srcFile name="memsysbios.c"/>
+        <srcFile name="ffcio.c"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.oem3.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.oem3.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.oem3.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.oem3.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.oem3.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.oem3.dep" src="memsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ffcio.oem3.dep" src="ffcio.c"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.aem4.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.oem4.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.oem4.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.oem4.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.oem4.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.oem4.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.oem4.dep" src="memsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ffcio.oem4.dep" src="ffcio.c"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.om3g.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.om3g.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.om3g.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.om3g.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.om3g.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.om3g.dep" src="memsysbios.c"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.am4g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.om4g.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.om4g.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.om4g.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.om4g.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.om4g.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.om4g.dep" src="memsysbios.c"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.arm3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.orm3.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.orm3.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.orm3.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.orm3.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.orm3.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.orm3.dep" src="memsysbios.c"/>
+        <srcFile name="lib/release/ti.sysbios.fatfs.arm4.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/package/package_ti.sysbios.fatfs.orm4.dep" src="package/package_ti.sysbios.fatfs.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ff.orm4.dep" src="ff.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/diskio.orm4.dep" src="diskio.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/ramdisk.orm4.dep" src="ramdisk.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/syncsysbios.orm4.dep" src="syncsysbios.c"/>
+        <srcFile name="package/lib/lib/release/ti.sysbios.fatfs/memsysbios.orm4.dep" src="memsysbios.c"/>
+        <srcFile name="package/rel/ti_sysbios_fatfs.tar.dep" src="package/rel/ti_sysbios_fatfs.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M3"
+            version="ti.targets.arm.elf.M3{1,0,5.2,2"
+            rawVersion="5.2.2"
+            platform="ti.platforms.simCM3"
+            isa="v7M"
+            suffix="em3"
+            rootDir="/db/vendors/ti/arm/5.2.2/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.arm.elf.M4"
+            version="ti.targets.arm.elf.M4{1,0,5.2,2"
+            rawVersion="5.2.2"
+            platform="ti.platforms.stellaris:LM4FSXLH5BB:1"
+            isa="v7M4"
+            suffix="em4"
+            rootDir="/db/vendors/ti/arm/5.2.2/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M3"
+            version="gnu.targets.arm.M3{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:LM3S9B90"
+            isa="v7M"
+            suffix="m3g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M4"
+            version="gnu.targets.arm.M4{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:LM4F232H5QD"
+            isa="v7M4"
+            suffix="m4g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M3"
+            version="iar.targets.arm.M3{1,0,7.40,2"
+            rawVersion="7.40.2.18"
+            platform="ti.platforms.tiva:LM3S9B92:1"
+            isa="v7M"
+            suffix="rm3"
+            rootDir="/db/vendors/iar/arm/7.40.1a/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M4"
+            version="iar.targets.arm.M4{1,0,7.40,2"
+            rawVersion="7.40.2.18"
+            platform="ti.platforms.tiva:LM4F120H5QR:1"
+            isa="v7M4"
+            suffix="rm4"
+            rootDir="/db/vendors/iar/arm/7.40.1a/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.aem3"
+        profile="release"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.aem4"
+        profile="release"
+        target="ti.targets.arm.elf.M4"/>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.am3g"
+        profile="release"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.am4g"
+        profile="release"
+        target="gnu.targets.arm.M4"/>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.arm3"
+        profile="release"
+        target="iar.targets.arm.M3"/>
+    <library name="lib/release/ti.sysbios.fatfs"
+        pname="lib/release/ti.sysbios.fatfs.arm4"
+        profile="release"
+        target="iar.targets.arm.M4"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_sysbios_fatfs"
+        pname="ti_sysbios_fatfs.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xdc"/>
+        <file name="package.bld"/>
+        <file name="package.xs"/>
+        <file name="FatFS.xdc"/>
+        <file name="FatFS.xdt"/>
+        <file name="FatFS.xml"/>
+        <file name="Welcome.html"/>
+        <file name="ff.c"/>
+        <file name="diskio.c"/>
+        <file name="syncsysbios.c"/>
+        <file name="ffcio.c"/>
+        <file name="memsysbios.c"/>
+        <file name="ramdisk.c"/>
+        <file name="diskio.h"/>
+        <file name="ffconf.h"/>
+        <file name="ff.h"/>
+        <file name="ffcio.h"/>
+        <file name="integer.h"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/release/ti.sysbios.fatfs.aem3"/>
+        <file name="package/package_ti.sysbios.fatfs.c"/>
+        <file name="lib/release/ti.sysbios.fatfs.aem4"/>
+        <file name="lib/release/ti.sysbios.fatfs.am3g"/>
+        <file name="lib/release/ti.sysbios.fatfs.am4g"/>
+        <file name="lib/release/ti.sysbios.fatfs.arm3"/>
+        <file name="lib/release/ti.sysbios.fatfs.arm4"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

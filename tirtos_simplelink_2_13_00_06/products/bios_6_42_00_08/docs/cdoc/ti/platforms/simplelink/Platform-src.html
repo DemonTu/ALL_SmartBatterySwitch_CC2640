@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.platforms.simplelink.Platform</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> *  Copyright (c) 2015 by Texas Instruments and others.
+</span>     3    <span class="comment"> *  All rights reserved. This program and the accompanying materials
+</span>     4    <span class="comment"> *  are made available under the terms of the Eclipse Public License v1.0
+</span>     5    <span class="comment"> *  which accompanies this distribution, and is available at
+</span>     6    <span class="comment"> *  http://www.eclipse.org/legal/epl-v10.html
+</span>     7    <span class="comment"> *
+</span>     8    <span class="comment"> *  Contributors:
+</span>     9    <span class="comment"> *      Texas Instruments - initial implementation
+</span>    10    <span class="comment"> *
+</span>    11    <span class="comment"> * */</span>
+    12    
+    13    <span class="comment">/*
+</span>    14    <span class="comment"> *  ======== Platform.xdc ========
+</span>    15    <span class="comment"> */</span>
+    16    <span class=key>package</span> ti.platforms.simplelink;
+    17    
+    18    <span class="xdoc">/*!
+</span>    19    <span class="xdoc"> *  ======== Platform ========
+</span>    20    <span class="xdoc"> *  A generic platform that supports any CC13xx, CC26xx, or CC32xx device
+</span>    21    <span class="xdoc"> *
+</span>    22    <span class="xdoc"> *  The device to be used by this platform is passed as the platform instance
+</span>    23    <span class="xdoc"> *  name. On the `xdc.tools.configuro` command line, it is done in the
+</span>    24    <span class="xdoc"> *  following way:
+</span>    25    <span class="xdoc"> *  <b>@p(code)</b>
+</span>    26    <span class="xdoc"> *  xs xdc.tools.configuro ... -p "ti.platforms.simplelink:CC3200"
+</span>    27    <span class="xdoc"> *  <b>@p</b>
+</span>    28    <span class="xdoc"> *
+</span>    29    <span class="xdoc"> *  In package.bld, the platform instance is selected as in:
+</span>    30    <span class="xdoc"> *  <b>@p(code)</b>
+</span>    31    <span class="xdoc"> *  Pkg.addExecutable("test", target, "ti.platforms.simplelink:CC3200");
+</span>    32    <span class="xdoc"> *  <b>@p</b>
+</span>    33    <span class="xdoc"> */</span>
+    34    @Template (<span class="string">"./Platform.xdt"</span>)
+    35    <span class=key>metaonly</span> <span class=key>module</span> Platform <span class=key>inherits</span> xdc.platform.IPlatform
+    36    {
+    37        <span class=key>config</span> xdc.platform.IPlatform.Board BOARD = {
+    38            id:             <span class="string">"0"</span>,
+    39            boardName:      <span class="string">"simplelink"</span>,
+    40            boardFamily:    <span class=key>null</span>,
+    41            boardRevision:  <span class=key>null</span>
+    42        };
+    43    
+    44        <span class="xdoc">/*!
+</span>    45    <span class="xdoc">     *  ======== nameFormat ========
+</span>    46    <span class="xdoc">     *  Encoding of instance creation parameters in the instance's name
+</span>    47    <span class="xdoc">     *
+</span>    48    <span class="xdoc">     *  For this platform, the parameters `deviceName`, `includeLinkCmdFile`
+</span>    49    <span class="xdoc">     *  and `clockRate` can be encoded in the instance name supplied on
+</span>    50    <span class="xdoc">     *  `xdc.tools.configuro` command line, for example:
+</span>    51    <span class="xdoc">     *  <b>@p(code)</b>
+</span>    52    <span class="xdoc">     *      xs xdc.tools.configuro ... -p ti.platforms.simplelink:CC3200:1:20
+</span>    53    <span class="xdoc">     *  <b>@p</b>
+</span>    54    <span class="xdoc">     *  Optional parameters can be omitted:
+</span>    55    <span class="xdoc">     *  <b>@p(code)</b>
+</span>    56    <span class="xdoc">     *      xs xdc.tools.configuro ... -p ti.platforms.simplelink:CC3200
+</span>    57    <span class="xdoc">     *  <b>@p</b>
+</span>    58    <span class="xdoc">     */</span>
+    59         <span class=key>readonly</span> <span class=key>config</span> string nameFormat
+    60             = <span class="string">"$(deviceName):$(includeLinkCmdFile):$(clockRate)"</span>;
+    61    
+    62        <span class="xdoc">/*!
+</span>    63    <span class="xdoc">     *  ======== useGnuRomLinkCmd ========
+</span>    64    <span class="xdoc">     *  Use ROM compatible linker script when building using GNU tools
+</span>    65    <span class="xdoc">     *
+</span>    66    <span class="xdoc">     *  If this config param is set to true and "includeLinkCmdFile" is true,
+</span>    67    <span class="xdoc">     *  the ROM compatible linker script will be used. The ROM compatible
+</span>    68    <span class="xdoc">     *  linker script is required when building a ROM based application.
+</span>    69    <span class="xdoc">     */</span>
+    70         <span class=key>config</span> Bool useGnuRomLinkCmd = <span class=key>false</span>;
+    71    
+    72    <span class=key>instance</span>:
+    73    
+    74        <span class="comment">/*
+</span>    75    <span class="comment">     *  This platform supports either Cortex M3 or M4 cores.
+</span>    76    <span class="comment">     *  The corresponding "actual" catalogName is overwritten
+</span>    77    <span class="comment">     *  in Platform.instance$meta$init() based on the device name
+</span>    78    <span class="comment">     */</span>
+    79    
+    80        <span class=key>config</span> xdc.platform.IExeContext.Cpu CPU = {
+    81            id:             <span class="string">"0"</span>,
+    82            clockRate:      80.0,
+    83            catalogName:    <span class="string">"ti.catalog.arm.cortexm4"</span>,
+    84            deviceName:     <span class="string">"CC32xx"</span>,
+    85            revision:       <span class="string">""</span>,
+    86        };
+    87    
+    88        <span class="xdoc">/*!
+</span>    89    <span class="xdoc">     *  ======== deviceName ========
+</span>    90    <span class="xdoc">     *  The name of an `ICpuDataSheet` module for the device
+</span>    91    <span class="xdoc">     *
+</span>    92    <span class="xdoc">     *  This parameter is required, but it does not have to be set explicitly;
+</span>    93    <span class="xdoc">     *  it can be encoded in the instance's name.
+</span>    94    <span class="xdoc">     */</span>
+    95        <span class=key>config</span> string deviceName;
+    96    
+    97        <span class="xdoc">/*!
+</span>    98    <span class="xdoc">     *  ======== clockRate ========
+</span>    99    <span class="xdoc">     *  The clock rate for this device.
+</span>   100    <span class="xdoc">     */</span>
+   101        <span class=key>config</span> Double clockRate;
+   102    
+   103        <span class=key>override</span> <span class=key>config</span> string codeMemory = <span class=key>null</span>;
+   104    
+   105        <span class=key>override</span> <span class=key>config</span> string dataMemory = <span class=key>null</span>;
+   106    
+   107        <span class=key>override</span> <span class=key>config</span> string stackMemory = <span class=key>null</span>;
+   108    
+   109        <span class="xdoc">/*!
+</span>   110    <span class="xdoc">     *  ======== includeLinkCmdFile ========
+</span>   111    <span class="xdoc">     *  The flag that specifies if the platform should include a linker command
+</span>   112    <span class="xdoc">     *  file.
+</span>   113    <span class="xdoc">     *
+</span>   114    <span class="xdoc">     *  By default, a user is responsible for adding a linker command file to
+</span>   115    <span class="xdoc">     *  the project, or to the linker command line. However, if this flag is
+</span>   116    <span class="xdoc">     *  set, this platform will include a default linker command file for the
+</span>   117    <span class="xdoc">     *  selected device.
+</span>   118    <span class="xdoc">     */</span>
+   119        <span class=key>config</span> Bool includeLinkCmdFile = <span class=key>false</span>;
+   120    };
+   121    <span class="comment">/*
+</span>   122    <span class="comment"> *  @(#) ti.platforms.simplelink; 1, 0, 0,; 4-24-2015 20:40:51; /db/ztree/library/trees/platform/platform-p07/src/
+</span>   123    <span class="comment"> */</span>
+   124    
+</pre>
+</body></html>

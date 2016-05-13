@@ -1,0 +1,42 @@
+\subsection{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction Struct Reference}
+\label{struct_crypto_c_c26_x_x___transaction}\index{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}
+
+
+Crypto\+C\+C26\+X\+X Transaction.  
+
+
+
+
+{\ttfamily \#include $<$Crypto\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation} \hyperlink{struct_crypto_c_c26_x_x___transaction_a40fe1424c6534f76622ff56ed4f2ab42}{op\+Type}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cd}{Crypto\+C\+C26\+X\+X\+\_\+\+Mode} \hyperlink{struct_crypto_c_c26_x_x___transaction_afe088678af719e3dc46c3196334b9398}{mode}
+\item 
+uint8\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___transaction_a3eb99656cb17d1c68fc28d42b5b392dd}{data} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Crypto\+C\+C26\+X\+X Transaction. 
+
+This structure defines the nature of a general crypto transaction. An operation specific object, e.\+g. \hyperlink{struct_crypto_c_c26_x_x___a_e_s_c_c_m___transaction}{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+C\+C\+M\+\_\+\+Transaction}, must be used by the clients. All transaction must be typecasted to this common type when calling the transact functions. The first data of all transactions must hold a type field indicating which type of transaction to be performed. 
+
+\subsubsection{Field Documentation}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}!op\+Type@{op\+Type}}
+\index{op\+Type@{op\+Type}!Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}
+\paragraph[{op\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Operation} Crypto\+C\+C26\+X\+X\+\_\+\+Transaction\+::op\+Type}\label{struct_crypto_c_c26_x_x___transaction_a40fe1424c6534f76622ff56ed4f2ab42}
+The type of the crypto operation \index{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}!mode@{mode}}
+\index{mode@{mode}!Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Mode} Crypto\+C\+C26\+X\+X\+\_\+\+Transaction\+::mode}\label{struct_crypto_c_c26_x_x___transaction_afe088678af719e3dc46c3196334b9398}
+The mode of current transaction \index{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}!data@{data}}
+\index{data@{data}!Crypto\+C\+C26\+X\+X\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+Transaction}}
+\paragraph[{data}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+Transaction\+::data\mbox{[}$\,$\mbox{]}}\label{struct_crypto_c_c26_x_x___transaction_a3eb99656cb17d1c68fc28d42b5b392dd}
+A void pointer to rest of transaction (transac. specific) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h}{Crypto\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

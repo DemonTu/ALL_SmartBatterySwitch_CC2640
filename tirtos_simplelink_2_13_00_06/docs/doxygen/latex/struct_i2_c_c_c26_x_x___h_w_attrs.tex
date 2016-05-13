@@ -1,0 +1,70 @@
+\subsection{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_c_c_c26_x_x___h_w_attrs}\index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+C\+C\+C26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h_a6e087d828c4463de0061d8205b2245d8}{I2\+C\+Base\+Addr\+Type} \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_a45cbf1a9044afdd06f0aa82319c977ef}{base\+Addr}
+\item 
+int \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_a429ce62b1e66221f0b702729cd1ac20e}{int\+Num}
+\item 
+unsigned long \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_aac2a311e3ef7b95a85b648026ac60780}{power\+Mngr\+Id}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_a011bf667fa99fa23a5609d74cb729cb7}{sda\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs_a05531669bc614278c181e2720499f1b6}{scl\+Pin}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+C\+C26\+X\+X Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For cc26xxware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CCC26XX_HWAttrs i2cCC26XXHWAttrs[] = \{
+    \{
+       .baseAddr = I2C0\_BASE,
+       .intNum = INT\_I2C,
+       .powerMngrId = PERIPH\_I2C0,
+       .sdaPin = Board\_I2C\_SDA,
+       .sclPin = Board\_I2C\_SCL,
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+Base\+Addr\+Type} I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_c_c_c26_x_x___h_w_attrs_a45cbf1a9044afdd06f0aa82319c977ef}
+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_i2_c_c_c26_x_x___h_w_attrs_a429ce62b1e66221f0b702729cd1ac20e}
+I2\+C Peripheral\textquotesingle{}s interrupt vector \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_i2_c_c_c26_x_x___h_w_attrs_aac2a311e3ef7b95a85b648026ac60780}
+I2\+C Peripheral\textquotesingle{}s power manager I\+D \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!sda\+Pin@{sda\+Pin}}
+\index{sda\+Pin@{sda\+Pin}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{sda\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::sda\+Pin}\label{struct_i2_c_c_c26_x_x___h_w_attrs_a011bf667fa99fa23a5609d74cb729cb7}
+I2\+C S\+D\+A pin mapping \index{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!scl\+Pin@{scl\+Pin}}
+\index{scl\+Pin@{scl\+Pin}!I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{scl\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::scl\+Pin}\label{struct_i2_c_c_c26_x_x___h_w_attrs_a05531669bc614278c181e2720499f1b6}
+I2\+C S\+C\+L pin mapping 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h}{I2\+C\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

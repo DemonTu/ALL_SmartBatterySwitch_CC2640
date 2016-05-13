@@ -1,0 +1,16 @@
+README
+addFiles.sh
+file1.txt
+file2.txt
+package.bld
+package.xdc
+package/package.bld.xml
+package/build.cfg
+package/package.xdc.inc
+README
+addFiles.sh
+file1.txt
+file2.txt
+package.bld
+package.xdc
+package/package.cfg.xdc.inc

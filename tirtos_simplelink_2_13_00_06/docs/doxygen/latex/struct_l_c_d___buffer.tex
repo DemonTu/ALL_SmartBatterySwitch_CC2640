@@ -1,0 +1,49 @@
+\subsection{L\+C\+D\+\_\+\+Buffer Struct Reference}
+\label{struct_l_c_d___buffer}\index{L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}}
+
+
+\hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} used to store data to be printed on the L\+C\+D display.  
+
+
+
+
+{\ttfamily \#include $<$L\+C\+D\+Dogm1286.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_l_c_d___buffer_af0f290cdf7fc2b94ebe0a918cc736982}{pc\+Buffer}
+\item 
+unsigned int \hyperlink{struct_l_c_d___buffer_a77c4adb59142a732371a552558161ebf}{buf\+Size}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_l_c_d___buffer_a48816704d8fb2c059d0c4c2ce3234cd7}{buf\+Mutex}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\hyperlink{struct_l_c_d___buffer}{L\+C\+D\+\_\+\+Buffer} used to store data to be printed on the L\+C\+D display. 
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+LCD_Buffer lcdBuffers[] = \{
+    \{lcdBuffer0, LCD_BYTES, NULL\},
+    \{lcdBuffer1, LCD_BYTES, NULL\},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}!pc\+Buffer@{pc\+Buffer}}
+\index{pc\+Buffer@{pc\+Buffer}!L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}}
+\paragraph[{pc\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ L\+C\+D\+\_\+\+Buffer\+::pc\+Buffer}\label{struct_l_c_d___buffer_af0f290cdf7fc2b94ebe0a918cc736982}
+Ptr to a buffer with data to be transmitted \index{L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}!buf\+Size@{buf\+Size}}
+\index{buf\+Size@{buf\+Size}!L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}}
+\paragraph[{buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int L\+C\+D\+\_\+\+Buffer\+::buf\+Size}\label{struct_l_c_d___buffer_a77c4adb59142a732371a552558161ebf}
+Size of the buffer \index{L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}!buf\+Mutex@{buf\+Mutex}}
+\index{buf\+Mutex@{buf\+Mutex}!L\+C\+D\+\_\+\+Buffer@{L\+C\+D\+\_\+\+Buffer}}
+\paragraph[{buf\+Mutex}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct L\+C\+D\+\_\+\+Buffer\+::buf\+Mutex}\label{struct_l_c_d___buffer_a48816704d8fb2c059d0c4c2ce3234cd7}
+Semaphore associated with the buffer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_l_c_d_dogm1286_8h}{L\+C\+D\+Dogm1286.\+h}\end{DoxyCompactItemize}

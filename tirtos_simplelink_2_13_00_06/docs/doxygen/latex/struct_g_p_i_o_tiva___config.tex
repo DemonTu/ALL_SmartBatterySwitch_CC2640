@@ -1,0 +1,50 @@
+\subsection{G\+P\+I\+O\+Tiva\+\_\+\+Config Struct Reference}
+\label{struct_g_p_i_o_tiva___config}\index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+
+
+G\+P\+I\+O device specific driver configuration structure.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+I\+O\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}{G\+P\+I\+O\+\_\+\+Pin\+Config} $\ast$ \hyperlink{struct_g_p_i_o_tiva___config_ad6ae62f641912a5e19278241550cede5}{pin\+Configs}
+\item 
+\hyperlink{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}{G\+P\+I\+O\+\_\+\+Callback\+Fxn} $\ast$ \hyperlink{struct_g_p_i_o_tiva___config_ad6dbaf80b33e7d6d2284bee7c4de6fc1}{callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_tiva___config_ab5a7de155e3541998a41e2bd3099be78}{number\+Of\+Pin\+Configs}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_tiva___config_aea570ca02796368da46e0b8607851fd9}{number\+Of\+Callbacks}
+\item 
+uint32\+\_\+t \hyperlink{struct_g_p_i_o_tiva___config_af447c2e65c010edf1653477d27c71476}{int\+Priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+G\+P\+I\+O device specific driver configuration structure. 
+
+\subsubsection{Field Documentation}
+\index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}!pin\+Configs@{pin\+Configs}}
+\index{pin\+Configs@{pin\+Configs}!G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+\paragraph[{pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Pin\+Config}$\ast$ G\+P\+I\+O\+Tiva\+\_\+\+Config\+::pin\+Configs}\label{struct_g_p_i_o_tiva___config_ad6ae62f641912a5e19278241550cede5}
+Pointer to the board\textquotesingle{}s Pin\+Config array \index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}!callbacks@{callbacks}}
+\index{callbacks@{callbacks}!G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+\paragraph[{callbacks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+P\+I\+O\+\_\+\+Callback\+Fxn}$\ast$ G\+P\+I\+O\+Tiva\+\_\+\+Config\+::callbacks}\label{struct_g_p_i_o_tiva___config_ad6dbaf80b33e7d6d2284bee7c4de6fc1}
+Pointer to the board\textquotesingle{}s callback array \index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}!number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}}
+\index{number\+Of\+Pin\+Configs@{number\+Of\+Pin\+Configs}!G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+\paragraph[{number\+Of\+Pin\+Configs}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+Tiva\+\_\+\+Config\+::number\+Of\+Pin\+Configs}\label{struct_g_p_i_o_tiva___config_ab5a7de155e3541998a41e2bd3099be78}
+Number of pin configs defined \index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}!number\+Of\+Callbacks@{number\+Of\+Callbacks}}
+\index{number\+Of\+Callbacks@{number\+Of\+Callbacks}!G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+\paragraph[{number\+Of\+Callbacks}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+Tiva\+\_\+\+Config\+::number\+Of\+Callbacks}\label{struct_g_p_i_o_tiva___config_aea570ca02796368da46e0b8607851fd9}
+Number of callbacks defined \index{G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!G\+P\+I\+O\+Tiva\+\_\+\+Config@{G\+P\+I\+O\+Tiva\+\_\+\+Config}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t G\+P\+I\+O\+Tiva\+\_\+\+Config\+::int\+Priority}\label{struct_g_p_i_o_tiva___config_af447c2e65c010edf1653477d27c71476}
+Interrupt priority used for call back interrupts. Setting $\sim$0 will configure the lowest possible priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_g_p_i_o_tiva_8h}{G\+P\+I\+O\+Tiva.\+h}\end{DoxyCompactItemize}

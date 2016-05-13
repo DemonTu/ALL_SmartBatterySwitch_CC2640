@@ -1,0 +1,591 @@
+\subsection{Power\+C\+C3200.\+h File Reference}
+\label{_power_c_c3200_8h}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+Power manager interface for the C\+C3200. 
+
+============================================================================
+
+The Power header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Power.h>}
+\textcolor{preprocessor}{#include <ti/drivers/power/PowerCC3200.h>}
+\end{DoxyCode}
+
+
+\paragraph*{Implementation}
+
+This module defines the power resources, constraints, events, sleep states and transition latency times for C\+C3200.
+
+A default power policy is provided which can transition the M\+C\+U from the active state to one of three sleep states (L\+P\+D\+S, Deep\+Sleep, or Sleep). The default policy looks at the amount of idle time remaining to determine which sleep state it can transition to. It first checks for a tranistion into L\+P\+D\+S. If it cannot transition into L\+P\+D\+S (e.\+g., not enough time, or a constraint has been set prohibiting L\+P\+D\+S), it next checks for a transition into Deep\+Sleep mode. If it cannot transition into Deep\+Sleep, then it goes into Sleep mode.
+
+The function \textquotesingle{}Power\+\_\+idle\+Func\textquotesingle{} needs to be added to the application\textquotesingle{}s idle loop.
+
+For a T\+I-\/\+R\+T\+O\+S application, the Clock module must be using the R\+T\+C timer. This timer can be selected using the following statements in the application configuration ($\ast$.cfg) file\+:
+
+
+\begin{DoxyCode}
+var Clock = xdc.useModule(\textcolor{stringliteral}{'ti.sysbios.knl.Clock'});
+Clock.TimerProxy = xdc.useModule(\textcolor{stringliteral}{"ti.sysbios.family.arm.cc32xx.Timer"});
+Clock.tickMode = Clock.TickMode\_DYNAMIC;
+
+var Idle = xdc.useModule(\textcolor{stringliteral}{'ti.sysbios.knl.Idle'});
+Idle.addFunc(\textcolor{stringliteral}{'&Power\_idleFunc'});
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+List\+P.\+h$>$}\\*
+{\ttfamily \#include $<$inc/hw\+\_\+types.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/pin.\+h$>$}\\*
+{\ttfamily \#include $<$driverlib/rom\+\_\+map.\+h$>$}\\*
+Include dependency graph for Power\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_power_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_power_c_c3200___config}{Power\+C\+C3200\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Power global configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_power_c_c3200___module_state}{Power\+C\+C3200\+\_\+\+Module\+State}
+\begin{DoxyCompactList}\small\item\em Internal module state. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_power_c_c3200___n_v_i_c_registers}{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}
+\begin{DoxyCompactList}\small\item\em N\+V\+I\+C registers that need to be save on entering L\+P\+D\+S. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_power_c_c3200___m_c_u_registers}{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}
+\begin{DoxyCompactList}\small\item\em M\+C\+U core registers that need to be save on entering L\+P\+D\+S. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_power_c_c3200___save_registers}{Power\+C\+C3200\+\_\+\+Save\+Registers}
+\begin{DoxyCompactList}\small\item\em struct of context registers to save on entering L\+P\+D\+S \end{DoxyCompactList}\item 
+struct \hyperlink{struct_power_c_c3200___wakeup}{Power\+C\+C3200\+\_\+\+Wakeup}
+\begin{DoxyCompactList}\small\item\em For wakeup from L\+P\+D\+S or shutdown configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_power_c_c3200_8h_af67fc285dc9efcca6002ce2b002f392c}{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}~500
+\item 
+\#define \hyperlink{_power_c_c3200_8h_aa033c14a63825d7442fc5fbcd83795ac}{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S}~2500
+\item 
+\#define \hyperlink{_power_c_c3200_8h_aa5092dea7f375df244519c8f715ab845}{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}~1000
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a3d48420ba6c1504e6a7064f57f7a7146}{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S}~5000
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a58c317a571d1d049b9abb957a6a4f33e}{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N}~500000
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a3007ab90a06f6eda3698b8578dc0ce93}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A}~0
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a5094474db8fdd9b86f587d8ed2451ba6}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S}~1
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ac7acff60b2adfcfa9fe975606f1cf383}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T}~2
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ae5a08454722475e27f5287b01e8c026a}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I}~3
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a989b70e48ff576ac1da5655905f9f198}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I}~4
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a053256ced317ea2bd0fc0263f9d608d0}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A}~5
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ad2c503e5d3bf7957213cf418246d4a2e}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0}~6
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a558e2586f8ece5e9151b1fc9edf7d3ba}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1}~7
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a0cd81475a3475e8477eba42260cb58db}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2}~8
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a2e0f9b47e529c90a598229c6edbae1dd}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3}~9
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a350bbdef6de035fabdb990ec7ea5ea9d}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4}~10
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a6bec8e5045d950d4716616ac8dfd24d9}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T}~11
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ae49279b2eb7a968549459f15e5c5f66e}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0}~12
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ac0e648dd15ce6221ad55061dccf1278d}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1}~13
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a9a93066636a929772de6073effb379e2}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0}~14
+\item 
+\#define \hyperlink{_power_c_c3200_8h_aada69d40cddbc56dacecc349492d240e}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1}~15
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a2d1b25f741325c53c433a146e4e45215}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2}~16
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a735b9405ef7164bfea7d6c2876980c98}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3}~17
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a7ae865cefff2ec3cdab96a6969a688c9}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E}~18
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ac0f1e38ab7cc8f626c628b792a069edd}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I}~19
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ac8eadfc6bfef3d3d5f55362915b1c801}{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0}~20
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a03c7ec2b53c1e67cd2f4f16a4c56a079}{Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}~21
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a16c8b9c71bd05323c2bbe77e6995c76a}{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}~0
+\item 
+\#define \hyperlink{_power_c_c3200_8h_aacd11ea9110be7f3105c5b009b2e8a4e}{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S}~1
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a7770161a9943a0a52ff5d7bac34283ef}{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}~2
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a5bcb1d540c69969ce4859150dabd5bad}{Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}~3
+\item 
+\#define \hyperlink{_power_c_c3200_8h_afb9f252dfb4df97bd49c413f854db433}{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}~0x1
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a44e07da2b7439b7c0f060c82ef6c3f84}{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S}~0x2
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a4138cf97a705ea4df43440739f64cf32}{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}~0x4
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a0ac3cb7ceb2db8ff79f9bfb11fa79bcc}{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}~0x8
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ada9b64eb549b6eefb3f926dce1b0ac21}{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S}~0x10
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ae654f226518fc563d284e73e52783e48}{Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S}~5
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ac2e501ffd25e6ae70acd5287c8fe9ec0}{Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}~0x1
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a7875b03538297965cb7bd69a3fd420e3}{Power\+C\+C3200\+\_\+\+L\+P\+D\+S}~0x2
+\item 
+\#define \hyperlink{_power_c_c3200_8h_ae8be40b57cc2977d11d8e433905626b0}{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs}~6
+\item 
+\#define \hyperlink{_power_c_c3200_8h_aa9308e92f793082775a42d2dc7f62098}{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority}~49
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a33c66d2d8a05f50274105eef817c41b0}{Power\+\_\+get\+Performance\+Level}(void)~0
+\item 
+\#define \hyperlink{_power_c_c3200_8h_a5c634ae909d29db6dd48c6bd104b62e5}{Power\+\_\+set\+Performance\+Level}(level)~\hyperlink{_power_8h_aed2f92a8c72bfa183e14d10a2e35789f}{Power\+\_\+\+E\+F\+A\+I\+L}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_power_c_c3200___config}{Power\+C\+C3200\+\_\+\+Config} \hyperlink{_power_c_c3200_8h_a8d9ee7af05855422ec151cc9b8e9849e}{Power\+C\+C3200\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em Power global configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power_c_c3200___module_state}{Power\+C\+C3200\+\_\+\+Module\+State} \hyperlink{_power_c_c3200_8h_a2be0d315e9ddaa43c44b5eb74380bc0f}{Power\+C\+C3200\+\_\+\+Module\+State}
+\begin{DoxyCompactList}\small\item\em Internal module state. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power_c_c3200___n_v_i_c_registers}{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers} \hyperlink{_power_c_c3200_8h_adff2d0c1a54df8093e4694270772b923}{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}
+\begin{DoxyCompactList}\small\item\em N\+V\+I\+C registers that need to be save on entering L\+P\+D\+S. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power_c_c3200___m_c_u_registers}{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers} \hyperlink{_power_c_c3200_8h_a54b9b60b75777323cdc7aa77f8ce3dc9}{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}
+\begin{DoxyCompactList}\small\item\em M\+C\+U core registers that need to be save on entering L\+P\+D\+S. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power_c_c3200___save_registers}{Power\+C\+C3200\+\_\+\+Save\+Registers} \hyperlink{_power_c_c3200_8h_ae00332cfff6e10261b4b394a02ac20e3}{Power\+C\+C3200\+\_\+\+Save\+Registers}
+\begin{DoxyCompactList}\small\item\em struct of context registers to save on entering L\+P\+D\+S \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power_c_c3200___wakeup}{Power\+C\+C3200\+\_\+\+Wakeup} \hyperlink{_power_c_c3200_8h_ade61871ecf51dcb5694c9b572d1e49dc}{Power\+C\+C3200\+\_\+\+Wakeup}
+\begin{DoxyCompactList}\small\item\em For wakeup from L\+P\+D\+S or shutdown configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975}{Power\+C\+C3200\+\_\+\+Park\+State} \{ \\*
+\hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a6a5c7ec18bde03dd354b71b3f5b11607}{Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z} = P\+I\+N\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+T\+D, 
+\\*
+\hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a2e867155c501c32027642e587b42f827}{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D} = P\+I\+N\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+T\+D\+\_\+\+P\+U, 
+\\*
+\hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a29104a99882652e257c805b53121dedd}{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D} = P\+I\+N\+\_\+\+T\+Y\+P\+E\+\_\+\+S\+T\+D\+\_\+\+P\+D, 
+\\*
+\hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975aee7a9bfc6fbe37ad41598c76a999a936}{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N} = P\+I\+N\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+D\+\_\+\+P\+U, 
+\\*
+\hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a0f975e383b8967d11fbdd5addb97bb61}{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N} = P\+I\+N\+\_\+\+T\+Y\+P\+E\+\_\+\+O\+D\+\_\+\+P\+D
+ \}
+\begin{DoxyCompactList}\small\item\em enumeration of states for parked pins \end{DoxyCompactList}\item 
+enum \hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536}{Power\+C\+C3200\+\_\+\+Pin} \{ \\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aff4adc2235027862ef617e8029a434eb}{Power\+C\+C3200\+\_\+\+P\+I\+N01} = P\+I\+N\+\_\+01, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a5a6584677486acbc9e7e24cd6abb5e55}{Power\+C\+C3200\+\_\+\+P\+I\+N02} = P\+I\+N\+\_\+02, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a53364a323792b9aaf32eb73b28f54226}{Power\+C\+C3200\+\_\+\+P\+I\+N03} = P\+I\+N\+\_\+03, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a622313fbd6d901437170c76e7fa29c8d}{Power\+C\+C3200\+\_\+\+P\+I\+N04} = P\+I\+N\+\_\+04, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a5688c0aa6e1bb29cc26bd19782fae0fc}{Power\+C\+C3200\+\_\+\+P\+I\+N05} = P\+I\+N\+\_\+05, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aa7c27bb58af2e8f01db7140c8f78ddba}{Power\+C\+C3200\+\_\+\+P\+I\+N06} = P\+I\+N\+\_\+06, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4d7226506aa1bc73a02ab64ba35b25fd}{Power\+C\+C3200\+\_\+\+P\+I\+N07} = P\+I\+N\+\_\+07, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a3aa9713d1b024cf07c64ab413a1edb74}{Power\+C\+C3200\+\_\+\+P\+I\+N08} = P\+I\+N\+\_\+08, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a74551253fb7cd609bcc7ac793ff33daa}{Power\+C\+C3200\+\_\+\+P\+I\+N11} = P\+I\+N\+\_\+11, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ac1b76ea07ee9b6237cb62cdd3efde041}{Power\+C\+C3200\+\_\+\+P\+I\+N12} = P\+I\+N\+\_\+12, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a608e8e411bea02c2bafb2a576adc5ac7}{Power\+C\+C3200\+\_\+\+P\+I\+N13} = P\+I\+N\+\_\+13, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a1a5ebc668f6cdeef5ebffd46d4a9edcd}{Power\+C\+C3200\+\_\+\+P\+I\+N14} = P\+I\+N\+\_\+14, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a7e00dfc2899b9c4e1cc843ac608c2110}{Power\+C\+C3200\+\_\+\+P\+I\+N15} = P\+I\+N\+\_\+15, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a0424c767f987a05bc27fe054e919c033}{Power\+C\+C3200\+\_\+\+P\+I\+N16} = P\+I\+N\+\_\+16, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a8f522f3585b84650899c5df3ec84061b}{Power\+C\+C3200\+\_\+\+P\+I\+N17} = P\+I\+N\+\_\+17, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536afbaa838ce9266c0e3b7e681da4e50b64}{Power\+C\+C3200\+\_\+\+P\+I\+N18} = P\+I\+N\+\_\+18, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4ea4962adcb1a9f8b3ce36bc2886c554}{Power\+C\+C3200\+\_\+\+P\+I\+N19} = P\+I\+N\+\_\+19, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a99aa6336ba9337a56a145854209ccf4b}{Power\+C\+C3200\+\_\+\+P\+I\+N20} = P\+I\+N\+\_\+20, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ab2f96eded7ddd4bc991e99c93360a962}{Power\+C\+C3200\+\_\+\+P\+I\+N21} = P\+I\+N\+\_\+21, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a12750e49eec3b301316da3e82321489c}{Power\+C\+C3200\+\_\+\+P\+I\+N45} = P\+I\+N\+\_\+45, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a368eea01066d6167ab5eb7f5ed90ef13}{Power\+C\+C3200\+\_\+\+P\+I\+N50} = P\+I\+N\+\_\+50, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ae62c339f5e930b41096e1740aa7bea3c}{Power\+C\+C3200\+\_\+\+P\+I\+N52} = P\+I\+N\+\_\+52, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a06620b9e752b30f55b25fab244707982}{Power\+C\+C3200\+\_\+\+P\+I\+N53} = P\+I\+N\+\_\+53, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ab405036c49cb428f31f9def7a0e2b470}{Power\+C\+C3200\+\_\+\+P\+I\+N55} = P\+I\+N\+\_\+55, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aba695ed61143c3c61ffed37e5ebb5653}{Power\+C\+C3200\+\_\+\+P\+I\+N57} = P\+I\+N\+\_\+57, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ad125a2085b57ffb8c964e8876b6de8ba}{Power\+C\+C3200\+\_\+\+P\+I\+N58} = P\+I\+N\+\_\+58, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a644c616600c06dce67ddea0e9b918c3d}{Power\+C\+C3200\+\_\+\+P\+I\+N59} = P\+I\+N\+\_\+59, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a0c5c21748f7ceee61978d01ac2995c23}{Power\+C\+C3200\+\_\+\+P\+I\+N60} = P\+I\+N\+\_\+60, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a7dd8398724cbccac80ff1a1beef0eaa9}{Power\+C\+C3200\+\_\+\+P\+I\+N61} = P\+I\+N\+\_\+61, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ac030010562495e1a3c1323d167515656}{Power\+C\+C3200\+\_\+\+P\+I\+N62} = P\+I\+N\+\_\+62, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4c6d65187deafd84a99eaa890cec5ba2}{Power\+C\+C3200\+\_\+\+P\+I\+N63} = P\+I\+N\+\_\+63, 
+\\*
+\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ad16c8ce08db5b7e5371664fe74943731}{Power\+C\+C3200\+\_\+\+P\+I\+N64} = P\+I\+N\+\_\+64
+ \}
+\begin{DoxyCompactList}\small\item\em enumeration of pins that can be parked \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_power_c_c3200_8h_a993d2d73356767768e849e24d72e9709}{Power\+C\+C3200\+\_\+configure\+Wakeup} (\hyperlink{struct_power_c_c3200___wakeup}{Power\+C\+C3200\+\_\+\+Wakeup} $\ast$wakeup)
+\begin{DoxyCompactList}\small\item\em Function configures wakeup for L\+P\+D\+S and shutdown. \end{DoxyCompactList}\item 
+void \hyperlink{_power_c_c3200_8h_ac8f5f6c1a02be91fba5231d9f955182e}{Power\+C\+C3200\+\_\+init\+Policy} (void)
+\item 
+void \hyperlink{_power_c_c3200_8h_ab39bdb92e0c20e89d6ebb5950e357c8a}{Power\+C\+C3200\+\_\+park\+Pin} (\hyperlink{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536}{Power\+C\+C3200\+\_\+\+Pin} pin, \hyperlink{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975}{Power\+C\+C3200\+\_\+\+Park\+State} park\+State)
+\item 
+void \hyperlink{_power_c_c3200_8h_ada8ba141d2aa30254feba0f088e47b87}{Power\+C\+C3200\+\_\+sleep\+Policy} (void)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P~500}\label{_power_c_c3200_8h_af67fc285dc9efcca6002ce2b002f392c}
+latency time for resuming from Deep\+Sleep in microseconds \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+R\+E\+S\+U\+M\+E\+T\+I\+M\+E\+L\+P\+D\+S~2500}\label{_power_c_c3200_8h_aa033c14a63825d7442fc5fbcd83795ac}
+latency time for resuming from L\+P\+D\+S in microseconds \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+D\+E\+E\+P\+S\+L\+E\+E\+P~1000}\label{_power_c_c3200_8h_aa5092dea7f375df244519c8f715ab845}
+total latency time for Deep\+Sleep in microseconds \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+L\+P\+D\+S~5000}\label{_power_c_c3200_8h_a3d48420ba6c1504e6a7064f57f7a7146}
+total latency time for L\+P\+D\+S in microseconds \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N}}
+\index{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N~500000}\label{_power_c_c3200_8h_a58c317a571d1d049b9abb957a6a4f33e}
+total latency time for Shutdown in microseconds \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+C\+A\+M\+E\+R\+A~0}\label{_power_c_c3200_8h_a3007ab90a06f6eda3698b8578dc0ce93}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+S~1}\label{_power_c_c3200_8h_a5094474db8fdd9b86f587d8ed2451ba6}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+D\+H\+O\+S\+T~2}\label{_power_c_c3200_8h_ac7acff60b2adfcfa9fe975606f1cf383}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+S\+P\+I~3}\label{_power_c_c3200_8h_ae5a08454722475e27f5287b01e8c026a}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+L\+S\+P\+I~4}\label{_power_c_c3200_8h_a989b70e48ff576ac1da5655905f9f198}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+D\+M\+A~5}\label{_power_c_c3200_8h_a053256ced317ea2bd0fc0263f9d608d0}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A0~6}\label{_power_c_c3200_8h_ad2c503e5d3bf7957213cf418246d4a2e}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A1~7}\label{_power_c_c3200_8h_a558e2586f8ece5e9151b1fc9edf7d3ba}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A2~8}\label{_power_c_c3200_8h_a0cd81475a3475e8477eba42260cb58db}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A3~9}\label{_power_c_c3200_8h_a2e0f9b47e529c90a598229c6edbae1dd}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+G\+P\+I\+O\+A4~10}\label{_power_c_c3200_8h_a350bbdef6de035fabdb990ec7ea5ea9d}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+W\+D\+T~11}\label{_power_c_c3200_8h_a6bec8e5045d950d4716616ac8dfd24d9}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A0~12}\label{_power_c_c3200_8h_ae49279b2eb7a968549459f15e5c5f66e}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+U\+A\+R\+T\+A1~13}\label{_power_c_c3200_8h_ac0e648dd15ce6221ad55061dccf1278d}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A0~14}\label{_power_c_c3200_8h_a9a93066636a929772de6073effb379e2}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A1~15}\label{_power_c_c3200_8h_aada69d40cddbc56dacecc349492d240e}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A2~16}\label{_power_c_c3200_8h_a2d1b25f741325c53c433a146e4e45215}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+T\+I\+M\+E\+R\+A3~17}\label{_power_c_c3200_8h_a735b9405ef7164bfea7d6c2876980c98}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+D\+T\+H\+E~18}\label{_power_c_c3200_8h_a7ae865cefff2ec3cdab96a6969a688c9}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+S\+S\+P\+I~19}\label{_power_c_c3200_8h_ac0f1e38ab7cc8f626c628b792a069edd}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0}}
+\index{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0@{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+\+I2\+C\+A0~20}\label{_power_c_c3200_8h_ac8eadfc6bfef3d3d5f55362915b1c801}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}}
+\index{Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+N\+U\+M\+R\+E\+S\+O\+U\+R\+C\+E\+S~21}\label{_power_c_c3200_8h_a03c7ec2b53c1e67cd2f4f16a4c56a079}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P~0}\label{_power_c_c3200_8h_a16c8b9c71bd05323c2bbe77e6995c76a}
+disallow entering Deep\+Sleep \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+L\+P\+D\+S~1}\label{_power_c_c3200_8h_aacd11ea9110be7f3105c5b009b2e8a4e}
+disallow entering L\+P\+D\+S \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}}
+\index{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N~2}\label{_power_c_c3200_8h_a7770161a9943a0a52ff5d7bac34283ef}
+disallow shutdown \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}}
+\index{Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+N\+U\+M\+C\+O\+N\+S\+T\+R\+A\+I\+N\+T\+S~3}\label{_power_c_c3200_8h_a5bcb1d540c69969ce4859150dabd5bad}
+number of constraints \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P~0x1}\label{_power_c_c3200_8h_afb9f252dfb4df97bd49c413f854db433}
+entering Deep\+Sleep event \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+L\+P\+D\+S~0x2}\label{_power_c_c3200_8h_a44e07da2b7439b7c0f060c82ef6c3f84}
+entering L\+P\+D\+S event \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}}
+\index{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N~0x4}\label{_power_c_c3200_8h_a4138cf97a705ea4df43440739f64cf32}
+entering Shutdown event \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P~0x8}\label{_power_c_c3200_8h_a0ac3cb7ceb2db8ff79f9bfb11fa79bcc}
+awake from Deep\+Sleep event \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+A\+W\+A\+K\+E\+\_\+\+L\+P\+D\+S~0x10}\label{_power_c_c3200_8h_ada9b64eb549b6eefb3f926dce1b0ac21}
+awake from L\+P\+D\+S event \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S}}
+\index{Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S@{Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+N\+U\+M\+E\+V\+E\+N\+T\+S~5}\label{_power_c_c3200_8h_ae654f226518fc563d284e73e52783e48}
+number of events \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}}
+\index{Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P@{Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P~0x1}\label{_power_c_c3200_8h_ac2e501ffd25e6ae70acd5287c8fe9ec0}
+Deep\+Sleep state \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+L\+P\+D\+S}}
+\index{Power\+C\+C3200\+\_\+\+L\+P\+D\+S@{Power\+C\+C3200\+\_\+\+L\+P\+D\+S}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+\+L\+P\+D\+S~0x2}\label{_power_c_c3200_8h_a7875b03538297965cb7bd69a3fd420e3}
+L\+P\+D\+S state \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs@{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs}}
+\index{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs@{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Set\+Enable\+Regs~6}\label{_power_c_c3200_8h_ae8be40b57cc2977d11d8e433905626b0}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority@{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority}}
+\index{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority@{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+C\+C3200\+\_\+num\+N\+V\+I\+C\+Int\+Priority~49}\label{_power_c_c3200_8h_aa9308e92f793082775a42d2dc7f62098}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+\_\+get\+Performance\+Level@{Power\+\_\+get\+Performance\+Level}}
+\index{Power\+\_\+get\+Performance\+Level@{Power\+\_\+get\+Performance\+Level}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+\_\+get\+Performance\+Level}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+get\+Performance\+Level(
+\begin{DoxyParamCaption}
+\item[{}]{void}
+\end{DoxyParamCaption}
+)~0}\label{_power_c_c3200_8h_a33c66d2d8a05f50274105eef817c41b0}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+\_\+set\+Performance\+Level@{Power\+\_\+set\+Performance\+Level}}
+\index{Power\+\_\+set\+Performance\+Level@{Power\+\_\+set\+Performance\+Level}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+\_\+set\+Performance\+Level}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+set\+Performance\+Level(
+\begin{DoxyParamCaption}
+\item[{}]{level}
+\end{DoxyParamCaption}
+)~{\bf Power\+\_\+\+E\+F\+A\+I\+L}}\label{_power_c_c3200_8h_a5c634ae909d29db6dd48c6bd104b62e5}
+
+
+\subsubsection{Typedef Documentation}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+Config}  {\bf Power\+C\+C3200\+\_\+\+Config}}\label{_power_c_c3200_8h_a8d9ee7af05855422ec151cc9b8e9849e}
+
+
+Power global configuration. 
+
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Module\+State@{Power\+C\+C3200\+\_\+\+Module\+State}}
+\index{Power\+C\+C3200\+\_\+\+Module\+State@{Power\+C\+C3200\+\_\+\+Module\+State}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Module\+State}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+Module\+State}  {\bf Power\+C\+C3200\+\_\+\+Module\+State}}\label{_power_c_c3200_8h_a2be0d315e9ddaa43c44b5eb74380bc0f}
+
+
+Internal module state. 
+
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers@{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}}
+\index{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers@{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}  {\bf Power\+C\+C3200\+\_\+\+N\+V\+I\+C\+Registers}}\label{_power_c_c3200_8h_adff2d0c1a54df8093e4694270772b923}
+
+
+N\+V\+I\+C registers that need to be save on entering L\+P\+D\+S. 
+
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers@{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}}
+\index{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers@{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}  {\bf Power\+C\+C3200\+\_\+\+M\+C\+U\+Registers}}\label{_power_c_c3200_8h_a54b9b60b75777323cdc7aa77f8ce3dc9}
+
+
+M\+C\+U core registers that need to be save on entering L\+P\+D\+S. 
+
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Save\+Registers@{Power\+C\+C3200\+\_\+\+Save\+Registers}}
+\index{Power\+C\+C3200\+\_\+\+Save\+Registers@{Power\+C\+C3200\+\_\+\+Save\+Registers}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Save\+Registers}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+Save\+Registers}  {\bf Power\+C\+C3200\+\_\+\+Save\+Registers}}\label{_power_c_c3200_8h_ae00332cfff6e10261b4b394a02ac20e3}
+
+
+struct of context registers to save on entering L\+P\+D\+S 
+
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Wakeup@{Power\+C\+C3200\+\_\+\+Wakeup}}
+\index{Power\+C\+C3200\+\_\+\+Wakeup@{Power\+C\+C3200\+\_\+\+Wakeup}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Wakeup}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+C\+C3200\+\_\+\+Wakeup}  {\bf Power\+C\+C3200\+\_\+\+Wakeup}}\label{_power_c_c3200_8h_ade61871ecf51dcb5694c9b572d1e49dc}
+
+
+For wakeup from L\+P\+D\+S or shutdown configuration. 
+
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Park\+State@{Power\+C\+C3200\+\_\+\+Park\+State}}
+\index{Power\+C\+C3200\+\_\+\+Park\+State@{Power\+C\+C3200\+\_\+\+Park\+State}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Park\+State}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Power\+C\+C3200\+\_\+\+Park\+State}}\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975}
+
+
+enumeration of states for parked pins 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z@{Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z@{Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z}}\item[{\em 
+Power\+C\+C3200\+\_\+\+N\+O\+\_\+\+P\+U\+L\+L\+\_\+\+H\+I\+Z\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a6a5c7ec18bde03dd354b71b3f5b11607}
+}]\index{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D}}\item[{\em 
+Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+S\+T\+D\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a2e867155c501c32027642e587b42f827}
+}]\index{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D}}\item[{\em 
+Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+S\+T\+D\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a29104a99882652e257c805b53121dedd}
+}]\index{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}}\item[{\em 
+Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+U\+P\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975aee7a9bfc6fbe37ad41598c76a999a936}
+}]\index{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N@{Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N}}\item[{\em 
+Power\+C\+C3200\+\_\+\+W\+E\+A\+K\+\_\+\+P\+U\+L\+L\+\_\+\+D\+O\+W\+N\+\_\+\+O\+P\+E\+N\+D\+R\+A\+I\+N\label{_power_c_c3200_8h_a352553cc06ecc6b8344d271bd27a0975a0f975e383b8967d11fbdd5addb97bb61}
+}]\end{description}
+\end{Desc}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+Pin@{Power\+C\+C3200\+\_\+\+Pin}}
+\index{Power\+C\+C3200\+\_\+\+Pin@{Power\+C\+C3200\+\_\+\+Pin}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Power\+C\+C3200\+\_\+\+Pin}}\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536}
+
+
+enumeration of pins that can be parked 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Power\+C\+C3200\+\_\+\+P\+I\+N01@{Power\+C\+C3200\+\_\+\+P\+I\+N01}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N01@{Power\+C\+C3200\+\_\+\+P\+I\+N01}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N01\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aff4adc2235027862ef617e8029a434eb}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N02@{Power\+C\+C3200\+\_\+\+P\+I\+N02}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N02@{Power\+C\+C3200\+\_\+\+P\+I\+N02}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N02\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a5a6584677486acbc9e7e24cd6abb5e55}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N03@{Power\+C\+C3200\+\_\+\+P\+I\+N03}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N03@{Power\+C\+C3200\+\_\+\+P\+I\+N03}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N03\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a53364a323792b9aaf32eb73b28f54226}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N04@{Power\+C\+C3200\+\_\+\+P\+I\+N04}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N04@{Power\+C\+C3200\+\_\+\+P\+I\+N04}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N04\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a622313fbd6d901437170c76e7fa29c8d}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N05@{Power\+C\+C3200\+\_\+\+P\+I\+N05}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N05@{Power\+C\+C3200\+\_\+\+P\+I\+N05}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N05\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a5688c0aa6e1bb29cc26bd19782fae0fc}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N06@{Power\+C\+C3200\+\_\+\+P\+I\+N06}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N06@{Power\+C\+C3200\+\_\+\+P\+I\+N06}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N06\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aa7c27bb58af2e8f01db7140c8f78ddba}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N07@{Power\+C\+C3200\+\_\+\+P\+I\+N07}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N07@{Power\+C\+C3200\+\_\+\+P\+I\+N07}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N07\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4d7226506aa1bc73a02ab64ba35b25fd}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N08@{Power\+C\+C3200\+\_\+\+P\+I\+N08}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N08@{Power\+C\+C3200\+\_\+\+P\+I\+N08}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N08\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a3aa9713d1b024cf07c64ab413a1edb74}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N11@{Power\+C\+C3200\+\_\+\+P\+I\+N11}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N11@{Power\+C\+C3200\+\_\+\+P\+I\+N11}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N11\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a74551253fb7cd609bcc7ac793ff33daa}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N12@{Power\+C\+C3200\+\_\+\+P\+I\+N12}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N12@{Power\+C\+C3200\+\_\+\+P\+I\+N12}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N12\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ac1b76ea07ee9b6237cb62cdd3efde041}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N13@{Power\+C\+C3200\+\_\+\+P\+I\+N13}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N13@{Power\+C\+C3200\+\_\+\+P\+I\+N13}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N13\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a608e8e411bea02c2bafb2a576adc5ac7}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N14@{Power\+C\+C3200\+\_\+\+P\+I\+N14}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N14@{Power\+C\+C3200\+\_\+\+P\+I\+N14}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N14\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a1a5ebc668f6cdeef5ebffd46d4a9edcd}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N15@{Power\+C\+C3200\+\_\+\+P\+I\+N15}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N15@{Power\+C\+C3200\+\_\+\+P\+I\+N15}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N15\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a7e00dfc2899b9c4e1cc843ac608c2110}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N16@{Power\+C\+C3200\+\_\+\+P\+I\+N16}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N16@{Power\+C\+C3200\+\_\+\+P\+I\+N16}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N16\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a0424c767f987a05bc27fe054e919c033}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N17@{Power\+C\+C3200\+\_\+\+P\+I\+N17}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N17@{Power\+C\+C3200\+\_\+\+P\+I\+N17}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N17\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a8f522f3585b84650899c5df3ec84061b}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N18@{Power\+C\+C3200\+\_\+\+P\+I\+N18}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N18@{Power\+C\+C3200\+\_\+\+P\+I\+N18}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N18\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536afbaa838ce9266c0e3b7e681da4e50b64}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N19@{Power\+C\+C3200\+\_\+\+P\+I\+N19}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N19@{Power\+C\+C3200\+\_\+\+P\+I\+N19}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N19\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4ea4962adcb1a9f8b3ce36bc2886c554}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N20@{Power\+C\+C3200\+\_\+\+P\+I\+N20}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N20@{Power\+C\+C3200\+\_\+\+P\+I\+N20}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N20\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a99aa6336ba9337a56a145854209ccf4b}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N21@{Power\+C\+C3200\+\_\+\+P\+I\+N21}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N21@{Power\+C\+C3200\+\_\+\+P\+I\+N21}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N21\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ab2f96eded7ddd4bc991e99c93360a962}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N45@{Power\+C\+C3200\+\_\+\+P\+I\+N45}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N45@{Power\+C\+C3200\+\_\+\+P\+I\+N45}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N45\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a12750e49eec3b301316da3e82321489c}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N50@{Power\+C\+C3200\+\_\+\+P\+I\+N50}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N50@{Power\+C\+C3200\+\_\+\+P\+I\+N50}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N50\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a368eea01066d6167ab5eb7f5ed90ef13}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N52@{Power\+C\+C3200\+\_\+\+P\+I\+N52}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N52@{Power\+C\+C3200\+\_\+\+P\+I\+N52}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N52\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ae62c339f5e930b41096e1740aa7bea3c}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N53@{Power\+C\+C3200\+\_\+\+P\+I\+N53}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N53@{Power\+C\+C3200\+\_\+\+P\+I\+N53}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N53\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a06620b9e752b30f55b25fab244707982}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N55@{Power\+C\+C3200\+\_\+\+P\+I\+N55}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N55@{Power\+C\+C3200\+\_\+\+P\+I\+N55}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N55\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ab405036c49cb428f31f9def7a0e2b470}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N57@{Power\+C\+C3200\+\_\+\+P\+I\+N57}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N57@{Power\+C\+C3200\+\_\+\+P\+I\+N57}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N57\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536aba695ed61143c3c61ffed37e5ebb5653}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N58@{Power\+C\+C3200\+\_\+\+P\+I\+N58}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N58@{Power\+C\+C3200\+\_\+\+P\+I\+N58}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N58\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ad125a2085b57ffb8c964e8876b6de8ba}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N59@{Power\+C\+C3200\+\_\+\+P\+I\+N59}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N59@{Power\+C\+C3200\+\_\+\+P\+I\+N59}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N59\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a644c616600c06dce67ddea0e9b918c3d}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N60@{Power\+C\+C3200\+\_\+\+P\+I\+N60}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N60@{Power\+C\+C3200\+\_\+\+P\+I\+N60}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N60\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a0c5c21748f7ceee61978d01ac2995c23}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N61@{Power\+C\+C3200\+\_\+\+P\+I\+N61}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N61@{Power\+C\+C3200\+\_\+\+P\+I\+N61}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N61\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a7dd8398724cbccac80ff1a1beef0eaa9}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N62@{Power\+C\+C3200\+\_\+\+P\+I\+N62}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N62@{Power\+C\+C3200\+\_\+\+P\+I\+N62}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N62\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ac030010562495e1a3c1323d167515656}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N63@{Power\+C\+C3200\+\_\+\+P\+I\+N63}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N63@{Power\+C\+C3200\+\_\+\+P\+I\+N63}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N63\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536a4c6d65187deafd84a99eaa890cec5ba2}
+}]\index{Power\+C\+C3200\+\_\+\+P\+I\+N64@{Power\+C\+C3200\+\_\+\+P\+I\+N64}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+\+P\+I\+N64@{Power\+C\+C3200\+\_\+\+P\+I\+N64}}\item[{\em 
+Power\+C\+C3200\+\_\+\+P\+I\+N64\label{_power_c_c3200_8h_a8b2018d283cb1a67825bd8dc13559536ad16c8ce08db5b7e5371664fe74943731}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+configure\+Wakeup@{Power\+C\+C3200\+\_\+configure\+Wakeup}}
+\index{Power\+C\+C3200\+\_\+configure\+Wakeup@{Power\+C\+C3200\+\_\+configure\+Wakeup}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+configure\+Wakeup}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+C\+C3200\+\_\+configure\+Wakeup (
+\begin{DoxyParamCaption}
+\item[{{\bf Power\+C\+C3200\+\_\+\+Wakeup} $\ast$}]{wakeup}
+\end{DoxyParamCaption}
+)}\label{_power_c_c3200_8h_a993d2d73356767768e849e24d72e9709}
+
+
+Function configures wakeup for L\+P\+D\+S and shutdown. 
+
+This function allows the app to configure the G\+P\+I\+O source and type for waking up from L\+P\+D\+S and shutdown and the network host as a wakeup source for L\+P\+D\+S. This overwrites any previous wakeup settings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em wakeup} & Settings applied to wakeup configuration \\
+\hline
+\end{DoxyParams}
+\index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+init\+Policy@{Power\+C\+C3200\+\_\+init\+Policy}}
+\index{Power\+C\+C3200\+\_\+init\+Policy@{Power\+C\+C3200\+\_\+init\+Policy}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+init\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+C\+C3200\+\_\+init\+Policy (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_c_c3200_8h_ac8f5f6c1a02be91fba5231d9f955182e}
+O\+S specific default power policy init function \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+park\+Pin@{Power\+C\+C3200\+\_\+park\+Pin}}
+\index{Power\+C\+C3200\+\_\+park\+Pin@{Power\+C\+C3200\+\_\+park\+Pin}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+park\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+C\+C3200\+\_\+park\+Pin (
+\begin{DoxyParamCaption}
+\item[{{\bf Power\+C\+C3200\+\_\+\+Pin}}]{pin, }
+\item[{{\bf Power\+C\+C3200\+\_\+\+Park\+State}}]{park\+State}
+\end{DoxyParamCaption}
+)}\label{_power_c_c3200_8h_ab39bdb92e0c20e89d6ebb5950e357c8a}
+C\+C3200 specific pin parking function \index{Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}!Power\+C\+C3200\+\_\+sleep\+Policy@{Power\+C\+C3200\+\_\+sleep\+Policy}}
+\index{Power\+C\+C3200\+\_\+sleep\+Policy@{Power\+C\+C3200\+\_\+sleep\+Policy}!Power\+C\+C3200.\+h@{Power\+C\+C3200.\+h}}
+\paragraph[{Power\+C\+C3200\+\_\+sleep\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+C\+C3200\+\_\+sleep\+Policy (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_c_c3200_8h_ada8ba141d2aa30254feba0f088e47b87}
+O\+S specific default power policy function 

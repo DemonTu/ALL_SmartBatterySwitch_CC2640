@@ -1,0 +1,37 @@
+\subsection{Clock\+P\+\_\+\+Params Struct Reference}
+\label{struct_clock_p___params}\index{Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}}
+
+
+Basic Clock\+P Parameters.  
+
+
+
+
+{\ttfamily \#include $<$Clock\+P.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_clock_p___params_aa569bbe76191ffc32ba1b6774002d83a}{name}
+\item 
+uintptr\+\_\+t \hyperlink{struct_clock_p___params_a262d7e91bc0a7f98b23033084e68531c}{arg}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Basic Clock\+P Parameters. 
+
+Structure that contains the parameters passed into \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create} when creating a Clock\+P instance. The \hyperlink{_clock_p_8h_a666e9ded465c969456e6c4ef95e849f4}{Clock\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Clock\+P default parameters are noted in Clock\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Field Documentation}
+\index{Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}!name@{name}}
+\index{name@{name}!Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}}
+\paragraph[{name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ Clock\+P\+\_\+\+Params\+::name}\label{struct_clock_p___params_aa569bbe76191ffc32ba1b6774002d83a}
+Name of the clock instance. Memory must persist for the life of the clock instance. This can be used for debugging purposes, or set to N\+U\+L\+L if not needed. \index{Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}!arg@{arg}}
+\index{arg@{arg}!Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t Clock\+P\+\_\+\+Params\+::arg}\label{struct_clock_p___params_a262d7e91bc0a7f98b23033084e68531c}
+Argument passed into the clock function. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_clock_p_8h}{Clock\+P.\+h}\end{DoxyCompactItemize}

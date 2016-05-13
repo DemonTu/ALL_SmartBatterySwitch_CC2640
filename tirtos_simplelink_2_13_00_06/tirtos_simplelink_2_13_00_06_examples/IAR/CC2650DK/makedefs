@@ -1,0 +1,44 @@
+###### CHANGE LOCATION TO YOUR CODEGEN TOOLS INSTALLATION DIR. UNIX PATH (no backslashes) #######
+CODEGEN_INSTALLATION_DIR = C:/Program Files (x86)/IAR Systems/Embedded Workbench 6.5/arm
+
+CC =  "$(CODEGEN_INSTALLATION_DIR)/bin/iccarm"
+
+LNK = "$(CODEGEN_INSTALLATION_DIR)/bin/ilinkarm"
+
+XDCTOOLS_INSTALLATION_DIR := c:/ti/xdctools_3_31_01_33_core
+# The following is ignored if xdctools has the JRE
+export XDCTOOLS_JAVA_HOME := /home/xlibrary/trees/xdcprod/xdcprod-u33/product/Linux/xdctools_3_31_01_33/jre
+TIRTOS_INSTALLATION_DIR := c:/ti/tirtos_simplelink_2_13_00_06/packages
+
+BIOS_INSTALLATION_DIR  ?= c:/ti/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages
+UIA_INSTALLATION_DIR   ?= c:/ti/tirtos_simplelink_2_13_00_06/products/uia_2_00_02_39/packages
+IPC_INSTALLATION_DIR   ?= 
+NDK_INSTALLATION_DIR   ?= 
+OPTIONAL_XDCPATH       ?= 
+
+XDCPATH = $(TIRTOS_INSTALLATION_DIR);$(UIA_INSTALLATION_DIR);$(IPC_INSTALLATION_DIR);$(NDK_INSTALLATION_DIR);$(BIOS_INSTALLATION_DIR);$(OPTIONAL_XDCPATH);
+
+CC26XXWARE_INSTALLATION_DIR ?= c:/ti/tirtos_simplelink_2_13_00_06/products/cc26xxware_2_21_01_15600
+
+CFLAGS =  --debug --silent -Dewarm -I$(CGTOOLS)/inc/c/DLib_Config_Normal.h -I$(CC26XXWARE_INSTALLATION_DIR)
+
+LFLAGS =  --silent --cpu=Cortex-M3 --semihosting=iar_breakpoint --config CC2650DK.icf --entry=__iar_program_start --redirect _Printf=_PrintfSmall --redirect _Scanf=_ScanfSmall --map $(NAME).map $(CC26XXWARE_INSTALLATION_DIR)/driverlib/bin/iar/driverlib.lib
+
+###################### SHOULD NOT MODIFY BELOW THIS LINE ############################
+export XDCPATH
+
+XDCTARGET = iar.targets.arm.M3
+
+PLATFORM = ti.platforms.simplelink:CC2650F128
+
+ifeq ("$(SHELL)","sh.exe")
+#For Windows
+        RMDIR  = -rmdir /S /Q
+        remove = -del $(subst /,\,$1)
+        pwd    = cd
+else
+#For Linux
+        RMDIR  = rm -rf
+        remove = rm -f $(subst /,\,$1)
+        pwd    = pwd
+endif

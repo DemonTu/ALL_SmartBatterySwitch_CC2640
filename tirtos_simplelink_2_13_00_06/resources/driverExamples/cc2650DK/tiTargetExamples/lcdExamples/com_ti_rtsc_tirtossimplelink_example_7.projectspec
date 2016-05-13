@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId=".*CC265.*"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="LCD SmartRF06EB"
+        name="lcdSmartRF06EB"
+        toolChain="TI"
+        linkerCommandFile=""
+        compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600"
+        linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+        description="An example demonstrating how to use the LCD on the SmartRF06 Evaluation Board">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        <property name="xdcToolsVersion" value="3.31.01.33"/>
+        <property name="target" value="ti.targets.arm.elf.M3"/>
+        <property name="platform" value="ti.platforms.simplelink:CC2650F128"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+        <group id="examples.root_SimpleLink.driver.CC2650DK.TI.LCD"/>
+        <file path="examples/./source/lcdSmartRF06EB/lcdSmartRF06EB.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/./source/lcdSmartRF06EB/lcdSmartRF06EB.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC2650DK/CC2650DK.cmd" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC2650DK/Board.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/boards/CC2650DK/Board.h" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="examples/source/lcdSmartRF06EB/lcdSmartRF06EB_readme.txt" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="./" >
+        </file>
+    </project>
+</projectSpec>
+

@@ -1,0 +1,777 @@
+\subsection{I2\+S.\+h File Reference}
+\label{_i2_s_8h}\index{I2\+S.\+h@{I2\+S.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+S driver interface. 
+
+============================================================================
+
+The I2\+S header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2S.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The I2\+S driver simplifies reading and writing to any of the Mc\+A\+S\+P peripherals on the board with Receive and Transmit support. These include blocking, non-\/blocking, read and write characters on the Mc\+A\+S\+P peripheral. The board\textquotesingle{}s I2\+S peripheral and pins must be configured before initializing the I2\+S driver. The application initializes the I2\+S driver by calling \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} and is then ready to open a I2\+S by calling \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} and passing in a I2\+S parameters data structure.
+
+The A\+P\+Is in this driver serve as an interface to a typical O\+S\+A\+L application. The specific peripheral implementations are responsible to create all the O\+S\+A\+L specific primitives to allow for thread-\/safe operation.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+I2S_Handle      handle;
+I2S_Params      params;
+I2SCC3200DMA_SerialPinParams customParams;
+
+I2S_Params_init(&params);
+params.operationMode                     = I2S\_MODE\_TX\_RX\_SYNC;
+< Change other params as required >
+
+I2SCC3200DMA_Params_init(&customParams);
+< Change custom params as required >
+params->customParams = (I2SCC3200DMA_SerialPinParams *)&customParams;
+
+handle = I2S_open(someI2S\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"I2S did not open"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Writing data}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} hello[] = \textcolor{stringliteral}{"Hello World\(\backslash\)n"};
+\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} hello1[] = \textcolor{stringliteral}{"Hello World1\(\backslash\)n"};
+I2S_BufDesc writeBuffer1;
+I2S_BufDesc writeBuffer2;
+I2S_BufDesc *pDesc = NULL;
+
+writeBuffer1.bufPtr  = &hello;
+writeBuffer1.bufSize = \textcolor{keyword}{sizeof}(hello);
+writeBuffer2.bufPtr  = &hello1;
+writeBuffer2.bufSize = \textcolor{keyword}{sizeof}(hello1);
+
+ret = I2S_write(handle, &writeBuffer1);
+ret = I2S_write(handle, &writeBuffer2);
+
+\textcolor{keywordflow}{while}(1)
+\{
+    ret = I2S_writeReclaim(handle, &pDesc);
+    System\_printf(\textcolor{stringliteral}{"The I2S wrote %d bytes\(\backslash\)n"}, ret);
+    pDesc->bufPtr  = &hello;;
+    pDesc->bufSize = \textcolor{keyword}{sizeof}(hello);
+    ret = I2S_write(handle, pDesc);
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Reading data}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rxBuffer[20];
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rxBuffer1[20];
+I2S_BufDesc readBuffer1;
+I2S_BufDesc readBuffer2;
+I2S_BufDesc *pDesc = NULL;
+
+readBuffer1.bufPtr = &rxBuffer;
+readBuffer1.bufSize = 20;
+readBuffer2.bufPtr = &rxBuffer1;
+readBuffer2.bufSize = 20;
+
+ret = I2S_read(handle, &readBuffer1);
+ret = I2S_read(handle, &readBuffer2);
+
+\textcolor{keywordflow}{while}(1)
+\{
+    ret = I2S_readReclaim(handle, &pDesc);
+    System\_printf(\textcolor{stringliteral}{"The I2S read %d bytes\(\backslash\)n"}, ret);
+    pDesc->bufPtr = &rxBuffer;
+    pDesc->bufSize = 20;
+    ret = I2S_read(handle, pDesc);
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for O\+S\+A\+L applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table}.
+
+The I2\+S driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config} data structures named {\itshape I2\+S\+\_\+config}. {\itshape I2\+S\+\_\+config} is implemented in the application with each entry being an instance of a I2\+S peripheral. Each entry in {\itshape I2\+S\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a I2\+S peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following I2\+S peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_i2_s_c_c3200_d_m_a_8h}{I2\+S\+C\+C3200\+D\+M\+A.\+h} 
+
+
+\end{DoxyItemize}{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+List\+P.\+h$>$}\\*
+Include dependency graph for I2\+S.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{_i2_s_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=135pt]{_i2_s_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc}
+\begin{DoxyCompactList}\small\item\em I2\+S buffer descriptor for issue/reclaim mode. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic I2\+S Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a I2\+S function table that contains the required set of functions to control a specific I2\+S driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em I2\+S Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_i2_s_8h_af919ac4341fca59988c28e16058fa819}{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_i2_s_8h_a3fad4fcf6773f3c5946c4881631f838d}{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_i2_s_8h_a23118b46858671b6537d3a68721f0282}{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_i2_s_8h_a775a6dc5aa644d4cca2179afbafb63ad}{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_i2_s_8h_a649cf0c869381728fc9b56dfdbbd3e3d}{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\item 
+\#define \hyperlink{_i2_s_8h_a81d0dd9da59128b28cb23c59fe57c939}{I2\+S\+\_\+\+E\+R\+R\+O\+R}~\hyperlink{_i2_s_8h_a775a6dc5aa644d4cca2179afbafb63ad}{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}
+\item 
+\#define \hyperlink{_i2_s_8h_a8fd310c110b6a9425cf61753f3e956ab}{I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}~$\sim$(0)
+\begin{DoxyCompactList}\small\item\em Wait forever define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config} $\ast$ \hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} \hyperlink{_i2_s_8h_a749d6d0d5339bfb54246e0b301016312}{I2\+S\+\_\+\+Buf\+Desc}
+\begin{DoxyCompactList}\small\item\em I2\+S buffer descriptor for issue/reclaim mode. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_s_8h_af87c5d43590153717044a932ff6b2e03}{I2\+S\+\_\+\+Callback}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle}, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used by the I2\+S driver when used in \hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a2c7b409c7185250bef51c0e6de600d08}{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405}{I2\+S\+\_\+\+Data\+Mode} \hyperlink{_i2_s_8h_ad634bdf621a2f3f626b3cce0e67f659a}{I2\+S\+\_\+\+Data\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+S mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0}{I2\+S\+\_\+\+Op\+Mode} \hyperlink{_i2_s_8h_a932b2a114f3c9cfd64af554ff3b4496a}{I2\+S\+\_\+\+Op\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+S mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3}{I2\+S\+\_\+\+Ser\+In\+Active\+Config} \hyperlink{_i2_s_8h_a19123e5e2c577320f90558cfc640e918}{I2\+S\+\_\+\+Ser\+In\+Active\+Config}
+\begin{DoxyCompactList}\small\item\em I2\+S Serializer In\+Active state settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_i2_s_8h_a68adf81f32430f87478afbc63e0623af}{I2\+S\+\_\+\+Pin\+Mode} \hyperlink{_i2_s_8h_ac3246d834f54bb71d4b58fe945cb9228}{I2\+S\+\_\+\+Pin\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+S serial pin mode. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} \hyperlink{_i2_s_8h_afff1198c952846b6248c11a68f5927ff}{I2\+S\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic I2\+S Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_s_8h_a91bfa91197cb8ff2388744088177dde8}{I2\+S\+\_\+\+Close\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a91bfa91197cb8ff2388744088177dde8}{I2\+S\+\_\+\+Close\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_i2_s_8h_aec416642887dbc181166c479a79c5615}{I2\+S\+\_\+\+Control\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_i2_s_8h_a17f21fcbc2627ef97044ee7ff6cfdee6}{I2\+S\+\_\+\+Init\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle}($\ast$ \hyperlink{_i2_s_8h_a0a8c4787b4a5a262dc86d9dfa7da2840}{I2\+S\+\_\+\+Open\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a0a8c4787b4a5a262dc86d9dfa7da2840}{I2\+S\+\_\+\+Open\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}{I2\+S\+\_\+\+Issue\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}{I2\+S\+\_\+\+Issue\+Fxn()}. \end{DoxyCompactList}\item 
+typedef size\+\_\+t($\ast$ \hyperlink{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}{I2\+S\+\_\+\+Reclaim\+Fxn}) (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$desc)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}{I2\+S\+\_\+\+Reclaim\+Fxn()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table} \hyperlink{_i2_s_8h_aea46bf5e1dc3bfd520ba7d2911b15b8c}{I2\+S\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a I2\+S function table that contains the required set of functions to control a specific I2\+S driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config} \hyperlink{_i2_s_8h_a702f29a736651810df453469ff616606}{I2\+S\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em I2\+S Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405}{I2\+S\+\_\+\+Data\+Mode} \{ \\*
+\hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a2c7b409c7185250bef51c0e6de600d08}{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}, 
+\\*
+\hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a294b93c8f4917e45ac62b7c12b017f85}{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M}
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+S mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0}{I2\+S\+\_\+\+Op\+Mode} \{ \\*
+\hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a314552b49ae8d2f1d03c17e9dbf165d0}{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y}, 
+\\*
+\hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a053d6506ed5a619c4ac829fe685091e0}{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y}, 
+\\*
+\hyperlink{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a0c2c408585299080663f8eb6cc289c04}{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C}
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+S mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3}{I2\+S\+\_\+\+Ser\+In\+Active\+Config} \{ \\*
+\hyperlink{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3a66aeb3fe813ed8c66e3e9e145068cdbd}{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E}, 
+\\*
+\hyperlink{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3ab0f78819f591a0100ecef46f97e0c7d9}{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L}, 
+\\*
+\hyperlink{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3a5fd9b84daf2b878932e3a28a6c21ea57}{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L}
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+S Serializer In\+Active state settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_i2_s_8h_a68adf81f32430f87478afbc63e0623af}{I2\+S\+\_\+\+Pin\+Mode} \{ \\*
+\hyperlink{_i2_s_8h_a68adf81f32430f87478afbc63e0623afa581622afe5daeecf01b66fb9c07c026b}{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X}, 
+\\*
+\hyperlink{_i2_s_8h_a68adf81f32430f87478afbc63e0623afa70c2a974a0b4fe247127546c4583cdfc}{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X}, 
+\\*
+\hyperlink{_i2_s_8h_a68adf81f32430f87478afbc63e0623aface52223cb7a46097543160547d9ff35d}{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+S serial pin mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_i2_s_8h_a111a6b44f868cf90f7b25ced9f22ae1b}{I2\+S\+\_\+close} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a given I2\+S peripheral specified by the I2\+S handle. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given I2\+S\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes the I2\+S module. \end{DoxyCompactList}\item 
+\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open} (unsigned int index, \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given I2\+S peripheral specified by the particular index value. The parameter specifies which mode the I2\+S will operate. \end{DoxyCompactList}\item 
+void \hyperlink{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}{I2\+S\+\_\+\+Params\+\_\+init} (\hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_s_8h_ae909acec82e9fcd05f3b6ee98312e286}{I2\+S\+\_\+read} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em Function to queue a buffer of data to the I2\+S in callback mode for reading. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_s_8h_a7e2985cc874172922713b781775b6d01}{I2\+S\+\_\+read\+Issue} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em Function to queue a buffer of data to the I2\+S in Issue/\+Reclaim mode for reading. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{_i2_s_8h_a5678bf72e1d1954179d2a0db5c45eca8}{I2\+S\+\_\+read\+Reclaim} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$p\+Desc)
+\begin{DoxyCompactList}\small\item\em Function to retrieve a full buffer of data read by the I2\+S. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_s_8h_a4998241e01565a840d592129287df9d6}{I2\+S\+\_\+write} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em Function to queue a buffer of data to the I2\+S in callback mode for writing. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_s_8h_aa87d62fe24fe0344c23e99e165c15424}{I2\+S\+\_\+write\+Issue} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)
+\begin{DoxyCompactList}\small\item\em Function to queue a buffer of data to the I2\+S in Issue/\+Reclaim mode for writing. \end{DoxyCompactList}\item 
+size\+\_\+t \hyperlink{_i2_s_8h_aa04de09198983b7bc17a000fc003ab1a}{I2\+S\+\_\+write\+Reclaim} (\hyperlink{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}{I2\+S\+\_\+\+Handle} handle, \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$p\+Desc)
+\begin{DoxyCompactList}\small\item\em Function to retrieve a buffer that the I2\+S has finished writing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_i2_s_8h_af919ac4341fca59988c28e16058fa819}
+Common I2\+S\+\_\+control command code reservation offset. I2\+S driver implementations should offset command codes with I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define I2SXYZ\_COMMAND0         I2S\_CMD\_RESERVED + 0
+2 #define I2SXYZ\_COMMAND1         I2S\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_i2_s_8h_a3fad4fcf6773f3c5946c4881631f838d}
+Common I2\+S\+\_\+control status code reservation offset. I2\+S driver implementations should offset status codes with I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define I2SXYZ\_STATUS\_ERROR0    I2S\_STATUS\_RESERVED - 0
+2 #define I2SXYZ\_STATUS\_ERROR1    I2S\_STATUS\_RESERVED - 1
+3 #define I2SXYZ\_STATUS\_ERROR2    I2S\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_i2_s_8h_a23118b46858671b6537d3a68721f0282}
+
+
+Successful status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. 
+
+\hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()} returns I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_i2_s_8h_a775a6dc5aa644d4cca2179afbafb63ad}
+
+
+Generic error status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. 
+
+\hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()} returns I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_i2_s_8h_a649cf0c869381728fc9b56dfdbbd3e3d}
+
+
+An error status code returned by \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()} returns I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{I2\+S\+\_\+\+E\+R\+R\+O\+R@{I2\+S\+\_\+\+E\+R\+R\+O\+R}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+E\+R\+R\+O\+R~{\bf I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}\label{_i2_s_8h_a81d0dd9da59128b28cb23c59fe57c939}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}}
+\index{I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R~$\sim$(0)}\label{_i2_s_8h_a8fd310c110b6a9425cf61753f3e956ab}
+
+
+Wait forever define. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Handle@{I2\+S\+\_\+\+Handle}}
+\index{I2\+S\+\_\+\+Handle@{I2\+S\+\_\+\+Handle}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+\_\+\+Config}$\ast$ {\bf I2\+S\+\_\+\+Handle}}\label{_i2_s_8h_aff0fad1efd0d9dc3c8d2cc87e73cd5a0}
+
+
+A handle that is returned from a \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} call. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+\index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Buf\+Desc}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+\_\+\+Buf\+Desc}  {\bf I2\+S\+\_\+\+Buf\+Desc}}\label{_i2_s_8h_a749d6d0d5339bfb54246e0b301016312}
+
+
+I2\+S buffer descriptor for issue/reclaim mode. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Callback@{I2\+S\+\_\+\+Callback}}
+\index{I2\+S\+\_\+\+Callback@{I2\+S\+\_\+\+Callback}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+S\+\_\+\+Callback) ({\bf I2\+S\+\_\+\+Handle}, {\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)}\label{_i2_s_8h_af87c5d43590153717044a932ff6b2e03}
+
+
+The definition of a callback function used by the I2\+S driver when used in \hyperlink{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a2c7b409c7185250bef51c0e6de600d08}{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em I2\+S\+\_\+\+Handle} & I2\+S\+\_\+\+Handle\\
+\hline
+{\em buf} & Pointer to read/write buffer\\
+\hline
+{\em count} & Number of elements read/written \\
+\hline
+\end{DoxyParams}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Data\+Mode@{I2\+S\+\_\+\+Data\+Mode}}
+\index{I2\+S\+\_\+\+Data\+Mode@{I2\+S\+\_\+\+Data\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+S\+\_\+\+Data\+Mode}  {\bf I2\+S\+\_\+\+Data\+Mode}}\label{_i2_s_8h_ad634bdf621a2f3f626b3cce0e67f659a}
+
+
+I2\+S mode settings. 
+
+This enum defines the read and write modes for the configured I2\+S. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Op\+Mode@{I2\+S\+\_\+\+Op\+Mode}}
+\index{I2\+S\+\_\+\+Op\+Mode@{I2\+S\+\_\+\+Op\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Op\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+S\+\_\+\+Op\+Mode}  {\bf I2\+S\+\_\+\+Op\+Mode}}\label{_i2_s_8h_a932b2a114f3c9cfd64af554ff3b4496a}
+
+
+I2\+S mode settings. 
+
+This enumeration defines the mode for I2\+S operation. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Ser\+In\+Active\+Config@{I2\+S\+\_\+\+Ser\+In\+Active\+Config}}
+\index{I2\+S\+\_\+\+Ser\+In\+Active\+Config@{I2\+S\+\_\+\+Ser\+In\+Active\+Config}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Ser\+In\+Active\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+S\+\_\+\+Ser\+In\+Active\+Config}  {\bf I2\+S\+\_\+\+Ser\+In\+Active\+Config}}\label{_i2_s_8h_a19123e5e2c577320f90558cfc640e918}
+
+
+I2\+S Serializer In\+Active state settings. 
+
+This enumeration defines the Serializer configuration in inactive state. \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Pin\+Mode@{I2\+S\+\_\+\+Pin\+Mode}}
+\index{I2\+S\+\_\+\+Pin\+Mode@{I2\+S\+\_\+\+Pin\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Pin\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+S\+\_\+\+Pin\+Mode}  {\bf I2\+S\+\_\+\+Pin\+Mode}}\label{_i2_s_8h_ac3246d834f54bb71d4b58fe945cb9228}
+
+
+I2\+S serial pin mode. 
+
+This enumeration defines the Serial pin configuration \index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}}
+\index{I2\+S\+\_\+\+Params@{I2\+S\+\_\+\+Params}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+\_\+\+Params}  {\bf I2\+S\+\_\+\+Params}}\label{_i2_s_8h_afff1198c952846b6248c11a68f5927ff}
+
+
+Basic I2\+S Parameters. 
+
+I2\+S parameters are used to with the \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}{I2\+S\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}{I2\+S\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Close\+Fxn@{I2\+S\+\_\+\+Close\+Fxn}}
+\index{I2\+S\+\_\+\+Close\+Fxn@{I2\+S\+\_\+\+Close\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+S\+\_\+\+Close\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle)}\label{_i2_s_8h_a91bfa91197cb8ff2388744088177dde8}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a91bfa91197cb8ff2388744088177dde8}{I2\+S\+\_\+\+Close\+Fxn()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Control\+Fxn@{I2\+S\+\_\+\+Control\+Fxn}}
+\index{I2\+S\+\_\+\+Control\+Fxn@{I2\+S\+\_\+\+Control\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ I2\+S\+\_\+\+Control\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_i2_s_8h_aec416642887dbc181166c479a79c5615}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}{I2\+S\+\_\+control()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Init\+Fxn@{I2\+S\+\_\+\+Init\+Fxn}}
+\index{I2\+S\+\_\+\+Init\+Fxn@{I2\+S\+\_\+\+Init\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ I2\+S\+\_\+\+Init\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle)}\label{_i2_s_8h_a17f21fcbc2627ef97044ee7ff6cfdee6}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Open\+Fxn@{I2\+S\+\_\+\+Open\+Fxn}}
+\index{I2\+S\+\_\+\+Open\+Fxn@{I2\+S\+\_\+\+Open\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf I2\+S\+\_\+\+Handle}($\ast$ I2\+S\+\_\+\+Open\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle, {\bf I2\+S\+\_\+\+Params} $\ast$params)}\label{_i2_s_8h_a0a8c4787b4a5a262dc86d9dfa7da2840}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a0a8c4787b4a5a262dc86d9dfa7da2840}{I2\+S\+\_\+\+Open\+Fxn()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Issue\+Fxn@{I2\+S\+\_\+\+Issue\+Fxn}}
+\index{I2\+S\+\_\+\+Issue\+Fxn@{I2\+S\+\_\+\+Issue\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Issue\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ I2\+S\+\_\+\+Issue\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle, {\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$desc)}\label{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}{I2\+S\+\_\+\+Issue\+Fxn()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Reclaim\+Fxn@{I2\+S\+\_\+\+Reclaim\+Fxn}}
+\index{I2\+S\+\_\+\+Reclaim\+Fxn@{I2\+S\+\_\+\+Reclaim\+Fxn}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Reclaim\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef size\+\_\+t($\ast$ I2\+S\+\_\+\+Reclaim\+Fxn) ({\bf I2\+S\+\_\+\+Handle} handle, {\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$desc)}\label{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}{I2\+S\+\_\+\+Reclaim\+Fxn()}. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+\_\+\+Fxn\+Table}  {\bf I2\+S\+\_\+\+Fxn\+Table}}\label{_i2_s_8h_aea46bf5e1dc3bfd520ba7d2911b15b8c}
+
+
+The definition of a I2\+S function table that contains the required set of functions to control a specific I2\+S driver implementation. 
+
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}}
+\index{I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+\_\+\+Config}  {\bf I2\+S\+\_\+\+Config}}\label{_i2_s_8h_a702f29a736651810df453469ff616606}
+
+
+I2\+S Global configuration. 
+
+The \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config} structure contains a set of pointers used to characterize the I2\+S driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Data\+Mode@{I2\+S\+\_\+\+Data\+Mode}}
+\index{I2\+S\+\_\+\+Data\+Mode@{I2\+S\+\_\+\+Data\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+S\+\_\+\+Data\+Mode}}\label{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405}
+
+
+I2\+S mode settings. 
+
+This enum defines the read and write modes for the configured I2\+S. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}}\item[{\em 
+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\label{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a2c7b409c7185250bef51c0e6de600d08}
+}]Non-\/blocking and will return immediately. When the transfer by the intr is finished the configured callback function is called. \index{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M@{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M@{I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M}}\item[{\em 
+I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M\label{_i2_s_8h_a120b8555bc048186bbd436dbdbb5b405a294b93c8f4917e45ac62b7c12b017f85}
+}]Use I2\+S\+\_\+read\+Issue, I2\+S\+\_\+write\+Issue calls to queue buffers to the I2\+S. \hyperlink{_i2_s_8h_a5678bf72e1d1954179d2a0db5c45eca8}{I2\+S\+\_\+read\+Reclaim()} blocks until a buffer of data is available. \hyperlink{_i2_s_8h_aa04de09198983b7bc17a000fc003ab1a}{I2\+S\+\_\+write\+Reclaim()} blocks until a buffer of data has been written and the descriptor can be returned back to the caller. \end{description}
+\end{Desc}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Op\+Mode@{I2\+S\+\_\+\+Op\+Mode}}
+\index{I2\+S\+\_\+\+Op\+Mode@{I2\+S\+\_\+\+Op\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Op\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+S\+\_\+\+Op\+Mode}}\label{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0}
+
+
+I2\+S mode settings. 
+
+This enumeration defines the mode for I2\+S operation. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y}}\item[{\em 
+I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+O\+N\+L\+Y\label{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a314552b49ae8d2f1d03c17e9dbf165d0}
+}]Only Transmit enabled \index{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y}}\item[{\em 
+I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+R\+X\+\_\+\+O\+N\+L\+Y\label{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a053d6506ed5a619c4ac829fe685091e0}
+}]Only Receive enabled \index{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C@{I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C}}\item[{\em 
+I2\+S\+\_\+\+O\+P\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C\label{_i2_s_8h_a1eb065ff9040979c9d6586c8d0df9ee0a0c2c408585299080663f8eb6cc289c04}
+}]Receive and Transmit are enabled in Sync \end{description}
+\end{Desc}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Ser\+In\+Active\+Config@{I2\+S\+\_\+\+Ser\+In\+Active\+Config}}
+\index{I2\+S\+\_\+\+Ser\+In\+Active\+Config@{I2\+S\+\_\+\+Ser\+In\+Active\+Config}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Ser\+In\+Active\+Config}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+S\+\_\+\+Ser\+In\+Active\+Config}}\label{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3}
+
+
+I2\+S Serializer In\+Active state settings. 
+
+This enumeration defines the Serializer configuration in inactive state. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E}}\item[{\em 
+I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+T\+R\+I\+\_\+\+S\+T\+A\+T\+E\label{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3a66aeb3fe813ed8c66e3e9e145068cdbd}
+}]Inactive state to tristate \index{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L}}\item[{\em 
+I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L\label{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3ab0f78819f591a0100ecef46f97e0c7d9}
+}]Inactive state to low \index{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L@{I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L}}\item[{\em 
+I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L\label{_i2_s_8h_a59a8a15850cffe145050ee9f0958bcd3a5fd9b84daf2b878932e3a28a6c21ea57}
+}]Inactive state to high \end{description}
+\end{Desc}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Pin\+Mode@{I2\+S\+\_\+\+Pin\+Mode}}
+\index{I2\+S\+\_\+\+Pin\+Mode@{I2\+S\+\_\+\+Pin\+Mode}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Pin\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+S\+\_\+\+Pin\+Mode}}\label{_i2_s_8h_a68adf81f32430f87478afbc63e0623af}
+
+
+I2\+S serial pin mode. 
+
+This enumeration defines the Serial pin configuration \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X}}\item[{\em 
+I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X\label{_i2_s_8h_a68adf81f32430f87478afbc63e0623afa581622afe5daeecf01b66fb9c07c026b}
+}]Operate the pin in Rx mode \index{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X}}\item[{\em 
+I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X\label{_i2_s_8h_a68adf81f32430f87478afbc63e0623afa70c2a974a0b4fe247127546c4583cdfc}
+}]Operate the pin in Tx mode \index{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E}!I2\+S.\+h@{I2\+S.\+h}}\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E@{I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E}}\item[{\em 
+I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+I\+N\+A\+C\+T\+I\+V\+E\label{_i2_s_8h_a68adf81f32430f87478afbc63e0623aface52223cb7a46097543160547d9ff35d}
+}]Pin in inactive mode \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+close@{I2\+S\+\_\+close}}
+\index{I2\+S\+\_\+close@{I2\+S\+\_\+close}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+S\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a111a6b44f868cf90f7b25ced9f22ae1b}
+
+
+Function to close a given I2\+S peripheral specified by the I2\+S handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle returned from I2\+S\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+control@{I2\+S\+\_\+control}}
+\index{I2\+S\+\_\+control@{I2\+S\+\_\+control}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+S\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a1af19b22e9036bee696b4e4efe4916b0}
+
+
+Function performs implementation specific features on a given I2\+S\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S handle returned from \hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}{I2\+S\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+init@{I2\+S\+\_\+init}}
+\index{I2\+S\+\_\+init@{I2\+S\+\_\+init}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+S\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}
+
+
+Function to initializes the I2\+S module. 
+
+\begin{DoxyPrecond}{Precondition}
+The I2\+S\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other I2\+S driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+open@{I2\+S\+\_\+open}}
+\index{I2\+S\+\_\+open@{I2\+S\+\_\+open}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Handle} I2\+S\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf I2\+S\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_aad4ce7cbdf38dc5597f5a92ad056ebc1}
+
+
+Function to initialize a given I2\+S peripheral specified by the particular index value. The parameter specifies which mode the I2\+S will operate. 
+
+\begin{DoxyPrecond}{Precondition}
+I2\+S controller has been initialized
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the I2\+S indexed into the I2\+S\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A I2\+S\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} 
+
+\hyperlink{_i2_s_8h_a111a6b44f868cf90f7b25ced9f22ae1b}{I2\+S\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+\+Params\+\_\+init@{I2\+S\+\_\+\+Params\+\_\+init}}
+\index{I2\+S\+\_\+\+Params\+\_\+init@{I2\+S\+\_\+\+Params\+\_\+init}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+S\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a961c116273a6e8d4581278b2666f13b5}
+
+
+Function to initialize the \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: params.\+operation\+Mode = I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+T\+X\+\_\+\+R\+X\+\_\+\+S\+Y\+N\+C; params.\+sampling\+Frequency = 16000; params.\+slot\+Length = 16; params.\+bits\+Per\+Sample = 16; params.\+num\+Channels = 2; params.\+read\+Mode = I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M; params.\+read\+Callback = N\+U\+L\+L; params.\+read\+Timeout = I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R; params.\+write\+Mode = I2\+S\+\_\+\+M\+O\+D\+E\+\_\+\+I\+S\+S\+U\+E\+R\+E\+C\+L\+A\+I\+M; params.\+write\+Callback = N\+U\+L\+L; params.\+write\+Timeout = I2\+S\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R; params.\+custom\+Params = N\+U\+L\+L;
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Parameter structure to initialize \\
+\hline
+\end{DoxyParams}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+read@{I2\+S\+\_\+read}}
+\index{I2\+S\+\_\+read@{I2\+S\+\_\+read}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+S\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$}]{desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_ae909acec82e9fcd05f3b6ee98312e286}
+
+
+Function to queue a buffer of data to the I2\+S in callback mode for reading. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} object. The buf\+Ptr and buf\+Size fields must be set to a buffer and the size of the buffer before passing to this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 if successful else would return I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D on an error. 
+\end{DoxyReturn}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+read\+Issue@{I2\+S\+\_\+read\+Issue}}
+\index{I2\+S\+\_\+read\+Issue@{I2\+S\+\_\+read\+Issue}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+read\+Issue}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+S\+\_\+read\+Issue (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$}]{desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a7e2985cc874172922713b781775b6d01}
+
+
+Function to queue a buffer of data to the I2\+S in Issue/\+Reclaim mode for reading. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} object. The buf\+Ptr and buf\+Size fields must be set to a buffer and the size of the buffer before passing to this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 if successful else would return I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D on an error. 
+\end{DoxyReturn}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+read\+Reclaim@{I2\+S\+\_\+read\+Reclaim}}
+\index{I2\+S\+\_\+read\+Reclaim@{I2\+S\+\_\+read\+Reclaim}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+read\+Reclaim}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+S\+\_\+read\+Reclaim (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$}]{p\+Desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a5678bf72e1d1954179d2a0db5c45eca8}
+
+
+Function to retrieve a full buffer of data read by the I2\+S. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em p\+Desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} pointer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes read from the I2\+S, or I2\+S\+\_\+\+E\+R\+R\+O\+R on an error. 
+\end{DoxyReturn}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+write@{I2\+S\+\_\+write}}
+\index{I2\+S\+\_\+write@{I2\+S\+\_\+write}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+S\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$}]{desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_a4998241e01565a840d592129287df9d6}
+
+
+Function to queue a buffer of data to the I2\+S in callback mode for writing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} object. The buf\+Ptr and buf\+Size fields must be set to a buffer and the size of the buffer before passing to this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 if successful else would return I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D on an error. 
+\end{DoxyReturn}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+write\+Issue@{I2\+S\+\_\+write\+Issue}}
+\index{I2\+S\+\_\+write\+Issue@{I2\+S\+\_\+write\+Issue}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+write\+Issue}]{\setlength{\rightskip}{0pt plus 5cm}int I2\+S\+\_\+write\+Issue (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$}]{desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_aa87d62fe24fe0344c23e99e165c15424}
+
+
+Function to queue a buffer of data to the I2\+S in Issue/\+Reclaim mode for writing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} object. The buf\+Ptr and buf\+Size fields must be set to a buffer and the size of the buffer before passing to this function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 if successful else would return I2\+S\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D on an error. 
+\end{DoxyReturn}
+\index{I2\+S.\+h@{I2\+S.\+h}!I2\+S\+\_\+write\+Reclaim@{I2\+S\+\_\+write\+Reclaim}}
+\index{I2\+S\+\_\+write\+Reclaim@{I2\+S\+\_\+write\+Reclaim}!I2\+S.\+h@{I2\+S.\+h}}
+\paragraph[{I2\+S\+\_\+write\+Reclaim}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+S\+\_\+write\+Reclaim (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+\_\+\+Handle}}]{handle, }
+\item[{{\bf I2\+S\+\_\+\+Buf\+Desc} $\ast$$\ast$}]{p\+Desc}
+\end{DoxyParamCaption}
+)}\label{_i2_s_8h_aa04de09198983b7bc17a000fc003ab1a}
+
+
+Function to retrieve a buffer that the I2\+S has finished writing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A I2\+S\+\_\+\+Handle\\
+\hline
+{\em p\+Desc} & A pointer to a \hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} pointer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes that have been written to the I2\+S, I2\+S\+\_\+\+E\+R\+R\+O\+R on an error. 
+\end{DoxyReturn}

@@ -1,0 +1,91 @@
+clean::
+	$(RM) package/gnu.targets.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/gnu_targets.java
+	$(RM) package/gnu_targets.class
+	$(RM) package/package_gnu.targets.c
+	$(RM) package/package.defs.h
+	$(RM) ITarget.h
+	$(RM) Linux86.h
+	$(RM) Linux86_64.h
+	$(RM) Mingw.h
+	$(RM) MacOS86_64.h
+	$(RM) package/gnu.targets.ccs
+
+.interfaces: package/gnu.targets.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/gnu_targets.java package/package_gnu.targets.c package/package.defs.h ITarget.h Linux86.h Linux86_64.h Mingw.h MacOS86_64.h package/gnu.targets.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Linux86.xdc Linux86_64.xdc Mingw.xdc MacOS86_64.xdc ITarget.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+ITarget.xs:
+package/package.xdc.inc: ITarget.xs
+Linux86.xs:
+package/package.xdc.inc: Linux86.xs
+Mingw.xs:
+package/package.xdc.inc: Mingw.xs
+
+# schema update dependencies
+package/package.xdc.inc: Linux86.xdc
+package/package.xdc.inc: Linux86_64.xdc
+package/package.xdc.inc: Mingw.xdc
+package/package.xdc.inc: MacOS86_64.xdc
+package/package.xdc.inc: ITarget.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget3.xdc
+xdc/bld/ITarget3.xdc:
+vpath xdc/bld/ITarget3.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget2.xdc
+xdc/bld/ITarget2.xdc:
+vpath xdc/bld/ITarget2.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget.xdc
+xdc/bld/ITarget.xdc:
+vpath xdc/bld/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITargetFilter.xdc
+xdc/bld/ITargetFilter.xdc:
+vpath xdc/bld/ITargetFilter.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: ITarget.h
+ITarget.h:
+package/package.xdc.inc: Linux86.h
+Linux86.h:
+package/package.xdc.inc: Linux86_64.h
+Linux86_64.h:
+package/package.xdc.inc: Mingw.h
+Mingw.h:
+package/package.xdc.inc: MacOS86_64.h
+MacOS86_64.h:
+

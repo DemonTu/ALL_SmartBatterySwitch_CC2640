@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+
+<iarProjectConnection version="1.2" name="Watchdog" oneShot="true"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="IarProjectConnection_1.2.xsd">
+
+  <device>
+    <name>CC3200</name>
+  </device>
+
+  <extraOptions>
+    <args>
+      <arg>-f</arg>
+      <arg>$PROJ_DIR$/configPkg/compiler.opt.defs</arg>
+      <arg>--diag_suppress=Pa050</arg>
+      <arg>-DPART_CC3200</arg>
+      <arg>-DCCWARE</arg>
+      <arg>-Dewarm</arg>
+      <arg>-Ic:/ti/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0</arg>
+      <arg>-Ic:/ti/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc</arg>
+      <arg>-Ic:/ti/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib</arg>
+    </args>
+  </extraOptions>
+
+  <linkerFile>
+    <override>true</override>
+    <path>$PROJ_DIR$/$PROJ_FNAME$_CC3200_LP.icf</path>
+  </linkerFile>
+
+  <linkerExtraOptions>
+    <args>
+      <arg>-f</arg>
+      <arg>$PROJ_DIR$/configPkg/linker.cmd</arg>
+      <arg>c:/ti/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/ewarm/Release/Exe/driverlib.a</arg>
+    </args>
+  </linkerExtraOptions>
+
+  <customBuildTools>
+    <customBuildTool name="configuro">   <!-- Custom build tool that will be assigned to a file group -->
+      <fileExtensions>.cfg</fileExtensions>
+      <command>"$XDCROOT$/bin/stderr"</command>
+      <output>
+        <path>$PROJ_DIR$/configPkg/package.mak</path>
+      </output>
+    </customBuildTool>
+  </customBuildTools>
+
+  <heaps>
+    <heap> <!-- If omitted, id="0" -->
+      <size>0</size>
+    </heap>
+    <heap id="1">
+      <size>0</size>
+    </heap>
+  </heaps>
+  <stacks>
+    <stack> <!-- If omitted, id="0" -->
+      <size>768</size>
+    </stack>
+  </stacks>
+
+  <preBuild>
+    <command>"$XDCROOT$/xs" --xdcpath="$XDCPATH$" iar.tools.configuro -c "$TOOLKIT_DIR$" --cc "$COMPILER_PATH$" --device "$DEVICE$" --compileOptions $COMPILER_ARGS_ROOT_QUOTED$ --linkOptions $LINKER_ARGS_QUOTED$ --profile release --projFile "$PROJ_PATH$"</command>
+  </preBuild>
+
+  <files>
+    <group name="Source files">
+      <path copyTo="$PROJ_DIR$/watchdog.c">./watchdog.c</path>
+      <path copyTo="$PROJ_DIR$/watchdog_rom_pin_mux_config.c">./watchdog_rom_pin_mux_config.c</path>
+      <path copyTo="$PROJ_DIR$/CC3200_LP.c">./CC3200_LP.c</path>
+      <path copyTo="$PROJ_DIR$/$PROJ_FNAME$_CC3200_LP.icf">./CC3200_LP.icf</path>
+    </group>
+
+    <group name="Header files">
+      <path copyTo="$PROJ_DIR$/pin_mux_config.h">./pin_mux_config.h</path>
+      <path copyTo="$PROJ_DIR$/Board.h">./Board.h</path>
+      <path copyTo="$PROJ_DIR$/CC3200_LP.h">./CC3200_LP.h</path>
+    </group>
+
+    <group name="Configuration files" customBuildTool="configuro">
+       <path copyTo="$PROJ_DIR$/$PROJ_FNAME$.cfg">./watchdog_cc3200_lp.cfg</path>
+    </group>
+
+    <group name="Documentation" build="false">
+      <path copyTo="$PROJ_DIR$/watchdog_readme.txt">./watchdog_readme.txt</path>
+    </group>
+  </files>
+</iarProjectConnection>

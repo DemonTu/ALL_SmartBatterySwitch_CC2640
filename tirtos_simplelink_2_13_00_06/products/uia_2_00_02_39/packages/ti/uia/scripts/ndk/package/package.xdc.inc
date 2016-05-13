@@ -1,0 +1,13 @@
+package.xdc
+Main.xdc
+Main.xs
+package/ti.uia.scripts.ndk.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/ti_uia_scripts_ndk.java
+package/ti_uia_scripts_ndk.class
+package/package_ti.uia.scripts.ndk.c
+package/package.defs.h
+package/ti.uia.scripts.ndk.ccs

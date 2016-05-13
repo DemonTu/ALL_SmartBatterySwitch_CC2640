@@ -1,0 +1,6 @@
+<map id="UARTCC3200DMA_Object" name="UARTCC3200DMA_Object">
+<area shape="rect" href="$struct_power___notify_obj.html" title="Power notify object structure. " alt="" coords="23,102,143,126" />
+<area shape="rect" href="$struct_list_p___elem.html" title="ListP_Elem" alt="" coords="39,10,127,34" />
+<area shape="rect" href="$struct_u_a_r_t___config.html" title="UART Global configuration. " alt="" coords="237,102,341,126" />
+<area shape="rect" href="$struct_u_a_r_t___fxn_table.html" title="The definition of a UART function table that contains the required set of functions to control a spec..." alt="" coords="289,339,409,363" />
+</map>

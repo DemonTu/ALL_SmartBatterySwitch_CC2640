@@ -1,0 +1,87 @@
+\subsection{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_tiva___h_w_attrs}\index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+Tiva Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_abecf13eceeaf44f1781aa2bfae1edad4}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_a3353583599880bab5429fcbbd189f89c}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_ae442562721bedb759753fdfba3bcb93b}{int\+Priority}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_ad8f36b7ebba17d7cecf8cc6bb3bac8ed}{flow\+Control}
+\item 
+unsigned char $\ast$ \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_a6382c2f9dc1fc1648e051d002a5c8521}{ring\+Buf\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_u_a_r_t_tiva___h_w_attrs_a71cdbd83ab94cd22b14da7204cd80b0d}{ring\+Buf\+Size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+Tiva Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\item driverlib/uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} uartTivaRingBuffer[2][32];
+
+\textcolor{keyword}{const} UARTTiva_HWAttrs uartTivaHWAttrs[] = \{
+    \{
+        .baseAddr = UART0\_BASE,
+        .intNum = INT\_UART0,
+        .intPriority = ~0,
+        .flowControl = UART\_FLOWCONTROL\_NONE,
+        .ringBufPtr  = uartTivaRingBuffer[0],
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartTivaRingBuffer[0])
+    \},
+    \{
+        .baseAddr = UART1\_BASE,
+        .intNum = INT\_UART1,
+        .intPriority = ~0,
+        .flowControl = UART\_FLOWCONTROL\_NONE,
+        .ringBufPtr  = uartTivaRingBuffer[1],
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartTivaRingBuffer[1])
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_tiva___h_w_attrs_abecf13eceeaf44f1781aa2bfae1edad4}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_u_a_r_t_tiva___h_w_attrs_a3353583599880bab5429fcbbd189f89c}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_u_a_r_t_tiva___h_w_attrs_ae442562721bedb759753fdfba3bcb93b}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority \index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!flow\+Control@{flow\+Control}}
+\index{flow\+Control@{flow\+Control}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{flow\+Control}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::flow\+Control}\label{struct_u_a_r_t_tiva___h_w_attrs_ad8f36b7ebba17d7cecf8cc6bb3bac8ed}
+Hardware flow control setting defined by driverlib \index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Ptr@{ring\+Buf\+Ptr}}
+\index{ring\+Buf\+Ptr@{ring\+Buf\+Ptr}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Ptr}\label{struct_u_a_r_t_tiva___h_w_attrs_a6382c2f9dc1fc1648e051d002a5c8521}
+Pointer to a application ring buffer \index{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Size@{ring\+Buf\+Size}}
+\index{ring\+Buf\+Size@{ring\+Buf\+Size}!U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t U\+A\+R\+T\+Tiva\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Size}\label{struct_u_a_r_t_tiva___h_w_attrs_a71cdbd83ab94cd22b14da7204cd80b0d}
+Size of ring\+Buf\+Ptr 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_tiva_8h}{U\+A\+R\+T\+Tiva.\+h}\end{DoxyCompactItemize}

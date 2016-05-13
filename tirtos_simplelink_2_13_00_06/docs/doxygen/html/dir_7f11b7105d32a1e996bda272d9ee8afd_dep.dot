@@ -1,0 +1,11 @@
+digraph "i2c" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_91d6028ef0aa1035242bfefa07cd806e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="drivers" fontname="Helvetica", fontsize="10", URL="dir_91d6028ef0aa1035242bfefa07cd806e.html"]
+  dir_7f11b7105d32a1e996bda272d9ee8afd [shape=box, label="i2c", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7f11b7105d32a1e996bda272d9ee8afd.html"];
+  }
+  dir_48feca565b02475938ec5531d6e9635b [shape=box label="ports" URL="dir_48feca565b02475938ec5531d6e9635b.html"];
+  dir_7f11b7105d32a1e996bda272d9ee8afd->dir_48feca565b02475938ec5531d6e9635b [headlabel="4", labeldistance=1.5 headhref="dir_000008_000005.html"];
+}

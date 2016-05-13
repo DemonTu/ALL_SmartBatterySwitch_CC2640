@@ -1,0 +1,136 @@
+clean::
+	$(RM) package/gnu.targets.arm.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/gnu_targets_arm.java
+	$(RM) package/gnu_targets_arm.class
+	$(RM) package/package_gnu.targets.arm.c
+	$(RM) package/package.defs.h
+	$(RM) ITarget.h
+	$(RM) GCArmv5T.h
+	$(RM) GCArmv6.h
+	$(RM) GCArmv7A.h
+	$(RM) GCArmv7AF.h
+	$(RM) IM.h
+	$(RM) M3.h
+	$(RM) M4.h
+	$(RM) M4F.h
+	$(RM) A8F.h
+	$(RM) A9F.h
+	$(RM) A15F.h
+	$(RM) package/gnu.targets.arm.ccs
+
+.interfaces: package/gnu.targets.arm.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/gnu_targets_arm.java package/package_gnu.targets.arm.c package/package.defs.h ITarget.h GCArmv5T.h GCArmv6.h GCArmv7A.h GCArmv7AF.h IM.h M3.h M4.h M4F.h A8F.h A9F.h A15F.h package/gnu.targets.arm.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: GCArmv5T.xdc GCArmv6.xdc GCArmv7A.xdc GCArmv7AF.xdc M3.xdc M4.xdc M4F.xdc A8F.xdc A9F.xdc A15F.xdc ITarget.xdc IM.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+ITarget.xs:
+package/package.xdc.inc: ITarget.xs
+GCArmv6.xs:
+package/package.xdc.inc: GCArmv6.xs
+GCArmv7A.xs:
+package/package.xdc.inc: GCArmv7A.xs
+IM.xs:
+package/package.xdc.inc: IM.xs
+M3.xs:
+package/package.xdc.inc: M3.xs
+M4.xs:
+package/package.xdc.inc: M4.xs
+M4F.xs:
+package/package.xdc.inc: M4F.xs
+A8F.xs:
+package/package.xdc.inc: A8F.xs
+A9F.xs:
+package/package.xdc.inc: A9F.xs
+A15F.xs:
+package/package.xdc.inc: A15F.xs
+
+# schema update dependencies
+package/package.xdc.inc: GCArmv5T.xdc
+package/package.xdc.inc: GCArmv6.xdc
+package/package.xdc.inc: GCArmv7A.xdc
+package/package.xdc.inc: GCArmv7AF.xdc
+package/package.xdc.inc: M3.xdc
+package/package.xdc.inc: M4.xdc
+package/package.xdc.inc: M4F.xdc
+package/package.xdc.inc: A8F.xdc
+package/package.xdc.inc: A9F.xdc
+package/package.xdc.inc: A15F.xdc
+package/package.xdc.inc: ITarget.xdc
+package/package.xdc.inc: IM.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget2.xdc
+xdc/bld/ITarget2.xdc:
+vpath xdc/bld/ITarget2.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget.xdc
+xdc/bld/ITarget.xdc:
+vpath xdc/bld/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITargetFilter.xdc
+xdc/bld/ITargetFilter.xdc:
+vpath xdc/bld/ITargetFilter.xdc $(XPKGVPATH)
+package/package.xdc.inc: gnu/targets/ITarget.xdc
+gnu/targets/ITarget.xdc:
+vpath gnu/targets/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget3.xdc
+xdc/bld/ITarget3.xdc:
+vpath xdc/bld/ITarget3.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: ITarget.h
+ITarget.h:
+package/package.xdc.inc: GCArmv5T.h
+GCArmv5T.h:
+package/package.xdc.inc: GCArmv6.h
+GCArmv6.h:
+package/package.xdc.inc: GCArmv7A.h
+GCArmv7A.h:
+package/package.xdc.inc: GCArmv7AF.h
+GCArmv7AF.h:
+package/package.xdc.inc: IM.h
+IM.h:
+package/package.xdc.inc: M3.h
+M3.h:
+package/package.xdc.inc: M4.h
+M4.h:
+package/package.xdc.inc: M4F.h
+M4F.h:
+package/package.xdc.inc: A8F.h
+A8F.h:
+package/package.xdc.inc: A9F.h
+A9F.h:
+package/package.xdc.inc: A15F.h
+A15F.h:
+

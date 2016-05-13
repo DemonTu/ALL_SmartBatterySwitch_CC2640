@@ -1,0 +1,5 @@
+<map id="I2CEUSCIB_Object" name="I2CEUSCIB_Object">
+<area shape="rect" href="$struct_i2_c___transaction.html" title="I2C transaction. " alt="" coords="8,9,125,33" />
+<area shape="rect" href="$struct_i2_c___config.html" title="I2C Global configuration. " alt="" coords="320,9,408,33" />
+<area shape="rect" href="$struct_i2_c___fxn_table.html" title="The definition of a I2C function table that contains the required set of functions to control a speci..." alt="" coords="360,158,464,182" />
+</map>

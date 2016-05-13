@@ -1,0 +1,68 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest-Main-Attributes: qAenzqePYASHGIF7LFUpyEflq/A=
+Created-By: 1.6.0_37 (Sun Microsystems Inc.)
+SHA1-Digest-Manifest: JMJOScKoDNik5iZGcdej8oMldfg=
+
+Name: uia_eclipse_cdoc_toc.xml
+SHA1-Digest: v6mhbDy2OL05bD+IH+bD1AS2Q8o=
+
+Name: resources/evm6472/message.c
+SHA1-Digest: Wor0I4TYp1avkcnl6R9xtU2NSz4=
+
+Name: resources/helloworld/cortexm/helloWorld.cfg
+SHA1-Digest: sTITNHYmPtPERd7CAegnqA+H8eY=
+
+Name: resources/makefile.defs
+SHA1-Digest: rHQq/24+5Dhc24fNb4qj0hhJIbE=
+
+Name: resources/single/msp430/stairstep_JTAGStopMode.cfg
+SHA1-Digest: 2UeKwvl8FSLmukRf3fIfuk7YYoQ=
+
+Name: plugin.properties
+SHA1-Digest: YhDtgcN9TWQav65PQAQNsbFtRus=
+
+Name: resources/helloworld/c28/helloWorld.cfg
+SHA1-Digest: QLND/thyacImHgtOzVPQpsGCmiw=
+
+Name: resources/single/stairstep.c
+SHA1-Digest: cSiVqXsJTdgeyDB5r/5mZihvw6o=
+
+Name: resources/helloworld/cc26xx/helloWorld.cfg
+SHA1-Digest: bfOjZirlXMGMR+NpLp77q7bYBKw=
+
+Name: resources/single/evm6472/stairstep_Ethernet.cfg
+SHA1-Digest: b19nq1aWglpdcWAyJKY+iR6wpn8=
+
+Name: resources/single/c6000/stairstep_JTAGRunMode.cfg
+SHA1-Digest: 8UDs9v60FNGE6/9NqOcdUyXWWCY=
+
+Name: toc_top.xml
+SHA1-Digest: BjXium7IpDY5AEpu3n38djOPG7Q=
+
+Name: resources/single/default/stairstep_JTAGStopMode.cfg
+SHA1-Digest: L8fa7pGwTEHJE5j7nyG1QUOclrE=
+
+Name: resources/evm6472/evm6472/message.cfg
+SHA1-Digest: 3xVSHJfEwR/XqgTNdryFxCuLf9Q=
+
+Name: plugin.xml
+SHA1-Digest: 8lmiYQUgRwGUlUeWMgv2C0BZAsA=
+
+Name: resources/single/cc26xx/stairstep_JTAGStopMode.cfg
+SHA1-Digest: gRvKpvpjnX6jm+uG57KVfflhHdo=
+
+Name: resources/single/cortexm/stairstep_JTAGStopMode.cfg
+SHA1-Digest: pDzNMoFltdTFd3rKEYiKX08bPVo=
+
+Name: resources/helloworld/main.c
+SHA1-Digest: sC/FyxbY4oJmgqDDb2OdWFztcVM=
+
+Name: resources/helloworld/default/helloWorld.cfg
+SHA1-Digest: Oam2oEhRmnt1Sn8KWJO9jkQJZxI=
+
+Name: resources/helloworld/msp430/helloWorld.cfg
+SHA1-Digest: umDYltBvf/9MYKvJ0JlgjQjhTXQ=
+
+Name: resources/single/c28/stairstep_JTAGStopMode.cfg
+SHA1-Digest: HM2kjRUWPPALz08wFkId0oivB1U=
+

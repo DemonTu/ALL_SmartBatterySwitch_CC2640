@@ -1,0 +1,6 @@
+<map id="UARTCC26XX_Object" name="UARTCC26XX_Object">
+<area shape="rect" href="$struct_power___notify_obj.html" title="Power notify object structure. " alt="" coords="8,102,128,126" />
+<area shape="rect" href="$struct_list_p___elem.html" title="ListP_Elem" alt="" coords="24,10,112,34" />
+<area shape="rect" href="$struct_u_a_r_t___config.html" title="UART Global configuration. " alt="" coords="232,102,336,126" />
+<area shape="rect" href="$struct_u_a_r_t___fxn_table.html" title="The definition of a UART function table that contains the required set of functions to control a spec..." alt="" coords="284,339,404,363" />
+</map>

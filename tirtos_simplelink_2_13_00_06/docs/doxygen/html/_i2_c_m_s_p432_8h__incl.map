@@ -1,0 +1,7 @@
+<map id="I2CMSP432.h" name="I2CMSP432.h">
+<area shape="rect" href="$_i2_c_8h.html" title="I2C driver interface. " alt="" coords="281,158,388,182" />
+<area shape="rect" href="$_hwi_p_8h.html" title="Hardware Interrupt module for the RTOS Porting Interface. " alt="" coords="412,158,561,182" />
+<area shape="rect" href="$_semaphore_p_8h.html" title="Semaphore module for the RTOS Porting Interface. " alt="" coords="60,158,257,182" />
+<area shape="rect" href="$_power_8h.html" title="Power manager interface. " alt="" coords="598,84,721,108" />
+<area shape="rect" href="$_list_p_8h.html" title="Linked List interface for the RTOS Ports Interface. " alt="" coords="585,158,734,182" />
+</map>

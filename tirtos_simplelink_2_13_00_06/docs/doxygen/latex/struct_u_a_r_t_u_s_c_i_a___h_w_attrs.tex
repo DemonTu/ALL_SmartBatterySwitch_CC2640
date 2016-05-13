@@ -1,0 +1,94 @@
+\subsection{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs}\index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+U\+S\+C\+I\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+U\+S\+C\+I\+A.\+h$>$}
+
+
+
+Collaboration diagram for U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{struct_u_a_r_t_u_s_c_i_a___h_w_attrs__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_aceece5625f03db035c4602c1f67e8038}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_a4aec72a0ebaedd4a4972448aa01a2250}{clock\+Source}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_ac37864896a2d13ca7989076a125f1bd0}{bit\+Order}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_ae73e37878acb0ca3f0c5b4209af6dc55}{num\+Baudrate\+Entries}
+\item 
+\hyperlink{struct_u_a_r_t_u_s_c_i_a___baudrate_config}{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+Baudrate\+Config} const $\ast$ \hyperlink{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_a5c2588fa1527626c8c6711f825cc96bd}{baudrate\+L\+U\+T}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+U\+S\+C\+I\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item usci\+\_\+a\+\_\+uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTUSCIA_BaudrateConfig uartUSCIABaudrates[] = \{
+ \textcolor{comment}{// Baudrate, input clock (Hz), UCBRx, UCBRFx, UCBRSx, Oversampling}
+    \{115200,  8192000,          4,     7,      0,      1\},
+    \{9600,    8192000,          53,    5,      0,      1\},
+    \{9600,    32768,            3,     0,      3,      0\},
+\};
+
+\textcolor{keyword}{const} UARTUSCIA_HWAttrs uartUSCIAHWAttrs[] = \{
+    \{
+        USCI\_A0\_BASE,
+        USCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+        USCI\_A\_UART\_LSB\_FIRST,
+        \textcolor{keyword}{sizeof}(uartUSCIABaudrates/UARTUSCIA_BaudrateConfig),
+        uartUSCIABaudrates
+    \},
+    \{
+        USCI\_A1\_BASE,
+        USCI\_A\_UART\_CLOCKSOURCE\_SMCLK,
+        USCI\_A\_UART\_LSB\_FIRST,
+        \textcolor{keyword}{sizeof}(uartUSCIABaudrates/UARTUSCIA_BaudrateConfig),
+        uartUSCIABaudrates
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_aceece5625f03db035c4602c1f67e8038}
+U\+S\+C\+I\+\_\+\+A\+\_\+\+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_a4aec72a0ebaedd4a4972448aa01a2250}
+U\+S\+C\+I\+\_\+\+A\+\_\+\+U\+A\+R\+T Clock source U\+S\+C\+I\+\_\+\+A\+\_\+\+U\+A\+R\+T Bit order \index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}!bit\+Order@{bit\+Order}}
+\index{bit\+Order@{bit\+Order}!U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{bit\+Order}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+::bit\+Order}\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_ac37864896a2d13ca7989076a125f1bd0}
+Number of \hyperlink{struct_u_a_r_t_u_s_c_i_a___baudrate_config}{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+Baudrate\+Config} entries \index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}!num\+Baudrate\+Entries@{num\+Baudrate\+Entries}}
+\index{num\+Baudrate\+Entries@{num\+Baudrate\+Entries}!U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{num\+Baudrate\+Entries}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+::num\+Baudrate\+Entries}\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_ae73e37878acb0ca3f0c5b4209af6dc55}
+Pointer to a table of possible \hyperlink{struct_u_a_r_t_u_s_c_i_a___baudrate_config}{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+Baudrate\+Config} entries \index{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}!baudrate\+L\+U\+T@{baudrate\+L\+U\+T}}
+\index{baudrate\+L\+U\+T@{baudrate\+L\+U\+T}!U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{baudrate\+L\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+Baudrate\+Config} const$\ast$ U\+A\+R\+T\+U\+S\+C\+I\+A\+\_\+\+H\+W\+Attrs\+::baudrate\+L\+U\+T}\label{struct_u_a_r_t_u_s_c_i_a___h_w_attrs_a5c2588fa1527626c8c6711f825cc96bd}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_u_s_c_i_a_8h}{U\+A\+R\+T\+U\+S\+C\+I\+A.\+h}\end{DoxyCompactItemize}

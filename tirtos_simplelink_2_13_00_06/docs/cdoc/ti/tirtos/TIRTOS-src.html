@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.tirtos.TIRTOS</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> * Copyright (c) 2015, Texas Instruments Incorporated
+</span>     3    <span class="comment"> * All rights reserved.
+</span>     4    <span class="comment"> *
+</span>     5    <span class="comment"> * Redistribution and use in source and binary forms, with or without
+</span>     6    <span class="comment"> * modification, are permitted provided that the following conditions
+</span>     7    <span class="comment"> * are met:
+</span>     8    <span class="comment"> *
+</span>     9    <span class="comment"> * *  Redistributions of source code must retain the above copyright
+</span>    10    <span class="comment"> *    notice, this list of conditions and the following disclaimer.
+</span>    11    <span class="comment"> *
+</span>    12    <span class="comment"> * *  Redistributions in binary form must reproduce the above copyright
+</span>    13    <span class="comment"> *    notice, this list of conditions and the following disclaimer in the
+</span>    14    <span class="comment"> *    documentation and/or other materials provided with the distribution.
+</span>    15    <span class="comment"> *
+</span>    16    <span class="comment"> * *  Neither the name of Texas Instruments Incorporated nor the names of
+</span>    17    <span class="comment"> *    its contributors may be used to endorse or promote products derived
+</span>    18    <span class="comment"> *    from this software without specific prior written permission.
+</span>    19    <span class="comment"> *
+</span>    20    <span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+</span>    21    <span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+</span>    22    <span class="comment"> * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+</span>    23    <span class="comment"> * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+</span>    24    <span class="comment"> * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+</span>    25    <span class="comment"> * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+</span>    26    <span class="comment"> * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+</span>    27    <span class="comment"> * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+</span>    28    <span class="comment"> * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+</span>    29    <span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+</span>    30    <span class="comment"> * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</span>    31    <span class="comment"> */</span>
+    32    
+    33    <span class="comment">/*
+</span>    34    <span class="comment"> *  ======== TIRTOS.xdc ========
+</span>    35    <span class="comment"> *  This module is used to tie together the xGConf pages for the various
+</span>    36    <span class="comment"> *  product components that make up the TI-RTOS.
+</span>    37    <span class="comment"> */</span>
+    38    
+    39    <span class="xdoc">/*!
+</span>    40    <span class="xdoc"> *  ======== TIRTOS ========
+</span>    41    <span class="xdoc"> */</span>
+    42    
+    43    <span class=key>metaonly</span> <span class=key>module</span> TIRTOS {
+    44        <span class="xdoc">/*!
+</span>    45    <span class="xdoc">     *  ======== LibType ========
+</span>    46    <span class="xdoc">     *  TI-RTOS driver library selection options
+</span>    47    <span class="xdoc">     *
+</span>    48    <span class="xdoc">     *  You can select the library type by setting
+</span>    49    <span class="xdoc">     *  the {<b>@link</b> #libType TIRTOS.libType} configuration parameter.
+</span>    50    <span class="xdoc">     *
+</span>    51    <span class="xdoc">     *  <b>@field(LibType_Instrumented)</b> The library supplied is prebuilt with
+</span>    52    <span class="xdoc">     *  logging and assertions enabled.
+</span>    53    <span class="xdoc">     *  Diags_USER1 mask logs basic information
+</span>    54    <span class="xdoc">     *  Diags_USER2 mask logs more detailed information
+</span>    55    <span class="xdoc">     *
+</span>    56    <span class="xdoc">     *  <b>@field(LibType_NonInstrumented)</b> The library supplied is prebuilt
+</span>    57    <span class="xdoc">     *  with logging and assertions disabled.
+</span>    58    <span class="xdoc">     */</span>
+    59        <span class=key>enum</span> LibType {
+    60            LibType_Instrumented,           <span class="xdoc">/*! instrumented (with asserts and logs)*/</span>
+    61            LibType_NonInstrumented         <span class="xdoc">/*! non-instrumented */</span>
+    62        };
+    63    
+    64        <span class="xdoc">/*!
+</span>    65    <span class="xdoc">     *  ======== libType ========
+</span>    66    <span class="xdoc">     *  TI-RTOS Driver Library type
+</span>    67    <span class="xdoc">     *
+</span>    68    <span class="xdoc">     *  The driver library is provided in the form of a library that is
+</span>    69    <span class="xdoc">     *  linked with your application.  Two forms of this library are
+</span>    70    <span class="xdoc">     *  provided with the TI-RTOS product. This configuration parameter
+</span>    71    <span class="xdoc">     *  allows you to select the form of the driver library to use.
+</span>    72    <span class="xdoc">     *
+</span>    73    <span class="xdoc">     *  The default value of libType is
+</span>    74    <span class="xdoc">     *  {<b>@link</b> #LibType_Instrumented TIRTOS_LibType_NonInstrumented}.  For a
+</span>    75    <span class="xdoc">     *  complete list of options and what they offer see {<b>@link</b> #LibType}.
+</span>    76    <span class="xdoc">     */</span>
+    77        <span class=key>metaonly</span> <span class=key>config</span> LibType libType = LibType_NonInstrumented;
+    78    
+    79        <span class="xdoc">/*!
+</span>    80    <span class="xdoc">     *  ======== useCamera ========
+</span>    81    <span class="xdoc">     *  Using Camera driver
+</span>    82    <span class="xdoc">     *
+</span>    83    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>    84    <span class="xdoc">     *  are  automatically pulled in.
+</span>    85    <span class="xdoc">     *
+</span>    86    <span class="xdoc">     *  The default value is false.
+</span>    87    <span class="xdoc">     */</span>
+    88        <span class=key>metaonly</span> <span class=key>config</span> Bool useCamera = <span class=key>false</span>;
+    89    
+    90        <span class="xdoc">/*!
+</span>    91    <span class="xdoc">     *  ======== useEMAC ========
+</span>    92    <span class="xdoc">     *  Using EMAC driver
+</span>    93    <span class="xdoc">     *
+</span>    94    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>    95    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>    96    <span class="xdoc">     *  driver is enabled.
+</span>    97    <span class="xdoc">     *
+</span>    98    <span class="xdoc">     *  The default value is false.
+</span>    99    <span class="xdoc">     */</span>
+   100        <span class=key>metaonly</span> <span class=key>config</span> Bool useEMAC = <span class=key>false</span>;
+   101    
+   102        <span class="xdoc">/*!
+</span>   103    <span class="xdoc">     *  ======== useGPIO ========
+</span>   104    <span class="xdoc">     *  Using GPIO driver
+</span>   105    <span class="xdoc">     *
+</span>   106    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   107    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   108    <span class="xdoc">     *  driver is enabled.
+</span>   109    <span class="xdoc">     *
+</span>   110    <span class="xdoc">     *  The default value is false.
+</span>   111    <span class="xdoc">     */</span>
+   112        <span class=key>metaonly</span> <span class=key>config</span> Bool useGPIO = <span class=key>false</span>;
+   113    
+   114        <span class="xdoc">/*!
+</span>   115    <span class="xdoc">     *  ======== useI2C ========
+</span>   116    <span class="xdoc">     *  Using I2C driver
+</span>   117    <span class="xdoc">     *
+</span>   118    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   119    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   120    <span class="xdoc">     *  driver is enabled.
+</span>   121    <span class="xdoc">     *
+</span>   122    <span class="xdoc">     *  The default value is false.
+</span>   123    <span class="xdoc">     */</span>
+   124        <span class=key>metaonly</span> <span class=key>config</span> Bool useI2C = <span class=key>false</span>;
+   125    
+   126        <span class="xdoc">/*!
+</span>   127    <span class="xdoc">     *  ======== useI2S ========
+</span>   128    <span class="xdoc">     *  Using I2S driver
+</span>   129    <span class="xdoc">     *
+</span>   130    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   131    <span class="xdoc">     *  are  automatically pulled in.
+</span>   132    <span class="xdoc">     *
+</span>   133    <span class="xdoc">     *  The default value is false.
+</span>   134    <span class="xdoc">     */</span>
+   135        <span class=key>metaonly</span> <span class=key>config</span> Bool useI2S = <span class=key>false</span>;
+   136    
+   137        <span class="xdoc">/*!
+</span>   138    <span class="xdoc">     *  ======== usePower ========
+</span>   139    <span class="xdoc">     *  Using Power driver
+</span>   140    <span class="xdoc">     *
+</span>   141    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   142    <span class="xdoc">     *  are automatically pulled in.
+</span>   143    <span class="xdoc">     *
+</span>   144    <span class="xdoc">     *  The default value is false.
+</span>   145    <span class="xdoc">     */</span>
+   146        <span class=key>metaonly</span> <span class=key>config</span> Bool usePower = <span class=key>false</span>;
+   147    
+   148        <span class="xdoc">/*!
+</span>   149    <span class="xdoc">     *  ======== usePWM ========
+</span>   150    <span class="xdoc">     *  Using PWM driver
+</span>   151    <span class="xdoc">     *
+</span>   152    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   153    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   154    <span class="xdoc">     *  driver is enabled.
+</span>   155    <span class="xdoc">     *
+</span>   156    <span class="xdoc">     *  The default value is false.
+</span>   157    <span class="xdoc">     */</span>
+   158        <span class=key>metaonly</span> <span class=key>config</span> Bool usePWM = <span class=key>false</span>;
+   159    
+   160        <span class="xdoc">/*!
+</span>   161    <span class="xdoc">     *  ======== useSDSPI ========
+</span>   162    <span class="xdoc">     *  Using SDSPI driver
+</span>   163    <span class="xdoc">     *
+</span>   164    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   165    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   166    <span class="xdoc">     *  driver is enabled.
+</span>   167    <span class="xdoc">     *
+</span>   168    <span class="xdoc">     *  The default value is false.
+</span>   169    <span class="xdoc">     */</span>
+   170        <span class=key>metaonly</span> <span class=key>config</span> Bool useSDSPI = <span class=key>false</span>;
+   171    
+   172        <span class="xdoc">/*!
+</span>   173    <span class="xdoc">     *  ======== useSPI ========
+</span>   174    <span class="xdoc">     *  Using SPI driver
+</span>   175    <span class="xdoc">     *
+</span>   176    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   177    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   178    <span class="xdoc">     *  driver is enabled.
+</span>   179    <span class="xdoc">     *
+</span>   180    <span class="xdoc">     *  The default value is false.
+</span>   181    <span class="xdoc">     */</span>
+   182        <span class=key>metaonly</span> <span class=key>config</span> Bool useSPI = <span class=key>false</span>;
+   183    
+   184        <span class="xdoc">/*!
+</span>   185    <span class="xdoc">     *  ======== useUART ========
+</span>   186    <span class="xdoc">     *  Using UART driver
+</span>   187    <span class="xdoc">     *
+</span>   188    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   189    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   190    <span class="xdoc">     *  driver is enabled.
+</span>   191    <span class="xdoc">     *
+</span>   192    <span class="xdoc">     *  The default value is false.
+</span>   193    <span class="xdoc">     */</span>
+   194        <span class=key>metaonly</span> <span class=key>config</span> Bool useUART = <span class=key>false</span>;
+   195    
+   196        <span class="xdoc">/*!
+</span>   197    <span class="xdoc">     *  ======== useUSBMSCHFatFs ========
+</span>   198    <span class="xdoc">     *  Using USBMSCHFatFs driver
+</span>   199    <span class="xdoc">     *
+</span>   200    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   201    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   202    <span class="xdoc">     *  driver is enabled.
+</span>   203    <span class="xdoc">     *
+</span>   204    <span class="xdoc">     *  The default value is false.
+</span>   205    <span class="xdoc">     */</span>
+   206        <span class=key>metaonly</span> <span class=key>config</span> Bool useUSBMSCHFatFs = <span class=key>false</span>;
+   207    
+   208        <span class="xdoc">/*!
+</span>   209    <span class="xdoc">     *  ======== useWatchdog ========
+</span>   210    <span class="xdoc">     *  Using Watchdog driver
+</span>   211    <span class="xdoc">     *
+</span>   212    <span class="xdoc">     *  If set to true, any modules that this driver requires
+</span>   213    <span class="xdoc">     *  are  automatically pulled in. Also ROV support for the
+</span>   214    <span class="xdoc">     *  driver is enabled.
+</span>   215    <span class="xdoc">     *
+</span>   216    <span class="xdoc">     *  The default value is false.
+</span>   217    <span class="xdoc">     */</span>
+   218        <span class=key>metaonly</span> <span class=key>config</span> Bool useWatchdog = <span class=key>false</span>;
+   219    
+   220        <span class="comment">/*
+</span>   221    <span class="comment">     *  ======== supportsCamera ========
+</span>   222    <span class="comment">     *  @_nodoc
+</span>   223    <span class="comment">     */</span>
+   224        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsCamera;
+   225    
+   226        <span class="comment">/*
+</span>   227    <span class="comment">     *  ======== supportsEMAC ========
+</span>   228    <span class="comment">     *  @_nodoc
+</span>   229    <span class="comment">     */</span>
+   230        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsEMAC;
+   231    
+   232        <span class="comment">/*
+</span>   233    <span class="comment">     *  ======== supportsGPIO ========
+</span>   234    <span class="comment">     *  @_nodoc
+</span>   235    <span class="comment">     */</span>
+   236        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsGPIO;
+   237    
+   238        <span class="comment">/*
+</span>   239    <span class="comment">     *  ======== supportsI2C ========
+</span>   240    <span class="comment">     *  @_nodoc
+</span>   241    <span class="comment">     */</span>
+   242        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsI2C;
+   243    
+   244        <span class="comment">/*
+</span>   245    <span class="comment">     *  ======== supportsI2S ========
+</span>   246    <span class="comment">     *  @_nodoc
+</span>   247    <span class="comment">     */</span>
+   248        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsI2S;
+   249    
+   250        <span class="comment">/*
+</span>   251    <span class="comment">     *  ======== supportsPower ========
+</span>   252    <span class="comment">     *  @_nodoc
+</span>   253    <span class="comment">     */</span>
+   254        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsPower;
+   255    
+   256        <span class="comment">/*
+</span>   257    <span class="comment">     *  ======== supportsPWM ========
+</span>   258    <span class="comment">     *  @_nodoc
+</span>   259    <span class="comment">     */</span>
+   260        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsPWM;
+   261    
+   262        <span class="comment">/*
+</span>   263    <span class="comment">     *  ======== supportsSDSPI ========
+</span>   264    <span class="comment">     *  @_nodoc
+</span>   265    <span class="comment">     */</span>
+   266        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsSDSPI;
+   267    
+   268        <span class="comment">/*
+</span>   269    <span class="comment">     *  ======== supportsSPI ========
+</span>   270    <span class="comment">     *  @_nodoc
+</span>   271    <span class="comment">     */</span>
+   272        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsSPI;
+   273    
+   274        <span class="comment">/*
+</span>   275    <span class="comment">     *  ======== supportsUART ========
+</span>   276    <span class="comment">     *  @_nodoc
+</span>   277    <span class="comment">     */</span>
+   278        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsUART;
+   279    
+   280        <span class="comment">/*
+</span>   281    <span class="comment">     *  ======== supportsUSBMSCHFatFs ========
+</span>   282    <span class="comment">     *  @_nodoc
+</span>   283    <span class="comment">     */</span>
+   284        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsUSBMSCHFatFs;
+   285    
+   286        <span class="comment">/*
+</span>   287    <span class="comment">     *  ======== supportsWatchdog ========
+</span>   288    <span class="comment">     *  @_nodoc
+</span>   289    <span class="comment">     */</span>
+   290        <span class=key>metaonly</span> <span class=key>config</span> Bool supportsWatchdog;
+   291    }
+</pre>
+</body></html>

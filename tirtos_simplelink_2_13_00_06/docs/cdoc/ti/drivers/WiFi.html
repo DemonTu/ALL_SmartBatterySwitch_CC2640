@@ -1,0 +1,348 @@
+<html>
+<head>
+<title>module ti.drivers.WiFi</title>
+<meta name="description" content="WiFi module configuration">
+<link rel="stylesheet" type="text/css" href="../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.drivers.</span><span class="xdoc-id">WiFi</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/Watchdog.html" title="module Watchdog"><img class="xdocHdrArrow" src="../../Arrow_left.png"/></a></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/package.html" title="package ti.drivers"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html">index URL</a></div>
+<p class="xdocHdrSummary">WiFi module configuration</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#targ-synop">C synopsis</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocElems">Individual elements</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">Configuration settings</a></li>
+<li class="xdocToc2"><a class="xdocToc" href="#xdocMetaElems">Individual elements</a></li>
+</ul>
+<span id='targ-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-targ2">C</span></tt> synopsis</td>
+<td class="xdocLabelCenter">target-domain</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../ti/drivers/WiFi-src.html"><span class="xdocLabelFile">ti/drivers/WiFi.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynT">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw3">#include</span> <span class="xdoc-id">&lt;ti/drivers/WiFi.h&gt;</span>
+</div>
+<table cellspacing="0" cellpadding="0" border="0">
+<tr><td colspan='2'><div class='xdocSynTblHdr'>Typedefs</div></td></tr>
+
+<tr valign="top"><td class="xdocSynDecl" nowrap><div class="xdocSynTblType"><tt></tt><span class="xdoc-kw1">typedef</span> <span class="xdoc-kw1">enum</span> </div></td><td class="xdocSynDecl"><div class="xdocSynTblDecl"><a class="xdocSynGo" href="#.Device.Type"><span class="xdoc-id">WiFi_DeviceType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi device selection options</span></span></a> ...</div></td></tr>
+<tr valign="top"><td class="xdocSynDecl" nowrap><div class="xdocSynTblType"><tt></tt><span class="xdoc-kw1">typedef</span> <span class="xdoc-kw1">enum</span> </div></td><td class="xdocSynDecl"><div class="xdocSynTblDecl"><a class="xdocSynGo" href="#.Lib.Type"><span class="xdoc-id">WiFi_LibType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi library selection options</span></span></a> ...</div></td></tr>
+</table>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocSep">
+</div>
+<div id="xdocElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id=".Device.Type"></a>
+<a class="xdocAnchor" id=".Device.Type_.Simple.Link_.C.C3100"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi_</span><span class="xdoc-id">DeviceType</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#.Device.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi device selection options</p>
+<span id='targ-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-targ2dcl">C</span></tt> synopsis</td>
+<td class="xdocLabelRight">target-domain</td>
+</tr></table>
+<div class="xdocSynTdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><span class="xdoc-kw1">typedef</span> <span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi_DeviceType</span> {
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-id">WiFi_DeviceType_SimpleLink_CC3100</span>
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;SimpleLink CC3100 Wi-Fi Module</div>
+<div class="xdocSynCode">
+<tt></tt><tt></tt>} <span class="xdoc-id">WiFi_DeviceType</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">DeviceType_SimpleLink_CC3100</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt
+  with the SimpleLink CC3100 Host Driver.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This enumeration defines all supported WiFi device types
+  provided by the product.  You can select the device type by setting
+  the <a class="xdoc-link" href="WiFi.html#device.Type" title="deviceType">WiFi.deviceType</a> configuration parameter.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id=".Lib.Type"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Instrumented"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Non.Instrumented"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi_</span><span class="xdoc-id">LibType</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#.Lib.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi library selection options</p>
+<span id='targ-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-targ2dcl">C</span></tt> synopsis</td>
+<td class="xdocLabelRight">target-domain</td>
+</tr></table>
+<div class="xdocSynTdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><span class="xdoc-kw1">typedef</span> <span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi_LibType</span> {
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-id">WiFi_LibType_Instrumented</span>, 
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;instrumented</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-id">WiFi_LibType_NonInstrumented</span>
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;non-instrumented</div>
+<div class="xdocSynCode">
+<tt></tt><tt></tt>} <span class="xdoc-id">WiFi_LibType</span>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_Instrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt with
+  logging and assertions enabled.</span>
+</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_NonInstrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt
+  with logging and assertions disabled.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This enumeration defines all the WiFi library type
+  provided by the product.  You can select the library type by setting
+  the <a class="xdoc-link" href="WiFi.html#lib.Type" title="libType">WiFi.libType</a> configuration parameter.</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight">sourced in <a class="xdocLink" href="../../ti/drivers/WiFi-src.html"><span class="xdocLabelFile">ti/drivers/WiFi.xdc</span></a></td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> WiFi = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.drivers.WiFi'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide constants & types</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><i>values of type <a class="xdocSynGo" href="#meta.Device.Type">WiFi.<span class="xdoc-id">DeviceType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi device selection options</span></span></a></i>
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#meta.Device.Type">WiFi.<span class="xdoc-id">DeviceType_SimpleLink_CC3100</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;SimpleLink CC3100 Wi-Fi Module</span></span></a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><i>values of type <a class="xdocSynGo" href="#meta.Lib.Type">WiFi.<span class="xdoc-id">LibType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi library selection options</span></span></a></i>
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#meta.Lib.Type">WiFi.<span class="xdoc-id">LibType_Instrumented</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;instrumented</span></span></a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> <a class="xdocSynGo" href="#meta.Lib.Type">WiFi.<span class="xdoc-id">LibType_NonInstrumented</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;non-instrumented</span></span></a>;
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#device.Type">WiFi.<span class="xdoc-id">deviceType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi Device type</span></span></a> = <i><a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Device.Type" title="ti.drivers.WiFi.DeviceType">WiFi.DeviceType</a></i> <a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Device.Type_.Simple.Link_.C.C3100" title="ti.drivers.WiFi.DeviceType_SimpleLink_CC3100">WiFi.DeviceType_SimpleLink_CC3100</a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#lib.Type">WiFi.<span class="xdoc-id">libType</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;WiFi Library type</span></span></a> = <i><a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Lib.Type" title="ti.drivers.WiFi.LibType">WiFi.LibType</a></i> <a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Lib.Type_.Instrumented" title="ti.drivers.WiFi.LibType_Instrumented">WiFi.LibType_Instrumented</a>;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#spawn.Task.Priority">WiFi.<span class="xdoc-id">spawnTaskPriority</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;SpawnTask priority</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> 3;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocSep">
+</div>
+<div id="xdocMetaElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="meta.Device.Type"></a>
+<a class="xdocAnchor" id=".Device.Type_.Simple.Link_.C.C3100"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi.</span><span class="xdoc-id">DeviceType</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#.Device.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi device selection options</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><i>values of type WiFi.<span class="xdoc-id">DeviceType</span></i>
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> WiFi.<span class="xdoc-id">DeviceType_SimpleLink_CC3100</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;SimpleLink CC3100 Wi-Fi Module</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">DeviceType_SimpleLink_CC3100</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt
+  with the SimpleLink CC3100 Host Driver.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This enumeration defines all supported WiFi device types
+  provided by the product.  You can select the device type by setting
+  the <a class="xdoc-link" href="WiFi.html#device.Type" title="deviceType">WiFi.deviceType</a> configuration parameter.</div>
+<div class="xdocSect">C SYNOPSIS</div>
+<div class="xdocText"><a class="xdoc-link" href="#.Device.Type" title="WiFi_DeviceType">WiFi_DeviceType</a></div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="meta.Lib.Type"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Instrumented"></a>
+<a class="xdocAnchor" id=".Lib.Type_.Non.Instrumented"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">enum</span> <span class="xdoc-id">WiFi.</span><span class="xdoc-id">LibType</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#.Lib.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi library selection options</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt><i>values of type WiFi.<span class="xdoc-id">LibType</span></i>
+</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> WiFi.<span class="xdoc-id">LibType_Instrumented</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;instrumented</div>
+<div class="xdocSynCode">
+<tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><span class="xdoc-kw1">const</span> WiFi.<span class="xdoc-id">LibType_NonInstrumented</span>;
+</div>
+<div class='xdocSynSum'><tt></tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt>//&nbsp;non-instrumented</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">VALUES</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_Instrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt with
+  logging and assertions enabled.</span>
+</div>
+<div class="xdocChild"><span class="xdocChildId">LibType_NonInstrumented</span>
+<span class="xdocChildSum">&#151;&nbsp;The library supplied is prebuilt
+  with logging and assertions disabled.</span>
+</div>
+<span id="xdoc-sect-2"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">This enumeration defines all the WiFi library type
+  provided by the product.  You can select the library type by setting
+  the <a class="xdoc-link" href="WiFi.html#lib.Type" title="libType">WiFi.libType</a> configuration parameter.</div>
+<div class="xdocSect">C SYNOPSIS</div>
+<div class="xdocText"><a class="xdoc-link" href="#.Lib.Type" title="WiFi_LibType">WiFi_LibType</a></div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="device.Type"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">WiFi.</span><span class="xdoc-id">deviceType</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#device.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi Device type</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>WiFi.<span class="xdoc-id">deviceType</span> = <i><a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Device.Type" title="ti.drivers.WiFi.DeviceType">WiFi.DeviceType</a></i> <a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Device.Type_.Simple.Link_.C.C3100" title="ti.drivers.WiFi.DeviceType_SimpleLink_CC3100">WiFi.DeviceType_SimpleLink_CC3100</a>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">WiFi support is provided in the form of a libraries that are linked
+  with your application.  Several libraries are provided with the
+  WiFi product to support the various devices. This configuration
+  parameter allows you to select the proper library for the WiFi
+  device to use.</div>
+<div class="xdocText">The default value of deviceType is
+  <a class="xdoc-link" href="WiFi.html#.Device.Type_.Simple.Link_.C.C3100" title="DeviceType_SimpleLink_CC3100">WiFi_DeviceType_SimpleLink_CC3100</a>.
+  For a complete list of options and what they offer see
+  <a class="xdoc-link" href="WiFi.html#.Device.Type" title="DeviceType">DeviceType</a>.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="lib.Type"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">WiFi.</span><span class="xdoc-id">libType</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#lib.Type">index URL</a></div>
+<p class="xdocHdrSummaryDcl">WiFi Library type</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>WiFi.<span class="xdoc-id">libType</span> = <i><a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Lib.Type" title="ti.drivers.WiFi.LibType">WiFi.LibType</a></i> <a class="xdoc-link" href="../../ti/drivers/WiFi.html#.Lib.Type_.Instrumented" title="ti.drivers.WiFi.LibType_Instrumented">WiFi.LibType_Instrumented</a>;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The WiFi runtime is provided in the form of a library that is
+  linked with your application.  Several forms of this library are
+  provided with the WiFi product. This configuration parameter
+  allows you to select the form of WiFi to use.</div>
+<div class="xdocText">The default value of libType is
+  <a class="xdoc-link" href="WiFi.html#.Lib.Type_.Instrumented" title="LibType_Instrumented">WiFi_LibType_Instrumented</a>.  For a
+  complete list of options and what they offer see <a class="xdoc-link" href="WiFi.html#.Lib.Type" title="LibType">LibType</a>.</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="spawn.Task.Priority"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">config</span> <span class="xdoc-id">WiFi.</span><span class="xdoc-id">spawnTaskPriority</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../ti/drivers/WiFi.html" title="module WiFi"><img class="xdocHdrArrow" src="../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../index.html#ti/drivers/WiFi.html#spawn.Task.Priority">index URL</a></div>
+<p class="xdocHdrSummaryDcl">SpawnTask priority</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2dcl"></span></tt>Configuration settings</td>
+<td class="xdocLabelRight"></td>
+</tr></table>
+<div class="xdocSynMdcl">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>WiFi.<span class="xdoc-id">spawnTaskPriority</span> = <i><span class="xdoc-kw2">Int</span></i> 3;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The SpawnTask is a task created for the host driver to allow the
+  execution of functions in a temporary context.</div>
+</div>
+<div id="xdocDate">generated on Wed, 06 May 2015 00:39:05 GMT</div>
+</div></div></body>
+</html>

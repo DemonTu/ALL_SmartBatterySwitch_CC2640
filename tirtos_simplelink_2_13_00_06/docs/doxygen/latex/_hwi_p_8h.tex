@@ -1,0 +1,290 @@
+\subsection{Hwi\+P.\+h File Reference}
+\label{_hwi_p_8h}\index{Hwi\+P.\+h@{Hwi\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Hardware Interrupt module for the R\+T\+O\+S Porting Interface. 
+
+============================================================================
+
+The \hyperlink{_hwi_p_8h_aac47ffab62f7d25d736b58e40be17425}{Hwi\+P\+\_\+disable}/\hyperlink{_hwi_p_8h_a979cdfbd9993f6c5eedef8570efbd62e}{Hwi\+P\+\_\+restore} A\+P\+Is can be called recursively. The order of the Hwi\+P\+\_\+restore calls, must be in reversed order. For example\+: 
+\begin{DoxyCode}
+uintptr\_t key1, key2;
+key1 = HwiP_disable();
+key2 = HwiP_disable();
+HwiP_restore(key2);
+HwiP_restore(key1);
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Hwi\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_hwi_p_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_hwi_p_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_hwi_p___params}{Hwi\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Hwi\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void $\ast$ \hyperlink{_hwi_p_8h_a7dd325ff62af296374efc6d317f5e368}{Hwi\+P\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em Opaque client reference to an instance of a Hwi\+P. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258}{Hwi\+P\+\_\+\+Status} \hyperlink{_hwi_p_8h_a1d0a42f3a5bb047cf6a14413f2a58e9f}{Hwi\+P\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes for Hwi\+P A\+P\+Is. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_hwi_p_8h_a53a36fe33e22847927ceddbb63fb50c7}{Hwi\+P\+\_\+\+Fxn}) (uintptr\+\_\+t arg)
+\begin{DoxyCompactList}\small\item\em Prototype for the entry function for a hardware interrupt. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_hwi_p___params}{Hwi\+P\+\_\+\+Params} \hyperlink{_hwi_p_8h_a7eefe35fc4269b78348f74e5db9c4dca}{Hwi\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Hwi\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258}{Hwi\+P\+\_\+\+Status} \{ \\*
+\hyperlink{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258a96e82ebb87c2c36bba1fdd072fcec2f9}{Hwi\+P\+\_\+\+O\+K} = 0, 
+\\*
+\hyperlink{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258aa0988bb08bdcf17a219385320e200000}{Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E} = -\/1
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes for Hwi\+P A\+P\+Is. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_hwi_p_8h_afe8d9c04a4f255f272ca690b25d59c7e}{Hwi\+P\+\_\+clear\+Interrupt} (int interrupt\+Num)
+\begin{DoxyCompactList}\small\item\em Function to clear a single interrupt. \end{DoxyCompactList}\item 
+\hyperlink{_hwi_p_8h_a7dd325ff62af296374efc6d317f5e368}{Hwi\+P\+\_\+\+Handle} \hyperlink{_hwi_p_8h_a3d80df47f0bdcbb6e562ee7b96a40af5}{Hwi\+P\+\_\+create} (int interrupt\+Num, \hyperlink{_hwi_p_8h_a53a36fe33e22847927ceddbb63fb50c7}{Hwi\+P\+\_\+\+Fxn} hwi\+Fxn, \hyperlink{struct_hwi_p___params}{Hwi\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to create an interrupt on Cortex\+M devices. \end{DoxyCompactList}\item 
+\hyperlink{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258}{Hwi\+P\+\_\+\+Status} \hyperlink{_hwi_p_8h_add08a6b4ccaca002ebb240777cc7f832}{Hwi\+P\+\_\+delete} (\hyperlink{_hwi_p_8h_a7dd325ff62af296374efc6d317f5e368}{Hwi\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to delete an interrupt on Cortex\+M devices. \end{DoxyCompactList}\item 
+uintptr\+\_\+t \hyperlink{_hwi_p_8h_aac47ffab62f7d25d736b58e40be17425}{Hwi\+P\+\_\+disable} (void)
+\begin{DoxyCompactList}\small\item\em Function to disable interrupts to enter a critical region. \end{DoxyCompactList}\item 
+void \hyperlink{_hwi_p_8h_a2ab29f4a0e277d336338900c07151325}{Hwi\+P\+\_\+disable\+Interrupt} (int interrupt\+Num)
+\begin{DoxyCompactList}\small\item\em Function to disable a single interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_hwi_p_8h_a31f70cf8be574453b13dd9bfa4c8da26}{Hwi\+P\+\_\+enable\+Interrupt} (int interrupt\+Num)
+\begin{DoxyCompactList}\small\item\em Function to enable a single interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_hwi_p_8h_a33f02161b1837b41f08ba064f1001045}{Hwi\+P\+\_\+\+Params\+\_\+init} (\hyperlink{struct_hwi_p___params}{Hwi\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initialize params structure to default values. \end{DoxyCompactList}\item 
+void \hyperlink{_hwi_p_8h_a979cdfbd9993f6c5eedef8570efbd62e}{Hwi\+P\+\_\+restore} (uintptr\+\_\+t key)
+\begin{DoxyCompactList}\small\item\em Function to restore interrupts to exit a critical region. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Handle@{Hwi\+P\+\_\+\+Handle}}
+\index{Hwi\+P\+\_\+\+Handle@{Hwi\+P\+\_\+\+Handle}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef void$\ast$ {\bf Hwi\+P\+\_\+\+Handle}}\label{_hwi_p_8h_a7dd325ff62af296374efc6d317f5e368}
+
+
+Opaque client reference to an instance of a Hwi\+P. 
+
+A Hwi\+P\+\_\+\+Handle returned from the \hyperlink{_hwi_p_8h_a3d80df47f0bdcbb6e562ee7b96a40af5}{Hwi\+P\+\_\+create} represents that instance. \index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Status@{Hwi\+P\+\_\+\+Status}}
+\index{Hwi\+P\+\_\+\+Status@{Hwi\+P\+\_\+\+Status}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Hwi\+P\+\_\+\+Status}  {\bf Hwi\+P\+\_\+\+Status}}\label{_hwi_p_8h_a1d0a42f3a5bb047cf6a14413f2a58e9f}
+
+
+Status codes for Hwi\+P A\+P\+Is. 
+
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Fxn@{Hwi\+P\+\_\+\+Fxn}}
+\index{Hwi\+P\+\_\+\+Fxn@{Hwi\+P\+\_\+\+Fxn}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Hwi\+P\+\_\+\+Fxn) (uintptr\+\_\+t arg)}\label{_hwi_p_8h_a53a36fe33e22847927ceddbb63fb50c7}
+
+
+Prototype for the entry function for a hardware interrupt. 
+
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}}
+\index{Hwi\+P\+\_\+\+Params@{Hwi\+P\+\_\+\+Params}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Hwi\+P\+\_\+\+Params}  {\bf Hwi\+P\+\_\+\+Params}}\label{_hwi_p_8h_a7eefe35fc4269b78348f74e5db9c4dca}
+
+
+Basic Hwi\+P Parameters. 
+
+Structure that contains the parameters passed into \hyperlink{_hwi_p_8h_a3d80df47f0bdcbb6e562ee7b96a40af5}{Hwi\+P\+\_\+create} when creating a Hwi\+P instance. The \hyperlink{_hwi_p_8h_a33f02161b1837b41f08ba064f1001045}{Hwi\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Hwi\+P default parameters are noted in Hwi\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Enumeration Type Documentation}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Status@{Hwi\+P\+\_\+\+Status}}
+\index{Hwi\+P\+\_\+\+Status@{Hwi\+P\+\_\+\+Status}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Hwi\+P\+\_\+\+Status}}\label{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258}
+
+
+Status codes for Hwi\+P A\+P\+Is. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Hwi\+P\+\_\+\+O\+K@{Hwi\+P\+\_\+\+O\+K}!Hwi\+P.\+h@{Hwi\+P.\+h}}\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+O\+K@{Hwi\+P\+\_\+\+O\+K}}\item[{\em 
+Hwi\+P\+\_\+\+O\+K\label{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258a96e82ebb87c2c36bba1fdd072fcec2f9}
+}]\index{Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}!Hwi\+P.\+h@{Hwi\+P.\+h}}\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}}\item[{\em 
+Hwi\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\label{_hwi_p_8h_a8f508a9a62c31a942ffc9438f53dd258aa0988bb08bdcf17a219385320e200000}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+clear\+Interrupt@{Hwi\+P\+\_\+clear\+Interrupt}}
+\index{Hwi\+P\+\_\+clear\+Interrupt@{Hwi\+P\+\_\+clear\+Interrupt}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+clear\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void Hwi\+P\+\_\+clear\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{int}]{interrupt\+Num}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_afe8d9c04a4f255f272ca690b25d59c7e}
+
+
+Function to clear a single interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interrupt\+Num} & interrupt number to clear \\
+\hline
+\end{DoxyParams}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+create@{Hwi\+P\+\_\+create}}
+\index{Hwi\+P\+\_\+create@{Hwi\+P\+\_\+create}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hwi\+P\+\_\+\+Handle} Hwi\+P\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{int}]{interrupt\+Num, }
+\item[{{\bf Hwi\+P\+\_\+\+Fxn}}]{hwi\+Fxn, }
+\item[{{\bf Hwi\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_a3d80df47f0bdcbb6e562ee7b96a40af5}
+
+
+Function to create an interrupt on Cortex\+M devices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interrupt\+Num} & Interrupt Vector Id\\
+\hline
+{\em hwi\+Fxn} & entry function of the hardware interrupt\\
+\hline
+{\em params} & Pointer to the instance configuration parameters. N\+U\+L\+L denotes to use the default parameters. The Hwi\+P default parameters are noted in \hyperlink{_hwi_p_8h_a33f02161b1837b41f08ba064f1001045}{Hwi\+P\+\_\+\+Params\+\_\+init}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Hwi\+P\+\_\+\+Handle on success or a N\+U\+L\+L on an error 
+\end{DoxyReturn}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+delete@{Hwi\+P\+\_\+delete}}
+\index{Hwi\+P\+\_\+delete@{Hwi\+P\+\_\+delete}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+delete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hwi\+P\+\_\+\+Status} Hwi\+P\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{{\bf Hwi\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_add08a6b4ccaca002ebb240777cc7f832}
+
+
+Function to delete an interrupt on Cortex\+M devices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & returned from the Hwi\+P\+\_\+create call\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+disable@{Hwi\+P\+\_\+disable}}
+\index{Hwi\+P\+\_\+disable@{Hwi\+P\+\_\+disable}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+disable}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t Hwi\+P\+\_\+disable (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_aac47ffab62f7d25d736b58e40be17425}
+
+
+Function to disable interrupts to enter a critical region. 
+
+This function can be called multiple times, but must unwound in the reverse order. For example 
+\begin{DoxyCode}
+1 uintptr\_t key1, key2;
+2 key1 = HwiP\_disable();
+3 key2 = HwiP\_disable();
+4 HwiP\_restore(key2);
+5 HwiP\_restore(key1);
+\end{DoxyCode}
+
+
+\begin{DoxyReturn}{Returns}
+A key that must be passed to Hwi\+P\+\_\+restore to re-\/enable interrupts. 
+\end{DoxyReturn}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+disable\+Interrupt@{Hwi\+P\+\_\+disable\+Interrupt}}
+\index{Hwi\+P\+\_\+disable\+Interrupt@{Hwi\+P\+\_\+disable\+Interrupt}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+disable\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void Hwi\+P\+\_\+disable\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{int}]{interrupt\+Num}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_a2ab29f4a0e277d336338900c07151325}
+
+
+Function to disable a single interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interrupt\+Num} & interrupt number to disable \\
+\hline
+\end{DoxyParams}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+enable\+Interrupt@{Hwi\+P\+\_\+enable\+Interrupt}}
+\index{Hwi\+P\+\_\+enable\+Interrupt@{Hwi\+P\+\_\+enable\+Interrupt}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+enable\+Interrupt}]{\setlength{\rightskip}{0pt plus 5cm}void Hwi\+P\+\_\+enable\+Interrupt (
+\begin{DoxyParamCaption}
+\item[{int}]{interrupt\+Num}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_a31f70cf8be574453b13dd9bfa4c8da26}
+
+
+Function to enable a single interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interrupt\+Num} & interrupt number to enable \\
+\hline
+\end{DoxyParams}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+\+Params\+\_\+init@{Hwi\+P\+\_\+\+Params\+\_\+init}}
+\index{Hwi\+P\+\_\+\+Params\+\_\+init@{Hwi\+P\+\_\+\+Params\+\_\+init}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Hwi\+P\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Hwi\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_a33f02161b1837b41f08ba064f1001045}
+
+
+Initialize params structure to default values. 
+
+The default parameters are\+:
+\begin{DoxyItemize}
+\item name\+: N\+U\+L\+L
+\item arg\+: 0
+\item priority\+: $\sim$0
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to the instance configuration parameters. \\
+\hline
+\end{DoxyParams}
+\index{Hwi\+P.\+h@{Hwi\+P.\+h}!Hwi\+P\+\_\+restore@{Hwi\+P\+\_\+restore}}
+\index{Hwi\+P\+\_\+restore@{Hwi\+P\+\_\+restore}!Hwi\+P.\+h@{Hwi\+P.\+h}}
+\paragraph[{Hwi\+P\+\_\+restore}]{\setlength{\rightskip}{0pt plus 5cm}void Hwi\+P\+\_\+restore (
+\begin{DoxyParamCaption}
+\item[{uintptr\+\_\+t}]{key}
+\end{DoxyParamCaption}
+)}\label{_hwi_p_8h_a979cdfbd9993f6c5eedef8570efbd62e}
+
+
+Function to restore interrupts to exit a critical region. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & return from Hwi\+P\+\_\+disable \\
+\hline
+\end{DoxyParams}

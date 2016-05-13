@@ -1,0 +1,77 @@
+\subsection{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs}\index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+Tiva\+D\+M\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+Tiva\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0cee71a1b87b797dbf1e7660c1134611}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_af51acdaa385973204a6c5741e3e26f40}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0b7002c09c1623fe01c4be22176cf611}{int\+Priority}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0c35ca59f07ed055b768efb74d304db1}{rx\+Channel\+Index}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_af4475ebe44ae2d17d0967c00266c586c}{tx\+Channel\+Index}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+Tiva\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTTivaDMA_HWAttrs uartTivaHWAttrs[] = \{
+    \{
+        UART1\_BASE,
+        INT\_UART1,
+        ~0,        \textcolor{comment}{// Interrupt priority}
+        UDMA\_CH22\_UART1RX,
+        UDMA\_CH23\_UART1TX,
+    \},
+    \{
+        UART3\_BASE,
+        INT\_UART3
+        ~0,        \textcolor{comment}{// Interrupt priority}
+        UDMA\_CH16\_UART3RX,
+        UDMA\_CH17\_UART3TX,
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0cee71a1b87b797dbf1e7660c1134611}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_af51acdaa385973204a6c5741e3e26f40}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0b7002c09c1623fe01c4be22176cf611}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority \index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+Channel\+Index@{rx\+Channel\+Index}}
+\index{rx\+Channel\+Index@{rx\+Channel\+Index}!U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+Channel\+Index}\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_a0c35ca59f07ed055b768efb74d304db1}
+u\+D\+M\+A control\+Table receive channel index plus peripheral map \index{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+Channel\+Index@{tx\+Channel\+Index}}
+\index{tx\+Channel\+Index@{tx\+Channel\+Index}!U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+Channel\+Index}\label{struct_u_a_r_t_tiva_d_m_a___h_w_attrs_af4475ebe44ae2d17d0967c00266c586c}
+u\+D\+M\+A control\+Table transmit channel index plus peripheral map 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_tiva_d_m_a_8h}{U\+A\+R\+T\+Tiva\+D\+M\+A.\+h}\end{DoxyCompactItemize}

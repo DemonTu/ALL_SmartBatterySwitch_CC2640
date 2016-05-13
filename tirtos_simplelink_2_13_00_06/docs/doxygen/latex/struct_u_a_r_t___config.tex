@@ -1,0 +1,59 @@
+\subsection{U\+A\+R\+T\+\_\+\+Config Struct Reference}
+\label{struct_u_a_r_t___config}\index{U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}}
+
+
+U\+A\+R\+T Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T.\+h$>$}
+
+
+
+Collaboration diagram for U\+A\+R\+T\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{struct_u_a_r_t___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_u_a_r_t___config_a9e8073b7f55a5b3bc70d377e3b3f1375}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_u_a_r_t___config_a6472bcf07cd2c8ed0045fe01a934f583}{object}
+\item 
+void const $\ast$ \hyperlink{struct_u_a_r_t___config_ad0baf0ebc820bca98fc7fbd089d1c55c}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T Global configuration. 
+
+The \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config} structure contains a set of pointers used to characterize the U\+A\+R\+T driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Fxn\+Table} const$\ast$ U\+A\+R\+T\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_u_a_r_t___config_a9e8073b7f55a5b3bc70d377e3b3f1375}
+Pointer to a table of driver-\/specific implementations of U\+A\+R\+T A\+P\+Is \index{U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}!object@{object}}
+\index{object@{object}!U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ U\+A\+R\+T\+\_\+\+Config\+::object}\label{struct_u_a_r_t___config_a6472bcf07cd2c8ed0045fe01a934f583}
+Pointer to a driver specific data object \index{U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ U\+A\+R\+T\+\_\+\+Config\+::hw\+Attrs}\label{struct_u_a_r_t___config_ad0baf0ebc820bca98fc7fbd089d1c55c}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_8h}{U\+A\+R\+T.\+h}\end{DoxyCompactItemize}

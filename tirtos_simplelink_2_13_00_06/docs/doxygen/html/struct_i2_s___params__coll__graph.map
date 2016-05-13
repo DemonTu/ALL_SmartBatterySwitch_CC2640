@@ -1,0 +1,4 @@
+<map id="I2S_Params" name="I2S_Params">
+<area shape="rect" href="$struct_i2_s___config.html" title="I2S Global configuration. " alt="" coords="123,9,209,33" />
+<area shape="rect" href="$struct_i2_s___fxn_table.html" title="The definition of a I2S function table that contains the required set of functions to control a speci..." alt="" coords="183,201,287,225" />
+</map>

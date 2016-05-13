@@ -1,0 +1,52 @@
+\subsection{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction Struct Reference}
+\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction}\index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+
+
+Crypto\+C\+C26\+X\+X A\+E\+S-\/\+E\+C\+B Transaction.  
+
+
+
+
+{\ttfamily \#include $<$Crypto\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h_a28465385e5b45efecc00f2015605f970}{Crypto\+C\+C26\+X\+X\+\_\+\+Operation} \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a538da4d16f0d7e5fdb2bf3f97bfa81be}{op\+Type}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h_abf86c8ac428559f00fed3299d439e2cd}{Crypto\+C\+C26\+X\+X\+\_\+\+Mode} \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a9dafb34e220b2dfe0ac118df2afc0ae8}{mode}
+\item 
+uint8\+\_\+t \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a1e144214803cec502698401343c830a1}{key\+Index}
+\item 
+void $\ast$ \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_ac63701080bffd789b53c7effcf46cfe9}{msg\+In}
+\item 
+void $\ast$ \hyperlink{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_ab5c3bff547308f1a63c771349cbef069}{msg\+Out}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Crypto\+C\+C26\+X\+X A\+E\+S-\/\+E\+C\+B Transaction. 
+
+This structure defines the nature of the A\+E\+S-\/\+E\+C\+B transaction. An object of this structure must be initialized by calling \hyperlink{_crypto_c_c26_x_x_8h_afb3ea8faceda234cdd62c5f53e203946}{Crypto\+C\+C26\+X\+X\+\_\+\+Transac\+\_\+init()}. 
+
+\subsubsection{Field Documentation}
+\index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!op\+Type@{op\+Type}}
+\index{op\+Type@{op\+Type}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\paragraph[{op\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Operation} Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction\+::op\+Type}\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a538da4d16f0d7e5fdb2bf3f97bfa81be}
+The type of the crypto operation \index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!mode@{mode}}
+\index{mode@{mode}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Crypto\+C\+C26\+X\+X\+\_\+\+Mode} Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction\+::mode}\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a9dafb34e220b2dfe0ac118df2afc0ae8}
+The mode of current transaction. Set by transact function. \index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!key\+Index@{key\+Index}}
+\index{key\+Index@{key\+Index}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\paragraph[{key\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction\+::key\+Index}\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_a1e144214803cec502698401343c830a1}
+The key store index to be used. \index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!msg\+In@{msg\+In}}
+\index{msg\+In@{msg\+In}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\paragraph[{msg\+In}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction\+::msg\+In}\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_ac63701080bffd789b53c7effcf46cfe9}
+A poiner to the octet string input message \index{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}!msg\+Out@{msg\+Out}}
+\index{msg\+Out@{msg\+Out}!Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction@{Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction}}
+\paragraph[{msg\+Out}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Crypto\+C\+C26\+X\+X\+\_\+\+A\+E\+S\+E\+C\+B\+\_\+\+Transaction\+::msg\+Out}\label{struct_crypto_c_c26_x_x___a_e_s_e_c_b___transaction_ab5c3bff547308f1a63c771349cbef069}
+A pointer to the output message location 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_crypto_c_c26_x_x_8h}{Crypto\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="EVE"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Hello World"
+        name="helloWorld"
+        toolChain="TI"
+        linkerCommandFile=""
+        compilerBuildOptions=""
+        linkerBuildOptions=""
+        description="A basic example that logs a hello world string that can be viewed using System Analyzer.">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+        <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+        <file path="ti/uia/examples/helloworld/main.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/helloworld/default/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+    </project>
+</projectSpec>
+

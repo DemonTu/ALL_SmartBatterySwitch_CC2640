@@ -1,0 +1,239 @@
+\subsection{I2\+S\+C\+C3200\+D\+M\+A.\+h File Reference}
+\label{_i2_s_c_c3200_d_m_a_8h}\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+S driver implementation for a C\+C3200 I2\+S controller. 
+
+============================================================================
+
+The I2\+S header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2S.h>}
+\textcolor{preprocessor}{#include <ti/drivers/i2s/I2SCC3200DMA.h>}
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+I2\+S.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Semaphore\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+List\+P.\+h$>$}\\*
+Include dependency graph for I2\+S\+C\+C3200\+D\+M\+A.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_i2_s_c_c3200_d_m_a_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_config}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}
+\begin{DoxyCompactList}\small\item\em C\+C3200 Serial Pin Configuration. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_params}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}
+\begin{DoxyCompactList}\small\item\em C\+C3200 specific I2\+S Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_vars}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Serial pin variables. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_s_c_c3200_d_m_a___object}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_i2_s_c_c3200_d_m_a_8h_a4fc87c0d5ba35cbd7dd5106777df30e9}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N}~\hyperlink{_i2_s_8h_af919ac4341fca59988c28e16058fa819}{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\item 
+\#define \hyperlink{_i2_s_c_c3200_d_m_a_8h_ab263b5ddc1de92899748cb3f641dc0b6}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N}~\hyperlink{_i2_s_8h_af919ac4341fca59988c28e16058fa819}{I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 1
+\item 
+\#define \hyperlink{_i2_s_c_c3200_d_m_a_8h_a44a9866ba102816db30981347246ae7c}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D}~0x\+F\+F
+\item 
+\#define \hyperlink{_i2_s_c_c3200_d_m_a_8h_a16c3369e33e69e4d870c2093e4451c03}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S}~2
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a5ab45b86872218ae89700bf004660b8f}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A data size is used to determine how to configure the D\+M\+A data transfers. This field is to be only used internally. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs} \hyperlink{_i2_s_c_c3200_d_m_a_8h_ade664e865841159858d62f74344c10e1}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_config}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a2609b03ff79e575eefff8d38e2528bbc}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}
+\begin{DoxyCompactList}\small\item\em C\+C3200 Serial Pin Configuration. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_params}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a5d937c5c8567a0863ced5af0d1d19502}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}
+\begin{DoxyCompactList}\small\item\em C\+C3200 specific I2\+S Parameters. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_vars}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars} \hyperlink{_i2_s_c_c3200_d_m_a_8h_ae2bd2cf855752378e22ae2b662df0a72}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Serial pin variables. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___object}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a3ee6e1f3af6d47f9d3f0fb4145789f9c}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_s_c_c3200_d_m_a___object}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object} $\ast$ \hyperlink{_i2_s_c_c3200_d_m_a_8h_ab6238a057e94d1d1a22e8c8bee266872}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size} \{ \\*
+\hyperlink{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687a01609448c24f97fd53129de27ad0bee5}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit} = 0, 
+\\*
+\hyperlink{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687afee360b86e4f90ebd95c2fe404bf0d16}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+S\+C\+C3200\+D\+M\+A data size is used to determine how to configure the D\+M\+A data transfers. This field is to be only used internally. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_i2_s_c_c3200_d_m_a_8h_a0d576148ac5d09bcec51323f6d5884c7}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init} (\hyperlink{struct_i2_s_c_c3200_d_m_a___serial_pin_params}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a3ca5ac11f1c32271d9522f38a29027e9}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table}
+\item 
+unsigned short \hyperlink{_i2_s_c_c3200_d_m_a_8h_ace2f776a3d3a454a9d0ca4d6235847d5}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer} \mbox{[}32\mbox{]}
+\item 
+\hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a7421ee729c35597dc64cd1b90941cbd5}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc}
+\item 
+unsigned char \hyperlink{_i2_s_c_c3200_d_m_a_8h_a073483177d241d51a7a10cfdd95ff8ba}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer} \mbox{[}32\mbox{]}
+\item 
+\hyperlink{struct_i2_s___buf_desc}{I2\+S\+\_\+\+Buf\+Desc} \hyperlink{_i2_s_c_c3200_d_m_a_8h_a6b20a23a7703adbae25bfcbba2529481}{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+Z\+E\+R\+O\+B\+U\+F\+\_\+\+L\+E\+N~{\bf I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{_i2_s_c_c3200_d_m_a_8h_a4fc87c0d5ba35cbd7dd5106777df30e9}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+S\+E\+T\+\_\+\+E\+M\+P\+T\+Y\+B\+U\+F\+\_\+\+L\+E\+N~{\bf I2\+S\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 1}\label{_i2_s_c_c3200_d_m_a_8h_ab263b5ddc1de92899748cb3f641dc0b6}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+I\+N\+D\+E\+X\+\_\+\+I\+N\+V\+A\+L\+I\+D~0x\+F\+F}\label{_i2_s_c_c3200_d_m_a_8h_a44a9866ba102816db30981347246ae7c}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+N\+U\+M\+\_\+\+S\+E\+R\+I\+A\+L\+\_\+\+P\+I\+N\+S~2}\label{_i2_s_c_c3200_d_m_a_8h_a16c3369e33e69e4d870c2093e4451c03}
+
+
+\subsubsection{Typedef Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}  {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}}\label{_i2_s_c_c3200_d_m_a_8h_a5ab45b86872218ae89700bf004660b8f}
+
+
+I2\+S\+C\+C3200\+D\+M\+A data size is used to determine how to configure the D\+M\+A data transfers. This field is to be only used internally. 
+
+I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit\+: tx\+Buf and rx\+Buf are arrays of uint16\+\_\+t elements I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit\+: tx\+Buf and rx\+Buf are arrays of uint32\+\_\+t elements \index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}  {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}\label{_i2_s_c_c3200_d_m_a_8h_ade664e865841159858d62f74344c10e1}
+
+
+I2\+S\+C\+C3200\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const I2SCC3200DMA\_HWAttrs i2sCC3200HWAttrs[] = \{
+2     \{
+3         I2S\_BASE,
+4         INT\_I2S,
+5         ~0,                 // Interrupt priority
+6         UDMA\_CH4\_I2S\_RX,
+7         UDMA\_CH5\_I2S\_TX
+8     \}
+9 \};
+\end{DoxyCode}
+ \index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}  {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Config}}\label{_i2_s_c_c3200_d_m_a_8h_a2609b03ff79e575eefff8d38e2528bbc}
+
+
+C\+C3200 Serial Pin Configuration. 
+
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}  {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params}}\label{_i2_s_c_c3200_d_m_a_8h_a5d937c5c8567a0863ced5af0d1d19502}
+
+
+C\+C3200 specific I2\+S Parameters. 
+
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars} {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Vars}}\label{_i2_s_c_c3200_d_m_a_8h_ae2bd2cf855752378e22ae2b662df0a72}
+
+
+I2\+S\+C\+C3200\+D\+M\+A Serial pin variables. 
+
+The application must not access any member variables of this structure! \index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}  {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object}}\label{_i2_s_c_c3200_d_m_a_8h_a3ee6e1f3af6d47f9d3f0fb4145789f9c}
+
+
+I2\+S\+C\+C3200\+D\+M\+A Object. 
+
+The application must not access any member variables of this structure! \index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Object} $\ast$ {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Handle}}\label{_i2_s_c_c3200_d_m_a_8h_ab6238a057e94d1d1a22e8c8bee266872}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Data\+Size}}\label{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687}
+
+
+I2\+S\+C\+C3200\+D\+M\+A data size is used to determine how to configure the D\+M\+A data transfers. This field is to be only used internally. 
+
+I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit\+: tx\+Buf and rx\+Buf are arrays of uint16\+\_\+t elements I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit\+: tx\+Buf and rx\+Buf are arrays of uint32\+\_\+t elements \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit}}\item[{\em 
+I2\+S\+C\+C3200\+D\+M\+A\+\_\+16bit\label{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687a01609448c24f97fd53129de27ad0bee5}
+}]\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit}}\item[{\em 
+I2\+S\+C\+C3200\+D\+M\+A\+\_\+32bit\label{_i2_s_c_c3200_d_m_a_8h_a712825340a80cc76e6ce4d6330ca3687afee360b86e4f90ebd95c2fe404bf0d16}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+Serial\+Pin\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_i2_s_c_c3200_d_m_a_8h_a0d576148ac5d09bcec51323f6d5884c7}
+
+
+Function to initialize the \hyperlink{struct_i2_s___params}{I2\+S\+\_\+\+Params} struct to its defaults. 
+
+params-\/$>$serial\+Pin\+Config\mbox{[}0\mbox{]}.pin\+Number = 0; params-\/$>$serial\+Pin\+Config\mbox{[}0\mbox{]}.pin\+Mode = I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+R\+X; params-\/$>$serial\+Pin\+Config\mbox{[}0\mbox{]}.in\+Active\+Config = I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L;
+
+params-\/$>$serial\+Pin\+Config\mbox{[}1\mbox{]}.pin\+Number = 1; params-\/$>$serial\+Pin\+Config\mbox{[}1\mbox{]}.pin\+Mode = I2\+S\+\_\+\+P\+I\+N\+M\+O\+D\+E\+\_\+\+T\+X; params-\/$>$serial\+Pin\+Config\mbox{[}1\mbox{]}.in\+Active\+Config = I2\+S\+\_\+\+S\+E\+R\+C\+O\+N\+F\+I\+G\+\_\+\+I\+N\+A\+C\+T\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L;
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Parameter structure to initialize \\
+\hline
+\end{DoxyParams}
+
+
+\subsubsection{Variable Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf I2\+S\+\_\+\+Fxn\+Table} I2\+S\+C\+C3200\+D\+M\+A\+\_\+fxn\+Table}\label{_i2_s_c_c3200_d_m_a_8h_a3ca5ac11f1c32271d9522f38a29027e9}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}unsigned short I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buffer\mbox{[}32\mbox{]}}\label{_i2_s_c_c3200_d_m_a_8h_ace2f776a3d3a454a9d0ca4d6235847d5}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Buf\+Desc} I2\+S\+C\+C3200\+D\+M\+A\+\_\+zero\+Buf\+Desc}\label{_i2_s_c_c3200_d_m_a_8h_a7421ee729c35597dc64cd1b90941cbd5}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buffer\mbox{[}32\mbox{]}}\label{_i2_s_c_c3200_d_m_a_8h_a073483177d241d51a7a10cfdd95ff8ba}
+\index{I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc}}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc}!I2\+S\+C\+C3200\+D\+M\+A.\+h@{I2\+S\+C\+C3200\+D\+M\+A.\+h}}
+\paragraph[{I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Buf\+Desc} I2\+S\+C\+C3200\+D\+M\+A\+\_\+empty\+Buf\+Desc}\label{_i2_s_c_c3200_d_m_a_8h_a6b20a23a7703adbae25bfcbba2529481}

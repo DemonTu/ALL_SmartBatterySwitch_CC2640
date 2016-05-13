@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package kind='package' name='ti.sysbios.benchmarks' nodoc='0' root='../../../' summary='BIOS+6+size+and+timing+benchmarks'>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3Eti.sysbios.benchmarks%3C%2Fspan%3E%3C%2Fgo%3E+%5B1%2C+1%2C+0%2C+0%5D+%7B'/>
+    <line tab='0' content='%7D'/>
+    <docSect name='details'>
+        <docPara content='See+%3Ca+href%3D%22.%2Fdoc-files%2Fbenchmarks.html%22%3Ebenchmarks.html%3C%2Fa%3E+for+results.'/>
+        <docPara content='Refer+to+the+BIOS+User%27s+Guide+Appendix+for+a+complete+description+of+the%0A++benchmarks.'/>
+    </docSect>
+</package>

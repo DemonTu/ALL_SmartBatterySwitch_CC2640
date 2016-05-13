@@ -1,0 +1,8 @@
+<map id="UARTCC3200.h" name="UARTCC3200.h">
+<area shape="rect" href="$_clock_p_8h.html" title="Clock interface for the RTOS Porting Interface. " alt="" coords="429,158,591,182" />
+<area shape="rect" href="$_hwi_p_8h.html" title="Hardware Interrupt module for the RTOS Porting Interface. " alt="" coords="615,158,765,182" />
+<area shape="rect" href="$_semaphore_p_8h.html" title="Semaphore module for the RTOS Porting Interface. " alt="" coords="789,158,986,182" />
+<area shape="rect" href="$_power_8h.html" title="Power manager interface. " alt="" coords="269,84,391,108" />
+<area shape="rect" href="$_u_a_r_t_8h.html" title="UART driver interface. " alt="" coords="109,158,231,182" />
+<area shape="rect" href="$_list_p_8h.html" title="Linked List interface for the RTOS Ports Interface. " alt="" coords="255,158,405,182" />
+</map>

@@ -1,0 +1,57 @@
+\subsection{Power\+\_\+\+Notify\+Obj Struct Reference}
+\label{struct_power___notify_obj}\index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+
+
+Power notify object structure.  
+
+
+
+
+{\ttfamily \#include $<$Power.\+h$>$}
+
+
+
+Collaboration diagram for Power\+\_\+\+Notify\+Obj\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{struct_power___notify_obj__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} \hyperlink{struct_power___notify_obj_ac29b08d6a225b7bdebc98adc931e3276}{link}
+\item 
+unsigned int \hyperlink{struct_power___notify_obj_a9ca54b240450f2575f6f70e578c8b988}{event\+Types}
+\item 
+\hyperlink{_power_8h_a91335240b2081eeefec80d043030c857}{Power\+\_\+\+Notify\+Fxn} \hyperlink{struct_power___notify_obj_acfc434bbe72476fdac364ffe7df28f4c}{notify\+Fxn}
+\item 
+uintptr\+\_\+t \hyperlink{struct_power___notify_obj_ab430e61fc76f545d992c452a3bc74405}{client\+Arg}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Power notify object structure. 
+
+This struct specification is for internal use. Notification clients must pre-\/allocate a notify object when registering for a notification; \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify()} will take care initializing the internal elements appropriately. 
+
+\subsubsection{Field Documentation}
+\index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}!link@{link}}
+\index{link@{link}!Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+\paragraph[{link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem} Power\+\_\+\+Notify\+Obj\+::link}\label{struct_power___notify_obj_ac29b08d6a225b7bdebc98adc931e3276}
+for placing on the notify list \index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}!event\+Types@{event\+Types}}
+\index{event\+Types@{event\+Types}!Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+\paragraph[{event\+Types}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+\+Notify\+Obj\+::event\+Types}\label{struct_power___notify_obj_a9ca54b240450f2575f6f70e578c8b988}
+the event type \index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}!notify\+Fxn@{notify\+Fxn}}
+\index{notify\+Fxn@{notify\+Fxn}!Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+\paragraph[{notify\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Notify\+Fxn} Power\+\_\+\+Notify\+Obj\+::notify\+Fxn}\label{struct_power___notify_obj_acfc434bbe72476fdac364ffe7df28f4c}
+notification function \index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}!client\+Arg@{client\+Arg}}
+\index{client\+Arg@{client\+Arg}!Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+\paragraph[{client\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t Power\+\_\+\+Notify\+Obj\+::client\+Arg}\label{struct_power___notify_obj_ab430e61fc76f545d992c452a3bc74405}
+argument provided by client 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_8h}{Power.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,160 @@
+\subsection{I2\+C\+U\+S\+C\+I\+B.\+h File Reference}
+\label{_i2_c_u_s_c_i_b_8h}\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+U\+S\+C\+I\+B driver implementation for a U\+S\+C\+I\+B controller. 
+
+============================================================================
+
+The I2\+C\+U\+S\+C\+I\+B header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2C.h>}
+\textcolor{preprocessor}{#include <ti/drivers/I2CUSCIB.h>}
+\end{DoxyCode}
+
+
+This I2\+C driver implementation is designed to operate on a U\+C\+S\+I controller in I2\+C mode.
+
+\paragraph*{Interrupts}
+
+This driver is interrupt driven. For M\+S\+P430 devices, it requires the user to statically (.cfg) create a Hwi for the accocated U\+S\+C\+I controller and have it call the I2\+C\+U\+S\+C\+I\+B\textquotesingle{}s Hwi interrupt function I2\+C\+U\+S\+C\+I\+B\+\_\+hwi\+Int\+Fxn().
+
+The following information is needed to create the Hwi\+:
+\begin{DoxyEnumerate}
+\item Interrupt vector~\newline
+ The interrupt vector number can be found in a given M\+S\+P430 device specific header file (e.\+g. msp430f5529.\+h).
+\item Hwi function pointer~\newline
+ Call I2\+C\+U\+S\+C\+I\+B\+\_\+hwi\+Int\+Fxn()
+\item Hwi function argument~\newline
+ This argument to the Hwi indexes into the I2\+C\+\_\+config\mbox{[}\mbox{]} data structure. Ensure you are indexing into the I2\+C\+\_\+config\mbox{[}\mbox{]} element that uses a \hyperlink{_i2_c_u_s_c_i_b_8h_a72eb489c9beee32e652431265a234cbd}{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table} pointer.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}
+\textcolor{comment}{// Statically create a I2CUSCIB Hwi in the .cfg file}
+var hwi0Params = \textcolor{keyword}{new} Hwi.Params();
+hwi0Params.instance.name = \textcolor{stringliteral}{"hwi0"};
+hwi0Params.arg = 0;  \textcolor{comment}{// I2C\_config[0];}
+Program.global.hwi0 = Hwi.create(45, \textcolor{stringliteral}{"&I2CUSCIB\_hwiIntFxn"}, hwi0Params);
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+I2\+C.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+Include dependency graph for I2\+C\+U\+S\+C\+I\+B.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_i2_c_u_s_c_i_b_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_c_u_s_c_i_b___h_w_attrs}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c_u_s_c_i_b___object}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode} \hyperlink{_i2_c_u_s_c_i_b_8h_a0aed92306214443ec824ce02e6149251}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B mode. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_u_s_c_i_b___h_w_attrs}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs} \hyperlink{_i2_c_u_s_c_i_b_8h_a83f30e87604a576ba053bea4686c9569}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_u_s_c_i_b___object}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object} \hyperlink{_i2_c_u_s_c_i_b_8h_a4b7b87d6ac61e0808fde0cd44bc2aa08}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode} \{ \\*
+\hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1a3f5f32dd94a378260e4e6ff3e1a7f497}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E} = 0, 
+\\*
+\hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1a2adaf12ff440fd858bfa516c232eea99}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1ad114cbf93a89a827a72563a239807157}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1ad31b7d0122eb14a53651cdd89f1802a6}{I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R} = 0x\+F\+F
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+C\+U\+S\+C\+I\+B mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table} \hyperlink{_i2_c_u_s_c_i_b_8h_a72eb489c9beee32e652431265a234cbd}{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}  {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}}\label{_i2_c_u_s_c_i_b_8h_a0aed92306214443ec824ce02e6149251}
+
+
+I2\+C\+U\+S\+C\+I\+B mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}  {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}\label{_i2_c_u_s_c_i_b_8h_a83f30e87604a576ba053bea4686c9569}
+
+
+I2\+C\+U\+S\+C\+I\+B Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item usci\+\_\+b\+\_\+i2c.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const I2CUSCIB\_HWAttrs i2cUSCIBHWAttrs[] = \{
+2     \{
+3         USCI\_B0\_BASE,
+4         USCI\_B\_SPI\_CLOCKSOURCE\_SMCLK
+5     \},
+6     \{
+7         USCI\_B1\_BASE,
+8         USCI\_B\_SPI\_CLOCKSOURCE\_SMCLK
+9     \},
+10 \};
+\end{DoxyCode}
+ \index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}  {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+Object}}\label{_i2_c_u_s_c_i_b_8h_a4b7b87d6ac61e0808fde0cd44bc2aa08}
+
+
+I2\+C\+U\+S\+C\+I\+B Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+C\+U\+S\+C\+I\+B\+\_\+\+Mode}}\label{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1}
+
+
+I2\+C\+U\+S\+C\+I\+B mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+U\+S\+C\+I\+B\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1a3f5f32dd94a378260e4e6ff3e1a7f497}
+}]\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+U\+S\+C\+I\+B\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1a2adaf12ff440fd858bfa516c232eea99}
+}]\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+U\+S\+C\+I\+B\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E\label{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1ad114cbf93a89a827a72563a239807157}
+}]\index{I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+I2\+C\+U\+S\+C\+I\+B\+\_\+\+E\+R\+R\+O\+R\label{_i2_c_u_s_c_i_b_8h_ad7062f0359995b8833bcc3ca097bc8b1ad31b7d0122eb14a53651cdd89f1802a6}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}!I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table@{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table}}
+\index{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table@{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table}!I2\+C\+U\+S\+C\+I\+B.\+h@{I2\+C\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf I2\+C\+\_\+\+Fxn\+Table} I2\+C\+U\+S\+C\+I\+B\+\_\+fxn\+Table}\label{_i2_c_u_s_c_i_b_8h_a72eb489c9beee32e652431265a234cbd}

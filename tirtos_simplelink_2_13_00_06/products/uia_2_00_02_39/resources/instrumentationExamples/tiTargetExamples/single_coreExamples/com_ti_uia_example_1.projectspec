@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+            />
+        </when>
+        <except>
+            <context
+                deviceId=".*(Cortex A|TM4C|TM4E|LM3|F28M3|LM4|RM4|TMS570LS|ARM7|ARM11|Generic|EVMDMRX45X|CC25|CM25|CC26|CC32|TMS470M|DM350|DM357|DM368|P401R).*"
+            />
+        </except>
+    </applicability>
+
+    <project
+        title="Stairstep JTAG StopMode"
+        name="stairstepStopMode"
+        toolChain="TI"
+        linkerCommandFile=""
+        compilerBuildOptions=""
+        linkerBuildOptions=""
+        description="The stairstep example runs continuously and periodically generates log events. Different threads (Hwi, Swi, Task) run to present a CPU load to the system.  The Log data is obtained when the target is halted.  The sizes of the loggers in LoggingSetup might need to be decreased if your target does not have enough memory.">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.uia;com.ti.rtsc.SYSBIOS"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+        <group id="ti.uia.examples.root.uia.targetsTI.singlecoreTI"/>
+        <file path="ti/uia/examples/single/stairstep.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/single/default/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/uia/examples/makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+    </project>
+</projectSpec>
+

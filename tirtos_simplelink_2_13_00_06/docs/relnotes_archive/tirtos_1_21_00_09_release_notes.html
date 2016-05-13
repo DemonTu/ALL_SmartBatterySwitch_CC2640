@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- saved from url=(0120)http://wiki.sanb.design.ti.com/twiki/bin/viewfile/Process/ReleaseNotesTemplate?rev=1;filename=example_release_notes.html --><!-- saved from url=(0113)file://C:\Documents and Settings\a0323759\Local Settings\Temporary Internet Files\OLKC\example_release_notes.html --><!-- /* * Copyright 2007 by Texas Instruments Incorporated . * * All rights reserved. Property of Texas Instruments Incorporated. * Restricted rights to use, duplicate or disclose this code are * granted through contract. * */ --><title>TI-RTOS 1.21.00 Release Notes</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- For now, we use the doxygen style sheet -->
+<link href="release_notes_template_files/css.htm" type="text/css" rel="stylesheet">
+<meta content="MSHTML 6.00.2900.3395" name="GENERATOR">
+</head>
+<body style="color: rgb(0, 0, 0);" alink="#ee0000" link="#0000ee" vlink="#551a8b">
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com/"><img style="border: 0px solid ; width: 222px; height: 54px;" alt="Texas Instruments" src="docs/tilogo.gif"> </a></td>
+<td bgcolor="red"><img style="width: 314px; height: 26px;" alt="Technology for Innovators(tm)" src="docs/titagline.gif">
+</td>
+</tr>
+</tbody>
+</table>
+<h1 style="text-align: left;">TI-RTOS 1.21.00.09
+Release
+Notes</h1>
+
+This release note is divided into the following sections:<br>
+<br>
+<a href="#General_Info">Introduction</a>,
+<a href="#Documentation">Documentation</a>,
+<a href="#Products">Products Included</a>,
+<a href="#Whats_New">What's New</a>, <a href="#Compatibility">Upgrade &amp;
+Compatibility
+Information</a>, <a href="#Host_Support">Host
+Support</a>, <a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>, <a href="#Validation">Validation Info</a>, <a href="#Known_Issues">Known Issues</a>, <a href="#Examples">Examples</a>, <a href="#Version">Version
+Information</a>, <a href="#Support">Technical
+Support</a>.
+<hr>
+<h2><a name="General_Info">Introduction</a></h2>
+<p style="background-color: white;"><span style="background-color: red;"></span>This
+is an General Availability release of TI-RTOS
+. This version of TI-RTOS requires CCS 5.5.</p>
+MSP430 support in this release is at a "beta" level. All of the other
+components in this release of TI-RTOS are at a GA level.<br>
+<br>
+The TI-RTOS delivers
+components
+that enable engineers to develop applications on Texas Instruments
+micro-controller devices. The product is comprised of multiple
+software
+components and examples of how to use these components together. <br>
+<br>
+The TI-RTOS gives developers a one-stop RTOS solution for developing
+applications for TI embedded microcontrollers. It provides an OS
+kernel, communications support, drivers, and more. It is tightly
+integrated with TIs Code Composer Studio development environment. In
+addition, examples are provided to demonstrate the use of each
+functional area and each supported device and as a starting point for
+your own projects.<br>
+<br>
+<hr>
+<h2><a name="Documentation">Documentation</a></h2>
+<p>The
+following documentation is available:</p>
+<ul>
+<li><a href="docs/spruhd3g.pdf">Getting
+Started
+Guide</a></li>
+<li><a href="docs/spruhd4e.pdf">User
+Guide</a></li>
+<li><a href="tirtos_1_21_00_09_manifest.html">TI
+RTOS&nbsp;Manifest</a></li>
+<li><a href="docs/report.html">Static
+Analysis Reports</a></li>
+<li><a href="http://processors.wiki.ti.com/index.php/TI-RTOS">TI-RTOS
+Wiki</a>&nbsp;</li>
+</ul>
+<font face="Times New Roman" size="3">Release
+notes from previous releases are also available in the
+<a href="docs/relnotes_archive">release notes archive</a>
+directory.</font>
+<hr>
+<h2><a name="Products">Products Included</a></h2>
+The following is a list of all the products bundled into the TI-RTOS
+installation.
+Note these products only support ARM and C2xxx devices (this was done
+to reduce installer and installation size).<br>
+<ul>
+<li style="background-color: white;"><a href="products/bios_6_37_00_20/bios_6_37_00_20_release_notes.html">bios_6_37_00_20</a>&nbsp;</li>
+<li style="background-color: white;"><a href="products/ipc_3_10_01_11/ipc_3_10_01_11_release_notes.html">ipc_3_10_01_11</a><a href="products/uia_1_04_00_06/uia_1_04_00_06_release_notes.html"><br>
+</a></li>
+<li style="background-color: white;"><a href="products/ndk_2_23_01_01/ndk_2_23_01_01_release_notes.html">ndk_2_23_01_01</a></li>
+<li><a href="products/uia_1_04_00_06/uia_1_04_00_06_release_notes.html">uia_1_04_00_06</a></li>
+<li>xdctools_3_25_04_88*</li>
+<li style="background-color: white;">MSP430Ware
+1_60_02_09a**</li>
+<li style="background-color: white;">MWare_v201b**<span style="background-color: red;"></span></li>
+<li>TivaWare_C_Series-2.0.1.11577a**</li>
+<li>Drivers and examples for&nbsp;</li>
+<ul>
+<li>Concerto Family: TMDXDOCKH52C1 and TMDXDOCK28M36</li>
+<li>Stellaris Family: EKS-LM4F232 and&nbsp;EK_LM4F120XL</li>
+<li>Tiva-C Family:&nbsp; EK_TM4C123GXL,&nbsp;
+DK_TM4C123G, and DK_TM4C129X</li>
+<li>MSP430 Family: MSP_EXP430F5529LP
+and&nbsp;MSP_EXP430F5529 (USB Experimenter Board)</li>
+</ul>
+</ul>
+* XDCtools is installed at the same level at TI-RTOS. If the xdctools_3_25_04_88
+version is already present at that location, that version is
+used.<br>
+** refer
+to
+&lt;TIRTOS_Install_dir&gt;\products\*Ware&gt;\TI-RTOS.README
+for more details
+<hr>
+<h2><a name="Whats_New">What's New</a><br>
+</h2>
+<h2>1.21.00.09<span style="background-color: red;"></span></h2>
+Please refer to the&nbsp;<a href="docs/spruhd3g.pdf">Getting
+Started
+Guide</a> and/or <a href="docs/spruhd4e.pdf">User
+Guide</a> for more detail about the following new features.
+<ul>
+<li>Added&nbsp;MSP-EXP430F5529&nbsp;USB Experimenter
+Board<br>
+</li>
+<li>IARWorkbench example integration (MSP430 and M4F)<br>
+</li>
+<li>GCC Tool support (for ARM-only)</li>
+<li>Added an empty&nbsp;minimal example for all boards</li>
+</ul>
+<span style="font-weight: bold;">Defects Fixed since
+1.20.00.28<br>
+<br>
+</span>
+<table style="width: 842px; height: 53px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td><b>ID</b></td>
+<td><b>Headline</b></td>
+</tr>
+<tr>
+<td>SDOCM00105001</td>
+<td>TI-RTOS EMAC drivers should use Hwi instead of NDK's
+interrupt module</td>
+</tr>
+<tr>
+<td>SDOCM00105047</td>
+<td>ROV for I2C for MSP430 does not work</td>
+</tr>
+<tr>
+<td>SDOCM00105385</td>
+<td>USB Mouse Device readme has incorrect Example Summary</td>
+</tr>
+<tr>
+<td>SDOCM00105605</td>
+<td>TI-RTOS drivers use too much stack space</td>
+</tr>
+<tr>
+<td>SDOCM00105607</td>
+<td>Add support for MSP-EXP430F5529 Experimenter board into
+TI-RTOS</td>
+</tr>
+<tr>
+<td>SDOCM00105696</td>
+<td>GPIO is missing graphical configuration</td>
+</tr>
+<tr>
+<td>SDOCM00105717</td>
+<td>Graphical Config should not allow modules not available
+on that device (e.g. NDK on MSP430)</td>
+</tr>
+<tr>
+<td>SDOCM00105718</td>
+<td>Add examples and ROV support into IAR workbench</td>
+</tr>
+<tr>
+<td>SDOCM00105719</td>
+<td>TI-RTOS needs to support GCC for ARM boards</td>
+</tr>
+<tr>
+<td>SDOCM00105721</td>
+<td>Use new TivaWare version (2.0.1.11577)</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: 'Arial','sans-serif';"><br>
+</span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<hr>
+<h2><a name="Compatibility">Upgrade and
+Compatibility Information</a></h2>
+When migrating an application that uses TI-RTOS 1.20.00.28 to TI-RTOS
+1.21.00.09, the following steps must be taken:<br>
+<ul>
+<li><span style="font-weight: bold;">TivaWare:</span>
+This version of TI-RTOS has TivaWare instead of StellarisWare. The
+following changes must be made to existing TI-RTOS applications that
+used StellarisWare</li>
+</ul>
+<ol style="font-weight: bold;">
+<ol>
+<li>Libraries: <span style="font-weight: normal;">The
+StellarisWare
+libraries (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.0b</span><span style="font-weight: normal;">/driverlib/ccs-cm4f/Debug/driverlib-cm4f.lib")
+must be changed to point to the TivaWare libraries (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/TivaWare_C_Series-2.0.1.11577a/</span><span style="font-weight: normal;">driverlib/ccs/Debug/driverlib.lib")</span></li>
+<li>Include Paths: <span style="font-weight: bold;"></span><span style="font-weight: normal;">The
+StellarisWare include paths (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.0b</span><span style="font-weight: normal;">") must
+be changed to point to the TivaWare path (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.0.1.11577a</span><span style="font-weight: normal;">").</span><span style="font-weight: bold;"></span><br>
+</li>
+</ol>
+</ol>
+<span style="font-family: 'Arial','sans-serif';"></span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+<ul>
+<li><font face="Times New Roman" size="3">Supported
+Operating Systems</font>
+<ul type="circle">
+<li><font face="Times New Roman" size="3">Windows
+7, Windows XP, Windows Vista</font> </li>
+<li><font face="Times New Roman" size="3">Linux
+[RH4], Ubuntu [10.04]</font> </li>
+</ul>
+</li>
+</ul>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Dependencies">Dependencies</a>
+</h2>
+<p>This release requires the following other software
+components
+and tools versions to successfully function:&nbsp;</p>
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.5
+</span> or higher (if you are using CCSv5.5 and TM4C129x devices, you will need to replace the FlashStellaris.dll<span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; color: rgb(31, 73, 125);"> </span>file. Please refer to <a href="http://processors.wiki.ti.com/index.php/TI-RTOS_Support">TI-RTOS Support Wiki</a> page for more details).<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span><br>
+</li>
+</ul>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+<ul>
+<li>TMDXDOCKH52C1</li>
+<li>TMDXDOCK28M36</li>
+<li>EKS-LM4F232</li>
+<li>EK_TM4C123GXL</li>
+<li>DK_TM4C123G</li>
+<li>DK_TM4C129X</li>
+<li>EK_LM4F120XL</li>
+<li>MSP_EXP430F5529LP</li>
+<li>MSP_EXP430F5529</li>
+</ul>
+<ul>
+</ul>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+This release was validated using the following components:
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.5 (with FlashStellaris.dll as noted in the </span><a href="#Dependencies">Dependencies</a><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">&nbsp;section)</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span></li>
+</ul>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a><span style="background-color: red;"></span></h2>
+There are several know issues with this release.<span style="background-color: red;"></span><br>
+<br>
+<table style="width: 1214px; height: 278px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td style="height: 31px;"><b>ID</b></td>
+<td style="height: 31px;"><b>Headline</b></td>
+</tr>
+<tr>
+<td>SDOCM00088081</td>
+<td>SD Card driver lacks CRC support</td>
+</tr>
+<tr>
+<td>SDOCM00093268</td>
+<td>Add parity and error checking for UART driver</td>
+</tr>
+<tr>
+<td>SDOCM00093967</td>
+<td>TI-RTOS Windows install will fail if installed in
+multiple or single directory that contains more than 38 characters in
+path</td>
+</tr>
+<tr>
+<td>SDOCM00094053</td>
+<td>TI-RTOS sub-products (e.g. UIA, IPC) are not linked
+into CCS Help</td>
+</tr>
+<tr>
+<td>SDOCM00097626</td>
+<td>Giving Priorities to Hwis from TI-RTOS Drivers</td>
+</tr>
+<tr>
+<td>SDOCM00098063</td>
+<td>UART driver needs to support DMA</td>
+</tr>
+<tr>
+<td>SDOCM00099017</td>
+<td>TI-RTOS needs to make sub-products examples accessible</td>
+</tr>
+<tr>
+<td>SDOCM00099460</td>
+<td>ping flood causes Concerto board to stop receiving
+interrupts</td>
+</tr>
+<tr>
+<td>SDOCM00099858</td>
+<td>Stellaris launchpad doesn't detect a USB disconnect
+event</td>
+</tr>
+<tr>
+<td>SDOCM00100494</td>
+<td>SPI driver was not tested in Slave Open Drain mode</td>
+</tr>
+<tr>
+<td>SDOCM00100864</td>
+<td>Multithreaded CC3000 Host Driver does not work properly</td>
+</tr>
+<tr>
+<td>SDOCM00100865</td>
+<td>TI-RTOS drivers should have top-level enable and
+disable APIs</td>
+</tr>
+<tr>
+<td>SDOCM00100945</td>
+<td>Make TCP/UDP Echo for CC3000 examples more like NDK
+TCP/UDP Echo examples</td>
+</tr>
+<tr>
+<td>SDOCM00101155</td>
+<td>Intermittent spin lock in USB library's
+USBHCDPipeRead() for LM4F232</td>
+</tr>
+<tr>
+<td>SDOCM00101176</td>
+<td>SPIMessageQTransport does not support static creates</td>
+</tr>
+<tr>
+<td>SDOCM00101229</td>
+<td>HTTP demo doesn't show the current SD Card logging
+state</td>
+</tr>
+<tr>
+<td>SDOCM00101240</td>
+<td>Coverity for WiFi driver reports several defects in
+the
+CC3000 Host Driver</td>
+</tr>
+<tr>
+<td>SDOCM00102477</td>
+<td>I2CTiva driver get's stuck at a Semaphore_pend() when
+I2C bus arbitration was lost</td>
+</tr>
+<tr>
+<td>SDOCM00102563</td>
+<td>WiFi driver should not create Hwi instance</td>
+</tr>
+<tr>
+<td>SDOCM00103028</td>
+<td>Add USB Host examples to EK_TM4C123GXL</td>
+</tr>
+<tr>
+<td>SDOCM00103637</td>
+<td>MSP430 UART[USCIA] LibType_Instrumented is not
+recommended at baudrates &gt; 9600</td>
+</tr>
+<tr>
+<td>SDOCM00104253</td>
+<td>MSP430 Launchpad ez-FET UART emulation issue at
+buadrate &gt; 28.8kbps<br>
+</td>
+</tr>
+<tr>
+<td>SDOCM00104686</td>
+<td>UART in Stellaris launchpad not working above 9600 baud
+when used with windows apps that use rxtxSerial.dll driver</td>
+</tr>
+<tr>
+<td>SDOCM00104691</td>
+<td>USBMSCHFatFsTiva_open requires a heap since no task
+stack is provided to the Task_construct</td>
+</tr>
+<tr>
+<td>SDOCM00104772</td>
+<td>Support for USB in a MSP430 Empty project wizard</td>
+</tr>
+<tr>
+<td>SDOCM00105002</td>
+<td>TI-RTOS examples with no heap get an error if they call
+BIOS_exit</td>
+</tr>
+<tr>
+<td>SDOCM00105005</td>
+<td>The EMACSnow driver needs a new name</td>
+</tr>
+<tr>
+<td>SDOCM00105006</td>
+<td>Build warnings for IAR when doing a top-level build<br>
+</td>
+</tr>
+<tr>
+<td>SDOCM00105311</td>
+<td>EK_LM4F120XL.h: EK_LM4F120XL_I2C0 should be
+EK_LM4F120XL_I2C1</td>
+</tr>
+<tr>
+<td>SDOCM00105737</td>
+<td>GCC examples cannot print (e.g.&nbsp; fatsdraw) to
+console in CCS 5.5</td>
+</tr>
+<tr>
+<td>SDOCM00105761</td>
+<td>CC3000 Wi-Fi examples not working with GCC</td>
+</tr>
+<tr>
+<td>SDOCM00105762</td>
+<td>TI Resource Explorer can't distinguish between boards
+of the same device or same boards with different toolchains</td>
+</tr>
+<tr>
+<td>SDOCM00105778</td>
+<td>MSP430 UART logging to System Analyzer does not work</td>
+</tr>
+<tr>
+<td>SDOCM00105836</td>
+<td>TI-RTOS GNU example for TM4C129x devices do not work with CCS 5.5 (see <a href="#Dependencies">Dependencies</a>)</td>
+</tr>
+</tbody>
+</table>
+<br>
+<hr>
+<h2><a name="Examples">Examples</a></h2>
+There are&nbsp;for TMDXDOCKH52C1,
+TMDXDOCK28M36,&nbsp;EKS-LM4F232, EK_TM4C123GXL, DK_TM4C123G,
+DK_TM4C129X, &nbsp;EK_LM4F120XL, MSP_EXP430F5529LP, and
+MSP_EXP430F5529.
+Please refer to the Getting Started Guide for more details.<br>
+<hr><big><span style="font-weight: bold;"></span></big>
+<h2><a name="Version">Version Information</a></h2>
+<p>All releases&nbsp;have 4 digits (<b>M.mm.pp.bb</b>).
+This includes GA and pre-releases (engineering, EA, beta, etc.).
+Pre-releases are denoted with a&nbsp;suffix (e.g. 1.01.00.15_eng or
+1.01.00.21-beta). </p>
+<p>This product's version follows a version format, <b>M.mm.pp.bb</b>,
+where <b>M</b> is a single digit Major number, <b>mm</b>
+is 2 digit minor number, <b>pp</b> is a 2 digit patch
+number, and <b>b</b> is an unrestricted set of digits used
+as an incrementing build counter. </p>
+<p>To support multiple side-by-side installations of the
+product,
+the product version is encoded in the top level directory, ex. <span style="font-weight: bold;">tirtos</span><b>_1_00_01_11</b>.
+</p>
+<p>Subsequent releases of patch upgrades will be identified by
+the patch number, ex. TI-RTOS 1.00.00.68 with directory <span style="font-weight: bold;">tirtos</span><b>_1_00_01_70</b>.
+Typically, these patches only include critical bug fixes. </p>
+<p>Please note that version numbers and compatibility keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section. </p>
+<hr>
+<h2><a name="Support">Technical Support</a></h2>
+<p><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">For
+technical
+support, please refer to the Texas Instruments E2E BIOS Support Forum <span style="color: rgb(31, 73, 125);"><a href="http://e2e.ti.com/support/embedded/bios/default.aspx">http://e2e.ti.com/support/embedded/bios/default.aspx</a>
+or other forums in <a href="http://e2e.ti.com/">http://e2e.ti.com/</a>
+as needed.</span></span></p>
+<hr>
+<p>Last updated: January 06, 2014 </p>
+</body></html>

@@ -1,0 +1,118 @@
+\subsection{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h File Reference}
+\label{_s_d_s_p_i_u_s_c_i_b_8h}\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+
+
+\subsubsection{Detailed Description}
+S\+D\+S\+P\+I driver implementation for a U\+S\+C\+I S\+P\+I peripheral used with the S\+D\+S\+P\+I driver. 
+
+============================================================================
+
+The S\+D\+S\+P\+I header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/SDSPI.h>}
+\textcolor{preprocessor}{#include <ti/drivers/sdspi/SDSPIUSCIB.h>}
+\end{DoxyCode}
+
+
+This S\+D\+S\+P\+I driver implementation is designed to operate on a U\+S\+C\+I S\+P\+I controller in a simple polling method. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+S\+D\+S\+P\+I.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/fatfs/ff.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/fatfs/diskio.\+h$>$}\\*
+Include dependency graph for S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_d_s_p_i_u_s_c_i_b_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_s_p_i_u_s_c_i_b___h_w_attrs}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I\+U\+S\+C\+I\+B Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_s_p_i_u_s_c_i_b___object}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I\+U\+S\+C\+I\+B Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type} \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a802d35208b5fda397e7de76e62db1b7c}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}
+\begin{DoxyCompactList}\small\item\em S\+D Card type inserted. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_s_p_i_u_s_c_i_b___h_w_attrs}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs} \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_ae05ce574f2adf5c1baf1ae53c2824576}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}
+\item 
+typedef struct \hyperlink{struct_s_d_s_p_i_u_s_c_i_b___object}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object} \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_ad59c8528a1b9ee05380131ed4448044c}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I\+U\+S\+C\+I\+B Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_s_p_i_u_s_c_i_b___object}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object} $\ast$ \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_ac3caea6a7328f588f8d4a05e365a66aa}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type} \{ \\*
+\hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1a422cdc20ba86c8cdcf1f0fd2318a1cfc}{N\+O\+C\+A\+R\+D} = 0, 
+\\*
+\hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1aa7d8fca3406f36682514f0384d910fac}{M\+M\+C} = 1, 
+\\*
+\hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1a87550a2102744c14e5e2e0ed39cc04b2}{S\+D\+S\+C} = 2, 
+\\*
+\hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1ab27db2a19a825c3e6f1513cdab7c81ea}{S\+D\+H\+C} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em S\+D Card type inserted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table} \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h_a5d9b8df7b2d67156b569476c6a0e6850}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}  {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}}\label{_s_d_s_p_i_u_s_c_i_b_8h_a802d35208b5fda397e7de76e62db1b7c}
+
+
+S\+D Card type inserted. 
+
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}  {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}\label{_s_d_s_p_i_u_s_c_i_b_8h_ae05ce574f2adf5c1baf1ae53c2824576}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}  {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object}}\label{_s_d_s_p_i_u_s_c_i_b_8h_ad59c8528a1b9ee05380131ed4448044c}
+
+
+S\+D\+S\+P\+I\+U\+S\+C\+I\+B Object. 
+
+The application must not access any member variables of this structure! \index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Object} $\ast$ {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Handle}}\label{_s_d_s_p_i_u_s_c_i_b_8h_ac3caea6a7328f588f8d4a05e365a66aa}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+\+Card\+Type}}\label{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1}
+
+
+S\+D Card type inserted. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\+O\+C\+A\+R\+D@{N\+O\+C\+A\+R\+D}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!N\+O\+C\+A\+R\+D@{N\+O\+C\+A\+R\+D}}\item[{\em 
+N\+O\+C\+A\+R\+D\label{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1a422cdc20ba86c8cdcf1f0fd2318a1cfc}
+}]Unrecognized Card \index{M\+M\+C@{M\+M\+C}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!M\+M\+C@{M\+M\+C}}\item[{\em 
+M\+M\+C\label{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1aa7d8fca3406f36682514f0384d910fac}
+}]Multi-\/media Memory Card (M\+M\+C) \index{S\+D\+S\+C@{S\+D\+S\+C}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+C@{S\+D\+S\+C}}\item[{\em 
+S\+D\+S\+C\label{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1a87550a2102744c14e5e2e0ed39cc04b2}
+}]Standard S\+D\+Card (S\+D\+S\+C) \index{S\+D\+H\+C@{S\+D\+H\+C}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+H\+C@{S\+D\+H\+C}}\item[{\em 
+S\+D\+H\+C\label{_s_d_s_p_i_u_s_c_i_b_8h_a82051f5c4a349b60bc2205ec32cd74c1ab27db2a19a825c3e6f1513cdab7c81ea}
+}]High Capacity S\+D\+Card (S\+D\+H\+C) \end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table}}
+\index{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table}!S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h@{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf S\+D\+S\+P\+I\+\_\+\+Fxn\+Table} S\+D\+S\+P\+I\+U\+S\+C\+I\+B\+\_\+fxn\+Table}\label{_s_d_s_p_i_u_s_c_i_b_8h_a5d9b8df7b2d67156b569476c6a0e6850}

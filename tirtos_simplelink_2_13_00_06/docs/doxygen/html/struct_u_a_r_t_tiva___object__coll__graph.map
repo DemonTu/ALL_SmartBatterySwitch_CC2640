@@ -1,0 +1,5 @@
+<map id="UARTTiva_Object" name="UARTTiva_Object">
+<area shape="rect" href="$struct_u_a_r_t_tiva___fxn_set.html" title="Complement set of read functions to be used by the UART ISR and UARTTiva_read(). Internal use only..." alt="" coords="8,9,138,33" />
+<area shape="rect" href="$struct_u_a_r_t___config.html" title="UART Global configuration. " alt="" coords="222,9,326,33" />
+<area shape="rect" href="$struct_u_a_r_t___fxn_table.html" title="The definition of a UART function table that contains the required set of functions to control a spec..." alt="" coords="274,246,394,270" />
+</map>

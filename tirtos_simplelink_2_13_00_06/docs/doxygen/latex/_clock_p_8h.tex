@@ -1,0 +1,368 @@
+\subsection{Clock\+P.\+h File Reference}
+\label{_clock_p_8h}\index{Clock\+P.\+h@{Clock\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Clock interface for the R\+T\+O\+S Porting Interface. 
+
+============================================================================
+
+The Clock\+P module can be used to schedule functions that run at intervals specified in the underlying kernel\textquotesingle{}s system ticks. Clock\+P instances are one-\/shot. The one-\/shot function will be run once after the specified period has elapsed since calling \hyperlink{_clock_p_8h_a72fe821307efbdb0e314108857e39e56}{Clock\+P\+\_\+start()}.
+
+The Clock\+P module can also be used to obtain the period of the kernel\textquotesingle{}s system tick in microseconds. This is useful for determining the number of ticks needed for setting a Clock object\textquotesingle{}s period.
+
+When using the T\+I-\/\+R\+T\+O\+S kernel, Clock\+P functions are run at software interrupt level. With Free\+R\+T\+O\+S, the Clock\+P functions are run by a timer service task with priority configured by the application.
+
+A common use case is to post a semaphore in the clock function. There is a specific A\+P\+I for this\+: Semaphore\+\_\+post\+From\+Clock(). This must be used in a clock function (instead of Semaphore\+\_\+post or Semaphore\+\_\+post\+From\+I\+S\+R). 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Clock\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_clock_p_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_clock_p_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_clock_p___freq_hz}{Clock\+P\+\_\+\+Freq\+Hz}
+\begin{DoxyCompactList}\small\item\em Frequency-\/in-\/hertz struct. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_clock_p___params}{Clock\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Clock\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_clock_p___freq_hz}{Clock\+P\+\_\+\+Freq\+Hz} \hyperlink{_clock_p_8h_a25fc160d58d458b85ec41dea37eaf902}{Clock\+P\+\_\+\+Freq\+Hz}
+\begin{DoxyCompactList}\small\item\em Frequency-\/in-\/hertz struct. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_ae1edd74163efee26d095e9a3d37f5a05}{Clock\+P\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes for Clock\+P A\+P\+Is. \end{DoxyCompactList}\item 
+typedef void $\ast$ \hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em Opaque client reference to an instance of a Clock\+P. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_clock_p_8h_af516e3c763bec8fb9769ecc4ac7296bb}{Clock\+P\+\_\+\+Fxn}) (uintptr\+\_\+t arg)
+\begin{DoxyCompactList}\small\item\em Prototype for a Clock\+P function. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_clock_p___params}{Clock\+P\+\_\+\+Params} \hyperlink{_clock_p_8h_a5c7625ee9fd43a5753a76382f81ca0eb}{Clock\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Clock\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \{ \\*
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767a300c7c353a0ae1d107c2b2278a40a09b}{Clock\+P\+\_\+\+O\+K} = 0, 
+\\*
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767a2033a09c166a62496eeb184d0c736a67}{Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E} = -\/1
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes for Clock\+P A\+P\+Is. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create} (\hyperlink{_clock_p_8h_af516e3c763bec8fb9769ecc4ac7296bb}{Clock\+P\+\_\+\+Fxn} clock\+Fxn, \hyperlink{struct_clock_p___params}{Clock\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to create a clock object. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_a307b64cb44053df12ca12ade68b3a788}{Clock\+P\+\_\+delete} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to delete a clock. \end{DoxyCompactList}\item 
+void \hyperlink{_clock_p_8h_ac0ac5819c6679eea45298919b789a48b}{Clock\+P\+\_\+get\+Cpu\+Freq} (\hyperlink{struct_clock_p___freq_hz}{Clock\+P\+\_\+\+Freq\+Hz} $\ast$freq)
+\begin{DoxyCompactList}\small\item\em Get C\+P\+U frequency in Hz. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{_clock_p_8h_a39de2743b275cf8fe1ddfeec815dd7fd}{Clock\+P\+\_\+get\+System\+Tick\+Period} ()
+\begin{DoxyCompactList}\small\item\em Get the system tick period in microseconds. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{_clock_p_8h_a46c12b1479924ea7e8bf3512a643a905}{Clock\+P\+\_\+get\+System\+Ticks} ()
+\begin{DoxyCompactList}\small\item\em Get the current tick value. \end{DoxyCompactList}\item 
+void \hyperlink{_clock_p_8h_a666e9ded465c969456e6c4ef95e849f4}{Clock\+P\+\_\+\+Params\+\_\+init} (\hyperlink{struct_clock_p___params}{Clock\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initialize params structure to default values. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_a72fe821307efbdb0e314108857e39e56}{Clock\+P\+\_\+start} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle, uint32\+\_\+t timeout)
+\begin{DoxyCompactList}\small\item\em Function to start a clock. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_aabcc5a93edd86380d8c8dcc8cbc7781e}{Clock\+P\+\_\+start\+From\+I\+S\+R} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle, uint32\+\_\+t timeout)
+\begin{DoxyCompactList}\small\item\em Function to start a clock from an interrupt. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_a45b3053db24b21ebd22bc1133c40d1d0}{Clock\+P\+\_\+stop} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to stop a clock. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_a355ca30df3b2152af32512db4123bae5}{Clock\+P\+\_\+stop\+From\+I\+S\+R} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to stop a clock from an interrupt. \end{DoxyCompactList}\item 
+\hyperlink{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}{Clock\+P\+\_\+\+Status} \hyperlink{_clock_p_8h_ad54f22b1f895c689d09686b9900d75ed}{Clock\+P\+\_\+timestamp} (\hyperlink{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}{Clock\+P\+\_\+\+Handle} handle)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Freq\+Hz@{Clock\+P\+\_\+\+Freq\+Hz}}
+\index{Clock\+P\+\_\+\+Freq\+Hz@{Clock\+P\+\_\+\+Freq\+Hz}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Freq\+Hz}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Clock\+P\+\_\+\+Freq\+Hz}  {\bf Clock\+P\+\_\+\+Freq\+Hz}}\label{_clock_p_8h_a25fc160d58d458b85ec41dea37eaf902}
+
+
+Frequency-\/in-\/hertz struct. 
+
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Status@{Clock\+P\+\_\+\+Status}}
+\index{Clock\+P\+\_\+\+Status@{Clock\+P\+\_\+\+Status}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Clock\+P\+\_\+\+Status}  {\bf Clock\+P\+\_\+\+Status}}\label{_clock_p_8h_ae1edd74163efee26d095e9a3d37f5a05}
+
+
+Status codes for Clock\+P A\+P\+Is. 
+
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Handle@{Clock\+P\+\_\+\+Handle}}
+\index{Clock\+P\+\_\+\+Handle@{Clock\+P\+\_\+\+Handle}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef void$\ast$ {\bf Clock\+P\+\_\+\+Handle}}\label{_clock_p_8h_a003dd74e948999fe5c3f45d8f51501f1}
+
+
+Opaque client reference to an instance of a Clock\+P. 
+
+A Clock\+P\+\_\+\+Handle returned from the \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create} represents that instance. and then is used in the other instance based functions (e.\+g. \hyperlink{_clock_p_8h_a72fe821307efbdb0e314108857e39e56}{Clock\+P\+\_\+start}, \hyperlink{_clock_p_8h_a45b3053db24b21ebd22bc1133c40d1d0}{Clock\+P\+\_\+stop}, etc.). \index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Fxn@{Clock\+P\+\_\+\+Fxn}}
+\index{Clock\+P\+\_\+\+Fxn@{Clock\+P\+\_\+\+Fxn}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Clock\+P\+\_\+\+Fxn) (uintptr\+\_\+t arg)}\label{_clock_p_8h_af516e3c763bec8fb9769ecc4ac7296bb}
+
+
+Prototype for a Clock\+P function. 
+
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}}
+\index{Clock\+P\+\_\+\+Params@{Clock\+P\+\_\+\+Params}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Clock\+P\+\_\+\+Params}  {\bf Clock\+P\+\_\+\+Params}}\label{_clock_p_8h_a5c7625ee9fd43a5753a76382f81ca0eb}
+
+
+Basic Clock\+P Parameters. 
+
+Structure that contains the parameters passed into \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create} when creating a Clock\+P instance. The \hyperlink{_clock_p_8h_a666e9ded465c969456e6c4ef95e849f4}{Clock\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Clock\+P default parameters are noted in Clock\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Enumeration Type Documentation}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Status@{Clock\+P\+\_\+\+Status}}
+\index{Clock\+P\+\_\+\+Status@{Clock\+P\+\_\+\+Status}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Clock\+P\+\_\+\+Status}}\label{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767}
+
+
+Status codes for Clock\+P A\+P\+Is. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Clock\+P\+\_\+\+O\+K@{Clock\+P\+\_\+\+O\+K}!Clock\+P.\+h@{Clock\+P.\+h}}\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+O\+K@{Clock\+P\+\_\+\+O\+K}}\item[{\em 
+Clock\+P\+\_\+\+O\+K\label{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767a300c7c353a0ae1d107c2b2278a40a09b}
+}]\index{Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}!Clock\+P.\+h@{Clock\+P.\+h}}\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}}\item[{\em 
+Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\label{_clock_p_8h_aa2030f172fe0c2dbc9ac0b082933c767a2033a09c166a62496eeb184d0c736a67}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+create@{Clock\+P\+\_\+create}}
+\index{Clock\+P\+\_\+create@{Clock\+P\+\_\+create}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Handle} Clock\+P\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Fxn}}]{clock\+Fxn, }
+\item[{{\bf Clock\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}
+
+
+Function to create a clock object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em clock\+Fxn} & Function called when timeout or period expires.\\
+\hline
+{\em params} & Pointer to the instance configuration parameters. N\+U\+L\+L denotes to use the default parameters. The Clock\+P default parameters are noted in \hyperlink{_clock_p_8h_a666e9ded465c969456e6c4ef95e849f4}{Clock\+P\+\_\+\+Params\+\_\+init}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Clock\+P\+\_\+\+Handle on success or a N\+U\+L\+L on an error. This handle can be passed to \hyperlink{_clock_p_8h_a72fe821307efbdb0e314108857e39e56}{Clock\+P\+\_\+start()} 
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+delete@{Clock\+P\+\_\+delete}}
+\index{Clock\+P\+\_\+delete@{Clock\+P\+\_\+delete}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+delete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a307b64cb44053df12ca12ade68b3a788}
+
+
+Function to delete a clock. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Clock\+P\+\_\+\+Handle returned from \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the function.
+\begin{DoxyItemize}
+\item Clock\+P\+\_\+\+O\+K\+: Deleted the clock instance
+\item Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\+: Timed out waiting to delete the clock object. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+get\+Cpu\+Freq@{Clock\+P\+\_\+get\+Cpu\+Freq}}
+\index{Clock\+P\+\_\+get\+Cpu\+Freq@{Clock\+P\+\_\+get\+Cpu\+Freq}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+get\+Cpu\+Freq}]{\setlength{\rightskip}{0pt plus 5cm}void Clock\+P\+\_\+get\+Cpu\+Freq (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Freq\+Hz} $\ast$}]{freq}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_ac0ac5819c6679eea45298919b789a48b}
+
+
+Get C\+P\+U frequency in Hz. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & Pointer to the Freq\+Hz structure \\
+\hline
+\end{DoxyParams}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+get\+System\+Tick\+Period@{Clock\+P\+\_\+get\+System\+Tick\+Period}}
+\index{Clock\+P\+\_\+get\+System\+Tick\+Period@{Clock\+P\+\_\+get\+System\+Tick\+Period}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+get\+System\+Tick\+Period}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Clock\+P\+\_\+get\+System\+Tick\+Period (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a39de2743b275cf8fe1ddfeec815dd7fd}
+
+
+Get the system tick period in microseconds. 
+
+\begin{DoxyReturn}{Returns}
+The kernel\textquotesingle{}s system tick period in microseconds. 
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+get\+System\+Ticks@{Clock\+P\+\_\+get\+System\+Ticks}}
+\index{Clock\+P\+\_\+get\+System\+Ticks@{Clock\+P\+\_\+get\+System\+Ticks}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+get\+System\+Ticks}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Clock\+P\+\_\+get\+System\+Ticks (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a46c12b1479924ea7e8bf3512a643a905}
+
+
+Get the current tick value. 
+
+The value returned will wrap back to zero after it reaches the max value that can be stored in 32 bits.
+
+\begin{DoxyReturn}{Returns}
+Time in system clock ticks 
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+\+Params\+\_\+init@{Clock\+P\+\_\+\+Params\+\_\+init}}
+\index{Clock\+P\+\_\+\+Params\+\_\+init@{Clock\+P\+\_\+\+Params\+\_\+init}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Clock\+P\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a666e9ded465c969456e6c4ef95e849f4}
+
+
+Initialize params structure to default values. 
+
+The default parameters are\+:
+\begin{DoxyItemize}
+\item name\+: N\+U\+L\+L
+\item arg\+: 0
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to the instance configuration parameters. \\
+\hline
+\end{DoxyParams}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+start@{Clock\+P\+\_\+start}}
+\index{Clock\+P\+\_\+start@{Clock\+P\+\_\+start}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+start}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{timeout}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a72fe821307efbdb0e314108857e39e56}
+
+
+Function to start a clock. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Clock\+P\+\_\+\+Handle returned from \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create}\\
+\hline
+{\em timeout} & The timeout used for a one-\/shot clock object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Clock\+P\+\_\+\+O\+K\+: Scheduled the clock function successfully
+\item Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\+: The A\+P\+I failed. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+start\+From\+I\+S\+R@{Clock\+P\+\_\+start\+From\+I\+S\+R}}
+\index{Clock\+P\+\_\+start\+From\+I\+S\+R@{Clock\+P\+\_\+start\+From\+I\+S\+R}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+start\+From\+I\+S\+R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+start\+From\+I\+S\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{timeout}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_aabcc5a93edd86380d8c8dcc8cbc7781e}
+
+
+Function to start a clock from an interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Clock\+P\+\_\+\+Handle returned from \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create}\\
+\hline
+{\em timeout} & The timeout used for a one-\/shot clock object.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Clock\+P\+\_\+\+O\+K\+: Scheduled the clock function successfully
+\item Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\+: The A\+P\+I failed. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+stop@{Clock\+P\+\_\+stop}}
+\index{Clock\+P\+\_\+stop@{Clock\+P\+\_\+stop}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+stop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+stop (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a45b3053db24b21ebd22bc1133c40d1d0}
+
+
+Function to stop a clock. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Clock\+P\+\_\+\+Handle returned from \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Clock\+P\+\_\+\+O\+K\+: Stopped the clock function successfully
+\item Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\+: The A\+P\+I failed. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+stop\+From\+I\+S\+R@{Clock\+P\+\_\+stop\+From\+I\+S\+R}}
+\index{Clock\+P\+\_\+stop\+From\+I\+S\+R@{Clock\+P\+\_\+stop\+From\+I\+S\+R}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+stop\+From\+I\+S\+R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+stop\+From\+I\+S\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_a355ca30df3b2152af32512db4123bae5}
+
+
+Function to stop a clock from an interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Clock\+P\+\_\+\+Handle returned from \hyperlink{_clock_p_8h_a1eab19790e2a9a2ed41fb4d900a3e12e}{Clock\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Clock\+P\+\_\+\+O\+K\+: Stopped the clock function successfully
+\item Clock\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\+: The A\+P\+I failed. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Clock\+P.\+h@{Clock\+P.\+h}!Clock\+P\+\_\+timestamp@{Clock\+P\+\_\+timestamp}}
+\index{Clock\+P\+\_\+timestamp@{Clock\+P\+\_\+timestamp}!Clock\+P.\+h@{Clock\+P.\+h}}
+\paragraph[{Clock\+P\+\_\+timestamp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Clock\+P\+\_\+\+Status} Clock\+P\+\_\+timestamp (
+\begin{DoxyParamCaption}
+\item[{{\bf Clock\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_clock_p_8h_ad54f22b1f895c689d09686b9900d75ed}

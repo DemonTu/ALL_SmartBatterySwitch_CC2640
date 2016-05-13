@@ -1,0 +1,59 @@
+\subsection{Watchdog\+\_\+\+Config Struct Reference}
+\label{struct_watchdog___config}\index{Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}}
+
+
+Watchdog Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$Watchdog.\+h$>$}
+
+
+
+Collaboration diagram for Watchdog\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{struct_watchdog___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_watchdog___config_a89184eb9474db817513b06dfd86bf96f}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_watchdog___config_aa8602245e364f7f910255dbcb14f51d1}{object}
+\item 
+void const $\ast$ \hyperlink{struct_watchdog___config_a96131766bd4da7bc2239eed02f15bed0}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Watchdog Global configuration. 
+
+The \hyperlink{struct_watchdog___config}{Watchdog\+\_\+\+Config} structure contains a set of pointers used to characterize the Watchdog driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_watchdog_8h_afaadfb59be17661ae95562f2081355e7}{Watchdog\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Watchdog\+\_\+\+Fxn\+Table} const$\ast$ Watchdog\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_watchdog___config_a89184eb9474db817513b06dfd86bf96f}
+Pointer to a table of driver-\/specific implementations of Watchdog A\+P\+Is \index{Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}!object@{object}}
+\index{object@{object}!Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Watchdog\+\_\+\+Config\+::object}\label{struct_watchdog___config_aa8602245e364f7f910255dbcb14f51d1}
+Pointer to a driver specific data object \index{Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!Watchdog\+\_\+\+Config@{Watchdog\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ Watchdog\+\_\+\+Config\+::hw\+Attrs}\label{struct_watchdog___config_a96131766bd4da7bc2239eed02f15bed0}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_watchdog_8h}{Watchdog.\+h}\end{DoxyCompactItemize}

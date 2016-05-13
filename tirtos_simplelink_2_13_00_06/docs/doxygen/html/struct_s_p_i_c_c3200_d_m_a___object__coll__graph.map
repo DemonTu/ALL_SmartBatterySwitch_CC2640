@@ -1,0 +1,7 @@
+<map id="SPICC3200DMA_Object" name="SPICC3200DMA_Object">
+<area shape="rect" href="$struct_power___notify_obj.html" title="Power notify object structure. " alt="" coords="8,102,128,126" />
+<area shape="rect" href="$struct_list_p___elem.html" title="ListP_Elem" alt="" coords="24,10,112,34" />
+<area shape="rect" href="$struct_s_p_i___transaction.html" title="A SPI_Transaction data structure is used with SPI_transfer(). It indicates how many SPI_FrameFormat f..." alt="" coords="152,102,272,126" />
+<area shape="rect" href="$struct_s_p_i___config.html" title="SPI Global configuration. " alt="" coords="418,102,506,126" />
+<area shape="rect" href="$struct_s_p_i___fxn_table.html" title="The definition of a SPI function table that contains the required set of functions to control a speci..." alt="" coords="480,281,584,305" />
+</map>

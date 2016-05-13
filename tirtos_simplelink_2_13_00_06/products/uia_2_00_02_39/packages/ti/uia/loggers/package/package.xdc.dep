@@ -1,0 +1,90 @@
+clean::
+	$(RM) package/ti.uia.loggers.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_uia_loggers.java
+	$(RM) package/ti_uia_loggers.class
+	$(RM) package/package_ti.uia.loggers.c
+	$(RM) package/package.defs.h
+	$(RM) LoggerStopMode.h
+	$(RM) package/internal/LoggerStopMode.xdc.h
+	$(RM) LoggerRunMode.h
+	$(RM) package/internal/LoggerRunMode.xdc.h
+	$(RM) LoggerMin.h
+	$(RM) package/internal/LoggerMin.xdc.h
+	$(RM) package/ti.uia.loggers.ccs
+
+.interfaces: package/ti.uia.loggers.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_uia_loggers.java package/package_ti.uia.loggers.c package/package.defs.h LoggerStopMode.h package/internal/LoggerStopMode.xdc.h LoggerRunMode.h package/internal/LoggerRunMode.xdc.h LoggerMin.h package/internal/LoggerMin.xdc.h package/ti.uia.loggers.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: LoggerStopMode.xdc LoggerRunMode.xdc LoggerMin.xdc 
+
+# schema include file dependencies
+LoggerStopMode.xs:
+package/package.xdc.inc: LoggerStopMode.xs
+LoggerRunMode.xs:
+package/package.xdc.inc: LoggerRunMode.xs
+LoggerMin.xs:
+package/package.xdc.inc: LoggerMin.xs
+
+# schema update dependencies
+package/package.xdc.inc: LoggerStopMode.xdc
+package/package.xdc.inc: LoggerRunMode.xdc
+package/package.xdc.inc: LoggerMin.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/runtime/ILoggerSnapshot.xdc
+ti/uia/runtime/ILoggerSnapshot.xdc:
+vpath ti/uia/runtime/ILoggerSnapshot.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/runtime/IUIATransfer.xdc
+ti/uia/runtime/IUIATransfer.xdc:
+vpath ti/uia/runtime/IUIATransfer.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/IFilterLogger.xdc
+xdc/runtime/IFilterLogger.xdc:
+vpath xdc/runtime/IFilterLogger.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/runtime/EventHdr.xdc
+ti/uia/runtime/EventHdr.xdc:
+vpath ti/uia/runtime/EventHdr.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: LoggerStopMode.h
+LoggerStopMode.h:
+package/package.xdc.inc: package/internal/LoggerStopMode.xdc.h
+package/internal/LoggerStopMode.xdc.h:
+package/package.xdc.inc: LoggerRunMode.h
+LoggerRunMode.h:
+package/package.xdc.inc: package/internal/LoggerRunMode.xdc.h
+package/internal/LoggerRunMode.xdc.h:
+package/package.xdc.inc: LoggerMin.h
+LoggerMin.h:
+package/package.xdc.inc: package/internal/LoggerMin.xdc.h
+package/internal/LoggerMin.xdc.h:
+

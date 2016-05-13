@@ -1,0 +1,5 @@
+<map id="ClockP.h" name="ClockP.h">
+<area shape="rect" href="$_u_a_r_t_c_c3200_8h.html" title="UART driver implementation for a CC3200 UART controller. " alt="" coords="8,83,125,107" />
+<area shape="rect" href="$_u_a_r_t_c_c3200_d_m_a_8h.html" title="UART driver implementation for a CC3200 UART controller, using the micro DMA controller. " alt="" coords="149,83,296,107" />
+<area shape="rect" href="$_u_a_r_t_m_s_p432_8h.html" title="UART driver implementation for a EUSCIA peripheral for MSP432. " alt="" coords="320,83,440,107" />
+</map>

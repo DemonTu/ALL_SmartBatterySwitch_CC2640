@@ -1,0 +1,4 @@
+Shortcut=BTool-1.41.05
+Executable=C:\Program Files (x86)\Texas Instruments\BTool-1.41.05\BTool.exe
+IconFile=C:\Program Files (x86)\Texas Instruments\BTool-1.41.05\Hidden\ti_icon.ico
+WorkingDir=C:\Program Files (x86)\Texas Instruments\BTool-1.41.05

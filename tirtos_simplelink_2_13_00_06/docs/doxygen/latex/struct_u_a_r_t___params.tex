@@ -1,0 +1,117 @@
+\subsection{U\+A\+R\+T\+\_\+\+Params Struct Reference}
+\label{struct_u_a_r_t___params}\index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+
+
+U\+A\+R\+T Parameters.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T.\+h$>$}
+
+
+
+Collaboration diagram for U\+A\+R\+T\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{struct_u_a_r_t___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90}{U\+A\+R\+T\+\_\+\+Mode} \hyperlink{struct_u_a_r_t___params_ab8677572499b3734fcaa00f6431b0e7b}{read\+Mode}
+\item 
+\hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90}{U\+A\+R\+T\+\_\+\+Mode} \hyperlink{struct_u_a_r_t___params_a53a95d4c2266d6e7ecea6640baf92d40}{write\+Mode}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t___params_a10875d91873fb77106bde0b799f961e2}{read\+Timeout}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t___params_a7a721cf5229c7c41074d262107cae501}{write\+Timeout}
+\item 
+\hyperlink{_u_a_r_t_8h_a44620a9d91e0357ebc6f0a79984d9e1e}{U\+A\+R\+T\+\_\+\+Callback} \hyperlink{struct_u_a_r_t___params_a5457b86b6793f1c4757457b9b22e379d}{read\+Callback}
+\item 
+\hyperlink{_u_a_r_t_8h_a44620a9d91e0357ebc6f0a79984d9e1e}{U\+A\+R\+T\+\_\+\+Callback} \hyperlink{struct_u_a_r_t___params_a0497d8a55aea66d3ab2118f8966e8e33}{write\+Callback}
+\item 
+\hyperlink{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914f}{U\+A\+R\+T\+\_\+\+Return\+Mode} \hyperlink{struct_u_a_r_t___params_a47382bd027b944868ce873ad71d29d0e}{read\+Return\+Mode}
+\item 
+\hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8}{U\+A\+R\+T\+\_\+\+Data\+Mode} \hyperlink{struct_u_a_r_t___params_a707659dcecb10f490000511ec2de2060}{read\+Data\+Mode}
+\item 
+\hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8}{U\+A\+R\+T\+\_\+\+Data\+Mode} \hyperlink{struct_u_a_r_t___params_a02e8b9127a7d6fa49021f01a7ee69ad2}{write\+Data\+Mode}
+\item 
+\hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2}{U\+A\+R\+T\+\_\+\+Echo} \hyperlink{struct_u_a_r_t___params_a61642ef82bbcfc98494739a98afff58a}{read\+Echo}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t___params_afadb98d0a0ef6e17240bab79306e7828}{baud\+Rate}
+\item 
+\hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694}{U\+A\+R\+T\+\_\+\+L\+E\+N} \hyperlink{struct_u_a_r_t___params_adb937e0b27c71886e58953312d3d1376}{data\+Length}
+\item 
+\hyperlink{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P} \hyperlink{struct_u_a_r_t___params_a59f12dc5b7329f484573521c0e2b3d78}{stop\+Bits}
+\item 
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4}{U\+A\+R\+T\+\_\+\+P\+A\+R} \hyperlink{struct_u_a_r_t___params_acaa90dc09cd820477c5bfaae152a2010}{parity\+Type}
+\item 
+void $\ast$ \hyperlink{struct_u_a_r_t___params_ab4df0d3f6c1e1121f303d11271abb7a1}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T Parameters. 
+
+U\+A\+R\+T parameters are used to with the \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}{U\+A\+R\+T\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}{U\+A\+R\+T\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Mode@{read\+Mode}}
+\index{read\+Mode@{read\+Mode}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Mode} U\+A\+R\+T\+\_\+\+Params\+::read\+Mode}\label{struct_u_a_r_t___params_ab8677572499b3734fcaa00f6431b0e7b}
+Mode for all read calls \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!write\+Mode@{write\+Mode}}
+\index{write\+Mode@{write\+Mode}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{write\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Mode} U\+A\+R\+T\+\_\+\+Params\+::write\+Mode}\label{struct_u_a_r_t___params_a53a95d4c2266d6e7ecea6640baf92d40}
+Mode for all write calls \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Timeout@{read\+Timeout}}
+\index{read\+Timeout@{read\+Timeout}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+\_\+\+Params\+::read\+Timeout}\label{struct_u_a_r_t___params_a10875d91873fb77106bde0b799f961e2}
+Timeout for read semaphore \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!write\+Timeout@{write\+Timeout}}
+\index{write\+Timeout@{write\+Timeout}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{write\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+\_\+\+Params\+::write\+Timeout}\label{struct_u_a_r_t___params_a7a721cf5229c7c41074d262107cae501}
+Timeout for write semaphore \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Callback@{read\+Callback}}
+\index{read\+Callback@{read\+Callback}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Callback} U\+A\+R\+T\+\_\+\+Params\+::read\+Callback}\label{struct_u_a_r_t___params_a5457b86b6793f1c4757457b9b22e379d}
+Pointer to read callback \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!write\+Callback@{write\+Callback}}
+\index{write\+Callback@{write\+Callback}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{write\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Callback} U\+A\+R\+T\+\_\+\+Params\+::write\+Callback}\label{struct_u_a_r_t___params_a0497d8a55aea66d3ab2118f8966e8e33}
+Pointer to write callback \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Return\+Mode@{read\+Return\+Mode}}
+\index{read\+Return\+Mode@{read\+Return\+Mode}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Return\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Return\+Mode} U\+A\+R\+T\+\_\+\+Params\+::read\+Return\+Mode}\label{struct_u_a_r_t___params_a47382bd027b944868ce873ad71d29d0e}
+Receive return mode \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Data\+Mode@{read\+Data\+Mode}}
+\index{read\+Data\+Mode@{read\+Data\+Mode}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Data\+Mode} U\+A\+R\+T\+\_\+\+Params\+::read\+Data\+Mode}\label{struct_u_a_r_t___params_a707659dcecb10f490000511ec2de2060}
+Type of data being read \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!write\+Data\+Mode@{write\+Data\+Mode}}
+\index{write\+Data\+Mode@{write\+Data\+Mode}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{write\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Data\+Mode} U\+A\+R\+T\+\_\+\+Params\+::write\+Data\+Mode}\label{struct_u_a_r_t___params_a02e8b9127a7d6fa49021f01a7ee69ad2}
+Type of data being written \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!read\+Echo@{read\+Echo}}
+\index{read\+Echo@{read\+Echo}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{read\+Echo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Echo} U\+A\+R\+T\+\_\+\+Params\+::read\+Echo}\label{struct_u_a_r_t___params_a61642ef82bbcfc98494739a98afff58a}
+Echo received data back \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!baud\+Rate@{baud\+Rate}}
+\index{baud\+Rate@{baud\+Rate}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{baud\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+\_\+\+Params\+::baud\+Rate}\label{struct_u_a_r_t___params_afadb98d0a0ef6e17240bab79306e7828}
+Baud rate for U\+A\+R\+T \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!data\+Length@{data\+Length}}
+\index{data\+Length@{data\+Length}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{data\+Length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+L\+E\+N} U\+A\+R\+T\+\_\+\+Params\+::data\+Length}\label{struct_u_a_r_t___params_adb937e0b27c71886e58953312d3d1376}
+Data length for U\+A\+R\+T \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!stop\+Bits@{stop\+Bits}}
+\index{stop\+Bits@{stop\+Bits}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{stop\+Bits}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+S\+T\+O\+P} U\+A\+R\+T\+\_\+\+Params\+::stop\+Bits}\label{struct_u_a_r_t___params_a59f12dc5b7329f484573521c0e2b3d78}
+Stop bits for U\+A\+R\+T \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!parity\+Type@{parity\+Type}}
+\index{parity\+Type@{parity\+Type}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{parity\+Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+P\+A\+R} U\+A\+R\+T\+\_\+\+Params\+::parity\+Type}\label{struct_u_a_r_t___params_acaa90dc09cd820477c5bfaae152a2010}
+Parity bit type for U\+A\+R\+T \index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ U\+A\+R\+T\+\_\+\+Params\+::custom}\label{struct_u_a_r_t___params_ab4df0d3f6c1e1121f303d11271abb7a1}
+Custom argument used by driver implementation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_8h}{U\+A\+R\+T.\+h}\end{DoxyCompactItemize}

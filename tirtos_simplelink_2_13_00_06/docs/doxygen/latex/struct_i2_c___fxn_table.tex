@@ -1,0 +1,60 @@
+\subsection{I2\+C\+\_\+\+Fxn\+Table Struct Reference}
+\label{struct_i2_c___fxn_table}\index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+
+
+The definition of a I2\+C function table that contains the required set of functions to control a specific I2\+C driver implementation.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C.\+h$>$}
+
+
+
+Collaboration diagram for I2\+C\+\_\+\+Fxn\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{struct_i2_c___fxn_table__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h_a083200108e980a0ef61e458f0b9fb9e7}{I2\+C\+\_\+\+Close\+Fxn} \hyperlink{struct_i2_c___fxn_table_a02f4e6a7daeb64d6741372a5636eedb5}{close\+Fxn}
+\item 
+\hyperlink{_i2_c_8h_a4b15853f98d3d5e5135b8c52b8465fff}{I2\+C\+\_\+\+Control\+Fxn} \hyperlink{struct_i2_c___fxn_table_af23db6bdc9b619633fb70ddff44412ea}{control\+Fxn}
+\item 
+\hyperlink{_i2_c_8h_adfb2451c8a1ce70402e43e4743c5fedf}{I2\+C\+\_\+\+Init\+Fxn} \hyperlink{struct_i2_c___fxn_table_ae27540a7175c9ad14b590ddc92e06390}{init\+Fxn}
+\item 
+\hyperlink{_i2_c_8h_add24fcdaaf1bdef1521ce2489bf1d80e}{I2\+C\+\_\+\+Open\+Fxn} \hyperlink{struct_i2_c___fxn_table_afb8c5f67ba6d0941f6265707083b16f8}{open\+Fxn}
+\item 
+\hyperlink{_i2_c_8h_aa785484e689c79262f98208689fecd38}{I2\+C\+\_\+\+Transfer\+Fxn} \hyperlink{struct_i2_c___fxn_table_a16048b22814e3d123f82a7674599b15c}{transfer\+Fxn}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The definition of a I2\+C function table that contains the required set of functions to control a specific I2\+C driver implementation. 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!close\+Fxn@{close\+Fxn}}
+\index{close\+Fxn@{close\+Fxn}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\paragraph[{close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Close\+Fxn} I2\+C\+\_\+\+Fxn\+Table\+::close\+Fxn}\label{struct_i2_c___fxn_table_a02f4e6a7daeb64d6741372a5636eedb5}
+Function to close the specified peripheral \index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!control\+Fxn@{control\+Fxn}}
+\index{control\+Fxn@{control\+Fxn}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\paragraph[{control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Control\+Fxn} I2\+C\+\_\+\+Fxn\+Table\+::control\+Fxn}\label{struct_i2_c___fxn_table_af23db6bdc9b619633fb70ddff44412ea}
+Function to implementation specific control function \index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!init\+Fxn@{init\+Fxn}}
+\index{init\+Fxn@{init\+Fxn}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\paragraph[{init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Init\+Fxn} I2\+C\+\_\+\+Fxn\+Table\+::init\+Fxn}\label{struct_i2_c___fxn_table_ae27540a7175c9ad14b590ddc92e06390}
+Function to initialize the given data object \index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!open\+Fxn@{open\+Fxn}}
+\index{open\+Fxn@{open\+Fxn}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\paragraph[{open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Open\+Fxn} I2\+C\+\_\+\+Fxn\+Table\+::open\+Fxn}\label{struct_i2_c___fxn_table_afb8c5f67ba6d0941f6265707083b16f8}
+Function to open the specified peripheral \index{I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}!transfer\+Fxn@{transfer\+Fxn}}
+\index{transfer\+Fxn@{transfer\+Fxn}!I2\+C\+\_\+\+Fxn\+Table@{I2\+C\+\_\+\+Fxn\+Table}}
+\paragraph[{transfer\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transfer\+Fxn} I2\+C\+\_\+\+Fxn\+Table\+::transfer\+Fxn}\label{struct_i2_c___fxn_table_a16048b22814e3d123f82a7674599b15c}
+Function to initiate a I2\+C data transfer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h}{I2\+C.\+h}\end{DoxyCompactItemize}

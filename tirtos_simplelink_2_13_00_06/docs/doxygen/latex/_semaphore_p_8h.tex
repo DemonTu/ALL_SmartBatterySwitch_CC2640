@@ -1,0 +1,340 @@
+\subsection{Semaphore\+P.\+h File Reference}
+\label{_semaphore_p_8h}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Semaphore module for the R\+T\+O\+S Porting Interface. 
+
+============================================================================
+
+Semaphores can be counting semaphores or binary semaphores. Counting semaphores keep track of the number of times the semaphore has been posted with post functions. This is useful, for example, if you have a group of resources that are shared between tasks. Such tasks might call pend() to see if a resource is available before using one. A count of zero for a counting semaphore denotes that it is not available. A positive count denotes how many times a Semaphore\+P\+\_\+pend can be called before it is blocked (or returns Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T).
+
+Binary semaphores can have only two states\+: available (count = 1) and unavailable (count = 0). They can be used to share a single resource between tasks. They can also be used for a basic signalling mechanism, where the semaphore can be posted multiple times. Binary semaphores do not keep track of the count; they simply track whether the semaphore has been posted or not. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Semaphore\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_semaphore_p_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_semaphore_p_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_semaphore_p___params}{Semaphore\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Semaphore\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_semaphore_p_8h_a6d1991df030b91d441c8bc886739c29d}{Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}~$\sim$(0)
+\begin{DoxyCompactList}\small\item\em Wait forever define. \end{DoxyCompactList}\item 
+\#define \hyperlink{_semaphore_p_8h_a39cd521223b38fd00a334c57929c67c7}{Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T}~(0)
+\begin{DoxyCompactList}\small\item\em No wait define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_abec0378f2d6838c402bbe0bfa155c170}{Semaphore\+P\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em Status codes for Semaphore\+P A\+P\+Is. \end{DoxyCompactList}\item 
+typedef void $\ast$ \hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em Opaque client reference to an instance of a Semaphore\+P. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ff}{Semaphore\+P\+\_\+\+Mode} \hyperlink{_semaphore_p_8h_a1c637322a42ff17a900127069a8c441a}{Semaphore\+P\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em Mode of the semaphore. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_semaphore_p___params}{Semaphore\+P\+\_\+\+Params} \hyperlink{_semaphore_p_8h_a83120723ac10a70459fabc2093ac18f9}{Semaphore\+P\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em Basic Semaphore\+P Parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \{ \\*
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42ac0da41b8e53bce919bbbec5aef644d42}{Semaphore\+P\+\_\+\+O\+K} = 0, 
+\\*
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42a21f9c91a89021706d666e97d50abf038}{Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E} = -\/1, 
+\\*
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42aaae2b0c8389e227faa6d8198879bd7ab}{Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T} = -\/2
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes for Semaphore\+P A\+P\+Is. \end{DoxyCompactList}\item 
+enum \hyperlink{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ff}{Semaphore\+P\+\_\+\+Mode} \{ \\*
+\hyperlink{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ffabcde1f1674c15cf87e3d8b8e8de53091}{Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G} = 0x0, 
+\\*
+\hyperlink{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ffacf53dfcfc30e664856ba170da10bde91}{Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y} = 0x1
+ \}
+\begin{DoxyCompactList}\small\item\em Mode of the semaphore. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create} (unsigned int count, \hyperlink{struct_semaphore_p___params}{Semaphore\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to create a semaphore. \end{DoxyCompactList}\item 
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_aa3c18c0d9bc7d13ac5d28dcfec842b81}{Semaphore\+P\+\_\+delete} (\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to delete a semaphore. \end{DoxyCompactList}\item 
+void \hyperlink{_semaphore_p_8h_a5a2deea3033e8a6aa2564637958efd02}{Semaphore\+P\+\_\+\+Params\+\_\+init} (\hyperlink{struct_semaphore_p___params}{Semaphore\+P\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Initialize params structure to default values. \end{DoxyCompactList}\item 
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_a375d7e0596970995eaa2c2bc77d7acb3}{Semaphore\+P\+\_\+pend} (\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} handle, uint32\+\_\+t timeout)
+\begin{DoxyCompactList}\small\item\em Function to pend (wait) on a semaphore. \end{DoxyCompactList}\item 
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_aae0a3a615ec693fc13da14ebaec9df9b}{Semaphore\+P\+\_\+post} (\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to post (signal) a semaphore. \end{DoxyCompactList}\item 
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_a6a58e4829dfd28d4059b96adc44bb918}{Semaphore\+P\+\_\+post\+From\+Clock} (\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to post (signal) a semaphore from an Clock\+P function. \end{DoxyCompactList}\item 
+\hyperlink{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}{Semaphore\+P\+\_\+\+Status} \hyperlink{_semaphore_p_8h_abec3ab7b2ea4767f77d133f05fce2378}{Semaphore\+P\+\_\+post\+From\+I\+S\+R} (\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to post (signal) a semaphore from an I\+S\+R. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}}
+\index{Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Semaphore\+P\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R~$\sim$(0)}\label{_semaphore_p_8h_a6d1991df030b91d441c8bc886739c29d}
+
+
+Wait forever define. 
+
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T@{Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T}}
+\index{Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T@{Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define Semaphore\+P\+\_\+\+N\+O\+\_\+\+W\+A\+I\+T~(0)}\label{_semaphore_p_8h_a39cd521223b38fd00a334c57929c67c7}
+
+
+No wait define. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Status@{Semaphore\+P\+\_\+\+Status}}
+\index{Semaphore\+P\+\_\+\+Status@{Semaphore\+P\+\_\+\+Status}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Semaphore\+P\+\_\+\+Status}  {\bf Semaphore\+P\+\_\+\+Status}}\label{_semaphore_p_8h_abec0378f2d6838c402bbe0bfa155c170}
+
+
+Status codes for Semaphore\+P A\+P\+Is. 
+
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Handle@{Semaphore\+P\+\_\+\+Handle}}
+\index{Semaphore\+P\+\_\+\+Handle@{Semaphore\+P\+\_\+\+Handle}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef void$\ast$ {\bf Semaphore\+P\+\_\+\+Handle}}\label{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}
+
+
+Opaque client reference to an instance of a Semaphore\+P. 
+
+A Semaphore\+P\+\_\+\+Handle returned from the \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create} represents that instance and is used in the other instance based functions (e.\+g. \hyperlink{_semaphore_p_8h_aae0a3a615ec693fc13da14ebaec9df9b}{Semaphore\+P\+\_\+post} or \hyperlink{_semaphore_p_8h_a375d7e0596970995eaa2c2bc77d7acb3}{Semaphore\+P\+\_\+pend}, etc.). \index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Mode@{Semaphore\+P\+\_\+\+Mode}}
+\index{Semaphore\+P\+\_\+\+Mode@{Semaphore\+P\+\_\+\+Mode}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Semaphore\+P\+\_\+\+Mode}  {\bf Semaphore\+P\+\_\+\+Mode}}\label{_semaphore_p_8h_a1c637322a42ff17a900127069a8c441a}
+
+
+Mode of the semaphore. 
+
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}}
+\index{Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Semaphore\+P\+\_\+\+Params}  {\bf Semaphore\+P\+\_\+\+Params}}\label{_semaphore_p_8h_a83120723ac10a70459fabc2093ac18f9}
+
+
+Basic Semaphore\+P Parameters. 
+
+Structure that contains the parameters are passed into \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create} when creating a Semaphore\+P instance. The \hyperlink{_semaphore_p_8h_a5a2deea3033e8a6aa2564637958efd02}{Semaphore\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Semaphore\+P default parameters are noted in Semaphore\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Enumeration Type Documentation}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Status@{Semaphore\+P\+\_\+\+Status}}
+\index{Semaphore\+P\+\_\+\+Status@{Semaphore\+P\+\_\+\+Status}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Semaphore\+P\+\_\+\+Status}}\label{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42}
+
+
+Status codes for Semaphore\+P A\+P\+Is. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Semaphore\+P\+\_\+\+O\+K@{Semaphore\+P\+\_\+\+O\+K}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+O\+K@{Semaphore\+P\+\_\+\+O\+K}}\item[{\em 
+Semaphore\+P\+\_\+\+O\+K\label{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42ac0da41b8e53bce919bbbec5aef644d42}
+}]A\+P\+I completed successfully \index{Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E@{Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E}}\item[{\em 
+Semaphore\+P\+\_\+\+F\+A\+I\+L\+U\+R\+E\label{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42a21f9c91a89021706d666e97d50abf038}
+}]A\+P\+I failed \index{Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T@{Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T@{Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T}}\item[{\em 
+Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T\label{_semaphore_p_8h_a5d4aebe0ebff4aaadba07d853ae4ee42aaae2b0c8389e227faa6d8198879bd7ab}
+}]A\+P\+I failed because of a timeout \end{description}
+\end{Desc}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Mode@{Semaphore\+P\+\_\+\+Mode}}
+\index{Semaphore\+P\+\_\+\+Mode@{Semaphore\+P\+\_\+\+Mode}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Semaphore\+P\+\_\+\+Mode}}\label{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ff}
+
+
+Mode of the semaphore. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G@{Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G@{Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G}}\item[{\em 
+Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G\label{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ffabcde1f1674c15cf87e3d8b8e8de53091}
+}]\index{Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y@{Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y@{Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y}}\item[{\em 
+Semaphore\+P\+\_\+\+Mode\+\_\+\+B\+I\+N\+A\+R\+Y\label{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ffacf53dfcfc30e664856ba170da10bde91}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+create@{Semaphore\+P\+\_\+create}}
+\index{Semaphore\+P\+\_\+create@{Semaphore\+P\+\_\+create}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Handle} Semaphore\+P\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{count, }
+\item[{{\bf Semaphore\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}
+
+
+Function to create a semaphore. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & Initial count of the semaphore. For binary semaphores, only values of 0 or 1 are valid.\\
+\hline
+{\em params} & Pointer to the instance configuration parameters. N\+U\+L\+L denotes to use the default parameters (Semaphore\+P default parameters as noted in \hyperlink{_semaphore_p_8h_a5a2deea3033e8a6aa2564637958efd02}{Semaphore\+P\+\_\+\+Params\+\_\+init}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Semaphore\+P\+\_\+\+Handle on success or a N\+U\+L\+L on an error 
+\end{DoxyReturn}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+delete@{Semaphore\+P\+\_\+delete}}
+\index{Semaphore\+P\+\_\+delete@{Semaphore\+P\+\_\+delete}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+delete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Status} Semaphore\+P\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_aa3c18c0d9bc7d13ac5d28dcfec842b81}
+
+
+Function to delete a semaphore. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Semaphore\+P\+\_\+\+Handle returned from \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Semaphore\+P\+\_\+\+O\+K\+: Deleted the semaphore instance
+\item Semaphore\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Failed to delete the semaphore instance 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+\+Params\+\_\+init@{Semaphore\+P\+\_\+\+Params\+\_\+init}}
+\index{Semaphore\+P\+\_\+\+Params\+\_\+init@{Semaphore\+P\+\_\+\+Params\+\_\+init}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Semaphore\+P\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_a5a2deea3033e8a6aa2564637958efd02}
+
+
+Initialize params structure to default values. 
+
+The default parameters are\+:
+\begin{DoxyItemize}
+\item mode\+: Semaphore\+P\+\_\+\+Mode\+\_\+\+C\+O\+U\+N\+T\+I\+N\+G
+\item name\+: N\+U\+L\+L
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & Pointer to the instance configuration parameters. \\
+\hline
+\end{DoxyParams}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+pend@{Semaphore\+P\+\_\+pend}}
+\index{Semaphore\+P\+\_\+pend@{Semaphore\+P\+\_\+pend}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+pend}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Status} Semaphore\+P\+\_\+pend (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{timeout}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_a375d7e0596970995eaa2c2bc77d7acb3}
+
+
+Function to pend (wait) on a semaphore. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Semaphore\+P\+\_\+\+Handle returned from \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create}\\
+\hline
+{\em timeout} & Timeout (in milliseconds) to wait for the semaphore to be posted (signalled).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Semaphore\+P\+\_\+\+O\+K\+: Obtain the semaphore
+\item Semaphore\+P\+\_\+\+T\+I\+M\+E\+O\+U\+T\+: Timed out. Semaphore was not obtained.
+\item Semaphore\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Non-\/time out failure. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+post@{Semaphore\+P\+\_\+post}}
+\index{Semaphore\+P\+\_\+post@{Semaphore\+P\+\_\+post}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+post}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Status} Semaphore\+P\+\_\+post (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_aae0a3a615ec693fc13da14ebaec9df9b}
+
+
+Function to post (signal) a semaphore. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Semaphore\+P\+\_\+\+Handle returned from \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Semaphore\+P\+\_\+\+O\+K\+: Released the semaphore
+\item Semaphore\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Failed to post the semaphore 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+post\+From\+Clock@{Semaphore\+P\+\_\+post\+From\+Clock}}
+\index{Semaphore\+P\+\_\+post\+From\+Clock@{Semaphore\+P\+\_\+post\+From\+Clock}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+post\+From\+Clock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Status} Semaphore\+P\+\_\+post\+From\+Clock (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_a6a58e4829dfd28d4059b96adc44bb918}
+
+
+Function to post (signal) a semaphore from an Clock\+P function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Semaphore\+P\+\_\+\+Handle returned from \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Semaphore\+P\+\_\+\+O\+K\+: Released the semaphore
+\item Semaphore\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Failed to post the semaphore 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\index{Semaphore\+P.\+h@{Semaphore\+P.\+h}!Semaphore\+P\+\_\+post\+From\+I\+S\+R@{Semaphore\+P\+\_\+post\+From\+I\+S\+R}}
+\index{Semaphore\+P\+\_\+post\+From\+I\+S\+R@{Semaphore\+P\+\_\+post\+From\+I\+S\+R}!Semaphore\+P.\+h@{Semaphore\+P.\+h}}
+\paragraph[{Semaphore\+P\+\_\+post\+From\+I\+S\+R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Status} Semaphore\+P\+\_\+post\+From\+I\+S\+R (
+\begin{DoxyParamCaption}
+\item[{{\bf Semaphore\+P\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_semaphore_p_8h_abec3ab7b2ea4767f77d133f05fce2378}
+
+
+Function to post (signal) a semaphore from an I\+S\+R. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A Semaphore\+P\+\_\+\+Handle returned from \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the functions
+\begin{DoxyItemize}
+\item Semaphore\+P\+\_\+\+O\+K\+: Released the semaphore
+\item Semaphore\+P\+\_\+\+F\+A\+I\+L\+E\+D\+: Failed to post the semaphore 
+\end{DoxyItemize}
+\end{DoxyReturn}

@@ -1,0 +1,25 @@
+package/lib/lib/drivers_ccware/./i2c/I2CCC3200.oem4: i2c/I2CCC3200.c /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h /db/vendors/ti/arm/5.2.2/Linux/include/stdbool.h /db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h ports/DebugP.h ports/ClockP.h ports/HwiP.h ports/SemaphoreP.h Power.h power/PowerCC3200.h i2c/I2CCC3200.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_types.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_map.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/i2c.h /db/vendors/ti/arm/5.2.2/Linux/include/yvals.h /db/vendors/ti/arm/5.2.2/Linux/include/linkage.h /db/vendors/ti/arm/5.2.2/Linux/include/stddef.h ports/ListP.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/pin.h I2C.h /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_patch.h /db/vendors/ti/arm/5.2.2/Linux/include/stdarg.h /db/vendors/ti/arm/5.2.2/Linux/include/_lock.h 
+i2c/I2CCC3200.c:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdbool.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h:
+ports/DebugP.h:
+ports/ClockP.h:
+ports/HwiP.h:
+ports/SemaphoreP.h:
+Power.h:
+power/PowerCC3200.h:
+i2c/I2CCC3200.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_types.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_map.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/i2c.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/yvals.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/linkage.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stddef.h:
+ports/ListP.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/pin.h:
+I2C.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_patch.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdarg.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/_lock.h:

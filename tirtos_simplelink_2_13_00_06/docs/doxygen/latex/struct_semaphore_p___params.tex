@@ -1,0 +1,42 @@
+\subsection{Semaphore\+P\+\_\+\+Params Struct Reference}
+\label{struct_semaphore_p___params}\index{Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}}
+
+
+Basic Semaphore\+P Parameters.  
+
+
+
+
+{\ttfamily \#include $<$Semaphore\+P.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{struct_semaphore_p___params_a2df7611d969720d93463a7c19e52ec28}{name}
+\item 
+\hyperlink{_semaphore_p_8h_add3b3b8c066d33d0067fac18e839f8ff}{Semaphore\+P\+\_\+\+Mode} \hyperlink{struct_semaphore_p___params_a4d12bb8c19485dd4d4fe2616a41a9948}{mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_semaphore_p___params_a4fdddd248bfd43a54ed6958a47838f88}{max\+Count}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Basic Semaphore\+P Parameters. 
+
+Structure that contains the parameters are passed into \hyperlink{_semaphore_p_8h_a3fd837348befa046554496e8da2a1fac}{Semaphore\+P\+\_\+create} when creating a Semaphore\+P instance. The \hyperlink{_semaphore_p_8h_a5a2deea3033e8a6aa2564637958efd02}{Semaphore\+P\+\_\+\+Params\+\_\+init} function should be used to initialize the fields to default values before the application sets the fields manually. The Semaphore\+P default parameters are noted in Semaphore\+P\+\_\+\+Params\+\_\+init. 
+
+\subsubsection{Field Documentation}
+\index{Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}!name@{name}}
+\index{name@{name}!Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}}
+\paragraph[{name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ Semaphore\+P\+\_\+\+Params\+::name}\label{struct_semaphore_p___params_a2df7611d969720d93463a7c19e52ec28}
+Name of the semaphore instance. Memory must persist for the life of the semaphore instance \index{Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}!mode@{mode}}
+\index{mode@{mode}!Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Mode} Semaphore\+P\+\_\+\+Params\+::mode}\label{struct_semaphore_p___params_a4d12bb8c19485dd4d4fe2616a41a9948}
+Mode for the semaphore \index{Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}!max\+Count@{max\+Count}}
+\index{max\+Count@{max\+Count}!Semaphore\+P\+\_\+\+Params@{Semaphore\+P\+\_\+\+Params}}
+\paragraph[{max\+Count}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Semaphore\+P\+\_\+\+Params\+::max\+Count}\label{struct_semaphore_p___params_a4fdddd248bfd43a54ed6958a47838f88}
+The max count allowed for counting semaphore 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_semaphore_p_8h}{Semaphore\+P.\+h}\end{DoxyCompactItemize}

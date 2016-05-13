@@ -1,0 +1,7 @@
+<map id="UARTMSP432_Object" name="UARTMSP432_Object">
+<area shape="rect" href="$struct_power___notify_obj.html" title="Power notify object structure. " alt="" coords="8,102,128,126" />
+<area shape="rect" href="$struct_list_p___elem.html" title="ListP_Elem" alt="" coords="24,10,112,34" />
+<area shape="rect" href="$struct_u_a_r_t_m_s_p432___fxn_set.html" title="Complement set of read functions to be used by the UART ISR and UARTMSP432_read(). Internal use only. " alt="" coords="152,102,309,126" />
+<area shape="rect" href="$struct_u_a_r_t___config.html" title="UART Global configuration. " alt="" coords="380,102,484,126" />
+<area shape="rect" href="$struct_u_a_r_t___fxn_table.html" title="The definition of a UART function table that contains the required set of functions to control a spec..." alt="" coords="432,339,552,363" />
+</map>

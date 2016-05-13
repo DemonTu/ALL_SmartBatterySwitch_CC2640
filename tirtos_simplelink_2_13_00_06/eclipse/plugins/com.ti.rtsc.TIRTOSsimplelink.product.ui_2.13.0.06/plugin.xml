@@ -1,0 +1,1303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin
+    name="TI-RTOS for SimpleLink Wireless MCUs IDE Support"
+    id="com.ti.rtsc.TIRTOSsimplelink.product.ui"
+    version="2.13.0.06"
+    provider-name="Texas Instruments">
+
+    <extension point="org.eclipse.help.toc">
+      <toc file="toc_top.xml" primary="true"/>
+      <toc file="bios_eclipse_cdoc_toc.xml"/>
+      <toc file="tirtos_doxygen_toc.xml"/>
+      <toc file="tirtos_eclipse_cdoc_toc.xml"/>
+      <toc file="uia_eclipse_cdoc_toc.xml"/>
+    </extension>
+
+    <extension point="org.eclipse.help.contentProducer">
+        <contentProducer>
+            <producer class="org.eclipse.rtsc.xdctools.ui.help.HelpContentProducer"/>
+        </contentProducer>
+    </extension>
+
+    <extension
+         point="org.eclipse.core.variables.dynamicVariables">
+     <variable 
+        name="COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR"
+        resolver="org.eclipse.rtsc.xdctools.ui.macros.MacroResolver"
+        description="Installation directory for TI-RTOS for SimpleLink Wireless MCUs">
+     </variable>
+   </extension>
+
+    <extension point="com.ti.common.project.core.projectTemplates">
+        <templateGroup
+            id="examples.root_SimpleLink"
+            description="TI-RTOS Templates and Examples"
+            name="TI-RTOS Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver"
+            description="TI-RTOS Driver examples"
+            name="Driver Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK"
+            description="TI-RTOS Projects for CC1350DK"
+            name="CC1350DK">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI"
+            description="TI Projects for CC1350DK"
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.FatFs"
+            description="FatFs Example Projects for the CC1350DK"
+            name="FatFs Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.GPIO"
+            description="GPIO Example Projects for the CC1350DK"
+            name="GPIO Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.I2C"
+            description="I2C Example Projects for the CC1350DK"
+            name="I2C Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.LCD"
+            description="LCD Example Projects for the CC1350DK"
+            name="LCD Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.SPI"
+            description="SPI Example Projects for the CC1350DK"
+            name="SPI Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.PIN"
+            description="PIN Example Projects for the CC1350DK"
+            name="PIN Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.UART"
+            description="UART Example Projects for the CC1350DK"
+            name="UART Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.Watchdog"
+            description="Watchdog Example Projects for the CC1350DK"
+            name="Watchdog Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.TI.Demo"
+            description="Demo Example Projects for the CC1350DK"
+            name="Demo Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK"
+            description="TI-RTOS Projects for CC2650DK"
+            name="CC2650DK">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI"
+            description="TI Projects for CC2650DK"
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.FatFs"
+            description="FatFs Example Projects for the CC2650DK"
+            name="FatFs Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.GPIO"
+            description="GPIO Example Projects for the CC2650DK"
+            name="GPIO Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.I2C"
+            description="I2C Example Projects for the CC2650DK"
+            name="I2C Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.LCD"
+            description="LCD Example Projects for the CC2650DK"
+            name="LCD Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.SPI"
+            description="SPI Example Projects for the CC2650DK"
+            name="SPI Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.PIN"
+            description="PIN Example Projects for the CC2650DK"
+            name="PIN Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.UART"
+            description="UART Example Projects for the CC2650DK"
+            name="UART Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.Watchdog"
+            description="Watchdog Example Projects for the CC2650DK"
+            name="Watchdog Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.TI.Demo"
+            description="Demo Example Projects for the CC2650DK"
+            name="Demo Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE"
+            description="TI-RTOS Projects for CC2650STK_BLE"
+            name="CC2650STK-BLE (SensorTag)">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"
+            description="TI Projects for CC2650STK_BLE"
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.FatFs"
+            description="FatFs Example Projects for the CC2650STK_BLE"
+            name="FatFs Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.GPIO"
+            description="GPIO Example Projects for the CC2650STK_BLE"
+            name="GPIO Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.I2C"
+            description="I2C Example Projects for the CC2650STK_BLE"
+            name="I2C Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.SPI"
+            description="SPI Example Projects for the CC2650STK_BLE"
+            name="SPI Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.PIN"
+            description="PIN Example Projects for the CC2650STK_BLE"
+            name="PIN Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.UART"
+            description="UART Example Projects for the CC2650STK_BLE"
+            name="UART Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.Watchdog"
+            description="Watchdog Example Projects for the CC2650STK_BLE"
+            name="Watchdog Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI.Demo"
+            description="Demo Example Projects for the CC2650STK_BLE"
+            name="Demo Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP"
+            description="TI-RTOS Projects for CC3200_LP"
+            name="CC3200-LAUNCHXL">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI"
+            description="TI Projects for CC3200_LP"
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.FatFs"
+            description="FatFs Example Projects for the CC3200_LP"
+            name="FatFs Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.GPIO"
+            description="GPIO Example Projects for the CC3200_LP"
+            name="GPIO Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.I2C"
+            description="I2C Example Projects for the CC3200_LP"
+            name="I2C Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.I2S"
+            description="I2S Example Projects for the CC3200_LP"
+            name="I2S Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.PWM"
+            description="PWM Example Projects for the CC3200_LP"
+            name="PWM Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.SPI"
+            description="SPI Example Projects for the CC3200_LP"
+            name="SPI Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.UART"
+            description="UART Example Projects for the CC3200_LP"
+            name="UART Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.Watchdog"
+            description="Watchdog Example Projects for the CC3200_LP"
+            name="Watchdog Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.TI.Demo"
+            description="Demo Example Projects for the CC3200_LP"
+            name="Demo Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.TI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP"
+            description="TI-RTOS Projects for CC3200_LP"
+            name="CC3200-LAUNCHXL">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU"
+            description="GNU Projects for CC3200_LP"
+            name="GNU Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.FatFs"
+            description="FatFs Example Projects for the CC3200_LP"
+            name="FatFs Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.GPIO"
+            description="GPIO Example Projects for the CC3200_LP"
+            name="GPIO Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.I2C"
+            description="I2C Example Projects for the CC3200_LP"
+            name="I2C Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.I2S"
+            description="I2S Example Projects for the CC3200_LP"
+            name="I2S Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.PWM"
+            description="PWM Example Projects for the CC3200_LP"
+            name="PWM Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.SPI"
+            description="SPI Example Projects for the CC3200_LP"
+            name="SPI Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.UART"
+            description="UART Example Projects for the CC3200_LP"
+            name="UART Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.Watchdog"
+            description="Watchdog Example Projects for the CC3200_LP"
+            name="Watchdog Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.GNU.Demo"
+            description="Demo Example Projects for the CC3200_LP"
+            name="Demo Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP.GNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink"
+            description="TI-RTOS Templates and Examples"
+            name="TI-RTOS for SimpleLink">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel"
+            description="SYS/BIOS Kernel Templates and Examples"
+            name="Kernel Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsTI"
+            description="SYS/BIOS Kernel Templates and Examples for TI targets."
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsGNU"
+            description="SYS/BIOS Kernel Templates and Examples for GNU targets."
+            name="GNU Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsTI.genericTI"
+            description="Generic SYS/BIOS Examples. These examples are not optimized for code and data memory usage and may not build on platforms with memory constraints."
+            name="Generic Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsGNU.genericGNU"
+            description="Generic SYS/BIOS Examples. These examples are not optimized for code and data memory usage and may not build on platforms with memory constraints."
+            name="Generic Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel.targetsGNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsTI.msp430"
+            description="MSP430 specific SYS/BIOS Examples"
+            name="MSP430 Specific Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.kernel.targetsTI.c28"
+            description="28x specific SYS/BIOS Examples"
+            name="28x Specific Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink"
+            description="TI-RTOS Templates and Examples"
+            name="TI-RTOS for SimpleLink">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia"
+            description="Instrumentation Example Projects"
+            name="Instrumentation Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsTI"
+            description="System Analyzer (UIA) Examples for TI targets."
+            name="TI Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsGNU"
+            description="System Analyzer (UIA) Examples for GNU targets."
+            name="GNU Target Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsTI.singlecoreTI"
+            description="System Analyzer (UIA) Single-core Examples"
+            name="Single-core Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsGNU.singlecoreGNU"
+            description="System Analyzer (UIA) Single-core Examples"
+            name="Single-core Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia.targetsGNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsTI.multicoreTI"
+            description="System Analyzer (UIA) Multi-core Examples"
+            name="Multi-core Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia.targetsTI"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.uia.targetsGNU.multicoreGNU"
+            description="System Analyzer (UIA) Multi-core Examples"
+            name="Multi-core Examples">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.uia.targetsGNU"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.EK_TM4C123GXL.example"
+            description="TI-RTOS Example Projects for the EK-TM4C123GXL"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.EK_TM4C123GXL"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC3200_LP.example"
+            description="TI-RTOS Example Projects for the CC3200_LP"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC3200_LP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC1350DK.example"
+            description="TI-RTOS Example Projects for the CC1350EM on the SmartRF06 evalation board"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC1350DK"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650DK.example"
+            description="TI-RTOS Example Projects for the CC2650EM on the SmartRF06 evaluation board"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650DK"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.CC2650STK_BLE.example"
+            description="TI-RTOS Example Projects for the CC2650 Sensor Tag evaluation board"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.CC2650STK_BLE"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.DK_TM4C123G.example"
+            description="TI-RTOS Example Projects for the DK_TM4C123G"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.DK_TM4C123G"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.DK_TM4C129X.example"
+            description="TI-RTOS Example Projects for the DK-TM4C129X"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.DK_TM4C129X"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.EK_TM4C1294XL.example"
+            description="TI-RTOS Example Projects for the EK-TM4C1294XL"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.EK_TM4C1294XL"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.MSP_EXP430F5529LP.example"
+            description="TI-RTOS Example Projects for the MSP-EXP430F5529LP"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.MSP_EXP430F5529LP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.MSP_EXP430F5529.example"
+            description="TI-RTOS Example Projects for the MSP_EXP430F5529"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.MSP_EXP430F5529"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.MSP_EXP430FR5969LP.example"
+            description="TI-RTOS Example Projects for the MSP-EXP430FR5969LP"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.MSP_EXP430FR5969LP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.MSP_EXP432P401RLP.example"
+            description="TI-RTOS Example Projects for the MSP_EXP432P401RLP"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.MSP_EXP432P401RLP"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.TMDXDOCK28M36_M3.example"
+            description="TI-RTOS Example Projects for the TMDXDOCK28M36"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.TMDXDOCK28M36_M3"/>
+        </templateGroup>
+        <templateGroup
+            id="examples.root_SimpleLink.driver.TMDXDOCKH52C1_M3.example"
+            description="TI-RTOS Example Projects for the TMDXDOCKH52C1"
+            name="Example Projects">
+            <property name="productType" value="com.ti.rtsc.TIRTOSsimplelink"/>
+            <group id="examples.root_SimpleLink.driver.TMDXDOCKH52C1_M3"/>
+        </templateGroup>
+
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC13.*F128$"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_0_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_0"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc13xxware_2_00_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc13xxware_2_00_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_0_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC1310F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC1350DK.example"/>
+                 <file path="resources/./boards/CC1350DK/empty.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/empty.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/empty_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/CC1350DK.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC13.*F128$"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_1_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_1"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc13xxware_2_00_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc13xxware_2_00_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_1_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC1310F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC1350DK.example"/>
+                 <file path="resources/./boards/CC1350DK/empty_min.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/empty_min.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/empty_min_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/CC1350DK.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC1350DK/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC265.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_2_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_2"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_2_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC2650F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC2650DK.example"/>
+                 <file path="resources/./boards/CC2650DK/empty.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/empty.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/empty_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/CC2650DK.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC265.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_3_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_3"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_3_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC2650F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC2650DK.example"/>
+                 <file path="resources/./boards/CC2650DK/empty_min.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/empty_min.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/empty_min_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/CC2650DK.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650DK/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC265.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_4_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_4"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_4_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC2650F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.example"/>
+                 <file path="resources/./boards/CC2650STK_BLE/empty.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/empty.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/empty_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/CC2650STK_BLE.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC265.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_5_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_5"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --gen_func_subsections=on --display_error_number --diag_warning=255 --diag_wrap=off  -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/cc26xxware_2_21_01_15600/driverlib/bin/ccs/driverlib.lib -x"
+                 description="%example_5_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M3"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC2650F128"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC2650STK_BLE.example"/>
+                 <file path="resources/./boards/CC2650STK_BLE/empty_min.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/empty_min.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/empty_min_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/CC2650STK_BLE.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/Board.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC2650STK_BLE/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC3200.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_6_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_6"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M4 --code_state=16 --abi=eabi -me -DPART_CC3200 -g --display_error_number --diag_warning=255 --diag_wrap=off -Dccs -DCCWARE --gen_func_subsections=on -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0 -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/inc -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib/ccs/Release/driverlib.a -x"
+                 description="%example_6_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC3200"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC3200_LP.example"/>
+                 <file path="resources/./boards/CC3200_LP/empty.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty.pinmux" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_rom_pin_mux_config.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/pin_mux_config.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC3200.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_7_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_7"
+                 linkerCommandFile=""
+                 compilerBuildOptions=" -mv7M4 --code_state=16 --abi=eabi -me -DPART_CC3200 -g --display_error_number --diag_warning=255 --diag_wrap=off -Dccs -DCCWARE --gen_func_subsections=on -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0 -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/inc -I${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib"
+                 linkerBuildOptions=" -l${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/CC3200_driverlib_1.1.0/driverlib/ccs/Release/driverlib.a -x"
+                 description="%example_7_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="xdcToolsVersion" value="3.31.01.33"/>
+                 <property name="target" value="ti.targets.arm.elf.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:CC3200"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;${COMPILER_FLAGS} &quot; "/>
+                 <group id="examples.root_SimpleLink.driver.CC3200_LP.example"/>
+                 <file path="resources/./boards/CC3200_LP/empty_min.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_min.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_min_readme.txt" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.cmd" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/Board.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/CC3200_LP.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_min.pinmux" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/empty_min_rom_pin_mux_config.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/./boards/CC3200_LP/pin_mux_config.h" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_8_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_8"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_8_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+                 <file path="resources/ti/sysbios/examples/./generic/minimal/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/minimal/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_9_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_9"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_9_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_10_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_10"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_10_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="false"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsTI"/>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_11_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_11"
+                 linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_11_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsGNU"/>
+                 <file path="resources/ti/sysbios/examples/./generic/minimal/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/minimal/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_12_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_12"
+                 linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_12_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsGNU"/>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_13_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_13"
+                 linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_13_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="false"/>
+                 <group id="examples.root_SimpleLink.kernel.targetsGNU"/>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./generic/typical/cortexm/app.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_14_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_14"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_14_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="examples.root_SimpleLink.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/ti/uia/examples/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="TI"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_15_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_15"
+                 compilerBuildOptions=""
+                 linkerBuildOptions=""
+                 description="%example_15_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <property name="configuroOptions" value="--compileOptions &quot;-g --optimize_with_debug&quot;"/>
+                 <group id="examples.root_SimpleLink.uia.targetsTI.singlecoreTI"/>
+                 <file path="resources/ti/uia/examples/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_16_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_16"
+                 linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_16_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="examples.root_SimpleLink.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/ti/uia/examples/./helloworld/main.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./helloworld/cortexm/helloWorld.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+        <templateSet>
+            <applicability>
+                <when>
+                    <context
+                       deviceFamily="ARM"
+                       deviceId=".*CC32.*"
+                       toolChain="GNU"
+                    />
+               </when>
+            </applicability>
+             <template
+                 title="%example_17_title"
+                 id="com.ti.rtsc.TIRTOSsimplelink.example_17"
+                 linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+                 compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+                 linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+                 description="%example_17_description">
+                 <property name="type" value="rtsc"/>
+                 <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+                 <property name="target" value="gnu.targets.arm.M4"/>
+                 <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+                 <property name="buildProfile" value="release"/>
+                 <property name="isHybrid" value="true"/>
+                 <group id="examples.root_SimpleLink.uia.targetsGNU.singlecoreGNU"/>
+                 <file path="resources/ti/uia/examples/./single/stairstep.c" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./single/cortexm/stairstep_JTAGStopMode.cfg" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+                 <file path="resources/ti/uia/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false">
+                 </file>
+             </template>
+        </templateSet>
+    </extension>
+
+
+</plugin>

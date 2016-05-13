@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>TI-RTOS 2.00.00 Release Notes</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link href="release_notes_template_files/css.htm" type="text/css" rel="stylesheet"><meta content="MSHTML 6.00.2900.3395" name="GENERATOR"><!-- saved from url=(0120)http://wiki.sanb.design.ti.com/twiki/bin/viewfile/Process/ReleaseNotesTemplate?rev=1;filename=example_release_notes.html --><!-- saved from url=(0113)file://C:\Documents and Settings\a0323759\Local Settings\Temporary Internet Files\OLKC\example_release_notes.html --><!-- /* * Copyright 2007 by Texas Instruments Incorporated . * * All rights reserved. Property of Texas Instruments Incorporated. * Restricted rights to use, duplicate or disclose this code are * granted through contract. * */ --><!-- For now, we use the doxygen style sheet --></head>
+<body style="color: rgb(0, 0, 0);" alink="#ee0000" link="#0000ee" vlink="#551a8b">
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com/"><img style="border: 0px solid ; width: 222px; height: 54px;" alt="Texas Instruments" src="docs/tilogo.gif"> </a></td>
+<td bgcolor="red"><img style="width: 314px; height: 26px;" alt="Technology for Innovators(tm)" src="docs/titagline.gif">
+</td>
+</tr>
+</tbody>
+</table>
+<h1 style="text-align: left;">TI-RTOS 2.00.01.23
+Release
+Notes</h1>
+
+This release note is divided into the following sections:<br>
+<br>
+<a href="#General_Info">Introduction</a>,
+<a href="#Documentation">Documentation</a>,
+<a href="#Products">Products Included</a>,
+<a href="#Whats_New">What's New</a>, <a href="#Compatibility">Upgrade &amp;
+Compatibility
+Information</a>, <a href="#Host_Support">Host
+Support</a>, <a href="#Dependencies">Dependencies</a>, <a href="#Target_Support">Target and Compiler Support</a>, <a href="#Validation">Validation Info</a>, <a href="#Known_Issues">Known Issues</a>, <a href="#Examples">Examples</a>, <a href="#Version">Version
+Information</a>, <a href="#Support">Technical
+Support</a>.
+<hr>
+<h2><a name="General_Info">Introduction</a></h2>
+<p style="background-color: white;"><span style="background-color: red;"></span>This
+is an General Availability release of TI-RTOS
+. This version of TI-RTOS requires CCS 6.0.</p>The TI-RTOS delivers
+components
+that enable engineers to develop applications on Texas Instruments
+micro-controller devices. The product is comprised of multiple
+software
+components and examples of how to use these components together. <br>
+<br>
+The TI-RTOS gives developers a one-stop RTOS solution for developing
+applications for TI embedded microcontrollers. It provides an OS
+kernel, communications support, drivers, and more. It is tightly
+integrated with TIs Code Composer Studio development environment. In
+addition, examples are provided to demonstrate the use of each
+functional area and each supported device and as a starting point for
+your own projects.<br>
+<br>
+<hr>
+<h2><a name="Documentation">Documentation</a></h2>
+<p>The
+following documentation is available:</p>
+<ul>
+<li>Getting
+Started
+Guide</li>
+<li>User
+Guide</li>
+
+<li>TI
+RTOS&nbsp;Manifest<br></li>
+<li>TI-RTOS
+Wiki&nbsp;</li>
+</ul>
+<font face="Times New Roman" size="3">Release
+notes from previous releases are also available in the
+release notes archive
+directory.</font>
+<hr>
+<h2><a name="Products">Products Included</a></h2>
+The following is a list of all the products bundled into the TI-RTOS
+installation (with exceptions as noted).&nbsp;<br>
+<ul>
+<li style="background-color: white;">bios_6_40_01_15&nbsp;</li>
+<li style="background-color: white;">uia_2_00_00_28</li><li style="background-color: white;">ipc_3_10_01_11 (valid for only TI-RTOS for C2000 and C6000 products)<br>
+</li>
+<li style="background-color: white;">ndk_2_23_01_01&nbsp;(valid for only TI-RTOS for C2000,&nbsp;C6000, Sitara, and TivaC products)</li>
+
+<li>xdctools_3_30_01_25* (included only in stand-alone installer. It is not include via an App Center download)</li>
+<li style="background-color: white;">MSP430Ware
+1_80_01_03a**&nbsp;(valid for only TI-RTOS for MSP430 product).&nbsp;Includes drivers and examples for the following boards:</li><ul><li style="background-color: white;">MSP-EXP430F5529LP, MSP-EXP430F5529(in CCS 6) (USB Experimenter Board) and MSP-EXP430FR5969LP</li></ul>
+<li style="background-color: white;">MWare_v201b** (valid for only TI-RTOS for C2000 product).&nbsp;&nbsp;Includes drivers and examples for the following boards:</li><ul><li style="background-color: white;">Concerto Family: TMDXDOCKH52C1 and TMDXDOCK28M36&nbsp;&nbsp;<span style="background-color: red;"></span></li></ul>
+<li>TivaWare_C_Series-2.1.0.12573c**&nbsp;(valid for only TI-RTOS for TivaC product).&nbsp;&nbsp;Includes drivers and examples for the following boards:</li><ul><li>Stellaris Family: EKS-LM4F232 and&nbsp;EK-LM4F120XL</li></ul><ul><li>Tiva-C Family:&nbsp; EK-TM4C123GXL,&nbsp;
+DK-TM4C123G, and DK-TM4C129X, and EK-TM4C1294XL</li></ul>
+
+</ul>
+* XDCtools is installed at the same level at TI-RTOS. If the xdctools_3_30_01_25
+version is already present at that location, that version is
+used.<br>
+** refer
+to
+&lt;TIRTOS_Install_dir&gt;\products\&lt;*Ware&gt;\TI-RTOS.README
+for more details
+<hr>
+<h2><a name="Whats_New">What's New</a><br>
+</h2>
+<h2>2.00.01.23<span style="background-color: red;"></span></h2>
+Please refer to the&nbsp;Getting
+Started
+Guide and/or User
+Guide for more detail about the following new features.
+<ul>
+<li>
+
+<p class="MsoNormal">This release is identical to 2.00.00.22 except for a minor
+installation fix.<o:p></o:p></p>
+</li><li>Multiple Products<br><table style="text-align: left; height: 308px; width: 1027px;" border="1" cellpadding="2" cellspacing="2"><tbody><tr style="font-weight: bold;"><td style="height: 67px; text-align: center; width: 144px;">Product</td><td style="height: 67px; text-align: center; width: 84px;">Kernel (SYS/BIOS)</td><td style="height: 67px; text-align: center; width: 113px;">Instrumentation (UIA)</td><td style="height: 67px; text-align: center; width: 122px;">Wired Networking (NDK)</td><td style="text-align: center; width: 123px;">Wireless Networking <br>(via CC3000)</td><td style="height: 67px; text-align: center; width: 84px;">IPC</td><td style="height: 67px; text-align: center; width: 174px;">Drivers (refer to the product's Getting Started Guide for more details)</td><td style="text-align: center; width: 115px;">*Ware</td></tr><tr><td style="height: 40px; width: 144px;" colspan="1" rowspan="1">TI-RTOS for C2000</td><td style="height: 40px; text-align: center; width: 84px;" colspan="1" rowspan="1"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; width: 113px;" colspan="1" rowspan="1"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; width: 122px;" colspan="1" rowspan="1"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (M3-only)</span></td><td style="text-align: center; width: 123px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (M3-only)</span></td><td style="height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; width: 174px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (M3-only)</span></td><td style="text-align: center; width: 115px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (MWare)</span></td></tr><tr><td style="background-color: rgb(204, 204, 204); height: 40px; width: 144px;">TI-RTOS for C6000</td><td style="background-color: rgb(204, 204, 204); height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="background-color: rgb(204, 204, 204); height: 40px; text-align: center; width: 113px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; background-color: rgb(204, 204, 204); width: 122px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="text-align: center; background-color: rgb(204, 204, 204); width: 123px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="height: 40px; text-align: center; background-color: rgb(204, 204, 204); width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; background-color: rgb(204, 204, 204); text-align: center; width: 174px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="background-color: rgb(204, 204, 204); text-align: center; width: 115px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td></tr><tr><td colspan="1" rowspan="1" style="height: 40px; width: 144px;">TI-RTOS for MSP430</td><td colspan="1" rowspan="1" style="height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="height: 40px; text-align: center; width: 113px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="height: 40px; text-align: center; width: 122px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span></td><td style="text-align: center; width: 123px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="height: 40px; text-align: center; width: 174px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="text-align: center; width: 115px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (MSP430)</span></td></tr><tr><td colspan="1" rowspan="1" style="background-color: rgb(204, 204, 204); height: 40px; width: 144px;">TI-RTOS for Sitara</td><td colspan="1" rowspan="1" style="background-color: rgb(204, 204, 204); height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="background-color: rgb(204, 204, 204); height: 40px; text-align: center; width: 113px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="height: 40px; text-align: center; background-color: rgb(204, 204, 204); width: 122px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span></td><td style="text-align: center; background-color: rgb(204, 204, 204); width: 123px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="height: 40px; text-align: center; background-color: rgb(204, 204, 204); width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="height: 40px; background-color: rgb(204, 204, 204); text-align: center; width: 174px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="background-color: rgb(204, 204, 204); text-align: center; width: 115px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td></tr><tr><td colspan="1" rowspan="1" style="background-color: white; height: 40px; width: 144px;">TI-RTOS for TivaC</td><td colspan="1" rowspan="1" style="background-color: white; height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="background-color: white; height: 40px; text-align: center; width: 113px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td colspan="1" rowspan="1" style="background-color: white; height: 40px; text-align: center; width: 122px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span></td><td style="text-align: center; width: 123px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="height: 40px; text-align: center; width: 84px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Not included</span></td><td style="height: 40px; text-align: center; width: 174px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included</span></td><td style="text-align: center; width: 115px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">Included (TivaWare)</span></td></tr></tbody></table>
+
+<hr>
+</li><li>Added MSP_EXP430FR5969LP and EK-TM4C1294XL boards</li><li>CCS 6 App Center Support<br></li><li>New versions of products</li><li>Kernel and Instrumentation examples for all products (driver examples only on TI-RTOS for C2000, MSP430 and TivaC).</li></ul>
+<span style="font-weight: bold;">Defects Fixed since
+1.21.00.29&nbsp;</span><big><span style="color: red; font-weight: bold;"></span></big><br><span style="font-weight: bold;">
+<br>
+</span>
+<table style="width: 842px; height: 53px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td><b>ID</b></td>
+<td><b>Headline</b></td>
+</tr>
+<tr><td>SDOCM00107298</td><td>Add MSP-EXP430FR5969LP support into TI-RTOS<br></td></tr><tr><td>SDOCM00107286</td><td>TI-RTOS Sitara product</td></tr><tr><td>SDOCM00107285</td><td>TI-RTOS TivaC product</td></tr><tr><td>SDOCM00106727</td><td>Move to MSP430Ware 1.70 (or higher)</td></tr><tr><td>SDOCM00106726</td><td>Take advantage of new footprint reductions features</td></tr><tr><td>SDOCM00106529</td><td>DK_TM4C123G board files need to be updated.</td></tr><tr><td>SDOCM00106527</td><td>Codegen versions should match CCS 6.0</td></tr><tr><td>SDOCM00106446</td><td>SDSPI timeout check fix</td></tr><tr><td>SDOCM00106312</td><td>TI-RTOS c6000 product</td></tr><tr><td>SDOCM00106311</td><td>TI-RTOS c2000 product</td></tr><tr><td>SDOCM00106309</td><td>TI-RTOS MSP430 product</td></tr><tr><td>SDOCM00106308</td><td>Need to support TM4C129x Connected LaunchPad</td></tr><tr><td>SDOCM00106129</td><td>Change stand alone installer to generate IAR exmples by default.</td></tr><tr><td>SDOCM00105896</td><td>C28 TRex demo examples fail to build due to missing target</td></tr><tr><td>SDOCM00105845</td><td>build warnings for NIMU device table in GCC projects</td></tr><tr><td>SDOCM00105681</td><td>Examples need to use footprint reduction features in 6.38/3.26</td></tr><tr><td>SDOCM00105311</td><td>EK_LM4F120XL.h: EK_LM4F120XL_I2C0 should be EK_LM4F120XL_I2C1</td></tr><tr><td>SDOCM00105074</td><td>Error opening doxygen pages in CCS help content window</td></tr><tr><td>SDOCM00105006</td><td>&nbsp;Build warnings for IAR when doing a top-level build</td></tr><tr><td>SDOCM00105002</td><td>TI-RTOS examples with no heap get an error if they call BIOS_exit</td></tr><tr><td>SDOCM00104138</td><td>TI-RTOS drivers should use C99 types</td></tr><tr><td>SDOCM00102477</td><td>I2CTiva driver get's stuck at a Semaphore_pend() when I2C bus arbitration was lost</td></tr><tr><td>SDOCM00099017</td><td>TI-RTOS needs to make sub-products examples accessible</td></tr></tbody></table><span style="font-family: 'Arial','sans-serif';"><br>
+</span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<hr>
+<h2><a name="Compatibility">Upgrade and
+C<big><span style="color: red; font-weight: bold;"></span></big>ompatibility Information</a></h2>
+When migrating an application that uses TI-RTOS 1.21.00.29 to TI-RTOS
+2.00.01.23, the following steps must be taken:<br><ul><li><span style="font-weight: bold;">New Product</span>:
+Existing applications must point to the corresponding "TI-RTOS for xxx"
+product instead of "TI-RTOS" in the Project
+Properties-&gt;General-&gt;RTSC-&gt;Product and Repositories.&nbsp;<br></li><li><span style="font-weight: bold;">TivaC Users:</span>
+TivaWare changed in this version of TI-RTOS. The
+following changes must be made to existing TI-RTOS TivaC applications</li></ul>
+<ol><ol><li>Libraries: <span style="font-weight: normal;">The TivaWare
+libraries (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.0.1.11577a</span><span style="font-weight: normal;">/driverlib/ccs/Debug/driverlib.lib")
+must be changed to point to the new TivaWare libraries (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/TivaWare_C_Series-2.1.0.12573c/</span><span style="font-weight: normal;">driverlib/ccs/Debug/driverlib.lib")</span></li><li>Include Paths: <span style="font-weight: bold;"></span><span style="font-weight: normal;">The TivaWare include paths (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.0.1.11577a</span><span style="font-weight: normal;">") must
+be changed to point to the new TivaWare path (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/</span><span style="font-weight: normal;">TivaWare_C_Series-2.1.0.12573c</span><span style="font-weight: normal;">").</span><span style="font-weight: bold;"></span></li></ol></ol><ul><li><span style="font-weight: bold;">MSP430 Users:</span> MSP430Ware changed in this version of TI-RTOS. The
+following changes must be made to existing TI-RTOS MSP430&nbsp;applications:</li></ul>
+<ol><ol><li>Libraries: <span style="font-weight: normal;">The MSP430
+libraries (e.g.
+"${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/MSP430Ware_1_60_02_09a/driverlib/ccs-MSP430F5529/ccs-MSP430F5529.lib"</span><span style="font-weight: normal;">)
+must be changed to point to the new MSP430 libraries (e.g.
+"${COM_TI_RTSC_TIRTOSMSP430_INSTALL_DIR}/products/MSP430Ware_1_80_01_03a/driverlib/ccs-MSP430F5529/ccs-MSP430F5529.lib"</span><span style="font-weight: normal;">)</span></li><li>Include Paths: <span style="font-weight: bold;"></span><span style="font-weight: normal;">The MSP430 include paths (e.g. "${COM_TI_RTSC_TIRTOS_INSTALL_DIR}/products/MSP430Ware_1_60_02_09a/driverlib/MSP430F5xx_6xx"</span><span style="font-weight: normal;">) must
+be changed to point to the new MSP430 path (e.g.
+""${COM_TI_RTSC_TIRTOSMSP430_INSTALL_DIR}/products/MSP430Ware_1_80_01_03a/driverlib/MSP430F5xx_6xx"</span><span style="font-weight: normal;"></span><span style="font-weight: normal;">").</span><span style="font-weight: bold;"></span></li></ol></ol>
+<span style="font-family: 'Arial','sans-serif';"></span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+<ul>
+<li><font face="Times New Roman" size="3">Supported
+Operating Systems</font>
+<ul type="circle">
+<li><font face="Times New Roman" size="3">Windows
+7, Windows XP, Windows Vista</font> </li>
+<li><font face="Times New Roman" size="3">Linux
+[RH4], Ubuntu [10.04]</font> </li>
+</ul>
+</li>
+</ul>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr><big><span style="color: red; font-weight: bold;"></span></big>
+<h2><a name="Dependencies">Dependencies</a>
+</h2>
+<p>This release requires the following other software
+components
+and tools versions to successfully function:&nbsp;</p>
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv6.0
+</span> or higher</li><li>Compiler versions are noted in the next section</li>
+</ul>
+<hr>
+<h2><a name="Target_Support">Target and Compiler Support</a></h2>
+The following table contains the targets available for each product. It
+also contains the compiler toolchains that are available and the
+recommended compiler version.<br><br><table style="text-align: left; height: 358px; width: 775px;" border="1" cellpadding="2" cellspacing="2"><tbody><tr style="font-weight: bold;"><td style="width: 163px; text-align: center;">Product</td><td style="text-align: center; width: 231px;">Supported Targets</td><td style="text-align: center; width: 158px;">Compiler Toolchains</td><td style="text-align: center; width: 201px;">Compiler Versions</td></tr><tr><td style="width: 163px;" colspan="1" rowspan="1">TI-RTOS for C2000</td><td style="width: 231px;" colspan="1" rowspan="1"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ti.targets.arm.elf.M3&nbsp;<br>
+ti.targets.C28_float<br></span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">
+ti.targets.C28_large</span></td><td style="width: 158px;" colspan="1" rowspan="1">Texas Instruments</td><td style="width: 201px;" colspan="1" rowspan="1"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">5.1.5&nbsp; (M3)<br>
+6.2.5 (C28)</span></td></tr><tr><td style="width: 163px; background-color: rgb(204, 204, 204);">TI-RTOS for C6000</td><td style="background-color: rgb(204, 204, 204); width: 231px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ti.targets.elf.C66<br>
+ti.targets.elf.C66_big_endian<br>
+ti.targets.elf.C674</span></td><td style="background-color: rgb(204, 204, 204); width: 158px;">Texas Instruments</td><td style="background-color: rgb(204, 204, 204); width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">7.4.7</span></td></tr><tr><td colspan="1" rowspan="2" style="width: 163px;">TI-RTOS for MSP430</td><td colspan="1" rowspan="2" style="width: 231px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ti.targets.msp430.elf.MSP430X<br>
+iar.targets.msp430.MSP430X_small</span></td><td style="width: 158px;">Texas&nbsp;Instruments</td><td style="width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">4.3.1</span></td></tr><tr><td style="width: 158px;">IAR for MSP430</td><td style="width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">5.60.1</span></td></tr><tr><td colspan="1" rowspan="2" style="width: 163px; background-color: rgb(204, 204, 204);">TI-RTOS for Sitara</td><td colspan="1" rowspan="2" style="background-color: rgb(204, 204, 204); width: 231px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ti.targets.arm.elf.A8Fnv<br>
+gnu.targets.arm.A8F<br></span><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">
+gnu.targets.arm.A9F</span></td><td style="background-color: rgb(204, 204, 204); width: 158px;">Texas Instruments</td><td style="background-color: rgb(204, 204, 204); width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">5.1.5</span></td></tr><tr><td style="background-color: rgb(204, 204, 204); width: 158px;">GCC (in CCS 6)</td><td style="background-color: rgb(204, 204, 204); width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">gcc-arm-none-eabi-4_7-2013q3</span></td></tr><tr><td colspan="1" rowspan="3" style="width: 163px; background-color: white;">TI-RTOS for TivaC</td><td colspan="1" rowspan="3" style="background-color: white; width: 231px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">ti.targets.arm.elf.M4F<br>
+iar.targets.arm.M4F<br>
+gnu.targets.arm.M4F</span></td><td style="background-color: white; width: 158px;">Texas Instruments</td><td style="background-color: white; width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">5.1.5</span></td></tr><tr><td style="background-color: white; width: 158px;">GCC (in CCS 6)</td><td style="background-color: white; width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">gcc-arm-none-eabi-4_7-2013q3</span></td></tr><tr><td style="background-color: white; width: 158px;">IAR for ARM</td><td style="background-color: white; width: 201px;"><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">6.70.1</span></td></tr></tbody></table>
+<ul>
+</ul>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+This release was validated using the following components:
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv6.0
+(with FlashStellaris.dll as noted in the </span><a href="#Dependencies">Dependencies</a><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">&nbsp;section)</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span></li>
+</ul>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a><span style="background-color: red;"></span></h2>
+There are several know issues with this release.<big><span style="color: red; font-weight: bold;"></span></big><span style="background-color: red;"></span><br>
+<br>
+<table style="width: 1214px; height: 278px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td style="height: 31px;"><b>ID</b></td>
+<td style="height: 31px;"><b>Headline</b></td>
+</tr>
+<tr><td><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=431821">Bug 431821</a></td><td><span id="summary_alias_container"><span id="short_desc_nonedit_display">add explicit (Void) to parameter for implmentation of SysCallback_abort() and ready() (IAR warning)</span></span></td></tr><tr><td>SDOCM00107416</td><td>TI-RTOS Kernel GNU examples (EK-TM4C1294XL) on Linux are missing the tm4c1294ncpdt.lds linker file<span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;; color: rgb(31, 73, 125);"><br></span></td></tr><tr><td>SDOCM00107380</td><td>Some examples (e.g. tcpEcho) do not work on new Rev of TMDXDOCKH52C1</td></tr><tr><td>SDOCM00107378</td><td>NDK examples for EK-TM4C1294XL do not work</td></tr><tr><td>SDOCM00107367</td><td>TI-RTOS projects imported to IAR Workbench use the default linker files</td></tr><tr>
+<td>SDOCM00107366</td>
+<td>Grlibdemo on MSP430FR5969LP not working for IAR</td></tr><tr><td>SDOCM00107337</td><td>BIOS and UIA examples will not link with default MSP430FR5969 linker file.</td></tr><tr><td>SDOCM00107336</td><td>GPIO's ROV module does work on the TM4C1294 because of a missing entry in the gel file.</td></tr><tr><td>SDOCM00107319</td><td>makedef's XDCTOOLS_JAVA_HOME default is bad in supplied examples for stand-alone installer</td></tr><tr><td>SDOCM00107296</td><td>UARTMon IAR warning in MSP430FR5969</td></tr><tr><td>SDOCM00107295</td><td>UART write callback function called twice for a single byte sent</td></tr><tr><td>SDOCM00107276</td><td>ROV for GPIO exception if opened before Board_initGeneral() is called</td></tr><tr><td>SDOCM00107260</td><td>ROV view for GPIO doesn't work for MSP430</td></tr><tr><td>SDOCM00106479</td><td>I2C_transfer() fails to unblock with a bad I2C address on Tiva C devices</td></tr><tr><td>SDOCM00106370</td><td>Adding and removing Semaphore module does not work correctly in XGCONF graphical editor for certain TI-RTOS examples</td></tr><tr><td>SDOCM00106264</td><td>UART driver doesn't handle RX FIFO overruns.</td></tr><tr><td>SDOCM00106237</td><td>SPI Tiva driver should only use required uDMA channels for transferring data.</td></tr><tr><td>SDOCM00106124</td><td>Editor has problems identifying used code sections in CCS.</td></tr><tr><td>SDOCM00105778</td><td>MSP430 UART logging to System Analyzer does not work</td></tr><tr><td>SDOCM00105762</td><td>TI Resource Explorer can't distinguish between boards of the same device or same boards with different toolchains</td></tr><tr><td>SDOCM00105761</td><td>CC3000 Wi-Fi examples not working with GCC</td></tr><tr><td>SDOCM00105006</td><td>Build warnings for IAR when doing a top-level build</td></tr><tr><td>SDOCM00104686</td><td>UART in Stellaris launchpad not working above 9600 baud when used with windows apps that use rxtxSerial.dll driver</td></tr><tr><td>SDOCM00104253</td><td>MSP430 Launchpad ez-FET UART emulation issue at buadrate &gt; 28.8kbps</td></tr><tr><td>SDOCM00103637</td><td>MSP430 UART[USCIA] LibType_Instrumented is not recommended at baudrates &gt; 9600</td></tr><tr><td>SDOCM00102563</td><td>WiFi driver should not create Hwi instance</td></tr><tr><td>SDOCM00101155</td><td>Intermittent spin lock in USB library's USBHCDPipeRead() for LM4F232</td></tr><tr><td>SDOCM00100865</td><td>TI-RTOS drivers should have top-level enable and disable APIs</td></tr><tr><td>SDOCM00100864</td><td>Multithreaded CC3000 Host Driver does not work properly</td></tr><tr><td>SDOCM00100494</td><td>SPI driver was not tested in Slave Open Drain mode</td></tr><tr><td>SDOCM00099858</td><td>Stellaris launchpad doesn't detect a USB disconnect event</td></tr><tr><td>SDOCM00099460</td><td>ping flood causes Concerto board to stop receiving interrupts</td></tr><tr><td>SDOCM00098063</td><td>UART driver needs to support DMA</td></tr><tr><td>SDOCM00097626</td><td>Giving Priorities to Hwis from TI-RTOS Drivers</td></tr><tr><td>SDOCM00094053</td><td>TI-RTOS sub-products (e.g. UIA, IPC) are not linked into CCS Help</td></tr><tr><td>SDOCM00093967</td><td>TI-RTOS Windows install will fail if installed in multiple or single directory that contains more than 38 characters in path</td></tr><tr><td>SDOCM00093268</td><td>Add parity and error checking for UART driver</td></tr><tr><td>SDOCM00088931</td><td>I2C Needs a Timeout feature</td></tr><tr><td>SDOCM00088081</td><td>SD Card driver lacks CRC support</td>
+</tr>
+</tbody>
+</table>
+<br>
+<hr>
+<h2><a name="Examples">Examples</a></h2>
+There are driver examples for TMDXDOCKH52C1,
+TMDXDOCK28M36,&nbsp;EKS-LM4F232, EK_TM4C123GXL, DK_TM4C123G,
+DK_TM4C129X, EK-TM4C1294XL, &nbsp;EK_LM4F120XL, MSP_EXP430F5529LP,
+MSP_EXP430F5529, and MSP-EXP430FR5969LP boards.
+There are kernel and instrumentation examples for all supported
+devices.Please refer to the Getting Started Guide for more details.<br>
+<hr><big><span style="font-weight: bold;"></span></big>
+<h2><a name="Version">Version Information</a></h2>
+<p>All releases&nbsp;have 4 digits (<b>M.mm.pp.bb</b>).
+This includes GA and pre-releases (engineering, EA, beta, etc.).
+Pre-releases are denoted with a&nbsp;suffix (e.g. 1.01.00.15_eng or
+1.01.00.21-beta). </p>
+<p>This product's version follows a version format, <b>M.mm.pp.bb</b>,
+where <b>M</b> is a single digit Major number, <b>mm</b>
+is 2 digit minor number, <b>pp</b> is a 2 digit patch
+number, and <b>b</b> is an unrestricted set of digits used
+as an incrementing build counter. </p>
+<p>To support multiple side-by-side installations of the
+product,
+the product version is encoded inEK-TM4C1294XL the top level directory, ex. <span style="font-weight: bold;">tirtos</span><b>_1_00_01_11</b>.
+</p>
+<p>Subsequent releases of patch upgrades will be identified by
+the patch number, ex. TI-RTOS 1.00.00.68 with directory <span style="font-weight: bold;">tirtos</span><b>_1_00_01_70</b>.
+Typically, these patches only include critical bug fixes. </p>
+<p>Please note that version numbers and compatibility keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section. </p>
+<hr>
+<h2><a name="Support">Technical Support</a></h2>
+<p><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">For
+technical
+support, please refer to the Texas Instruments E2E BIOS Support Forum <span style="color: rgb(31, 73, 125);"><a href="http://e2e.ti.com/support/embedded/tirtos/default.aspx">http://e2e.ti.com/support/embedded/tirtos/default.aspx</a>
+or other forums in <a href="http://e2e.ti.com/">http://e2e.ti.com/</a>
+as needed.</span></span></p>
+<hr>
+<p>Last updated: April 23, 2014 </p>
+</body></html>

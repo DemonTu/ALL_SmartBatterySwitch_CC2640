@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="examples.boards.CC2650DK" version="1, 0, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/examples_boards_CC2650DK.tar.dep" src="package/rel/examples_boards_CC2650DK.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="examples_boards_CC2650DK"
+        pname="examples_boards_CC2650DK.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.bld"/>
+        <file name="empty.c"/>
+        <file name="empty.cfg"/>
+        <file name="empty_min.c"/>
+        <file name="empty_min.cfg"/>
+        <file name="Board.c"/>
+        <file name="Board.h"/>
+        <file name="CC2650DK.cmd"/>
+        <file name="CC2650DK.icf"/>
+        <file name="CC2650DK.lds"/>
+        <file name="CC2650DK_ROM.lds"/>
+        <file name="package/package.cfg.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

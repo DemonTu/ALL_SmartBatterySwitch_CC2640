@@ -1,0 +1,7 @@
+<map id="Watchdog.h" name="Watchdog.h">
+<area shape="rect" href="$_watchdog_c_c26_x_x_8h.html" title="Watchdog driver implementation for CC26XX. " alt="" coords="8,83,152,107" />
+<area shape="rect" href="$_watchdog_c_c3200_8h.html" title="Watchdog driver implementation for CC3200. " alt="" coords="176,83,317,107" />
+<area shape="rect" href="$_watchdog_m_s_p430_8h.html" title="Watchdog driver implementation for MSP430. " alt="" coords="341,83,485,107" />
+<area shape="rect" href="$_watchdog_m_s_p432_8h.html" title="Watchdog driver implementation for MSP432. " alt="" coords="509,83,653,107" />
+<area shape="rect" href="$_watchdog_tiva_8h.html" title="Watchdog driver implementation for Tiva. " alt="" coords="677,83,794,107" />
+</map>

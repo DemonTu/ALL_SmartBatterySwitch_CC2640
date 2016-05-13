@@ -1,0 +1,68 @@
+\subsection{I2\+C\+\_\+\+Params Struct Reference}
+\label{struct_i2_c___params}\index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+
+
+I2\+C Parameters.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C.\+h$>$}
+
+
+
+Collaboration diagram for I2\+C\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{struct_i2_c___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}{I2\+C\+\_\+\+Transfer\+Mode} \hyperlink{struct_i2_c___params_a79c5c51380ffbdb21df1dff6cb57de0e}{transfer\+Mode}
+\item 
+\hyperlink{_i2_c_8h_aa7389002843eba77425c73b441358fd1}{I2\+C\+\_\+\+Callback\+Fxn} \hyperlink{struct_i2_c___params_a57edf1b900368904779d0c57a73cf047}{transfer\+Callback\+Fxn}
+\item 
+\hyperlink{_i2_c_8h_ac954e3197f04c50293db466c4abb6fbe}{I2\+C\+\_\+\+Bit\+Rate} \hyperlink{struct_i2_c___params_ad31857f6dbedb77c60c92cc8cd8cde0c}{bit\+Rate}
+\item 
+void $\ast$ \hyperlink{struct_i2_c___params_a2416cc06d853e6cc24e1f294dfebb194}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C Parameters. 
+
+I2\+C parameters are used to with the \hyperlink{_i2_c_8h_ae1aa99e1fee4517406018e10025cca0e}{I2\+C\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_i2_c_8h_ab11636302074d67180207ab81ceb323c}{I2\+C\+\_\+\+Params\+\_\+init()}.
+
+If I2\+C\+\_\+\+Transfer\+Mode is set to I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G then I2\+C\+\_\+transfer function calls will block thread execution until the transaction has completed.
+
+If I2\+C\+\_\+\+Transfer\+Mode is set to I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K then I2\+C\+\_\+transfer will not block thread execution and it will call the function specified by transfer\+Callback\+Fxn. Sequential calls to I2\+C\+\_\+transfer in I2\+C\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K mode will put the designated transaction onto an internal queue that automatically starts queued transactions after the previous transaction has completed. (regardless of error state).
+
+I2\+C\+\_\+\+Bit\+Rate specifies the I2\+C bus rate used for I2\+C communications.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_c_8h_ab11636302074d67180207ab81ceb323c}{I2\+C\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}!transfer\+Mode@{transfer\+Mode}}
+\index{transfer\+Mode@{transfer\+Mode}!I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+\paragraph[{transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transfer\+Mode} I2\+C\+\_\+\+Params\+::transfer\+Mode}\label{struct_i2_c___params_a79c5c51380ffbdb21df1dff6cb57de0e}
+Blocking or Callback mode \index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}!transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}}
+\index{transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}!I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+\paragraph[{transfer\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Callback\+Fxn} I2\+C\+\_\+\+Params\+::transfer\+Callback\+Fxn}\label{struct_i2_c___params_a57edf1b900368904779d0c57a73cf047}
+Callback function pointer \index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}!bit\+Rate@{bit\+Rate}}
+\index{bit\+Rate@{bit\+Rate}!I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+\paragraph[{bit\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Bit\+Rate} I2\+C\+\_\+\+Params\+::bit\+Rate}\label{struct_i2_c___params_ad31857f6dbedb77c60c92cc8cd8cde0c}
+I2\+C bus bit rate \index{I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!I2\+C\+\_\+\+Params@{I2\+C\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+\_\+\+Params\+::custom}\label{struct_i2_c___params_a2416cc06d853e6cc24e1f294dfebb194}
+Custom argument used by driver implementation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h}{I2\+C.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,23 @@
+package/lib/lib/drivers_ccware_instrumented/./spi/SPICC3200DMA.om4g:  spi/SPICC3200DMA.c ../../ti/drivers/Power.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/stdint.h  ../../ti/drivers/ports/ListP.h  /db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stdbool.h  /db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stddef.h  ../../ti/drivers/power/PowerCC3200.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_types.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/pin.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_map.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_patch.h  ../../ti/drivers/ports/DebugP.h ../../ti/drivers/ports/HwiP.h  ../../ti/drivers/ports/SemaphoreP.h ../../ti/drivers/spi/SPICC3200DMA.h  ../../ti/drivers/SPI.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_mcspi.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_memmap.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/prcm.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/spi.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/udma.h
+spi/SPICC3200DMA.c:
+../../ti/drivers/Power.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/stdint.h:
+../../ti/drivers/ports/ListP.h:
+/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stdbool.h:
+/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stddef.h:
+../../ti/drivers/power/PowerCC3200.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_types.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/pin.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_map.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom_patch.h:
+../../ti/drivers/ports/DebugP.h:
+../../ti/drivers/ports/HwiP.h:
+../../ti/drivers/ports/SemaphoreP.h:
+../../ti/drivers/spi/SPICC3200DMA.h:
+../../ti/drivers/SPI.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_mcspi.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/inc/hw_memmap.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/rom.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/prcm.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/spi.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/CC3200_driverlib_1.1.0/driverlib/udma.h:

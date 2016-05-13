@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+            body {
+                font-family: Arial;
+                font-size: 14px;
+            }
+            h2 {
+                background: #cc0000;
+                padding: 1px;
+                margin-top:0px;
+                color: white;
+                font-size: 16px;
+            }
+            footer {
+                width:100%;
+                height:15px;
+                bottom:0;
+                left:0;
+                background:#ddd;
+                font-size:12px;
+            }
+            div.release-container {
+                border: 1px solid #ccc;
+                margin-bottom: 20px;
+            }
+            div.content-container {
+                padding: 0px 5px 5px 5px;
+            }
+        </style>
+        <title>CC26xxware release notes</title>
+    </head>
+    <body>
+        <h1>CC26xxWare Release Notes</h1>
+        <p>
+            This page lists all relevant changes for all public versions of CC26xxware, containing:
+            <ul>
+                <li>CC26xxWare driverlib source code <strong>[DRV_SRC]</strong></li>
+                <li>CC26xxWare driverlib documentation <strong>[DRV_DOC]</strong></li>
+                <li>CC26xxWare driverlib prebuilt libraries <strong>[DRV_LIB]</strong></li>
+                <li>CC26xxWare hardware interface description <strong>[HW_INC]</strong></li>
+                <li>CC26xxWare rflib source code <strong>[RF_SRC]</strong></li>
+                <li>CC26xxWare rflib documentation <strong>[RF_DOC]</strong></li>
+            </ul>
+        </p>
+
+        <!-- Start of cc26xxware entry -->
+        <div class="release-container">
+            <h2>cc26xxware_2_21_01_15600</h2>
+            <div class="content-container">
+                Release date: April 16, 2015 <br />
+
+                <h3>New features</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] PRCM:</strong> Converting warm reset to pin reset (configured in the boot sequence), giving full system reset upon e.g. watchdog resets.</li>
+                    <li><strong>[DRV_SRC] Timer</strong> Added new driverlib timer configuration functions: TimerCcpCombineEnable, TimerCcpCombineDisable, TimerMatchUpdateMode TimerIntervalLoadMode.</li>
+                </ul>
+
+                <h3>Improvements</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] SysCtrl:</strong> Changed adaptive recharge calculation algorithm to adapt faster.</li>
+                    <li><strong>[DRV_SRC] ChipInfo:</strong> Made hardware revision check future proof. Changes relate to functions: ChipInfo_GetChipFamily and ChipInfo_GetHwRevision</li>
+                </ul>
+
+                <h3>Bug fixes</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] AUX_ADC:</strong> Corrected raw ADC sample to millivolt calculation and parameter handling in function AUXADCEnableSync.</li>
+                </ul>
+
+                <h3>Known Issues</h3>
+                <ul>
+                    <li><strong>None</strong></li>
+                    <li><strong>For an updated list of known issues (including issues found after the release), see <a href="http://processors.wiki.ti.com/index.php/CC26xxware">CC26xxWare</a> on the Texas Instruments wiki.</strong> (Or on the internal wiki <a href="http://ap-fpdsp-swapps.dal.design.ti.com/index.php/CC26xxware">CC26xxWare-internal</a>)</li>
+                </ul>
+                
+            </div>
+        </div>
+        <div class="release-container">
+            <h2>cc26xxware_2_21_00_15402</h2>
+            <div class="content-container">
+                Release date: March 24, 2015 <br />
+
+                <h3>New features</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] UART:</strong> Extending the UART module.
+                    Adding functions to enable and disable hardware flow control (UARTHwFlowControlEnable() and UARTHwFlowControlDisbale().</li>
+                    <li><strong>[DRV_SRC] SysCtrl:</strong> Added driverlib function doing system/chip reset (Achieved by calling function SysCtrlSystemReset() ).</li>
+                    <li><strong>[DRV_SRC] VIMS:</strong> Enhancing cache usage.
+                    1: Make sure cache is enabled also when executing in the debugger. 
+                    2: Enabled cache TAG RAM prefetching permanently at boot - increasing CPU execution speed (between 5% and 20% depending of usage).</li>
+                    <li><strong>[DRV_SRC] CCFG:</strong> Made use of external Low Frequency (32 KHz) clock easier
+                    (Now configurable through Customer Configuration (CCFG)).</li>
+                    <li><strong>[DRV_SRC] CCFG:</strong> Corrected bug when using HF XTAL as source to the Low Frequency clock
+                    (Set/controlled by the Customer Configuration (CCFG)).</li>
+                    <li><strong>[DRV_SRC] AUX_ADC:</strong> Extending module AUX_ADC with more functionality
+                    (Now supporting conversion from raw samples to millivolt in both absolute and relative mode).</li>
+                    <li><strong>[DRV_SRC] CCFG:</strong> Removed hard coding of XTAL type used (24/48MHz).
+                    XTAL type used is now configurable through Customer Configuration (CCFG)</li>
+                    <li><strong>[DRV_LIB] CCS:</strong> Corrected problem related to linking/using pre-built library, built for Code Composer Studio</li>
+                    <li><strong>[DRV_DOC] CCFG:</strong> Enhancing the Customer Configuration description (CCFG).</li>
+                    <li><strong>[DRV_DOC] General:</strong> Improvements in the documentation.
+                    Added documentation of new modules, added missing documentation at function level and aligned documentation styling between modules.</li>
+                    <li><strong>[RF_SRC/RF_DOC]</strong> Initial revision of the rflib module and contains as such no New features, Changes, Bug fixes or Known Issues.</li>
+                </ul>
+
+                <h3>Improvements</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] General:</strong> A lot of the initial functions available could be dangerous to use and
+                    the following functions are therefore either removed, renamed or replaced:<br />
+                    - Removed function DDIStatusGet(), DDIConfigSet(), DDISync() and DDIProtect()<br />
+                    - Removed function PRCMClockConfigureSet() and PRCMClockConfigureGet()<br />
+                    - Removed function PRCMRetentionEnable(). Calling PRCMRetentionEnable(PRCM_DOMAIN_VIMS) is done by calling new function PRCMCacheRetentionEnable()<br />
+                    - Removed function PRCMRetentionDisable(). Calling PRCMRetentionDisbale(PRCM_DOMAIN_VIMS) is done by calling new function PRCMCacheRetentionDisable()<br />
+                    - Removed function PowerCtrlIoConfigSet()<br />
+                    - Removed function SysCtrlPeripheralClockGet()<br />
+                    - Removed function IOCIOJTagSet()<br />
+                    - Removed function AONBatMonTemperatureGet() (Use AONBatMonTemperatureGetDegC() instead).<br />
+                    - Removed function AONBatMonMeasurementCycleSet()<br />
+                    - Removed function AONBatMonMeasurementCycleGet()<br />
+                    - Removed function AONBatMonBatteryTrimSet()<br />
+                    - Removed function AONBatMonTemperatureTrimSet()<br />
+                    - Removed function AONWUCAuxClockConfigSet()<br />
+                    - Removed function AONWUCAuxPowerOffConfig()<br />
+                    - Renamed Function AONWUCPowerStatus() to AONWUCPowerStatusGet()<br />
+                    - Renamed Function AONWUCMcuResetStatus() to AONWUCMcuResetStatusGet()<br />
+                    - Changed possible return parameter from function VIMSModeGet() from VIMS_MODE_INVALIDATE to VIMS_MODE_CHANGING (function checks different bit in VIMS from now)<br />
+                    - Removed entire module obs (obs.h and obs.c).</li>
+                    <li><strong>[DRV_SRC] UART:</strong> Removing unsupported functionality (removed functions UARTTxIntModeSet() and UARTTxIntModeGet() ).
+                    <li><strong>[DRV_SRC] drivelib_release:</strong> Renamed release consistency checker module
+                    (Renamed driverlib_ver.h/.c to drivelib_release.h/.c and renamed macro/function DRIVERLIB_ASSERT_CURR_VERSION() to DRIVERLIB_ASSERT_CURR_RELEASE() ).</li>
+                    <li><strong>[DRV_SRC] AON_BatMon:</strong> Renamed driverlib function AON_BatmonTempGetDegC() to AONBatMonTemperatureGetDegC()
+                    (to align with coding style).</li>
+                    <li><strong>[HW_INC] General:</strong> Enhancing the hardware interface description
+                    (Removed description of register not recommended to be used by the customers and improved description of remaining registers and register fields).</li>
+                </ul>
+
+                <h3>Bug fixes</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] SysCtrl:</strong> Corrected bugs giving too high current consumption in STANDBY
+                    (Two bugs: 1: When running in External Regulator mode. 2: When having multiple events waking up from standby asynchrounesly).</li>
+                    <li><strong>[DRV_SRC] AON_RTC:</strong> Enhanced reading of the RTC clock 
+                    (Reading the RTC clock could be interrupted giving wrong result. Function AONRTCCurrentCompareValueGet() is now made thread/interrupt safe).</li>
+                    <li><strong>[DRV_SRC] CTYPTO:</strong> Corrected minor bug in function CRYPTOCcmAuthEncrypt() results in sometimes giving wrong result).</li>
+                    <li><strong>[DRV_SRC] SysCtrl:</strong> Added minor extension to battery monitoring function SysCtrl_DCDC_VoltageConditionalControl()
+                    (Do not changed DCDC setting before battery voltage measurement is available. This function is called regularly by TI-RTOS).</li>
+                </ul>
+
+                <h3>Known Issues</h3>
+                <ul>
+                    <li><strong>None</strong></li>
+                    <li><strong>For an updated list of known issues (including issues found after the release), see <a href="http://processors.wiki.ti.com/index.php/CC26xxware">CC26xxWare</a> on the Texas Instruments wiki.</strong> (Or on the internal wiki <a href="http://ap-fpdsp-swapps.dal.design.ti.com/index.php/CC26xxware">CC26xxWare-internal</a>)</li>
+                </ul>
+                
+            </div>
+        </div>
+        <div class="release-container">
+            <h2>cc26xxware_2_20_06_14829</h2>
+            <div class="content-container">
+                Release date: February 25, 2015 <br />
+
+                <h3>Bug fixes & New features</h3>
+                <ul>
+                    <li><strong>cc26xxware_2_20_06_14829</strong> is the initial revision and contains as such no bug fixes or new features.</li>
+                </ul>
+                
+                <h3>Known Issues</h3>
+                <ul>
+                    <li><strong>[DRV_SRC] - STANDBY current consumption when using external regulator mode</strong><br />
+                        The driverlib function used to setup the recharge rate before entering the STANDBY power mode does not turn
+                        off the adaptive rate calculation when in external regulator mode and ends up with minimum recharge rate and
+                        a current consumption of approximately 100 micro amps (while expecting approximately 1 micro amps).</li>
+                    <li><strong>For an updated list of known issues (including issues found after the release), see <a href="http://processors.wiki.ti.com/index.php/CC26xxware">CC26xxWare</a> on the Texas Instruments wiki.</strong> (Or on the internal wiki <a href="http://ap-fpdsp-swapps.dal.design.ti.com/index.php/CC26xxware">CC26xxWare-internal</a>)</li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- End of cc26xxware entry -->
+        
+        <footer align="right">
+            &copy 2015. Texas Instruments | All Rights Reserved
+        </footer>
+
+    </body>
+</html>

@@ -1,0 +1,133 @@
+\subsection{I2\+C\+C\+C3200.\+h File Reference}
+\label{_i2_c_c_c3200_8h}\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+I2\+C driver implementation for a C\+C3200 I2\+C controller. 
+
+============================================================================
+
+The I2\+C header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/I2C.h>}
+\textcolor{preprocessor}{#include <ti/drivers/i2c/I2CCC3200.h>}
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+I2\+C.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Semaphore\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+Include dependency graph for I2\+C\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_i2_c_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_i2_c_c_c3200___h_w_attrs}{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_i2_c_c_c3200___object}{I2\+C\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940b}{I2\+C\+C\+C3200\+\_\+\+Mode} \hyperlink{_i2_c_c_c3200_8h_a3e7a8af39ebe4372d43cbcbd760e5ab6}{I2\+C\+C\+C3200\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 mode. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_c_c3200___h_w_attrs}{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs} \hyperlink{_i2_c_c_c3200_8h_a684a95a71c6d653f099add355c43a1dd}{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_i2_c_c_c3200___object}{I2\+C\+C\+C3200\+\_\+\+Object} \hyperlink{_i2_c_c_c3200_8h_aa8410656ed73821e36a81fd1e4c083a8}{I2\+C\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940b}{I2\+C\+C\+C3200\+\_\+\+Mode} \{ \\*
+\hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba39c02bbdf27eb3022e79e392d3f08648}{I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E} = 0, 
+\\*
+\hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba9c614218d1b85c03c650df65996bd87a}{I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba592d1ad3d4ebb76ae41697215dab7943}{I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}, 
+\\*
+\hyperlink{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba7dc2951d6837d16501d116c501ae8e05}{I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R} = 0x\+F\+F
+ \}
+\begin{DoxyCompactList}\small\item\em I2\+C\+C\+C3200 mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_i2_c___fxn_table}{I2\+C\+\_\+\+Fxn\+Table} \hyperlink{_i2_c_c_c3200_8h_a8d55c316465052f05df19d16002be53a}{I2\+C\+C\+C3200\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+Mode@{I2\+C\+C\+C3200\+\_\+\+Mode}}
+\index{I2\+C\+C\+C3200\+\_\+\+Mode@{I2\+C\+C\+C3200\+\_\+\+Mode}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+\paragraph[{I2\+C\+C\+C3200\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf I2\+C\+C\+C3200\+\_\+\+Mode}  {\bf I2\+C\+C\+C3200\+\_\+\+Mode}}\label{_i2_c_c_c3200_8h_a3e7a8af39ebe4372d43cbcbd760e5ab6}
+
+
+I2\+C\+C\+C3200 mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\index{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+\paragraph[{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}  {\bf I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}\label{_i2_c_c_c3200_8h_a684a95a71c6d653f099add355c43a1dd}
+
+
+I2\+C\+C\+C3200 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const I2CCC3200\_HWAttrs i2cCC3200HWAttrs[] = \{
+2     \{
+3         I2CA0\_BASE,
+4         INT\_I2CA0,
+5         ~0               // Interrupt priority
+6     \}
+7 \};
+\end{DoxyCode}
+ \index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+Object@{I2\+C\+C\+C3200\+\_\+\+Object}}
+\index{I2\+C\+C\+C3200\+\_\+\+Object@{I2\+C\+C\+C3200\+\_\+\+Object}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+\paragraph[{I2\+C\+C\+C3200\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf I2\+C\+C\+C3200\+\_\+\+Object}  {\bf I2\+C\+C\+C3200\+\_\+\+Object}}\label{_i2_c_c_c3200_8h_aa8410656ed73821e36a81fd1e4c083a8}
+
+
+I2\+C\+C\+C3200 Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Enumeration Type Documentation}
+\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+Mode@{I2\+C\+C\+C3200\+\_\+\+Mode}}
+\index{I2\+C\+C\+C3200\+\_\+\+Mode@{I2\+C\+C\+C3200\+\_\+\+Mode}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+\paragraph[{I2\+C\+C\+C3200\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf I2\+C\+C\+C3200\+\_\+\+Mode}}\label{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940b}
+
+
+I2\+C\+C\+C3200 mode. 
+
+This enum defines the state of the I2\+C driver\textquotesingle{}s state-\/machine. Do not modify. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+C\+C3200\+\_\+\+I\+D\+L\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba39c02bbdf27eb3022e79e392d3f08648}
+}]\index{I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+C\+C3200\+\_\+\+W\+R\+I\+T\+E\+\_\+\+M\+O\+D\+E\label{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba9c614218d1b85c03c650df65996bd87a}
+}]\index{I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E@{I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E}}\item[{\em 
+I2\+C\+C\+C3200\+\_\+\+R\+E\+A\+D\+\_\+\+M\+O\+D\+E\label{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba592d1ad3d4ebb76ae41697215dab7943}
+}]\index{I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R@{I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R}}\item[{\em 
+I2\+C\+C\+C3200\+\_\+\+E\+R\+R\+O\+R\label{_i2_c_c_c3200_8h_aecba715487712a8b525074b7b93e940ba7dc2951d6837d16501d116c501ae8e05}
+}]\end{description}
+\end{Desc}
+
+
+\subsubsection{Variable Documentation}
+\index{I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}!I2\+C\+C\+C3200\+\_\+fxn\+Table@{I2\+C\+C\+C3200\+\_\+fxn\+Table}}
+\index{I2\+C\+C\+C3200\+\_\+fxn\+Table@{I2\+C\+C\+C3200\+\_\+fxn\+Table}!I2\+C\+C\+C3200.\+h@{I2\+C\+C\+C3200.\+h}}
+\paragraph[{I2\+C\+C\+C3200\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf I2\+C\+\_\+\+Fxn\+Table} I2\+C\+C\+C3200\+\_\+fxn\+Table}\label{_i2_c_c_c3200_8h_a8d55c316465052f05df19d16002be53a}

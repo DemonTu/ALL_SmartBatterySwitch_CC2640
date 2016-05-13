@@ -1,0 +1,134 @@
+clean::
+	$(RM) package/ti.sysbios.heaps.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_heaps.java
+	$(RM) package/ti_sysbios_heaps.class
+	$(RM) package/package_ti.sysbios.heaps.c
+	$(RM) package/package.defs.h
+	$(RM) HeapBuf.h
+	$(RM) package/internal/HeapBuf.xdc.h
+	$(RM) HeapMem.h
+	$(RM) package/internal/HeapMem.xdc.h
+	$(RM) HeapMultiBuf.h
+	$(RM) package/internal/HeapMultiBuf.xdc.h
+	$(RM) HeapNull.h
+	$(RM) package/internal/HeapNull.xdc.h
+	$(RM) HeapTrack.h
+	$(RM) package/internal/HeapTrack.xdc.h
+	$(RM) HeapCallback.h
+	$(RM) package/internal/HeapCallback.xdc.h
+	$(RM) package/HeapMem_Module_GateProxy.h
+	$(RM) package/internal/HeapMem_Module_GateProxy.xdc.h
+	$(RM) package/ti.sysbios.heaps.ccs
+
+.interfaces: package/ti.sysbios.heaps.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_heaps.java package/package_ti.sysbios.heaps.c package/package.defs.h HeapBuf.h package/internal/HeapBuf.xdc.h HeapMem.h package/internal/HeapMem.xdc.h HeapMultiBuf.h package/internal/HeapMultiBuf.xdc.h HeapNull.h package/internal/HeapNull.xdc.h HeapTrack.h package/internal/HeapTrack.xdc.h HeapCallback.h package/internal/HeapCallback.xdc.h package/HeapMem_Module_GateProxy.h package/internal/HeapMem_Module_GateProxy.xdc.h package/ti.sysbios.heaps.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: HeapBuf.xdc HeapMem.xdc HeapMultiBuf.xdc HeapNull.xdc HeapTrack.xdc HeapCallback.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+HeapBuf.xs:
+package/package.xdc.inc: HeapBuf.xs
+HeapMem.xs:
+package/package.xdc.inc: HeapMem.xs
+HeapMultiBuf.xs:
+package/package.xdc.inc: HeapMultiBuf.xs
+HeapNull.xs:
+package/package.xdc.inc: HeapNull.xs
+HeapTrack.xs:
+package/package.xdc.inc: HeapTrack.xs
+HeapCallback.xs:
+package/package.xdc.inc: HeapCallback.xs
+
+# schema update dependencies
+package/package.xdc.inc: HeapBuf.xdc
+package/package.xdc.inc: HeapMem.xdc
+package/package.xdc.inc: HeapMultiBuf.xdc
+package/package.xdc.inc: HeapNull.xdc
+package/package.xdc.inc: HeapTrack.xdc
+package/package.xdc.inc: HeapCallback.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Queue.xdc
+ti/sysbios/knl/Queue.xdc:
+vpath ti/sysbios/knl/Queue.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Task.xdc
+ti/sysbios/knl/Task.xdc:
+vpath ti/sysbios/knl/Task.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITaskSupport.xdc
+ti/sysbios/interfaces/ITaskSupport.xdc:
+vpath ti/sysbios/interfaces/ITaskSupport.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Clock.xdc
+ti/sysbios/knl/Clock.xdc:
+vpath ti/sysbios/knl/Clock.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Swi.xdc
+ti/sysbios/knl/Swi.xdc:
+vpath ti/sysbios/knl/Swi.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: HeapBuf.h
+HeapBuf.h:
+package/package.xdc.inc: package/internal/HeapBuf.xdc.h
+package/internal/HeapBuf.xdc.h:
+package/package.xdc.inc: HeapMem.h
+HeapMem.h:
+package/package.xdc.inc: package/internal/HeapMem.xdc.h
+package/internal/HeapMem.xdc.h:
+package/package.xdc.inc: HeapMultiBuf.h
+HeapMultiBuf.h:
+package/package.xdc.inc: package/internal/HeapMultiBuf.xdc.h
+package/internal/HeapMultiBuf.xdc.h:
+package/package.xdc.inc: HeapNull.h
+HeapNull.h:
+package/package.xdc.inc: package/internal/HeapNull.xdc.h
+package/internal/HeapNull.xdc.h:
+package/package.xdc.inc: HeapTrack.h
+HeapTrack.h:
+package/package.xdc.inc: package/internal/HeapTrack.xdc.h
+package/internal/HeapTrack.xdc.h:
+package/package.xdc.inc: HeapCallback.h
+HeapCallback.h:
+package/package.xdc.inc: package/internal/HeapCallback.xdc.h
+package/internal/HeapCallback.xdc.h:
+package/package.xdc.inc: package/HeapMem_Module_GateProxy.h
+package/HeapMem_Module_GateProxy.h:
+package/package.xdc.inc: package/internal/HeapMem_Module_GateProxy.xdc.h
+package/internal/HeapMem_Module_GateProxy.xdc.h:
+

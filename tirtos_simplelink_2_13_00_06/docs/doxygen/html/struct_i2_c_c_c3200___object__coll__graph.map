@@ -1,0 +1,7 @@
+<map id="I2CCC3200_Object" name="I2CCC3200_Object">
+<area shape="rect" href="$struct_power___notify_obj.html" title="Power notify object structure. " alt="" coords="8,102,128,126" />
+<area shape="rect" href="$struct_list_p___elem.html" title="ListP_Elem" alt="" coords="24,10,112,34" />
+<area shape="rect" href="$struct_i2_c___transaction.html" title="I2C transaction. " alt="" coords="152,102,269,126" />
+<area shape="rect" href="$struct_i2_c___config.html" title="I2C Global configuration. " alt="" coords="464,102,552,126" />
+<area shape="rect" href="$struct_i2_c___fxn_table.html" title="The definition of a I2C function table that contains the required set of functions to control a speci..." alt="" coords="504,251,608,275" />
+</map>

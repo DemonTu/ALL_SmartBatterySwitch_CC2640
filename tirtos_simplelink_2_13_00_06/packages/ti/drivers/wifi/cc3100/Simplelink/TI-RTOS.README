@@ -1,0 +1,17 @@
+Changes done from the orginal SimpleLink 1.0.0.0
+
+SimpleLink documentation and host firmware programmer have been stripped out of
+the TI-RTOS WiFi driver package.
+To obtain the CC3100 SimpleLink documentation and host firmware programmer go
+to: http://processors.wiki.ti.com/index.php/CC31xx_%26_CC32xx
+
+simplelink.h:
+Changed #include paths to use a Uppercase S for Linux compatibility
+
+driver.c:
+removed "const" keyword from
+    const _SlSyncPattern_t g_H2NSyncPattern = H2N_SYNC_PATTERN;
+and
+    const _SlSyncPattern_t g_H2NCnysPattern = H2N_CNYS_PATTERN;
+to support DMA SPI transfers on TivaC devices where a DMA transfer from flash is
+not permissible.

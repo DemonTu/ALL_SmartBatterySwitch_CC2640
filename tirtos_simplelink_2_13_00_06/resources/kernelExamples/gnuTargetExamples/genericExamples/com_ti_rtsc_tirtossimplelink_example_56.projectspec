@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId=".*CC32.*"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Event Example"
+        name="event"
+        toolChain="GNU"
+        linkerCommandFile="ti/platforms/simplelink/include_gnu/$DeviceId$.lds"
+        compilerBuildOptions="-mthumb -march=armv7e-m -mfloat-abi=soft"
+        linkerBuildOptions="-nostartfiles -static --gc-sections -lgcc -lc -lm -lnosys -L${COM_TI_RTSC_TIRTOSSIMPLELINK_INSTALL_DIR}/products/bios_6_42_00_08/gnu/targets/arm/libs/install-native/arm-none-eabi/lib/armv7e-m"
+        description="The event example shows how to use the ti.sysbios.knl.Event module. The ti.sysbios.knl.Event module solves the 'Wait on Multiple' problem. In this example a reader task waits on several events.">
+
+        <property name="type" value="rtsc"/>
+        <property name="products" value="com.ti.rtsc.TIRTOSsimplelink"/>
+        <property name="target" value="gnu.targets.arm.M4"/>
+        <property name="platform" value="ti.platforms.simplelink:$DeviceId$"/>
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <group id="examples.root_SimpleLink.kernel.targetsGNU.genericGNU"/>
+        <file path="ti/sysbios/examples/./generic/event/event.c" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/sysbios/examples/./generic/event/cortexm/event.cfg" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+        <file path="ti/sysbios/examples/./makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy" >
+        </file>
+    </project>
+</projectSpec>
+

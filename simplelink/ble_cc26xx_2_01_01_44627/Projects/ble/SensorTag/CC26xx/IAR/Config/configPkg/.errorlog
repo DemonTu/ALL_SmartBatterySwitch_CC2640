@@ -1,0 +1,3 @@
+js: "C:/work/source/ALL_SmartBatterySwitch_CC2640/simplelink/ble_cc26xx_2_01_01_44627/Projects/ble/SensorTag/CC26xx/IAR/Config/appBLE.cfg", line 26: XDC runtime error: ti.sysbios.family.arm.cc26xx.Power: no property named 'standbyPolicy'
+    "./package/cfg/appBLE_prm3.cfg", line 169
+xdctools_3_32_00_06_core\gmake.exe: *** [package/cfg/appBLE_prm3.xdl] Error 1

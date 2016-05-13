@@ -1,0 +1,106 @@
+\subsection{Camera\+\_\+\+Params Struct Reference}
+\label{struct_camera___params}\index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+
+
+Camera Parameters.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
+
+
+Collaboration diagram for Camera\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{struct_camera___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8}{Camera\+\_\+\+Capture\+Mode} \hyperlink{struct_camera___params_ab370847eb029c1b816830f6a2fb1956f}{capture\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera___params_a0b8e5d861228a67c891ac7737c3546af}{output\+Clock}
+\item 
+\hyperlink{_camera_8h_a44b110de33cc32adba6d4a5807665987}{Camera\+\_\+\+H\+Sync\+Polarity} \hyperlink{struct_camera___params_a08f9574d65f148d071452c4ae0841d4b}{hsync\+Polarity}
+\item 
+\hyperlink{_camera_8h_a05347818dd7d8986a24a0fe1bc74d412}{Camera\+\_\+\+V\+Sync\+Polarity} \hyperlink{struct_camera___params_a707b9746ec88eb4d183a7471fd8151bf}{vsync\+Polarity}
+\item 
+\hyperlink{_camera_8h_a081a0e4af0b04d76a5476d22e6cf8657}{Camera\+\_\+\+Pixel\+Clk\+Config} \hyperlink{struct_camera___params_a55279b026ec9bee61c7f3fedef456d64}{pixel\+Clk\+Config}
+\item 
+\hyperlink{_camera_8h_ae5c1282ca99dd27ba0faf0f16f6e9904}{Camera\+\_\+\+Byte\+Order} \hyperlink{struct_camera___params_ac23766c87406fdf6b9aca3a3b9b4e15c}{byte\+Order}
+\item 
+\hyperlink{_camera_8h_a741d469cc903899255a1d3e76fdce47b}{Camera\+\_\+\+If\+Synchoronisation} \hyperlink{struct_camera___params_ad32edd6c21bc9952deeb917034ca0f45}{interface\+Sync}
+\item 
+\hyperlink{_camera_8h_a783564f838bc718a5b56f114027f5185}{Camera\+\_\+\+Stop\+Capture\+Config} \hyperlink{struct_camera___params_a89b5c7168ff120da5fc7461fb71499aa}{stop\+Config}
+\item 
+\hyperlink{_camera_8h_a97037da7c87b817ddb71ec7100c69ca5}{Camera\+\_\+\+Start\+Capture\+Config} \hyperlink{struct_camera___params_aa754cc494ff462b01a7ed647742b15af}{start\+Config}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera___params_a7a66a4013966579c58e2d02ad788d6ce}{capture\+Timeout}
+\item 
+\hyperlink{_camera_8h_ad70b3ced1706386d1a093a0bf659bd87}{Camera\+\_\+\+Callback} \hyperlink{struct_camera___params_a2bc1db1262e09919a7711301cd784fda}{capture\+Callback}
+\item 
+void $\ast$ \hyperlink{struct_camera___params_a35814b7c3aea7ecb153cbe05371cad27}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Camera Parameters. 
+
+Camera parameters are used to with the \hyperlink{_camera_8h_a5bd1f515c97e0f598ff554c663bc6cde}{Camera\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_camera_8h_a522620ae3e5fb202b1f46f5535619564}{Camera\+\_\+\+Params\+\_\+init()}.
+
+If Camera\+\_\+\+Capture\+Mode is set to Camera\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G then Camera\+\_\+capture function calls will block thread execution until the capture has completed.
+
+If Camera\+\_\+\+Capture\+Mode is set to Camera\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K then Camera\+\_\+capture will not block thread execution and it will call the function specified by capture\+Callback\+Fxn.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_camera_8h_a522620ae3e5fb202b1f46f5535619564}{Camera\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!capture\+Mode@{capture\+Mode}}
+\index{capture\+Mode@{capture\+Mode}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{capture\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Capture\+Mode} Camera\+\_\+\+Params\+::capture\+Mode}\label{struct_camera___params_ab370847eb029c1b816830f6a2fb1956f}
+$<$ Mode for camera capture Output clock to set divider \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!output\+Clock@{output\+Clock}}
+\index{output\+Clock@{output\+Clock}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{output\+Clock}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+\_\+\+Params\+::output\+Clock}\label{struct_camera___params_a0b8e5d861228a67c891ac7737c3546af}
+Polarity of Hsync \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!hsync\+Polarity@{hsync\+Polarity}}
+\index{hsync\+Polarity@{hsync\+Polarity}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{hsync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+H\+Sync\+Polarity} Camera\+\_\+\+Params\+::hsync\+Polarity}\label{struct_camera___params_a08f9574d65f148d071452c4ae0841d4b}
+Polarity of V\+Sync \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!vsync\+Polarity@{vsync\+Polarity}}
+\index{vsync\+Polarity@{vsync\+Polarity}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{vsync\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+V\+Sync\+Polarity} Camera\+\_\+\+Params\+::vsync\+Polarity}\label{struct_camera___params_a707b9746ec88eb4d183a7471fd8151bf}
+Pixcel clock configuration \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!pixel\+Clk\+Config@{pixel\+Clk\+Config}}
+\index{pixel\+Clk\+Config@{pixel\+Clk\+Config}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{pixel\+Clk\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Pixel\+Clk\+Config} Camera\+\_\+\+Params\+::pixel\+Clk\+Config}\label{struct_camera___params_a55279b026ec9bee61c7f3fedef456d64}
+camera capture byte order \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!byte\+Order@{byte\+Order}}
+\index{byte\+Order@{byte\+Order}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{byte\+Order}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Byte\+Order} Camera\+\_\+\+Params\+::byte\+Order}\label{struct_camera___params_ac23766c87406fdf6b9aca3a3b9b4e15c}
+Camera-\/\+Sensor synchoronisation \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!interface\+Sync@{interface\+Sync}}
+\index{interface\+Sync@{interface\+Sync}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{interface\+Sync}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+If\+Synchoronisation} Camera\+\_\+\+Params\+::interface\+Sync}\label{struct_camera___params_ad32edd6c21bc9952deeb917034ca0f45}
+Camera stop configuration \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!stop\+Config@{stop\+Config}}
+\index{stop\+Config@{stop\+Config}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{stop\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Stop\+Capture\+Config} Camera\+\_\+\+Params\+::stop\+Config}\label{struct_camera___params_a89b5c7168ff120da5fc7461fb71499aa}
+Camera start configuration \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!start\+Config@{start\+Config}}
+\index{start\+Config@{start\+Config}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{start\+Config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Start\+Capture\+Config} Camera\+\_\+\+Params\+::start\+Config}\label{struct_camera___params_aa754cc494ff462b01a7ed647742b15af}
+Timeout for capture semaphore \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!capture\+Timeout@{capture\+Timeout}}
+\index{capture\+Timeout@{capture\+Timeout}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{capture\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+\_\+\+Params\+::capture\+Timeout}\label{struct_camera___params_a7a66a4013966579c58e2d02ad788d6ce}
+Pointer to capture callback \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!capture\+Callback@{capture\+Callback}}
+\index{capture\+Callback@{capture\+Callback}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{capture\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Callback} Camera\+\_\+\+Params\+::capture\+Callback}\label{struct_camera___params_a2bc1db1262e09919a7711301cd784fda}
+Custom argument used by driver implementation \index{Camera\+\_\+\+Params@{Camera\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!Camera\+\_\+\+Params@{Camera\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Camera\+\_\+\+Params\+::custom}\label{struct_camera___params_a35814b7c3aea7ecb153cbe05371cad27}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_8h}{Camera.\+h}\end{DoxyCompactItemize}

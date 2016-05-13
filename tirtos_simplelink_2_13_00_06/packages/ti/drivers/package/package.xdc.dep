@@ -1,0 +1,134 @@
+clean::
+	$(RM) package/ti.drivers.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_drivers.java
+	$(RM) package/ti_drivers.class
+	$(RM) package/package_ti.drivers.c
+	$(RM) package/package.defs.h
+	$(RM) package/internal/EMAC.xdc.h
+	$(RM) package/internal/GPIO.xdc.h
+	$(RM) package/internal/I2C.xdc.h
+	$(RM) package/internal/Power.xdc.h
+	$(RM) package/internal/PWM.xdc.h
+	$(RM) package/internal/SDSPI.xdc.h
+	$(RM) package/internal/SPI.xdc.h
+	$(RM) package/internal/UART.xdc.h
+	$(RM) package/internal/USBMSCHFatFs.xdc.h
+	$(RM) package/internal/Watchdog.xdc.h
+	$(RM) package/internal/WiFi.xdc.h
+	$(RM) package/ti.drivers.ccs
+
+.interfaces: package/ti.drivers.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_drivers.java package/package_ti.drivers.c package/package.defs.h package/internal/EMAC.xdc.h package/internal/GPIO.xdc.h package/internal/I2C.xdc.h package/internal/Power.xdc.h package/internal/PWM.xdc.h package/internal/SDSPI.xdc.h package/internal/SPI.xdc.h package/internal/UART.xdc.h package/internal/USBMSCHFatFs.xdc.h package/internal/Watchdog.xdc.h package/internal/WiFi.xdc.h package/ti.drivers.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: EMAC.xdc GPIO.xdc I2C.xdc Power.xdc PWM.xdc SDSPI.xdc SPI.xdc UART.xdc USBMSCHFatFs.xdc Watchdog.xdc WiFi.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+EMAC.xs:
+package/package.xdc.inc: EMAC.xs
+GPIO.xs:
+package/package.xdc.inc: GPIO.xs
+I2C.xs:
+package/package.xdc.inc: I2C.xs
+Power.xs:
+package/package.xdc.inc: Power.xs
+PWM.xs:
+package/package.xdc.inc: PWM.xs
+SDSPI.xs:
+package/package.xdc.inc: SDSPI.xs
+SPI.xs:
+package/package.xdc.inc: SPI.xs
+UART.xs:
+package/package.xdc.inc: UART.xs
+USBMSCHFatFs.xs:
+package/package.xdc.inc: USBMSCHFatFs.xs
+Watchdog.xs:
+package/package.xdc.inc: Watchdog.xs
+WiFi.xs:
+package/package.xdc.inc: WiFi.xs
+
+# schema update dependencies
+package/package.xdc.inc: EMAC.xdc
+package/package.xdc.inc: GPIO.xdc
+package/package.xdc.inc: I2C.xdc
+package/package.xdc.inc: Power.xdc
+package/package.xdc.inc: PWM.xdc
+package/package.xdc.inc: SDSPI.xdc
+package/package.xdc.inc: SPI.xdc
+package/package.xdc.inc: UART.xdc
+package/package.xdc.inc: USBMSCHFatFs.xdc
+package/package.xdc.inc: Watchdog.xdc
+package/package.xdc.inc: WiFi.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Swi.xdc
+ti/sysbios/knl/Swi.xdc:
+vpath ti/sysbios/knl/Swi.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Queue.xdc
+ti/sysbios/knl/Queue.xdc:
+vpath ti/sysbios/knl/Queue.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/hal/Hwi.xdc
+ti/sysbios/hal/Hwi.xdc:
+vpath ti/sysbios/hal/Hwi.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IHwi.xdc
+ti/sysbios/interfaces/IHwi.xdc:
+vpath ti/sysbios/interfaces/IHwi.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: package/internal/EMAC.xdc.h
+package/internal/EMAC.xdc.h:
+package/package.xdc.inc: package/internal/GPIO.xdc.h
+package/internal/GPIO.xdc.h:
+package/package.xdc.inc: package/internal/I2C.xdc.h
+package/internal/I2C.xdc.h:
+package/package.xdc.inc: package/internal/Power.xdc.h
+package/internal/Power.xdc.h:
+package/package.xdc.inc: package/internal/PWM.xdc.h
+package/internal/PWM.xdc.h:
+package/package.xdc.inc: package/internal/SDSPI.xdc.h
+package/internal/SDSPI.xdc.h:
+package/package.xdc.inc: package/internal/SPI.xdc.h
+package/internal/SPI.xdc.h:
+package/package.xdc.inc: package/internal/UART.xdc.h
+package/internal/UART.xdc.h:
+package/package.xdc.inc: package/internal/USBMSCHFatFs.xdc.h
+package/internal/USBMSCHFatFs.xdc.h:
+package/package.xdc.inc: package/internal/Watchdog.xdc.h
+package/internal/Watchdog.xdc.h:
+package/package.xdc.inc: package/internal/WiFi.xdc.h
+package/internal/WiFi.xdc.h:
+

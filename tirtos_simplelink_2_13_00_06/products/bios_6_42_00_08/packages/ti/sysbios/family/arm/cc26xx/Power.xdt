@@ -1,0 +1,274 @@
+%%{
+/*
+ * Copyright (c) 2014-2015, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+%%}
+%/*
+% *  ======== Power.xdt ========
+% */
+%var Power = xdc.module("ti.sysbios.family.arm.cc26xx.Power");
+%var Boot = xdc.module("ti.sysbios.family.arm.cc26xx.Boot");
+
+#include <ti/sysbios/knl/Clock.h>
+#include <ti/sysbios/hal/Hwi.h>
+#include <ti/sysbios/family/arm/cc26xx/Power.h>
+#include <ti/sysbios/family/arm/cc26xx/PowerCC2650.h>
+
+#include <inc/hw_types.h>
+#include <inc/hw_memmap.h>
+#include <inc/hw_rfc_pwr.h>
+#include <driverlib/prcm.h>
+#include <driverlib/osc.h>
+#include <driverlib/sys_ctrl.h>
+#include <driverlib/rfc.h>
+
+/*
+ *  Resource database records.  Each record contains:
+ *    { flags, flags2 , driverlibID}
+ *
+ *  flags  = type : parent1
+ *  flags2 = parent2
+ */
+const ti_sysbios_family_arm_cc26xx_Power_ResourceRecord
+    ti_sysbios_family_arm_cc26xx_Power_db[RESOURCE_END] =
+{
+/*  type       parent1      parent2      driverlibID
+    ----      ----------   --------- ------------------- */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_TIMER0 },/* PERIPH_GPT0 */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_TIMER1 },/* PERIPH_GPT1 */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_TIMER2 },/* PERIPH_GPT2 */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_TIMER3 },/* PERIPH_GPT3 */
+ { PERIPH  | DOMAIN_SERIAL, NOPARENT, PRCM_PERIPH_SSI0 },  /* PERIPH_SSI0 */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_SSI1 },  /* PERIPH_SSI1 */
+ { PERIPH  | DOMAIN_SERIAL, NOPARENT, PRCM_PERIPH_UART0 }, /* PERIPH_UART0 */
+ { PERIPH  | DOMAIN_SERIAL, NOPARENT, PRCM_PERIPH_I2C0 },  /* PERIPH_I2C0 */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_TRNG },  /* PERIPH_TRNG */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_GPIO },  /* PERIPH_GPIO */
+ { PERIPH  | DOMAIN_PERIPH, DOMAIN_SYSBUS, PRCM_PERIPH_UDMA }, /* PERIPH_UDMA */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_CRYPTO },/* PERIPH_CRYPTO */
+ { PERIPH  | DOMAIN_PERIPH, NOPARENT, PRCM_PERIPH_I2S },   /* PERIPH_I2S */
+ { SPECIAL | DOMAIN_RFCORE, NOPARENT, 0 },                 /* PERIPH_RFCORE */
+ { SPECIAL | NOPARENT,      NOPARENT, 1 },                 /* XOSC_HF */
+ { DOMAIN  | NOPARENT,      NOPARENT, PRCM_DOMAIN_PERIPH },/* DOMAIN_PERIPH */
+ { DOMAIN  | NOPARENT,      NOPARENT, PRCM_DOMAIN_SERIAL },/* DOMAIN_SERIAL */
+ { DOMAIN  | NOPARENT,      NOPARENT, PRCM_DOMAIN_RFCORE },/* DOMAIN_RFCORE */
+ { SPECIAL | NOPARENT,      NOPARENT, 2 }                  /* DOMAIN_SYSBUS */
+};
+
+volatile UInt8 ti_sysbios_family_arm_cc26xx_Power_refCount[RESOURCE_END] =
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+/* careful: bitmask values index to this array, be sure they are contiguous */
+volatile UInt8 ti_sysbios_family_arm_cc26xx_Power_constraintCounts[
+    ti_sysbios_family_arm_cc26xx_Power_NUMCONSTRAINTS] =
+    { 0, 0, 0, 0, 0 };
+
+extern struct ti_sysbios_family_arm_cc26xx_Power_Module_State__ ti_sysbios_family_arm_cc26xx_Power_Module__state__V;
+
+/* special dependency functions */
+UInt ti_sysbios_family_arm_cc26xx_Power_RFCORECLKS (UInt action);
+UInt ti_sysbios_family_arm_cc26xx_Power_XOSC_HF (UInt action);
+UInt ti_sysbios_family_arm_cc26xx_Power_NOP (UInt action);
+Void ti_sysbios_family_arm_cc26xx_Power_XOSC_HF_clockFunc (UArg arg0);
+
+/*
+ *  ======== ti_sysbios_family_arm_cc26xx_Power_RFCORECLKS ========
+ *
+ */
+UInt ti_sysbios_family_arm_cc26xx_Power_RFCORECLKS (UInt action)
+{
+    if (action == ENABLE) {
+        RFCClockEnable();
+    }
+    else {
+        RFCClockDisable();
+    }
+    return (0);
+}
+
+/*
+ *  ======== ti_sysbios_family_arm_cc26xx_Power_XOSC_HF_clockFunc ========
+ */
+Void ti_sysbios_family_arm_cc26xx_Power_XOSC_HF_clockFunc(UArg arg0)
+{
+    Bool readyToCal;
+    UInt32 timeout;
+    UInt key;
+
+    key = ti_sysbios_hal_Hwi_disable();
+
+    /* if pending switch has already been made, just send out notifications */
+    if (ti_sysbios_family_arm_cc26xx_Power_Module__state__V.xoscPending ==
+        FALSE) {
+
+        if (ti_sysbios_family_arm_cc26xx_Power_calibrateRCOSC) {
+            /* initiate RCOSC calibration */
+            readyToCal =
+                ti_sysbios_family_arm_cc26xx_Power_initiateCalibration();
+        }
+
+        /* notify clients that were waiting for a switch notification */
+        ti_sysbios_family_arm_cc26xx_Power_notify(
+            ti_sysbios_family_arm_cc26xx_Power_XOSC_HF_SWITCHED);
+
+        /* if ready to start first cal measurment, do it now */
+        if (ti_sysbios_family_arm_cc26xx_Power_calibrateRCOSC) {
+            if (readyToCal == TRUE) {
+                ti_sysbios_family_arm_cc26xx_Power_startFirstMeasurement();
+            }
+        }
+    }
+
+    /* else, if HF ready to switch, do it now ... */
+    else if (OSCHF_AttemptToSwitchToXosc()) {
+
+        ti_sysbios_family_arm_cc26xx_Power_Module__state__V.xoscPending = FALSE;
+
+        if (ti_sysbios_family_arm_cc26xx_Power_calibrateRCOSC) {
+            /* initiate RCOSC calibration */
+            readyToCal =
+                ti_sysbios_family_arm_cc26xx_Power_initiateCalibration();
+        }
+
+        /* now notify clients that were waiting for a switch notification */
+        ti_sysbios_family_arm_cc26xx_Power_notify(
+            ti_sysbios_family_arm_cc26xx_Power_XOSC_HF_SWITCHED);
+
+        /* if ready to start first cal measurment, do it now */
+        if (ti_sysbios_family_arm_cc26xx_Power_calibrateRCOSC) {
+            if (readyToCal == TRUE) {
+                ti_sysbios_family_arm_cc26xx_Power_startFirstMeasurement();
+            }
+        }
+    }
+
+    /* else, wait some more, then see if can switch ... */
+    else {
+        /* calculate wait timeout in units of ticks */
+        timeout = ti_sysbios_family_arm_cc26xx_Power_retryWaitXOSC_HF /
+            ti_sysbios_knl_Clock_tickPeriod;
+        if (timeout == 0) {
+            timeout = 1;   /* wait at least 1 tick */
+        }
+
+        /* re-start Clock object with retry timeout */
+        ti_sysbios_knl_Clock_setTimeout(
+            ti_sysbios_family_arm_cc26xx_Power_Module_State_xoscClockObj(),
+            timeout);
+        ti_sysbios_knl_Clock_start(
+            ti_sysbios_family_arm_cc26xx_Power_Module_State_xoscClockObj());
+    }
+
+    ti_sysbios_hal_Hwi_restore(key);
+}
+
+/*
+ *  ======== ti_sysbios_family_arm_cc26xx_Power_XOSC_HF ========
+ */
+UInt ti_sysbios_family_arm_cc26xx_Power_XOSC_HF (UInt action)
+{
+    UInt32 timeout;
+
+    if (action == ENABLE) {
+        if (OSCClockSourceGet(OSC_SRC_CLK_HF) != OSC_XOSC_HF) {
+            OSCHF_TurnOnXosc();
+
+            ti_sysbios_family_arm_cc26xx_Power_Module__state__V.xoscPending =
+                TRUE;
+
+            /* calculate wait timeout in units of ticks */
+            timeout = ti_sysbios_family_arm_cc26xx_Power_initialWaitXOSC_HF /
+                ti_sysbios_knl_Clock_tickPeriod;
+            if (timeout == 0) {
+                timeout = 1;   /* wait at least 1 tick */
+            }
+
+            /* start Clock object with initial timeout */
+            ti_sysbios_knl_Clock_stop(
+                ti_sysbios_family_arm_cc26xx_Power_Module_State_xoscClockObj());
+            ti_sysbios_knl_Clock_setTimeout(
+                ti_sysbios_family_arm_cc26xx_Power_Module_State_xoscClockObj(),
+                timeout);
+            ti_sysbios_knl_Clock_start(
+                ti_sysbios_family_arm_cc26xx_Power_Module_State_xoscClockObj());
+        }
+    }
+
+    /* when release XOSC_HF, auto switch to RCOSC_HF */
+    else {
+        OSCHF_SwitchToRcOscTurnOffXosc();
+    }
+    return (0);
+}
+
+/*
+ *  ======== ti_sysbios_family_arm_cc26xx_Power_isDependencyActive ========
+ */
+Bool ti_sysbios_family_arm_cc26xx_Power_isDependencyActive (Power_Resource
+    resourceID)
+{
+    Bool status = TRUE;
+
+    /* check if the special XOSC_HF resource ...*/
+    if(resourceID == XOSC_HF) {
+
+        /* check to see if XOSC_HF is the active source */
+        if(OSCClockSourceGet(OSC_SRC_CLK_HF) != OSC_XOSC_HF) {
+            status = FALSE;
+        }
+    }
+
+    /* else, all other resources ... */
+    else {
+
+       /* resource is active if dependency count != 0 */
+        if(ti_sysbios_family_arm_cc26xx_Power_refCount[resourceID] == 0) {
+            status = FALSE;
+        }
+    }
+
+    return (status);
+}
+
+/*
+ *  ======== ti_sysbios_family_arm_cc26xx_Power_NOP (UInt action) ========
+ */
+UInt ti_sysbios_family_arm_cc26xx_Power_NOP (UInt action)
+{
+    return (0);
+}
+
+Fxn ti_sysbios_family_arm_cc26xx_Power_resourceHandlers[3] =
+{
+    (Fxn) ti_sysbios_family_arm_cc26xx_Power_RFCORECLKS,
+    (Fxn) ti_sysbios_family_arm_cc26xx_Power_XOSC_HF,
+    (Fxn) ti_sysbios_family_arm_cc26xx_Power_NOP
+};

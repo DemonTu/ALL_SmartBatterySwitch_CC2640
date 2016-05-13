@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.sysbios.posix" version="1, 0, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.sysbios.posix.c"/>
+        <srcFile name="pthread.c"/>
+        <srcFile name="pthread_barrier.c"/>
+        <srcFile name="pthread_cond.c"/>
+        <srcFile name="pthread_mutex.c"/>
+        <srcFile name="pthread_rwlock.c"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.posix.aem4.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/package/package_ti.sysbios.posix.oem4.dep" src="package/package_ti.sysbios.posix.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread.oem4.dep" src="pthread.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_barrier.oem4.dep" src="pthread_barrier.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_cond.oem4.dep" src="pthread_cond.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_mutex.oem4.dep" src="pthread_mutex.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_rwlock.oem4.dep" src="pthread_rwlock.c"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.posix.am4g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/package/package_ti.sysbios.posix.om4g.dep" src="package/package_ti.sysbios.posix.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread.om4g.dep" src="pthread.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_barrier.om4g.dep" src="pthread_barrier.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_cond.om4g.dep" src="pthread_cond.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_mutex.om4g.dep" src="pthread_mutex.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_rwlock.om4g.dep" src="pthread_rwlock.c"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.posix.arm4.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/package/package_ti.sysbios.posix.orm4.dep" src="package/package_ti.sysbios.posix.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread.orm4.dep" src="pthread.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_barrier.orm4.dep" src="pthread_barrier.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_cond.orm4.dep" src="pthread_cond.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_mutex.orm4.dep" src="pthread_mutex.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.posix/pthread_rwlock.orm4.dep" src="pthread_rwlock.c"/>
+        <srcFile name="package/rel/ti_sysbios_posix.tar.dep" src="package/rel/ti_sysbios_posix.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M4"
+            version="ti.targets.arm.elf.M4{1,0,5.2,2"
+            rawVersion="5.2.2"
+            platform="ti.platforms.stellaris:LM4FSXLH5BB:1"
+            isa="v7M4"
+            suffix="em4"
+            rootDir="/db/vendors/ti/arm/5.2.2/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M4"
+            version="gnu.targets.arm.M4{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:LM4F232H5QD"
+            isa="v7M4"
+            suffix="m4g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="iar.targets.arm.M4"
+            version="iar.targets.arm.M4{1,0,7.40,2"
+            rawVersion="7.40.2.18"
+            platform="ti.platforms.tiva:LM4F120H5QR:1"
+            isa="v7M4"
+            suffix="rm4"
+            rootDir="/db/vendors/iar/arm/7.40.1a/Linux"
+            os="undefined"
+            rts="iar.targets.arm.rts">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/sysbios/debug/ti.sysbios.posix"
+        pname="lib/sysbios/debug/ti.sysbios.posix.aem4"
+        profile="debug"
+        target="ti.targets.arm.elf.M4"/>
+    <library name="lib/sysbios/debug/ti.sysbios.posix"
+        pname="lib/sysbios/debug/ti.sysbios.posix.am4g"
+        profile="debug"
+        target="gnu.targets.arm.M4"/>
+    <library name="lib/sysbios/debug/ti.sysbios.posix"
+        pname="lib/sysbios/debug/ti.sysbios.posix.arm4"
+        profile="debug"
+        target="iar.targets.arm.M4"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_sysbios_posix"
+        pname="ti_sysbios_posix.tar"
+        label="default"
+        relScript="ti/sysbios/libFilter.xs">
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xdc"/>
+        <file name="package.bld"/>
+        <file name="pthread.c"/>
+        <file name="pthread_barrier.c"/>
+        <file name="pthread_cond.c"/>
+        <file name="pthread_mutex.c"/>
+        <file name="pthread_rwlock.c"/>
+        <file name="pthread.h"/>
+        <file name="_pthread.h"/>
+        <file name="_pthread_error.h"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/sysbios/debug/ti.sysbios.posix.aem4"/>
+        <file name="package/package_ti.sysbios.posix.c"/>
+        <file name="lib/sysbios/debug/ti.sysbios.posix.am4g"/>
+        <file name="lib/sysbios/debug/ti.sysbios.posix.arm4"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

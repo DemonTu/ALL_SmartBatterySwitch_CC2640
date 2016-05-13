@@ -1,0 +1,6 @@
+package/lib/lib/drivers_ccware/SDSPI.oem4: SDSPI.c SDSPI.h /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h /db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h /db/vendors/ti/arm/5.2.2/Linux/include/linkage.h 
+SDSPI.c:
+SDSPI.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/linkage.h:

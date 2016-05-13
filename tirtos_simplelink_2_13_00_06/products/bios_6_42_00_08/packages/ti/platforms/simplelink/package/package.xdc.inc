@@ -1,0 +1,14 @@
+package.xdc
+Platform.xdc
+Platform.xs
+Platform.xdt
+package/ti.platforms.simplelink.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/ti_platforms_simplelink.java
+package/ti_platforms_simplelink.class
+package/package_ti.platforms.simplelink.c
+package/package.defs.h
+package/ti.platforms.simplelink.ccs

@@ -1,0 +1,97 @@
+\subsection{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object Struct Reference}
+\label{struct_camera_c_c3200_d_m_a___object}\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+
+
+Camera\+C\+C3200\+D\+M\+A Object.  
+
+
+
+
+{\ttfamily \#include $<$Camera\+C\+C3200\+D\+M\+A.\+h$>$}
+
+
+
+Collaboration diagram for Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{struct_camera_c_c3200_d_m_a___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{struct_camera_c_c3200_d_m_a___object_a2e99e02c8def5c2896e44b15a2f4f64f}{opened}
+\item 
+\hyperlink{_camera_8h_a74c8a8a13eebddea16c33c726d096ba8}{Camera\+\_\+\+Capture\+Mode} \hyperlink{struct_camera_c_c3200_d_m_a___object_aaa0838ac44e51d70def41781c7729532}{operation\+Mode}
+\item 
+\hyperlink{_camera_8h_ad70b3ced1706386d1a093a0bf659bd87}{Camera\+\_\+\+Callback} \hyperlink{struct_camera_c_c3200_d_m_a___object_a1c312487767a09f76b15980edd37376c}{capture\+Callback}
+\item 
+uint32\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___object_a3b5a430c0b49ac9892048855e27d83bf}{capture\+Timeout}
+\item 
+void $\ast$ \hyperlink{struct_camera_c_c3200_d_m_a___object_a56ea7a063ed0e8cf8afa0afd6f038755}{capture\+Buf}
+\item 
+size\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___object_ae41c48404a17a22275174828a0e9c716}{bufferlength}
+\item 
+size\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___object_ad39831496e4b0d2524a3330eb61e03d9}{frame\+Length}
+\item 
+bool \hyperlink{struct_camera_c_c3200_d_m_a___object_a4689867d47ffb91755cb1ee8d5c398bb}{camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode}
+\item 
+size\+\_\+t \hyperlink{struct_camera_c_c3200_d_m_a___object_a02df95c2e304c158c4b0546514fd0197}{camera\+D\+M\+Ax\+Intr\+Rcvd}
+\item 
+bool \hyperlink{struct_camera_c_c3200_d_m_a___object_a6f3345ee783c717458d5d6023b317507}{in\+Use}
+\item 
+\hyperlink{_semaphore_p_8h_a7f34865f33e666455692544e5f12d1f2}{Semaphore\+P\+\_\+\+Handle} \hyperlink{struct_camera_c_c3200_d_m_a___object_a88fd58c7a1d952724eac0378636955a7}{capture\+Sem}
+\item 
+\hyperlink{_hwi_p_8h_a7dd325ff62af296374efc6d317f5e368}{Hwi\+P\+\_\+\+Handle} \hyperlink{struct_camera_c_c3200_d_m_a___object_a1fa67c202c12cf460cfc3006024365cb}{hwi\+Handle}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Camera\+C\+C3200\+D\+M\+A Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Field Documentation}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!opened@{opened}}
+\index{opened@{opened}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{opened}]{\setlength{\rightskip}{0pt plus 5cm}bool Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::opened}\label{struct_camera_c_c3200_d_m_a___object_a2e99e02c8def5c2896e44b15a2f4f64f}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!operation\+Mode@{operation\+Mode}}
+\index{operation\+Mode@{operation\+Mode}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{operation\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Capture\+Mode} Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::operation\+Mode}\label{struct_camera_c_c3200_d_m_a___object_aaa0838ac44e51d70def41781c7729532}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!capture\+Callback@{capture\+Callback}}
+\index{capture\+Callback@{capture\+Callback}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{capture\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera\+\_\+\+Callback} Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::capture\+Callback}\label{struct_camera_c_c3200_d_m_a___object_a1c312487767a09f76b15980edd37376c}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!capture\+Timeout@{capture\+Timeout}}
+\index{capture\+Timeout@{capture\+Timeout}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{capture\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::capture\+Timeout}\label{struct_camera_c_c3200_d_m_a___object_a3b5a430c0b49ac9892048855e27d83bf}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!capture\+Buf@{capture\+Buf}}
+\index{capture\+Buf@{capture\+Buf}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{capture\+Buf}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::capture\+Buf}\label{struct_camera_c_c3200_d_m_a___object_a56ea7a063ed0e8cf8afa0afd6f038755}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!bufferlength@{bufferlength}}
+\index{bufferlength@{bufferlength}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{bufferlength}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::bufferlength}\label{struct_camera_c_c3200_d_m_a___object_ae41c48404a17a22275174828a0e9c716}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!frame\+Length@{frame\+Length}}
+\index{frame\+Length@{frame\+Length}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{frame\+Length}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::frame\+Length}\label{struct_camera_c_c3200_d_m_a___object_ad39831496e4b0d2524a3330eb61e03d9}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode@{camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode}}
+\index{camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode@{camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}bool Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::camera\+D\+M\+A\+\_\+\+Ping\+Pong\+Mode}\label{struct_camera_c_c3200_d_m_a___object_a4689867d47ffb91755cb1ee8d5c398bb}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!camera\+D\+M\+Ax\+Intr\+Rcvd@{camera\+D\+M\+Ax\+Intr\+Rcvd}}
+\index{camera\+D\+M\+Ax\+Intr\+Rcvd@{camera\+D\+M\+Ax\+Intr\+Rcvd}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{camera\+D\+M\+Ax\+Intr\+Rcvd}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::camera\+D\+M\+Ax\+Intr\+Rcvd}\label{struct_camera_c_c3200_d_m_a___object_a02df95c2e304c158c4b0546514fd0197}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!in\+Use@{in\+Use}}
+\index{in\+Use@{in\+Use}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{in\+Use}]{\setlength{\rightskip}{0pt plus 5cm}bool Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::in\+Use}\label{struct_camera_c_c3200_d_m_a___object_a6f3345ee783c717458d5d6023b317507}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!capture\+Sem@{capture\+Sem}}
+\index{capture\+Sem@{capture\+Sem}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{capture\+Sem}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Semaphore\+P\+\_\+\+Handle} Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::capture\+Sem}\label{struct_camera_c_c3200_d_m_a___object_a88fd58c7a1d952724eac0378636955a7}
+\index{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}!hwi\+Handle@{hwi\+Handle}}
+\index{hwi\+Handle@{hwi\+Handle}!Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object@{Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object}}
+\paragraph[{hwi\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hwi\+P\+\_\+\+Handle} Camera\+C\+C3200\+D\+M\+A\+\_\+\+Object\+::hwi\+Handle}\label{struct_camera_c_c3200_d_m_a___object_a1fa67c202c12cf460cfc3006024365cb}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_c_c3200_d_m_a_8h}{Camera\+C\+C3200\+D\+M\+A.\+h}\end{DoxyCompactItemize}

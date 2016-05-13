@@ -1,0 +1,112 @@
+\subsection{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_d_s_p_i_c_c3200___h_w_attrs}\index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+
+
+S\+D\+S\+P\+I\+C\+C3200 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$S\+D\+S\+P\+I\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_ab719c737801cacc1be5f4d3551553fa4}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a5018400a617d0bbdcfcb1fc1361389a8}{spi\+P\+R\+C\+M}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a3e9b0ffd41aa203b0ff23af0e83670e3}{cs\+G\+P\+I\+O\+Base}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a5adaae558104d9339719441e995661f0}{cs\+G\+P\+I\+O\+Pin}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a74e44f74a230a8b73709be421469aaaa}{tx\+G\+P\+I\+O\+Base}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a9428fc65d7331abeedad003fbd53d662}{tx\+G\+P\+I\+O\+Pin}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a6bcfd4de926b3be4315087cf536f8b1b}{tx\+G\+P\+I\+O\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_a3790f0017a294cda85b96db7e0c0cded}{tx\+S\+P\+I\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_c_c3200___h_w_attrs_ac74ef997109f15ab77d18fac98bbf939}{tx\+Pack\+Pin}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+D\+S\+P\+I\+C\+C3200 Hardware attributes. 
+
+The S\+D\+S\+P\+I\+C\+C3200 configuration structure describes to the S\+D\+S\+P\+I\+C\+C3200 driver implementation hardware specifies on which S\+P\+I peripheral, G\+P\+I\+O Pins and Ports are to be used.
+
+The S\+D\+S\+P\+I\+C\+C3200 driver uses this information to\+:
+\begin{DoxyItemize}
+\item configure and reconfigure specific ports/pins to initialize the S\+D Card for S\+P\+I mode
+\item identify which S\+P\+I peripheral is used for data communications
+\item identify which G\+P\+I\+O port and pin is used for the S\+P\+I chip select mechanism
+\item identify which G\+P\+I\+O port and pin is concurrently located on the S\+P\+I\textquotesingle{}s M\+O\+S\+I (T\+X) pin.
+\end{DoxyItemize}
+
+\begin{DoxyRemark}{Remarks}
+To initialize the S\+D Card into S\+P\+I mode, the S\+D\+S\+P\+I driver changes the S\+P\+I\textquotesingle{}s M\+O\+S\+I pin into a G\+P\+I\+O pin so it can kept driven H\+I\+G\+H while the S\+P\+I S\+C\+K pin can toggle. After the initialization, the T\+X pin is reverted back to the S\+P\+I M\+O\+S\+I mode.
+\end{DoxyRemark}
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\item driverlib/gpio.\+h
+\item driverlib/pin.\+h
+\item driverlib/prcm.\+h
+\end{DoxyItemize}
+
+An example configuration structure could look as the following\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SDSPICC3200_HWAttrs sdspiCC3200HWattrs = \{
+    \{
+          GSPI\_BASE,      \textcolor{comment}{// SSI Peripheral's base address}
+          PRCM\_GSPI,      \textcolor{comment}{// SPI PRCM peripheral number}
+
+          GPIOA0\_BASE,    \textcolor{comment}{// CS GPIO base}
+          GPIO\_PIN\_7,     \textcolor{comment}{// CS GPIO pin number}
+
+          GPIOA2\_BASE,    \textcolor{comment}{// GPIO base addr when using MOSI as GPIO}
+          GPIO\_PIN\_0,     \textcolor{comment}{// GPIO pin number when using MOSI as GPIO}
+          PIN\_MODE\_0,     \textcolor{comment}{// GPIO pin mode to use MOSI as GPIO}
+          PIN\_MODE\_7,     \textcolor{comment}{// Pin mode to use MOSI}
+          PIN\_07,         \textcolor{comment}{// Package pin number}
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_ab719c737801cacc1be5f4d3551553fa4}
+$<$ S\+P\+I Peripheral base address \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!spi\+P\+R\+C\+M@{spi\+P\+R\+C\+M}}
+\index{spi\+P\+R\+C\+M@{spi\+P\+R\+C\+M}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{spi\+P\+R\+C\+M}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::spi\+P\+R\+C\+M}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a5018400a617d0bbdcfcb1fc1361389a8}
+S\+P\+I P\+R\+C\+M peripheral number C\+S G\+P\+I\+O base \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!cs\+G\+P\+I\+O\+Base@{cs\+G\+P\+I\+O\+Base}}
+\index{cs\+G\+P\+I\+O\+Base@{cs\+G\+P\+I\+O\+Base}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{cs\+G\+P\+I\+O\+Base}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::cs\+G\+P\+I\+O\+Base}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a3e9b0ffd41aa203b0ff23af0e83670e3}
+C\+S G\+P\+I\+O pin number \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!cs\+G\+P\+I\+O\+Pin@{cs\+G\+P\+I\+O\+Pin}}
+\index{cs\+G\+P\+I\+O\+Pin@{cs\+G\+P\+I\+O\+Pin}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{cs\+G\+P\+I\+O\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::cs\+G\+P\+I\+O\+Pin}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a5adaae558104d9339719441e995661f0}
+G\+P\+I\+O base addr when using M\+O\+S\+I as G\+P\+I\+O \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!tx\+G\+P\+I\+O\+Base@{tx\+G\+P\+I\+O\+Base}}
+\index{tx\+G\+P\+I\+O\+Base@{tx\+G\+P\+I\+O\+Base}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+G\+P\+I\+O\+Base}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::tx\+G\+P\+I\+O\+Base}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a74e44f74a230a8b73709be421469aaaa}
+G\+P\+I\+O pin number when using M\+O\+S\+I as G\+P\+I\+O \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!tx\+G\+P\+I\+O\+Pin@{tx\+G\+P\+I\+O\+Pin}}
+\index{tx\+G\+P\+I\+O\+Pin@{tx\+G\+P\+I\+O\+Pin}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+G\+P\+I\+O\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::tx\+G\+P\+I\+O\+Pin}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a9428fc65d7331abeedad003fbd53d662}
+G\+P\+I\+O pin mode to use M\+O\+S\+I as G\+P\+I\+O \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!tx\+G\+P\+I\+O\+Mode@{tx\+G\+P\+I\+O\+Mode}}
+\index{tx\+G\+P\+I\+O\+Mode@{tx\+G\+P\+I\+O\+Mode}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+G\+P\+I\+O\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::tx\+G\+P\+I\+O\+Mode}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a6bcfd4de926b3be4315087cf536f8b1b}
+Pin mode to use M\+O\+S\+I \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!tx\+S\+P\+I\+Mode@{tx\+S\+P\+I\+Mode}}
+\index{tx\+S\+P\+I\+Mode@{tx\+S\+P\+I\+Mode}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+S\+P\+I\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::tx\+S\+P\+I\+Mode}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_a3790f0017a294cda85b96db7e0c0cded}
+Package pin number \index{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}!tx\+Pack\+Pin@{tx\+Pack\+Pin}}
+\index{tx\+Pack\+Pin@{tx\+Pack\+Pin}!S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Pack\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+C\+C3200\+\_\+\+H\+W\+Attrs\+::tx\+Pack\+Pin}\label{struct_s_d_s_p_i_c_c3200___h_w_attrs_ac74ef997109f15ab77d18fac98bbf939}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_d_s_p_i_c_c3200_8h}{S\+D\+S\+P\+I\+C\+C3200.\+h}\end{DoxyCompactItemize}

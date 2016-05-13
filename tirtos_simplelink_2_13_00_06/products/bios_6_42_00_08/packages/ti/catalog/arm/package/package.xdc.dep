@@ -1,0 +1,168 @@
+clean::
+	$(RM) package/ti.catalog.arm.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_catalog_arm.java
+	$(RM) package/ti_catalog_arm.class
+	$(RM) package/package_ti.catalog.arm.c
+	$(RM) package/package.defs.h
+	$(RM) package/ti.catalog.arm.ccs
+
+.interfaces: package/ti.catalog.arm.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_catalog_arm.java package/package_ti.catalog.arm.c package/package.defs.h package/ti.catalog.arm.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: LM3S9792.xdc LM3S9790.xdc LM3S5791.xdc LM3S2793.xdc LM3S9B96.xdc LM3S9B95.xdc LM3S9B92.xdc LM3S5B91.xdc LM3S9B90.xdc LM3S2B93.xdc LM3S8962.xdc TMS470R10.xdc TMS320C5912.xdc TMS320C1030.xdc TMS320CDM6446.xdc TMS320CDM6467.xdc TMS320DM355.xdc TMS320DM357.xdc TMS320DM365.xdc TMS320CDM510.xdc OMAP2430.xdc OMAP2431.xdc OMAP2530.xdc OMAP2531.xdc OMAP3403.xdc OMAP3405.xdc OMAP3503.xdc OMAP3505.xdc OMAP3515.xdc OMAP3517.xdc OMAP3425.xdc OMAP3525.xdc TMS320C3430.xdc OMAP3530.xdc TMS320DA828.xdc TMS320DA830.xdc OMAPL137.xdc CortexM3.xdc TMS570PSF762.xdc TMS570LS20216.xdc TMS320DA840.xdc TMS320DA850.xdc AM1705.xdc AM1707.xdc AM1806.xdc AM1808.xdc OMAPL108.xdc OMAPL118.xdc OMAPL138.xdc TMS320CDM730.xdc TMS320CDM740.xdc TNETV107X.xdc ILM3Sx7xx.xdc ILM3SxBxx.xdc ILM3Sx9xx.xdc IOMAP2x3x.xdc IOMAP3xxx.xdc ITMS320DA8xx.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+ILM3Sx7xx.xs:
+package/package.xdc.inc: ILM3Sx7xx.xs
+ILM3SxBxx.xs:
+package/package.xdc.inc: ILM3SxBxx.xs
+ILM3Sx9xx.xs:
+package/package.xdc.inc: ILM3Sx9xx.xs
+TMS470R10.xs:
+package/package.xdc.inc: TMS470R10.xs
+TMS320C5912.xs:
+package/package.xdc.inc: TMS320C5912.xs
+TMS320C1030.xs:
+package/package.xdc.inc: TMS320C1030.xs
+TMS320CDM6446.xs:
+package/package.xdc.inc: TMS320CDM6446.xs
+TMS320CDM6467.xs:
+package/package.xdc.inc: TMS320CDM6467.xs
+TMS320DM355.xs:
+package/package.xdc.inc: TMS320DM355.xs
+TMS320DM357.xs:
+package/package.xdc.inc: TMS320DM357.xs
+TMS320DM365.xs:
+package/package.xdc.inc: TMS320DM365.xs
+TMS320CDM510.xs:
+package/package.xdc.inc: TMS320CDM510.xs
+IOMAP2x3x.xs:
+package/package.xdc.inc: IOMAP2x3x.xs
+IOMAP3xxx.xs:
+package/package.xdc.inc: IOMAP3xxx.xs
+ITMS320DA8xx.xs:
+package/package.xdc.inc: ITMS320DA8xx.xs
+CortexM3.xs:
+package/package.xdc.inc: CortexM3.xs
+TMS570PSF762.xs:
+package/package.xdc.inc: TMS570PSF762.xs
+TMS570LS20216.xs:
+package/package.xdc.inc: TMS570LS20216.xs
+TMS320CDM730.xs:
+package/package.xdc.inc: TMS320CDM730.xs
+TMS320CDM740.xs:
+package/package.xdc.inc: TMS320CDM740.xs
+TNETV107X.xs:
+package/package.xdc.inc: TNETV107X.xs
+
+# schema update dependencies
+package/package.xdc.inc: LM3S9792.xdc
+package/package.xdc.inc: LM3S9790.xdc
+package/package.xdc.inc: LM3S5791.xdc
+package/package.xdc.inc: LM3S2793.xdc
+package/package.xdc.inc: LM3S9B96.xdc
+package/package.xdc.inc: LM3S9B95.xdc
+package/package.xdc.inc: LM3S9B92.xdc
+package/package.xdc.inc: LM3S5B91.xdc
+package/package.xdc.inc: LM3S9B90.xdc
+package/package.xdc.inc: LM3S2B93.xdc
+package/package.xdc.inc: LM3S8962.xdc
+package/package.xdc.inc: TMS470R10.xdc
+package/package.xdc.inc: TMS320C5912.xdc
+package/package.xdc.inc: TMS320C1030.xdc
+package/package.xdc.inc: TMS320CDM6446.xdc
+package/package.xdc.inc: TMS320CDM6467.xdc
+package/package.xdc.inc: TMS320DM355.xdc
+package/package.xdc.inc: TMS320DM357.xdc
+package/package.xdc.inc: TMS320DM365.xdc
+package/package.xdc.inc: TMS320CDM510.xdc
+package/package.xdc.inc: OMAP2430.xdc
+package/package.xdc.inc: OMAP2431.xdc
+package/package.xdc.inc: OMAP2530.xdc
+package/package.xdc.inc: OMAP2531.xdc
+package/package.xdc.inc: OMAP3403.xdc
+package/package.xdc.inc: OMAP3405.xdc
+package/package.xdc.inc: OMAP3503.xdc
+package/package.xdc.inc: OMAP3505.xdc
+package/package.xdc.inc: OMAP3515.xdc
+package/package.xdc.inc: OMAP3517.xdc
+package/package.xdc.inc: OMAP3425.xdc
+package/package.xdc.inc: OMAP3525.xdc
+package/package.xdc.inc: TMS320C3430.xdc
+package/package.xdc.inc: OMAP3530.xdc
+package/package.xdc.inc: TMS320DA828.xdc
+package/package.xdc.inc: TMS320DA830.xdc
+package/package.xdc.inc: OMAPL137.xdc
+package/package.xdc.inc: CortexM3.xdc
+package/package.xdc.inc: TMS570PSF762.xdc
+package/package.xdc.inc: TMS570LS20216.xdc
+package/package.xdc.inc: TMS320DA840.xdc
+package/package.xdc.inc: TMS320DA850.xdc
+package/package.xdc.inc: AM1705.xdc
+package/package.xdc.inc: AM1707.xdc
+package/package.xdc.inc: AM1806.xdc
+package/package.xdc.inc: AM1808.xdc
+package/package.xdc.inc: OMAPL108.xdc
+package/package.xdc.inc: OMAPL118.xdc
+package/package.xdc.inc: OMAPL138.xdc
+package/package.xdc.inc: TMS320CDM730.xdc
+package/package.xdc.inc: TMS320CDM740.xdc
+package/package.xdc.inc: TNETV107X.xdc
+package/package.xdc.inc: ILM3Sx7xx.xdc
+package/package.xdc.inc: ILM3SxBxx.xdc
+package/package.xdc.inc: ILM3Sx9xx.xdc
+package/package.xdc.inc: IOMAP2x3x.xdc
+package/package.xdc.inc: IOMAP3xxx.xdc
+package/package.xdc.inc: ITMS320DA8xx.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/catalog/ICpuDataSheet.xdc
+ti/catalog/ICpuDataSheet.xdc:
+vpath ti/catalog/ICpuDataSheet.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/ICpuDataSheet.xdc
+xdc/platform/ICpuDataSheet.xdc:
+vpath xdc/platform/ICpuDataSheet.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/IPeripheral.xdc
+xdc/platform/IPeripheral.xdc:
+vpath xdc/platform/IPeripheral.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/catalog/arm/peripherals/timers/Timer.xdc
+ti/catalog/arm/peripherals/timers/Timer.xdc:
+vpath ti/catalog/arm/peripherals/timers/Timer.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/platform/IPlatform.xdc
+xdc/platform/IPlatform.xdc:
+vpath xdc/platform/IPlatform.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+

@@ -1,0 +1,113 @@
+\subsection{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_p_i_tiva_d_m_a___h_w_attrs}\index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+S\+P\+I\+Tiva\+D\+M\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I\+Tiva\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_c_c3200_d_m_a_8h_a4b7e9f3739f6196bed13f9c3c549c96d}{S\+P\+I\+Base\+Addr\+Type} \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_a3264130b8293c92d7556f4288da9e6c3}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_aa3c30677a08faf98b923022684288727}{int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_ab591cf70d0b7c2f4b22d29b78c9fcf7c}{int\+Priority}
+\item 
+uint32\+\_\+t $\ast$ \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_a91c1a3a97cc28823bdfebd0fdc659a26}{scratch\+Buf\+Ptr}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_a9b0752c53408495fb1dfe9358668e023}{default\+Tx\+Buf\+Value}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_af18c0efa81dbb2ec14fe1a77b759d7db}{rx\+Channel\+Index}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_af2833557c6725d3edf86b4f72543cf1c}{tx\+Channel\+Index}
+\item 
+void($\ast$ \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_a6a44a95374c9bf112964309fcffc0778}{channel\+Mapping\+Fxn} )(\hyperlink{_s_p_i_c_c3200_d_m_a_8h_ac69c2f2d8cda29733c058bf8e0233af7}{S\+P\+I\+Data\+Type})
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_abae80f97226457864feb654117217f66}{rx\+Channel\+Mapping\+Fxn\+Arg}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_tiva_d_m_a___h_w_attrs_a58b59e083a9e324970d63c46f3342afe}{tx\+Channel\+Mapping\+Fxn\+Arg}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I\+Tiva\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\item driverlib/udma.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SPITivaDMA_HWAttrs spiTivaDMAobjects[] = \{
+    \{   \textcolor{comment}{// Used by TivaWare (Tiva devices!!!)}
+        SSI0\_BASE,
+        INT\_SSI0,
+        ~0,         \textcolor{comment}{// Interrupt priority}
+        &scratchBuffer[0],
+        0,
+        UDMA\_CHANNEL\_SSI0RX,
+        UDMA\_CHANNEL\_SSI0TX,
+        uDMAChannelAssign,
+        UDMA\_CH10\_SSI0RX,
+        UDMA\_CH11\_SSI0TX
+    \},
+    \{   \textcolor{comment}{// Used by MWare (Concerto devices!!!)}
+        SSI1\_BASE,
+        INT\_SSI1,
+        ~0,         \textcolor{comment}{// Interrupt priority}
+        &scratchBuffer[1],
+        0,
+        UDMA\_CHANNEL\_SSI1RX,
+        UDMA\_CHANNEL\_SSI1TX,
+        uDMAChannel24\_31SelectDefault,
+        UDMA\_CHAN24\_DEF\_SSI1RX\_M,
+        UDMA\_CHAN25\_DEF\_SSI1TX\_M
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+Base\+Addr\+Type} S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_a3264130b8293c92d7556f4288da9e6c3}
+S\+S\+I Peripheral\textquotesingle{}s base address \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_aa3c30677a08faf98b923022684288727}
+S\+S\+I Tiva\+D\+M\+A Peripheral\textquotesingle{}s interrupt vector \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_ab591cf70d0b7c2f4b22d29b78c9fcf7c}
+S\+P\+I\+Tiva\+D\+M\+A Peripheral\textquotesingle{}s interrupt priority \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!scratch\+Buf\+Ptr@{scratch\+Buf\+Ptr}}
+\index{scratch\+Buf\+Ptr@{scratch\+Buf\+Ptr}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{scratch\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t$\ast$ S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::scratch\+Buf\+Ptr}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_a91c1a3a97cc28823bdfebd0fdc659a26}
+Address of a scratch buffer of size uint32\+\_\+t \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}}
+\index{default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{default\+Tx\+Buf\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::default\+Tx\+Buf\+Value}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_a9b0752c53408495fb1dfe9358668e023}
+Default T\+X value if tx\+Buf == N\+U\+L\+L \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+Channel\+Index@{rx\+Channel\+Index}}
+\index{rx\+Channel\+Index@{rx\+Channel\+Index}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+Channel\+Index}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_af18c0efa81dbb2ec14fe1a77b759d7db}
+u\+D\+M\+A control\+Table channel index \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+Channel\+Index@{tx\+Channel\+Index}}
+\index{tx\+Channel\+Index@{tx\+Channel\+Index}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+Channel\+Index}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_af2833557c6725d3edf86b4f72543cf1c}
+u\+D\+M\+A control\+Table channel index \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!channel\+Mapping\+Fxn@{channel\+Mapping\+Fxn}}
+\index{channel\+Mapping\+Fxn@{channel\+Mapping\+Fxn}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{channel\+Mapping\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::channel\+Mapping\+Fxn) ({\bf S\+P\+I\+Data\+Type})}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_a6a44a95374c9bf112964309fcffc0778}
+u\+D\+M\+A mapping function that maps the S\+P\+I trigger to the D\+M\+A channel \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+Channel\+Mapping\+Fxn\+Arg@{rx\+Channel\+Mapping\+Fxn\+Arg}}
+\index{rx\+Channel\+Mapping\+Fxn\+Arg@{rx\+Channel\+Mapping\+Fxn\+Arg}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+Channel\+Mapping\+Fxn\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+Channel\+Mapping\+Fxn\+Arg}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_abae80f97226457864feb654117217f66}
+u\+D\+M\+A Mapping\+Fxn arg to map the Tx channel \index{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+Channel\+Mapping\+Fxn\+Arg@{tx\+Channel\+Mapping\+Fxn\+Arg}}
+\index{tx\+Channel\+Mapping\+Fxn\+Arg@{tx\+Channel\+Mapping\+Fxn\+Arg}!S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Channel\+Mapping\+Fxn\+Arg}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+Tiva\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+Channel\+Mapping\+Fxn\+Arg}\label{struct_s_p_i_tiva_d_m_a___h_w_attrs_a58b59e083a9e324970d63c46f3342afe}
+u\+D\+M\+A Mapping\+Fxn arg to map the Rx channel 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_tiva_d_m_a_8h}{S\+P\+I\+Tiva\+D\+M\+A.\+h}\end{DoxyCompactItemize}

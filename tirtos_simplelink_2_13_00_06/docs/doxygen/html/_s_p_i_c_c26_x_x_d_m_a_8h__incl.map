@@ -1,0 +1,6 @@
+<map id="SPICC26XXDMA.h" name="SPICC26XXDMA.h">
+<area shape="rect" href="$_s_p_i_8h.html" title="SPI driver interface. " alt="" coords="629,165,736,189" />
+<area shape="rect" href="$_p_i_n_c_c26_x_x_8h.html" title="Device&#45;specific pin &amp; GPIO driver for CC26xx family [def]. " alt="" coords="285,84,466,108" />
+<area shape="rect" href="$_u_d_m_a_c_c26_x_x_8h.html" title="UDMACC26XX driver implementation. " alt="" coords="829,84,1034,108" />
+<area shape="rect" href="$_p_i_n_8h.html" title="Generic PIN &amp; GPIO driver. " alt="" coords="760,165,869,189" />
+</map>

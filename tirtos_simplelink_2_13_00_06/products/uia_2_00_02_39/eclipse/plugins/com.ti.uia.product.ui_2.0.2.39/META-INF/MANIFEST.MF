@@ -1,0 +1,77 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.he
+ lp,org.eclipse.rtsc.xdctools.ui;resolution:=optional
+Bundle-Vendor: Texas Instruments
+Eclipse-LazyStart: true
+Bundle-Version: 2.0.2.39
+Bundle-Name: System Analyzer (UIA Target) IDE Tooling
+Bundle-Localization: plugin
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.eclipse.rtsc.xdctools.ui.CCSActivator;resolution
+ :=optional
+Created-By: 1.6.0_37 (Sun Microsystems Inc.)
+Bundle-SymbolicName: com.ti.uia.product.ui;singleton:=true
+
+Name: uia_eclipse_cdoc_toc.xml
+SHA1-Digest: Vvf0HlSCYCf/4FQsGSDCCRRG1N4=
+
+Name: resources/evm6472/message.c
+SHA1-Digest: N5f6bzktYqWLwpNO+AVkSYmT8d8=
+
+Name: resources/helloworld/cortexm/helloWorld.cfg
+SHA1-Digest: uHrnA3P7vgR4r3s/eKolBUonU5M=
+
+Name: resources/makefile.defs
+SHA1-Digest: TWswp3alCstcpxDeE6LAuj6Rjf4=
+
+Name: resources/single/msp430/stairstep_JTAGStopMode.cfg
+SHA1-Digest: TaitskuLonJgCBtFx2d7bwbphaY=
+
+Name: plugin.properties
+SHA1-Digest: iLNTTCs9aJg5dzMyvIwRLKdwwpQ=
+
+Name: resources/helloworld/c28/helloWorld.cfg
+SHA1-Digest: uHrnA3P7vgR4r3s/eKolBUonU5M=
+
+Name: resources/single/stairstep.c
+SHA1-Digest: cImKzvqPk0WAydLtZlD/gbRXBEI=
+
+Name: resources/helloworld/cc26xx/helloWorld.cfg
+SHA1-Digest: g2N8+8OhkG5O2ef3ib0jXeWMgh8=
+
+Name: resources/single/evm6472/stairstep_Ethernet.cfg
+SHA1-Digest: JP+N5+4tT/hKaTuiVIwTFlHbSbI=
+
+Name: resources/single/c6000/stairstep_JTAGRunMode.cfg
+SHA1-Digest: uKOP1UEZaNFtu3mOIeJCwJfkg4c=
+
+Name: toc_top.xml
+SHA1-Digest: pZ/hriQB73KhO0sRtfTHztBZ5LA=
+
+Name: resources/single/default/stairstep_JTAGStopMode.cfg
+SHA1-Digest: PxFH1e5n9IEqWmwiCgAQhhz7p9U=
+
+Name: plugin.xml
+SHA1-Digest: mZClnSWwdMXRTCD1mCApWUsKtIk=
+
+Name: resources/evm6472/evm6472/message.cfg
+SHA1-Digest: uoP7s8WID2nhBnk7p3QseBLBe8o=
+
+Name: resources/single/cc26xx/stairstep_JTAGStopMode.cfg
+SHA1-Digest: 2WEg0TjCaSg3iO2BGaeszVRtYF8=
+
+Name: resources/helloworld/main.c
+SHA1-Digest: 6AYZnVdJROVKvr+pfHpeOXqwxv8=
+
+Name: resources/single/cortexm/stairstep_JTAGStopMode.cfg
+SHA1-Digest: xvNNz4CTp4KUEZ04JiRIbcP2NXk=
+
+Name: resources/helloworld/default/helloWorld.cfg
+SHA1-Digest: uHrnA3P7vgR4r3s/eKolBUonU5M=
+
+Name: resources/single/c28/stairstep_JTAGStopMode.cfg
+SHA1-Digest: xvNNz4CTp4KUEZ04JiRIbcP2NXk=
+
+Name: resources/helloworld/msp430/helloWorld.cfg
+SHA1-Digest: L9O2Vs5MrIZEnb748kNKz929DUo=
+

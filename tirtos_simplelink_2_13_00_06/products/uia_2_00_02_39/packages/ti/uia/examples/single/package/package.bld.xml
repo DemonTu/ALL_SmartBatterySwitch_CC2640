@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.uia.examples.single" version="2, 0, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/ti_uia_examples_single.tar.dep" src="package/rel/ti_uia_examples_single.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_uia_examples_single"
+        pname="ti_uia_examples_single.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.bld"/>
+        <file name="logger.c"/>
+        <file name="loggerStreamer2.c"/>
+        <file name="stairstep.c"/>
+        <file name="c28/stairstep_JTAGStopMode.cfg"/>
+        <file name="cc26xx/stairstep_JTAGStopMode.cfg"/>
+        <file name="cortexm/stairstep_JTAGStopMode.cfg"/>
+        <file name="c6000/stairstep_JTAGRunMode.cfg"/>
+        <file name="default/logger.cfg"/>
+        <file name="default/loggerStreamer2.cfg"/>
+        <file name="default/stairstep_JTAGStopMode.cfg"/>
+        <file name="evm6472/stairstep_Ethernet.cfg"/>
+        <file name="msp430/stairstep_JTAGStopMode.cfg"/>
+        <file name="package/package.cfg.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

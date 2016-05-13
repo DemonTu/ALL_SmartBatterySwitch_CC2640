@@ -1,0 +1,58 @@
+\subsection{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_c_c_c3200___h_w_attrs}\index{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+C\+C\+C3200 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_i2_c_c_c3200___h_w_attrs_aad58884ee0e40e6b4eda27d212c0339b}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_i2_c_c_c3200___h_w_attrs_a944246733bda012f41d4eb1b9b4b3b8b}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_i2_c_c_c3200___h_w_attrs_af3153448f4918bfde5041a411c984daf}{int\+Priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+C\+C3200 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CCC3200_HWAttrs i2cCC3200HWAttrs[] = \{
+    \{
+        I2CA0\_BASE,
+        INT\_I2CA0,
+        ~0               \textcolor{comment}{// Interrupt priority}
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_c_c_c3200___h_w_attrs_aad58884ee0e40e6b4eda27d212c0339b}
+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_i2_c_c_c3200___h_w_attrs_a944246733bda012f41d4eb1b9b4b3b8b}
+I2\+C Peripheral\textquotesingle{}s interrupt vector \index{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs@{I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+C\+C3200\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_i2_c_c_c3200___h_w_attrs_af3153448f4918bfde5041a411c984daf}
+I2\+C Peripheral\textquotesingle{}s interrupt priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c3200_8h}{I2\+C\+C\+C3200.\+h}\end{DoxyCompactItemize}

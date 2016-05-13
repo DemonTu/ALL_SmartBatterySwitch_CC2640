@@ -1,0 +1,122 @@
+\subsection{I2\+C\+C\+C26\+X\+X\+\_\+\+Object Struct Reference}
+\label{struct_i2_c_c_c26_x_x___object}\index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+
+
+I2\+C\+C\+C26\+X\+X Object.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+C\+C26\+X\+X.\+h$>$}
+
+
+
+Collaboration diagram for I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_i2_c_c_c26_x_x___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}{I2\+C\+\_\+\+Transfer\+Mode} \hyperlink{struct_i2_c_c_c26_x_x___object_a64cd64cf328013bebacf75feaa17f127}{transfer\+Mode}
+\item 
+\hyperlink{_i2_c_8h_aa7389002843eba77425c73b441358fd1}{I2\+C\+\_\+\+Callback\+Fxn} \hyperlink{struct_i2_c_c_c26_x_x___object_ad8faa83bb84c09307294134d9fd9d454}{transfer\+Callback\+Fxn}
+\item 
+volatile \hyperlink{_i2_c_c_c26_x_x_8h_a9deb519e150efd12ccf7068efca5ee75}{I2\+C\+C\+C26\+X\+X\+\_\+\+Mode} \hyperlink{struct_i2_c_c_c26_x_x___object_a5d9b9f0f08afda1776a2f3caa155bda5}{mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___object_a8544e07d83b25c67b957c58a9a0e4317}{bit\+Rate}
+\item 
+ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct \hyperlink{struct_i2_c_c_c26_x_x___object_a759e20bc1c388f73638963c20d99cd09}{hwi}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_i2_c_c_c26_x_x___object_a84660b6df95d3cad705c774609f4e29f}{mutex}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_i2_c_c_c26_x_x___object_a98865f00b814edcc3480e64e55f8405d}{transfer\+Complete}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_aa14b9975af2982d7c84646b91c1a6ad5}{current\+Transaction}
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_a8175be0691405f4398d2734492e534ed}{write\+Buf\+Idx}
+\item 
+unsigned int \hyperlink{struct_i2_c_c_c26_x_x___object_a8b01e2705b597bc44164bafa3a14af6e}{write\+Count\+Idx}
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_ad39b7ffb7de097aecda32d14005df8cd}{read\+Buf\+Idx}
+\item 
+unsigned int \hyperlink{struct_i2_c_c_c26_x_x___object_a012990d843f7189a488e072708bb4490}{read\+Count\+Idx}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_a7148eed6e39ab2ab626c53030c7b77bb}{head\+Ptr}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_a6cd1216ab6faa1e951186dfe696f841b}{tail\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_i2_c_c_c26_x_x___object_a6a7aaccb2b2b05d9fd9230924acf9e96}{i2c\+Post\+Fxn}
+\item 
+\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} \hyperlink{struct_i2_c_c_c26_x_x___object_a2b16c813ec8f21896de5eecf03ed4178}{i2c\+Post\+Obj}
+\item 
+bool \hyperlink{struct_i2_c_c_c26_x_x___object_a4c74297d4652d9f61558ca4099867686}{is\+Open}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+C\+C26\+X\+X Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!transfer\+Mode@{transfer\+Mode}}
+\index{transfer\+Mode@{transfer\+Mode}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transfer\+Mode} I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::transfer\+Mode}\label{struct_i2_c_c_c26_x_x___object_a64cd64cf328013bebacf75feaa17f127}
+Blocking or Callback mode \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}}
+\index{transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{transfer\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Callback\+Fxn} I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::transfer\+Callback\+Fxn}\label{struct_i2_c_c_c26_x_x___object_ad8faa83bb84c09307294134d9fd9d454}
+Callback function pointer \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!mode@{mode}}
+\index{mode@{mode}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf I2\+C\+C\+C26\+X\+X\+\_\+\+Mode} I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::mode}\label{struct_i2_c_c_c26_x_x___object_a5d9b9f0f08afda1776a2f3caa155bda5}
+Stores the I2\+C state \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!bit\+Rate@{bit\+Rate}}
+\index{bit\+Rate@{bit\+Rate}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{bit\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::bit\+Rate}\label{struct_i2_c_c_c26_x_x___object_a8544e07d83b25c67b957c58a9a0e4317}
+Bitrate of the I2\+C module \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::hwi}\label{struct_i2_c_c_c26_x_x___object_a759e20bc1c388f73638963c20d99cd09}
+Hwi object handle \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!mutex@{mutex}}
+\index{mutex@{mutex}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{mutex}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::mutex}\label{struct_i2_c_c_c26_x_x___object_a84660b6df95d3cad705c774609f4e29f}
+Grants exclusive access to I2\+C \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!transfer\+Complete@{transfer\+Complete}}
+\index{transfer\+Complete@{transfer\+Complete}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{transfer\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::transfer\+Complete}\label{struct_i2_c_c_c26_x_x___object_a98865f00b814edcc3480e64e55f8405d}
+Notify finished I2\+C transfer \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!current\+Transaction@{current\+Transaction}}
+\index{current\+Transaction@{current\+Transaction}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{current\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::current\+Transaction}\label{struct_i2_c_c_c26_x_x___object_aa14b9975af2982d7c84646b91c1a6ad5}
+Ptr to current I2\+C transaction \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!write\+Buf\+Idx@{write\+Buf\+Idx}}
+\index{write\+Buf\+Idx@{write\+Buf\+Idx}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{write\+Buf\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::write\+Buf\+Idx}\label{struct_i2_c_c_c26_x_x___object_a8175be0691405f4398d2734492e534ed}
+Internal inc. write\+Buf index \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!write\+Count\+Idx@{write\+Count\+Idx}}
+\index{write\+Count\+Idx@{write\+Count\+Idx}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{write\+Count\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::write\+Count\+Idx}\label{struct_i2_c_c_c26_x_x___object_a8b01e2705b597bc44164bafa3a14af6e}
+Internal dec. write\+Counter \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!read\+Buf\+Idx@{read\+Buf\+Idx}}
+\index{read\+Buf\+Idx@{read\+Buf\+Idx}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{read\+Buf\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::read\+Buf\+Idx}\label{struct_i2_c_c_c26_x_x___object_ad39b7ffb7de097aecda32d14005df8cd}
+Internal inc. read\+Buf index \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!read\+Count\+Idx@{read\+Count\+Idx}}
+\index{read\+Count\+Idx@{read\+Count\+Idx}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{read\+Count\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::read\+Count\+Idx}\label{struct_i2_c_c_c26_x_x___object_a012990d843f7189a488e072708bb4490}
+Internal dec. read\+Counter \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!head\+Ptr@{head\+Ptr}}
+\index{head\+Ptr@{head\+Ptr}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{head\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::head\+Ptr}\label{struct_i2_c_c_c26_x_x___object_a7148eed6e39ab2ab626c53030c7b77bb}
+Head ptr for queued transactions \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!tail\+Ptr@{tail\+Ptr}}
+\index{tail\+Ptr@{tail\+Ptr}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{tail\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::tail\+Ptr}\label{struct_i2_c_c_c26_x_x___object_a6cd1216ab6faa1e951186dfe696f841b}
+Tail ptr for queued transactions \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!i2c\+Post\+Fxn@{i2c\+Post\+Fxn}}
+\index{i2c\+Post\+Fxn@{i2c\+Post\+Fxn}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{i2c\+Post\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::i2c\+Post\+Fxn}\label{struct_i2_c_c_c26_x_x___object_a6a7aaccb2b2b05d9fd9230924acf9e96}
+I2\+C post-\/notification Function pointer \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!i2c\+Post\+Obj@{i2c\+Post\+Obj}}
+\index{i2c\+Post\+Obj@{i2c\+Post\+Obj}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{i2c\+Post\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Notify\+Obj} I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::i2c\+Post\+Obj}\label{struct_i2_c_c_c26_x_x___object_a2b16c813ec8f21896de5eecf03ed4178}
+I2\+C post-\/notification object \index{I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!I2\+C\+C\+C26\+X\+X\+\_\+\+Object@{I2\+C\+C\+C26\+X\+X\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool I2\+C\+C\+C26\+X\+X\+\_\+\+Object\+::is\+Open}\label{struct_i2_c_c_c26_x_x___object_a4c74297d4652d9f61558ca4099867686}
+flag to indicate module is open 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h}{I2\+C\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

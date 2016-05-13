@@ -1,0 +1,107 @@
+\subsection{I2\+C\+Tiva\+\_\+\+Object Struct Reference}
+\label{struct_i2_c_tiva___object}\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+
+
+I2\+C\+Tiva Object.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+Tiva.\+h$>$}
+
+
+
+Collaboration diagram for I2\+C\+Tiva\+\_\+\+Object\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_i2_c_tiva___object__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_i2_c_tiva___object_ab5732612f8d726766ac03090cef2f464}{mutex}
+\item 
+Semaphore\+\_\+\+Struct \hyperlink{struct_i2_c_tiva___object_a04447b4f959b4882af33b78e3b05bce3}{transfer\+Complete}
+\item 
+\hyperlink{_i2_c_8h_a39f3b9340fc4ee241b0d2da9b2841c26}{I2\+C\+\_\+\+Transfer\+Mode} \hyperlink{struct_i2_c_tiva___object_a04f864a6f1bb4d4561fa14b3606a4012}{transfer\+Mode}
+\item 
+\hyperlink{_i2_c_8h_aa7389002843eba77425c73b441358fd1}{I2\+C\+\_\+\+Callback\+Fxn} \hyperlink{struct_i2_c_tiva___object_a5b74f5516b0c46a6a16c8e5df9de619d}{transfer\+Callback\+Fxn}
+\item 
+ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct \hyperlink{struct_i2_c_tiva___object_a942b0ffaf1a7a7bfea05eeeb9ac08244}{hwi}
+\item 
+volatile \hyperlink{_i2_c_tiva_8h_ab6fdad6d12d7ec02e2acb6fbc1ab85af}{I2\+C\+Tiva\+\_\+\+Mode} \hyperlink{struct_i2_c_tiva___object_a8648be63f474182f93c39216dfcd980f}{mode}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_tiva___object_aed736876ed3cf26c69bbf7b61d450042}{current\+Transaction}
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{struct_i2_c_tiva___object_a6e14179dcc38177ade3c5bef4404f1bb}{write\+Buf\+Idx}
+\item 
+size\+\_\+t \hyperlink{struct_i2_c_tiva___object_a0c98fe0fcb52da4ea29516402aae56b8}{write\+Count\+Idx}
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{struct_i2_c_tiva___object_a6df9e5e6f703e9b23bc325bc70a3ac2a}{read\+Buf\+Idx}
+\item 
+size\+\_\+t \hyperlink{struct_i2_c_tiva___object_ad3b3a075a971c85b4e2a00665d208866}{read\+Count\+Idx}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_tiva___object_ab004ef4879f8e53ef8cfcec4c5589cdb}{head\+Ptr}
+\item 
+\hyperlink{struct_i2_c___transaction}{I2\+C\+\_\+\+Transaction} $\ast$ \hyperlink{struct_i2_c_tiva___object_af9dbef087eec693dd7dd41822b52b8bd}{tail\+Ptr}
+\item 
+bool \hyperlink{struct_i2_c_tiva___object_a8026898ec8dd40f92c6a1acdbc599832}{is\+Open}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+Tiva Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!mutex@{mutex}}
+\index{mutex@{mutex}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{mutex}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct I2\+C\+Tiva\+\_\+\+Object\+::mutex}\label{struct_i2_c_tiva___object_ab5732612f8d726766ac03090cef2f464}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!transfer\+Complete@{transfer\+Complete}}
+\index{transfer\+Complete@{transfer\+Complete}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{transfer\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}Semaphore\+\_\+\+Struct I2\+C\+Tiva\+\_\+\+Object\+::transfer\+Complete}\label{struct_i2_c_tiva___object_a04447b4f959b4882af33b78e3b05bce3}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!transfer\+Mode@{transfer\+Mode}}
+\index{transfer\+Mode@{transfer\+Mode}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transfer\+Mode} I2\+C\+Tiva\+\_\+\+Object\+::transfer\+Mode}\label{struct_i2_c_tiva___object_a04f864a6f1bb4d4561fa14b3606a4012}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}}
+\index{transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{transfer\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Callback\+Fxn} I2\+C\+Tiva\+\_\+\+Object\+::transfer\+Callback\+Fxn}\label{struct_i2_c_tiva___object_a5b74f5516b0c46a6a16c8e5df9de619d}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!hwi@{hwi}}
+\index{hwi@{hwi}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{hwi}]{\setlength{\rightskip}{0pt plus 5cm}ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+Struct I2\+C\+Tiva\+\_\+\+Object\+::hwi}\label{struct_i2_c_tiva___object_a942b0ffaf1a7a7bfea05eeeb9ac08244}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!mode@{mode}}
+\index{mode@{mode}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf I2\+C\+Tiva\+\_\+\+Mode} I2\+C\+Tiva\+\_\+\+Object\+::mode}\label{struct_i2_c_tiva___object_a8648be63f474182f93c39216dfcd980f}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!current\+Transaction@{current\+Transaction}}
+\index{current\+Transaction@{current\+Transaction}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{current\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+Tiva\+\_\+\+Object\+::current\+Transaction}\label{struct_i2_c_tiva___object_aed736876ed3cf26c69bbf7b61d450042}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!write\+Buf\+Idx@{write\+Buf\+Idx}}
+\index{write\+Buf\+Idx@{write\+Buf\+Idx}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{write\+Buf\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t$\ast$ I2\+C\+Tiva\+\_\+\+Object\+::write\+Buf\+Idx}\label{struct_i2_c_tiva___object_a6e14179dcc38177ade3c5bef4404f1bb}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!write\+Count\+Idx@{write\+Count\+Idx}}
+\index{write\+Count\+Idx@{write\+Count\+Idx}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{write\+Count\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+C\+Tiva\+\_\+\+Object\+::write\+Count\+Idx}\label{struct_i2_c_tiva___object_a0c98fe0fcb52da4ea29516402aae56b8}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!read\+Buf\+Idx@{read\+Buf\+Idx}}
+\index{read\+Buf\+Idx@{read\+Buf\+Idx}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{read\+Buf\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t$\ast$ I2\+C\+Tiva\+\_\+\+Object\+::read\+Buf\+Idx}\label{struct_i2_c_tiva___object_a6df9e5e6f703e9b23bc325bc70a3ac2a}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!read\+Count\+Idx@{read\+Count\+Idx}}
+\index{read\+Count\+Idx@{read\+Count\+Idx}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{read\+Count\+Idx}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+C\+Tiva\+\_\+\+Object\+::read\+Count\+Idx}\label{struct_i2_c_tiva___object_ad3b3a075a971c85b4e2a00665d208866}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!head\+Ptr@{head\+Ptr}}
+\index{head\+Ptr@{head\+Ptr}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{head\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+Tiva\+\_\+\+Object\+::head\+Ptr}\label{struct_i2_c_tiva___object_ab004ef4879f8e53ef8cfcec4c5589cdb}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!tail\+Ptr@{tail\+Ptr}}
+\index{tail\+Ptr@{tail\+Ptr}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{tail\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+C\+\_\+\+Transaction}$\ast$ I2\+C\+Tiva\+\_\+\+Object\+::tail\+Ptr}\label{struct_i2_c_tiva___object_af9dbef087eec693dd7dd41822b52b8bd}
+\index{I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!I2\+C\+Tiva\+\_\+\+Object@{I2\+C\+Tiva\+\_\+\+Object}}
+\paragraph[{is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool I2\+C\+Tiva\+\_\+\+Object\+::is\+Open}\label{struct_i2_c_tiva___object_a8026898ec8dd40f92c6a1acdbc599832}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_tiva_8h}{I2\+C\+Tiva.\+h}\end{DoxyCompactItemize}

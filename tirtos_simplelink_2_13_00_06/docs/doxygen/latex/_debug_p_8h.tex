@@ -1,0 +1,110 @@
+\subsection{Debug\+P.\+h File Reference}
+\label{_debug_p_8h}\index{Debug\+P.\+h@{Debug\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Debug support. 
+
+============================================================================
+
+The Debug\+P module allows application to do logging and assert checking.
+
+Debug\+P\+\_\+assert calls can be added into code. If the code is compiled with the compiler define Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D set to a non-\/zero value, the call is passed onto the underlying assert checking. If Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D is zero (or not defined), the calls are resolved to nothing.
+
+This module sits on top of the assert checking of the underlying R\+T\+O\+S. Please refer to the underlying R\+T\+O\+S port implementation for more details.
+
+Similarly, Debug\+P\+\_\+log\+N calls can be added into code. If the code is compiled with the compiler define Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D set to a non-\/zero value, the call is passed onto the underlying assert checking. If Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D is zero (or not defined), the calls are resolved to nothing.
+
+This module sits on top of the logging of the underlying R\+T\+O\+S. Please refer to the underlying R\+T\+O\+S port implementation for more details. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for Debug\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_debug_p_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_debug_p_8h_a03b7dc7186ecc72ee015f386b1c16260}{Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D}~0
+\item 
+\#define \hyperlink{_debug_p_8h_ad65fb9a156b26af7d75f81db3cfc49c3}{Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D}~0
+\item 
+\#define \hyperlink{_debug_p_8h_a552e9055ca7eab5fe6c224c6cd5a9d4c}{Debug\+P\+\_\+assert}(expression)
+\item 
+\#define \hyperlink{_debug_p_8h_ac1ccfa728e7a1093f755156d5b7dbe7f}{Debug\+P\+\_\+log0}(format)
+\item 
+\#define \hyperlink{_debug_p_8h_a441ad40dc1a0da66e14d6eb24fe1bfe3}{Debug\+P\+\_\+log1}(format,  p1)
+\item 
+\#define \hyperlink{_debug_p_8h_aadc8ab941bd1bf3014ba19091d709c54}{Debug\+P\+\_\+log2}(format,  p1,  p2)
+\item 
+\#define \hyperlink{_debug_p_8h_acf9fd9f696becf00db78ab1248836d43}{Debug\+P\+\_\+log3}(format,  p1,  p2,  p3)
+\item 
+\#define \hyperlink{_debug_p_8h_a26a49fb45fed248e5fcbf19351d51fef}{Debug\+P\+\_\+log4}(format,  p1,  p2,  p3,  p4)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D@{Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D}}
+\index{Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D@{Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+E\+N\+A\+B\+L\+E\+D~0}\label{_debug_p_8h_a03b7dc7186ecc72ee015f386b1c16260}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D@{Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D}}
+\index{Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D@{Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+\+L\+O\+G\+\_\+\+E\+N\+A\+B\+L\+E\+D~0}\label{_debug_p_8h_ad65fb9a156b26af7d75f81db3cfc49c3}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+assert@{Debug\+P\+\_\+assert}}
+\index{Debug\+P\+\_\+assert@{Debug\+P\+\_\+assert}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+assert}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+assert(
+\begin{DoxyParamCaption}
+\item[{}]{expression}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_a552e9055ca7eab5fe6c224c6cd5a9d4c}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+log0@{Debug\+P\+\_\+log0}}
+\index{Debug\+P\+\_\+log0@{Debug\+P\+\_\+log0}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+log0}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+log0(
+\begin{DoxyParamCaption}
+\item[{}]{format}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_ac1ccfa728e7a1093f755156d5b7dbe7f}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+log1@{Debug\+P\+\_\+log1}}
+\index{Debug\+P\+\_\+log1@{Debug\+P\+\_\+log1}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+log1}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+log1(
+\begin{DoxyParamCaption}
+\item[{}]{format, }
+\item[{}]{p1}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_a441ad40dc1a0da66e14d6eb24fe1bfe3}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+log2@{Debug\+P\+\_\+log2}}
+\index{Debug\+P\+\_\+log2@{Debug\+P\+\_\+log2}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+log2}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+log2(
+\begin{DoxyParamCaption}
+\item[{}]{format, }
+\item[{}]{p1, }
+\item[{}]{p2}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_aadc8ab941bd1bf3014ba19091d709c54}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+log3@{Debug\+P\+\_\+log3}}
+\index{Debug\+P\+\_\+log3@{Debug\+P\+\_\+log3}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+log3}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+log3(
+\begin{DoxyParamCaption}
+\item[{}]{format, }
+\item[{}]{p1, }
+\item[{}]{p2, }
+\item[{}]{p3}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_acf9fd9f696becf00db78ab1248836d43}
+\index{Debug\+P.\+h@{Debug\+P.\+h}!Debug\+P\+\_\+log4@{Debug\+P\+\_\+log4}}
+\index{Debug\+P\+\_\+log4@{Debug\+P\+\_\+log4}!Debug\+P.\+h@{Debug\+P.\+h}}
+\paragraph[{Debug\+P\+\_\+log4}]{\setlength{\rightskip}{0pt plus 5cm}\#define Debug\+P\+\_\+log4(
+\begin{DoxyParamCaption}
+\item[{}]{format, }
+\item[{}]{p1, }
+\item[{}]{p2, }
+\item[{}]{p3, }
+\item[{}]{p4}
+\end{DoxyParamCaption}
+)}\label{_debug_p_8h_a26a49fb45fed248e5fcbf19351d51fef}

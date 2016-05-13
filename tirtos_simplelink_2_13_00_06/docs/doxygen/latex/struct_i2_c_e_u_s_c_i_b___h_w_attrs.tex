@@ -1,0 +1,56 @@
+\subsection{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_c_e_u_s_c_i_b___h_w_attrs}\index{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+C\+E\+U\+S\+C\+I\+B Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+E\+U\+S\+C\+I\+B.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_c_e_u_s_c_i_b___h_w_attrs_ac629f3dec6ed52e4f6696c301000c0ac}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_e_u_s_c_i_b___h_w_attrs_ae90808e5895254b06d72a2c83f4f0987}{clock\+Source}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+E\+U\+S\+C\+I\+B Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item usci\+\_\+b\+\_\+i2c.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CEUSCIB_HWAttrs i2cUSCIBHWAttrs[] = \{
+    \{
+        EUSCI\_B0\_BASE,
+        EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK
+    \},
+    \{
+        EUSCI\_B1\_BASE,
+        EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_c_e_u_s_c_i_b___h_w_attrs_ac629f3dec6ed52e4f6696c301000c0ac}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_i2_c_e_u_s_c_i_b___h_w_attrs_ae90808e5895254b06d72a2c83f4f0987}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+I2\+C Clock source 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_e_u_s_c_i_b_8h}{I2\+C\+E\+U\+S\+C\+I\+B.\+h}\end{DoxyCompactItemize}

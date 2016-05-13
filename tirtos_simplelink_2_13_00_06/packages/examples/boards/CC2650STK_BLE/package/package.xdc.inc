@@ -1,0 +1,11 @@
+package.xdc
+package/examples.boards.CC2650STK_BLE.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/examples_boards_CC2650STK_BLE.java
+package/examples_boards_CC2650STK_BLE.class
+package/package_examples.boards.CC2650STK_BLE.c
+package/package.defs.h
+package/examples.boards.CC2650STK_BLE.ccs

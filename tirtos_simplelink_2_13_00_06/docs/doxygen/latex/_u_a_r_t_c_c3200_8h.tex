@@ -1,0 +1,124 @@
+\subsection{U\+A\+R\+T\+C\+C3200.\+h File Reference}
+\label{_u_a_r_t_c_c3200_8h}\index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T driver implementation for a C\+C3200 U\+A\+R\+T controller. 
+
+============================================================================
+
+The U\+A\+R\+T header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/UART.h>}
+\textcolor{preprocessor}{#include <ti/drivers/uart/UARTCC3200.h>}
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Clock\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Semaphore\+P.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Power.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+U\+A\+R\+T.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/uart/\+Ring\+Buf.\+h$>$}\\*
+Include dependency graph for U\+A\+R\+T\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_u_a_r_t_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_a_r_t_c_c3200___fxn_set}{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}
+\begin{DoxyCompactList}\small\item\em Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+C\+C3200\+\_\+read(). Internal use only. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs}{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t_c_c3200___object}{U\+A\+R\+T\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C3200 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c3200___fxn_set}{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set} \hyperlink{_u_a_r_t_c_c3200_8h_a752d0ee3dd233dc675dd2338f365f3df}{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}
+\begin{DoxyCompactList}\small\item\em Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+C\+C3200\+\_\+read(). Internal use only. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs}{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs} \hyperlink{_u_a_r_t_c_c3200_8h_a4314d1c1487378758af75f900158e582}{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C3200 Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c3200___object}{U\+A\+R\+T\+C\+C3200\+\_\+\+Object} \hyperlink{_u_a_r_t_c_c3200_8h_ab955379efacdd1121191c43ef60c6389}{U\+A\+R\+T\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T\+C\+C3200 Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t_c_c3200___object}{U\+A\+R\+T\+C\+C3200\+\_\+\+Object} $\ast$ \hyperlink{_u_a_r_t_c_c3200_8h_a7918e9066f5ecdeaba9075bf4fe71157}{U\+A\+R\+T\+C\+C3200\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} \hyperlink{_u_a_r_t_c_c3200_8h_af5c9fcf73d2540d179ec24ef172f1299}{U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}!U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}!U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}  {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set}}\label{_u_a_r_t_c_c3200_8h_a752d0ee3dd233dc675dd2338f365f3df}
+
+
+Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+C\+C3200\+\_\+read(). Internal use only. 
+
+These functions should not be used by the user and are solely intended for the U\+A\+R\+T\+C\+C3200 driver. The \hyperlink{struct_u_a_r_t_c_c3200___fxn_set}{U\+A\+R\+T\+C\+C3200\+\_\+\+Fxn\+Set} is a pair of complement functions that are design to operate with one another in a task context and in an I\+S\+R context. The read\+Task\+Fxn is called by U\+A\+R\+T\+C\+C3200\+\_\+read() to drain a circular buffer, whereas the read\+Isr\+Fxn is used by the U\+A\+R\+T\+C\+C3200\+\_\+hwi\+Int\+Fxn to fill up the circular buffer.
+
+read\+Task\+Fxn\+: Function called by U\+A\+R\+T read These variables are set and avilalable for use to the read\+Task\+Fxn. object-\/$>$read\+Buf = buffer; //\+Pointer to a user buffer object-\/$>$read\+Size = size; //\+Desired no. of bytes to read object-\/$>$read\+Count = size; //\+Remaining no. of bytes to read
+
+read\+Isr\+Fxn\+: The required I\+S\+R counterpart to read\+Task\+Fxn \index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}  {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}\label{_u_a_r_t_c_c3200_8h_a4314d1c1487378758af75f900158e582}
+
+
+U\+A\+R\+T\+C\+C3200 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\item driverlib/uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 unsigned char uartCC3200RingBuffer[2][32];
+2 
+3 const UARTCC3200\_HWAttrs uartCC3200HWAttrs[] = \{
+4     \{
+5         .baseAddr = UARTA0\_BASE,
+6         .intNum = INT\_UARTA0,
+7         .intPriority = ~0,
+8         .flowControl = UART\_FLOWCONTROL\_NONE,
+9         .ringBufPtr  = uartCC3200RingBuffer[0],
+10         .ringBufSize = sizeof(uartCC3200RingBuffer[0])
+11     \},
+12     \{
+13         .baseAddr = UARTA1\_BASE,
+14         .intNum = INT\_UARTA1,
+15         .intPriority = ~0,
+16         .flowControl = UART\_FLOWCONTROL\_TX | UART\_FLOWCONTROL\_RX,
+17         .ringBufPtr  = uartCC3200RingBuffer[1],
+18         .ringBufSize = sizeof(uartCC3200RingBuffer[1])
+19     \},
+20 \};
+\end{DoxyCode}
+ \index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}!U\+A\+R\+T\+C\+C3200\+\_\+\+Object@{U\+A\+R\+T\+C\+C3200\+\_\+\+Object}}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+\+Object@{U\+A\+R\+T\+C\+C3200\+\_\+\+Object}!U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C3200\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Object}  {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Object}}\label{_u_a_r_t_c_c3200_8h_ab955379efacdd1121191c43ef60c6389}
+
+
+U\+A\+R\+T\+C\+C3200 Object. 
+
+The application must not access any member variables of this structure! \index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}!U\+A\+R\+T\+C\+C3200\+\_\+\+Handle@{U\+A\+R\+T\+C\+C3200\+\_\+\+Handle}}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+\+Handle@{U\+A\+R\+T\+C\+C3200\+\_\+\+Handle}!U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C3200\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Object} $\ast$ {\bf U\+A\+R\+T\+C\+C3200\+\_\+\+Handle}}\label{_u_a_r_t_c_c3200_8h_a7918e9066f5ecdeaba9075bf4fe71157}
+
+
+\subsubsection{Variable Documentation}
+\index{U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}!U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table@{U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table}}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table@{U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table}!U\+A\+R\+T\+C\+C3200.\+h@{U\+A\+R\+T\+C\+C3200.\+h}}
+\paragraph[{U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf U\+A\+R\+T\+\_\+\+Fxn\+Table} U\+A\+R\+T\+C\+C3200\+\_\+fxn\+Table}\label{_u_a_r_t_c_c3200_8h_af5c9fcf73d2540d179ec24ef172f1299}

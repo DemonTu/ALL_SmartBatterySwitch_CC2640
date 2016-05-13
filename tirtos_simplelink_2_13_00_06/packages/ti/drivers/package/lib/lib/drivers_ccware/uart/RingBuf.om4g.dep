@@ -1,0 +1,7 @@
+package/lib/lib/drivers_ccware/./uart/RingBuf.om4g: uart/RingBuf.c  ../../ti/drivers/uart/RingBuf.h  /db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/stdint.h  /db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stddef.h  /db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stdbool.h  ../../ti/drivers/ports/HwiP.h
+uart/RingBuf.c:
+../../ti/drivers/uart/RingBuf.h:
+/db/vtree/library/trees/zumaprod/zumaprod-g06/tirtos_simplelink_2_13_00_06/products/bios_6_42_00_08/packages/gnu/targets/arm//libs/install-native/arm-none-eabi/include/stdint.h:
+/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stddef.h:
+/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3/lib/gcc/arm-none-eabi/4.8.4/include/stdbool.h:
+../../ti/drivers/ports/HwiP.h:

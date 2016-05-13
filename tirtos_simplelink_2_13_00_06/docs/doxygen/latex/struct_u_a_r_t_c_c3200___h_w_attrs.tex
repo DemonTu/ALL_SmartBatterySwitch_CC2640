@@ -1,0 +1,87 @@
+\subsection{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_c_c3200___h_w_attrs}\index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+C\+C3200 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_a559d6e21a7f9950e0d3e9d42413d47ea}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_a45e245f429f6bba9b77223bdcd58f2a2}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_a4949d5f8d8f2e244ef949c6a3c0829c9}{int\+Priority}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_abfe1406d34c1592bab7fb32f741943b3}{flow\+Control}
+\item 
+unsigned char $\ast$ \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_aa6c7f90459e3145fdc3a2d94392911d6}{ring\+Buf\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_u_a_r_t_c_c3200___h_w_attrs_a85b3df2ec52bcd2cef4a55efe823f978}{ring\+Buf\+Size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+C\+C3200 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\item driverlib/uart.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} uartCC3200RingBuffer[2][32];
+
+\textcolor{keyword}{const} UARTCC3200_HWAttrs uartCC3200HWAttrs[] = \{
+    \{
+        .baseAddr = UARTA0\_BASE,
+        .intNum = INT\_UARTA0,
+        .intPriority = ~0,
+        .flowControl = UART\_FLOWCONTROL\_NONE,
+        .ringBufPtr  = uartCC3200RingBuffer[0],
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartCC3200RingBuffer[0])
+    \},
+    \{
+        .baseAddr = UARTA1\_BASE,
+        .intNum = INT\_UARTA1,
+        .intPriority = ~0,
+        .flowControl = UART\_FLOWCONTROL\_TX | UART\_FLOWCONTROL\_RX,
+        .ringBufPtr  = uartCC3200RingBuffer[1],
+        .ringBufSize = \textcolor{keyword}{sizeof}(uartCC3200RingBuffer[1])
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_c_c3200___h_w_attrs_a559d6e21a7f9950e0d3e9d42413d47ea}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_u_a_r_t_c_c3200___h_w_attrs_a45e245f429f6bba9b77223bdcd58f2a2}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_u_a_r_t_c_c3200___h_w_attrs_a4949d5f8d8f2e244ef949c6a3c0829c9}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt priority \index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!flow\+Control@{flow\+Control}}
+\index{flow\+Control@{flow\+Control}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{flow\+Control}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::flow\+Control}\label{struct_u_a_r_t_c_c3200___h_w_attrs_abfe1406d34c1592bab7fb32f741943b3}
+Hardware flow control setting defined by driverlib \index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Ptr@{ring\+Buf\+Ptr}}
+\index{ring\+Buf\+Ptr@{ring\+Buf\+Ptr}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Ptr}\label{struct_u_a_r_t_c_c3200___h_w_attrs_aa6c7f90459e3145fdc3a2d94392911d6}
+Pointer to a application ring buffer \index{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}!ring\+Buf\+Size@{ring\+Buf\+Size}}
+\index{ring\+Buf\+Size@{ring\+Buf\+Size}!U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{ring\+Buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t U\+A\+R\+T\+C\+C3200\+\_\+\+H\+W\+Attrs\+::ring\+Buf\+Size}\label{struct_u_a_r_t_c_c3200___h_w_attrs_a85b3df2ec52bcd2cef4a55efe823f978}
+Size of ring\+Buf\+Ptr 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_c_c3200_8h}{U\+A\+R\+T\+C\+C3200.\+h}\end{DoxyCompactItemize}

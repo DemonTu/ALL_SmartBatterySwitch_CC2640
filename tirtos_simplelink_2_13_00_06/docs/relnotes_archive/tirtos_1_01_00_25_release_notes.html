@@ -1,0 +1,420 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- saved from url=(0120)http://wiki.sanb.design.ti.com/twiki/bin/viewfile/Process/ReleaseNotesTemplate?rev=1;filename=example_release_notes.html --><!-- saved from url=(0113)file://C:\Documents and Settings\a0323759\Local Settings\Temporary Internet Files\OLKC\example_release_notes.html --><!-- /* * Copyright 2007 by Texas Instruments Incorporated . * * All rights reserved. Property of Texas Instruments Incorporated. * Restricted rights to use, duplicate or disclose this code are * granted through contract. * */ --><title>TI-RTOS 1.01.00 Release Notes</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- For now, we use the doxygen style sheet -->
+<link href="release_notes_template_files/css.htm" type="text/css" rel="stylesheet">
+<meta content="MSHTML 6.00.2900.3395" name="GENERATOR">
+</head>
+<body>
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com/"><img style="border: 0px solid ; width: 222px; height: 54px;" alt="Texas Instruments" src="docs/tilogo.gif"> </a></td>
+<td bgcolor="red"><img style="width: 314px; height: 26px;" alt="Technology for Innovators(tm)" src="docs/titagline.gif">
+</td>
+</tr>
+</tbody>
+</table>
+<h1 style="text-align: left;">TI-RTOS 1.01.00.25
+Release
+Notes</h1>
+This release note is divided into the following sections:<br>
+<br>
+<a href="#General_Info">Introduction</a>,
+<a href="#Documentation">Documentation</a>,
+<a href="#Products">Products Included</a>,
+<a href="#Whats_New">What's New</a>, <a href="#Compatibility">Upgrade &amp;
+Compatibility
+Information</a>, <a href="#Host_Support">Host
+Support</a>, <a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>, <a href="#Validation">Validation Info</a>, <a href="#Known_Issues">Known Issues</a>, <a href="#Examples">Examples</a>, <a href="#Version">Version
+Information</a>, <a href="#Support">Technical
+Support</a>.
+<hr>
+<h2><a name="General_Info">Introduction</a></h2>
+<p>This is an General Availability release of TI-RTOS (previously
+called MCU SDK).&nbsp;</p>
+The TI-RTOS delivers
+components
+that enable engineers to develop applications on Texas Instruments
+micro-controller devices. The product is compromised of multiple
+software
+components and examples of how to use these components together. <br>
+<br>
+The TI-RTOS gives developers a one-stop RTOS solution for developing
+applications for TI embedded microcontrollers. It provides an OS
+kernel, communications support, drivers, and more. It is tightly
+integrated with TI&#8217;s Code Composer Studio development environment. In
+addition, examples are provided to demonstrate the use of each
+functional area and each supported device and as a starting point for
+your own projects.<br>
+<br>
+<hr>
+<h2><a name="Documentation">Documentation</a></h2>
+<p>The
+following documentation is available:</p>
+<ul>
+<li><a href="docs/spruhd3d.pdf">Getting
+Started
+Guide</a></li>
+<li><a href="docs/spruhd4b.pdf">User
+Guide</a></li>
+<li><a href="tirtos_1_01_00_25_manifest.html">TI
+RTOS&nbsp;Manifest</a></li>
+<li><a href="docs/report.html">Static
+Analysis Reports</a></li>
+</ul>
+<hr>
+<h2><a name="Products">Products Included</a></h2>
+The following is a list of all the products bundled into the TI-RTOS
+zip.
+Note these products only support ARM and C2xxx devices (this was done
+to reduce installer and installation size).<br>
+<ul>
+<li>XDCtools 3.24.06.63</li>
+<li>SYS/BIOS 6.34.04.22</li>
+<li>IPC 1.25.02.12</li>
+<li>UIA 1.02.00.07</li>
+<li>NDK 2.22.01.14</li>
+<li>MWare v110a (refer to
+&lt;TIRTOS_Install_dir&gt;\products\MWare_v110a\TI-RTOS.README
+for more details)</li>
+<li>StellarisWare revision 9453e (refer to
+&lt;TIRTOS_Install_dir&gt;\products\StellarisWare_9453e\TI-RTOS.README
+for more details)</li>
+<li>Drivers and examples for TMDXDOCKH52C1, TMDXDOCK28M36,
+DK-LM3S9D96,
+EKS-LM4F232, and EK_LM4F120XL.</li>
+</ul>
+<hr>
+<h2><a name="Whats_New">What's New</a><br>
+</h2>
+<h2>1.01.00.25</h2>
+<ul>
+<li>Changed product name from "MCU SDK" to "TI-RTOS"</li>
+<li>Added examples for&nbsp;TMDXDOCK28M36</li>
+<li>Added Watchdog driver module</li>
+<li>Added interrupt support in GPIO module</li>
+<li>Added graphics library demo for EKS-LM4F232</li>
+<li>Using new versions of SYS/BIOS, XDCtools, IPC, NDK, UIA,
+StellarisWare, MWare (refer to above section for more details)</li>
+<li>Requires CCS 5.3 or higher</li>
+<li>Using Arm Compiler Tools version 5.0.1</li>
+<li>Using C2000 Compiler Tools version 6.1.0</li>
+</ul>
+<span style="font-weight: bold;">Defects Fixed since
+1.00.01.74<br>
+<br>
+</span>
+<table style="width: 842px; height: 53px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td><b>ID</b></td>
+<td><b>Headline</b></td>
+</tr>
+<tr>
+<td>SDOCM00098482</td>
+<td>need IPv6 support for TI-RTOS tcpEcho example (target
+and host side apps)</td>
+</tr>
+<tr>
+<td>SDOCM00098023</td>
+<td>Incorrect LED labeling on Stellaris Launchpad
+board.[c|h]</td>
+</tr>
+<tr>
+<td>SDOCM00097184</td>
+<td>LM4F examples default to 40MHz instead of 80MHz</td>
+</tr>
+<tr>
+<td>SDOCM00096574</td>
+<td>Fixed initialized pointer dereference in USBCDCMOUSE
+and USBCDCD examples</td>
+</tr>
+<tr>
+<td>SDOCM00095910</td>
+<td>Build error after a build gmake clean</td>
+</tr>
+<tr>
+<td>SDOCM00095695</td>
+<td>Assert_isTrue() does not work in examples</td>
+</tr>
+<tr>
+<td>SDOCM00094212</td>
+<td>I2C ROV needs to show write/read instead of
+transmit/receive modes</td>
+</tr>
+<tr>
+<td>SDOCM00094118</td>
+<td>Rename product to "TI-RTOS" (not MCUSDK)</td>
+</tr>
+<tr>
+<td>SDOCM00094033</td>
+<td>Windows install is too slow</td>
+</tr>
+<tr>
+<td>SDOCM00087597</td>
+<td>MCU SDK should enhance top-level make to build
+sub-products (e.g. SYS/BIOS, IPC, etc)</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>1.00.01.74</h2>
+<ul>
+<li>Added examples for Launchpad (EK_LM4F120XL)</li>
+<li>Used Arm Compiler Tools version 4.9.7</li>
+</ul>
+<span style="font-weight: bold;">Defects Fixed since
+1.00.00.68<br>
+<br>
+</span>
+<table style="width: 842px; height: 53px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td><b>ID</b></td>
+<td><b>Headline</b></td>
+</tr>
+<tr>
+<td>SDOCM00095695</td>
+<td>Assert_isTrue() don't work in examples</td>
+</tr>
+<tr>
+<td>SDOCM00094212</td>
+<td>I2C ROV needs to show write/read instead of
+transmit/receive modes</td>
+</tr>
+<tr>
+<td>SDOCM00094108</td>
+<td>Missing doxygen information on driver objects</td>
+</tr>
+<tr>
+<td>SDOCM00094053</td>
+<td>MCUSDK sub-products (e.g. UIA, IPC) are not linked into
+CCS Help</td>
+</tr>
+<tr>
+<td>SDOCM00094026</td>
+<td>Stability issue with USB Host MSC on LM4F232</td>
+</tr>
+</tbody>
+</table>
+<br>
+<span style="font-family: 'Arial','sans-serif';"><br>
+</span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<hr>
+<h2><a name="Compatibility">Upgrade and
+Compatibility Information</a></h2>
+When migrating an application that uses MCUSDK 1.00.xx to TI-RTOS
+1.01.00.25, the following steps must be taken<br>
+<br>
+1. The following
+options must be changed in the project&#8217;s properties (if present)<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="text-decoration: underline;">i. Move to the new
+version in General-&gt;RTSC-&gt;Products and Repositories</span><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Deselect
+the "MCU SDK" version that you are currently using.<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Select
+the TI-RTOS&nbsp;1.01.00.25 version. <br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+<span style="text-decoration: underline;">ii. Point to the
+new MWare include path in Build-&gt;ARM
+Compiler-&gt;Include Options*</span><br>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;
+&nbsp;<small>"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="font-weight: bold; color: rgb(204, 0, 0);">MCUSDK</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_vXXX</span>/MWare"</small></span><br>
+&nbsp;&nbsp;&nbsp; becomes<br>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;<small>&nbsp;&nbsp;"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="color: rgb(204, 0, 0); font-weight: bold;">TIRTOS</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_v110a</span>/MWare"</small></span><br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="text-decoration: underline;">iii. </span><span style="text-decoration: underline;">Point to the new MWare
+libraries&nbsp;in </span><span style="text-decoration: underline;">Build-&gt;ARM
+Linker-&gt;File Search Path*</span><br>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;
+&nbsp;<small>"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="color: rgb(204, 0, 0); font-weight: bold;">MCUSDK</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_vXXX</span>/MWare/driverlib/ccs/Debug/driverlib.lib"</small></span><small><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;"></span><big>&nbsp;&nbsp;&nbsp;
+becomes</big><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;
+&nbsp;&nbsp;"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="color: rgb(204, 0, 0); font-weight: bold;">TIRTOS</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_v110a</span>/MWare/driverlib/ccs/Debug/driverlib.lib"</span><br style="font-family: Courier New,Courier,monospace;">
+<br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;
+&nbsp;&nbsp;"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="color: rgb(204, 0, 0); font-weight: bold;">MCUSDK</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_vXXX</span>/MWare/usblib/ccs/Debug/usblib.lib"</span><br style="font-family: Courier New,Courier,monospace;">
+<big>&nbsp;&nbsp;&nbsp; becomes</big><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;
+&nbsp;&nbsp;&nbsp;"${COM_TI_RTSC<span style="color: rgb(204, 0, 0);">_</span><span style="color: rgb(204, 0, 0); font-weight: bold;">TIRTOS</span><span style="color: rgb(204, 0, 0);">_</span>INSTALL_DIR}/products/<span style="font-weight: bold; color: rgb(204, 0, 0);">MWare_v110a</span>/MWare/usblib/ccs/Debug/usblib.lib"</span><br>
+</small>
+<br>
+&nbsp;&nbsp;&nbsp; *For Stellaris boards,&nbsp;<small style="color: rgb(204, 0, 0);"><span style="font-family: Courier New,Courier,monospace;">StellarisWare_YYYY</span></small>
+becomes <small style="font-family: Courier New,Courier,monospace;"><span style="color: rgb(204, 0, 0);">StellarisWare_9453e</span>.</small><br>
+<span style="font-family: 'Arial','sans-serif';"></span><br>
+2. In the configuration file (i.e. .cfg
+file), the two lines must be changed (if present)<br>
+<br>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+var <span style="font-weight: bold; color: rgb(204, 0, 0);">McuSdk</span><span style="color: rgb(204, 0, 0);">
+</span>= xdc.useModule('ti.<span style="font-weight: bold; color: rgb(204, 0, 0);">mcusdk</span><span style="color: rgb(204, 0, 0);">.</span><span style="font-weight: bold; color: rgb(204, 0, 0);">McuSdk</span>');</span><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+</span><span style="font-family: Courier New,Courier,monospace;">var
+SysFlex = xdc.useModule('ti.<span style="font-weight: bold; color: rgb(204, 0, 0);">mcusdk</span>.utils.SysFlex');<br>
+</span>&nbsp;&nbsp;&nbsp; becomes<br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+var <span style="font-weight: bold; color: rgb(204, 0, 0);">TIRTOS</span><span style="color: rgb(204, 0, 0);">
+</span>= xdc.useModule('ti.<span style="font-weight: bold; color: rgb(204, 0, 0);">tirtos</span><span style="color: rgb(204, 0, 0);">.</span><span style="font-weight: bold; color: rgb(204, 0, 0);">TIRTOS</span>');</span><br>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+var SysFlex = xdc.useModule('ti.<span style="font-weight: bold; color: rgb(204, 0, 0);">tirtos</span>.utils.SysFlex');</span><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: 'Arial','sans-serif';"><br>
+</span><span style="font-size: 10pt; font-family: 'Arial','sans-serif';"><o:p></o:p></span><big><span style="font-weight: bold;"></span></big>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+<ul>
+<li><font face="Times New Roman" size="3">Supported
+Operating Systems</font>
+<ul type="circle">
+<li><font face="Times New Roman" size="3">Windows
+7, Windows XP, Windows Vista</font> </li>
+<li><font face="Times New Roman" size="3">Linux
+[RH4], Ubuntu [10.04]</font> </li>
+</ul>
+</li>
+</ul>
+<p class="MsoPlainText" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><o:p></o:p></span></p>
+<hr>
+<h2><a name="Dependencies">Dependencies</a>
+</h2>
+<p>This release requires the following other software components
+and tools versions to successfully function:&nbsp;</p>
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.3
+</span> or higher<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span><br>
+</li>
+</ul>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+<ul>
+<li>TMDXDOCKH52C1</li>
+<li>TMDXDOCK28M36</li>
+<li>DK-LM3S9D96</li>
+<li>EKS-LM4F232</li>
+<li>EK_LM4F120XL</li>
+</ul>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+This release was validated using the following components:
+<ul>
+<li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">CCSv5.3</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span></li>
+</ul>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+There are several know issues with this release.<span style="background-color: red;"></span><br>
+<br>
+<table style="width: 1214px; height: 278px;">
+<colgroup width="15%"></colgroup><tbody>
+<tr>
+<td style="height: 31px;"><b>ID</b></td>
+<td style="height: 31px;"><b>Headline</b></td>
+</tr>
+<tr>
+<td>SDOCM00098844</td>
+<td>add subcomponent cdoc to the master TI-RTOS cdoc,
+release notes docs should point to subcomponent docs</td>
+</tr>
+<tr>
+<td>SDOCM00098821</td>
+<td>Add Watchdog_open parameter to specify whether to or
+not to stall the timer when a breakpoint is hit</td>
+</tr>
+<tr>
+<td>SDOCM00098377</td>
+<td>TI Stellaris launchpad directory/board name should be
+EK_LM4F120XL and not LM4F120H5QR</td>
+</tr>
+<tr>
+<td>SDOCM00097626</td>
+<td>Giving Priorities to Hwis from TI-RTOS Drivers</td>
+</tr>
+<tr>
+<td>SDOCM00097460<br>
+</td>
+<td>No ROV view for USBMSCHFatFs<br>
+</td>
+</tr>
+<tr>
+<td>SDOCM00095218<br>
+</td>
+<td>Available products should show BIOS, NDK and UIA<br>
+</td>
+</tr>
+<tr>
+<td>SDOCM00094100</td>
+<td>Concerto demo fails when using chrome to enable SD card</td>
+</tr>
+<tr>
+<td>SDOCM00094054</td>
+<td>tcpEcho does not handle more than connections well</td>
+</tr>
+<tr>
+<td>SDOCM00094053</td>
+<td>TI-RTOS sub-products (e.g. UIA, IPC) are not linked
+into CCS Help</td>
+</tr>
+<tr>
+<td>SDOCM00093967</td>
+<td>MCUSDK Windows install will fail if installed in
+multiple or single directory that contains more than 38 characters in
+path</td>
+</tr>
+<tr>
+<td>SDOCM00093268</td>
+<td>Add parity and error checking for UART driver</td>
+</tr>
+<tr>
+<td>SDOCM00090537</td>
+<td>DK-LM3S9D96 fwrite to stdout (console) reports Invalid
+CIO command.</td>
+</tr>
+<tr>
+<td>SDOCM00088081</td>
+<td>SD Card driver lacks CRC support</td>
+</tr>
+</tbody>
+</table>
+<br>
+<hr>
+<h2><a name="Examples">Examples</a></h2>
+There are&nbsp;for TMDXDOCKH52C1, TMDXDOCK28M36, DK-LM3S9D96,
+EKS-LM4F232, and EK_LM4F120XL.
+Please refer to the Getting Started Guide for more details.<br>
+<hr><big><span style="font-weight: bold;"></span></big>
+<h2><a name="Version">Version Information</a></h2>
+<p>All releases&nbsp;have 4 digits (<b>M.mm.pp.bb</b>).
+This includes GA and pre-releases (engineering, EA, beta, etc.).
+Pre-releases are denoted with a&nbsp;suffix (e.g. 1.01.00.15_eng or
+1.01.00.21-beta). </p>
+<p>This product's version follows a version format, <b>M.mm.pp.bb</b>,
+where <b>M</b> is a single digit Major number, <b>mm</b>
+is 2 digit minor number, <b>pp</b> is a 2 digit patch
+number, and <b>b</b> is an unrestricted set of digits used
+as an incrementing build counter. </p>
+<p>To support multiple side-by-side installations of the product,
+the product version is encoded in the top level directory, ex. <span style="font-weight: bold;">tirtos</span><b>_1_00_01_11</b>.
+</p>
+<p>Subsequent releases of patch upgrades will be identified by
+the patch number, ex. TI-RTOS 1.00.00.68 with directory <span style="font-weight: bold;">tirtos</span><b>_1_00_01_70</b>.
+Typically, these patches only include critical bug fixes. </p>
+<p>Please note that version numbers and compatibility keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section. </p>
+<hr>
+<h2><a name="Support">Technical Support</a></h2>
+<p><span style="font-size: 11pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;">For
+technical
+support, please refer to the Texas Instrument&#8217;s E2E BIOS Support Forum <span style="color: rgb(31, 73, 125);"><a href="http://e2e.ti.com/support/embedded/bios/default.aspx">http://e2e.ti.com/support/embedded/bios/default.aspx</a>
+or other forums in <a href="http://e2e.ti.com/">http://e2e.ti.com/</a>
+as needed.</span></span></p>
+<hr>
+<p>Last updated: January 28, 2013 </p>
+</body></html>

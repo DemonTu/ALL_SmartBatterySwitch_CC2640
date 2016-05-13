@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.targets.arm.elf.Arm7</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/* 
+</span>     2    <span class="comment"> *  Copyright (c) 2008 Texas Instruments and others.
+</span>     3    <span class="comment"> *  All rights reserved. This program and the accompanying materials
+</span>     4    <span class="comment"> *  are made available under the terms of the Eclipse Public License v1.0
+</span>     5    <span class="comment"> *  which accompanies this distribution, and is available at
+</span>     6    <span class="comment"> *  http://www.eclipse.org/legal/epl-v10.html
+</span>     7    <span class="comment"> * 
+</span>     8    <span class="comment"> *  Contributors:
+</span>     9    <span class="comment"> *      Texas Instruments - initial implementation
+</span>    10    <span class="comment"> * 
+</span>    11    <span class="comment"> * */</span>
+    12    <span class="comment">/*
+</span>    13    <span class="comment"> *  ======== Arm7.xdc ========
+</span>    14    <span class="comment"> *
+</span>    15    <span class="comment"> */</span>
+    16    
+    17    <span class="xdoc">/*!
+</span>    18    <span class="xdoc"> *  ======== Arm7.xdc ========
+</span>    19    <span class="xdoc"> *  TI Arm7 little endian (ELF)
+</span>    20    <span class="xdoc"> */</span>
+    21    <span class=key>metaonly</span> <span class=key>module</span> Arm7 <span class=key>inherits</span> ti.targets.arm.elf.IArm {
+    22        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> string name             = <span class="string">"Arm7"</span>; 
+    23        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> string suffix           = <span class="string">"e7"</span>;
+    24        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> string isa              = <span class="string">"v4T"</span>;    
+    25        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> string rts              = <span class="string">"ti.targets.arm.rtsarm"</span>;
+    26        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> xdc.bld.ITarget.Model model = {
+    27            endian: <span class="string">"little"</span>,
+    28            shortEnums: <span class=key>true</span>
+    29        };
+    30    
+    31        <span class="comment">/*
+</span>    32    <span class="comment">     *  ======== compatibleSuffixes ========
+</span>    33    <span class="comment">     */</span>
+    34        <span class=key>override</span> <span class=key>config</span> String compatibleSuffixes[] = [<span class="string">"470"</span>];
+    35    
+    36        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> xdc.bld.ITarget2.Command cc = {
+    37            cmd:  <span class="string">"armcl -c"</span>,
+    38            opts: <span class="string">" -me -mv4 --abi=eabi"</span>
+    39        };
+    40    
+    41        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> xdc.bld.ITarget2.Command asm = {
+    42            cmd:  <span class="string">"armcl -c"</span>,
+    43            opts: <span class="string">" -me -mv4 --abi=eabi"</span>
+    44        };
+    45    
+    46        <span class=key>override</span> <span class=key>readonly</span> <span class=key>config</span> xdc.bld.ITarget2.Command lnk = {
+    47            cmd:  <span class="string">"armlnk"</span>,
+    48            opts: <span class="string">"--silicon_version=4 --strict_compatibility=on"</span>
+    49        };
+    50    }
+    51    <span class="comment">/*
+</span>    52    <span class="comment"> *  @(#) ti.targets.arm.elf; 1, 0, 0,5; 2-27-2015 12:11:33; /db/ztree/library/trees/xdctargets/xdctargets-i02/src/ xlibrary
+</span>    53    <span class="comment">
+</span>    54    <span class="comment"> */</span>
+    55    
+</pre>
+</body></html>

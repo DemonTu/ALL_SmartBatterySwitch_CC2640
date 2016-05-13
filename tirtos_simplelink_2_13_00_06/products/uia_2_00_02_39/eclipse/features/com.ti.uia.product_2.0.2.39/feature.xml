@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.ti.uia.product_2.0.2.39"
+      version="2.0.2.39"
+      label="System Analyzer (UIA Target) (Target Content)"
+      provider-name="Texas Instruments">
+
+   <description url="http://processors.wiki.ti.com/index.php/Multicore_System_Analyzer">
+This version of System Analyzer (UIA Target) Target Content can be chosen separately for each C/C++ project via their project settings.  The System Analyzer (UIA Target) IDE Client, on the other hand, is common to all projects and its version must be equal to or greater than the version of this Target Content feature.
+   </description>
+
+   <copyright>
+Copyright (c) 2013-2014, Texas Instruments Incorporated
+   </copyright>
+
+   <license>
+      Released under Texas Instruments Incorporated - Technology Software Publicly Available license.
+   </license>
+
+
+   <plugin
+        id="com.ti.uia.product_2.0.2.39"
+        version="2.0.2.39"
+        unpack="false" 
+   />
+    
+</feature>

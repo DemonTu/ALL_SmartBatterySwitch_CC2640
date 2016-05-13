@@ -1,0 +1,70 @@
+\subsection{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs}\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+S\+C\+C3200\+D\+M\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+S\+C\+C3200\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a5c7118ba39df294292416db655a444b2}{base\+Addr}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a8f6a7b4b483c5722b4f7a9c6ff345336}{int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a05e33796bd29a7e691915ef3f662b2ec}{int\+Priority}
+\item 
+unsigned long \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs_ab2ce6b73e9391305baae269289262afa}{rx\+Channel\+Index}
+\item 
+unsigned long \hyperlink{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a34608d4786f5b013412cfe07a6f17330}{tx\+Channel\+Index}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+S\+C\+C3200\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2SCC3200DMA_HWAttrs i2sCC3200HWAttrs[] = \{
+    \{
+        I2S\_BASE,
+        INT\_I2S,
+        ~0,                 \textcolor{comment}{// Interrupt priority}
+        UDMA\_CH4\_I2S\_RX,
+        UDMA\_CH5\_I2S\_TX
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a5c7118ba39df294292416db655a444b2}
+I2\+S Peripheral\textquotesingle{}s base address \index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a8f6a7b4b483c5722b4f7a9c6ff345336}
+I2\+S Peripheral\textquotesingle{}s interrupt vector \index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a05e33796bd29a7e691915ef3f662b2ec}
+I2\+S Peripheral\textquotesingle{}s interrupt priority \index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+Channel\+Index@{rx\+Channel\+Index}}
+\index{rx\+Channel\+Index@{rx\+Channel\+Index}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+Channel\+Index}\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs_ab2ce6b73e9391305baae269289262afa}
+u\+D\+M\+A control\+Table receive channel index \index{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+Channel\+Index@{tx\+Channel\+Index}}
+\index{tx\+Channel\+Index@{tx\+Channel\+Index}!I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs@{I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long I2\+S\+C\+C3200\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+Channel\+Index}\label{struct_i2_s_c_c3200_d_m_a___h_w_attrs_a34608d4786f5b013412cfe07a6f17330}
+u\+D\+M\+A control\+Table transmit channel index 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_c_c3200_d_m_a_8h}{I2\+S\+C\+C3200\+D\+M\+A.\+h}\end{DoxyCompactItemize}

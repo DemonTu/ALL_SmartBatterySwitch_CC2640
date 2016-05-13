@@ -1,0 +1,82 @@
+\subsection{S\+P\+I\+\_\+\+Params Struct Reference}
+\label{struct_s_p_i___params}\index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+
+
+S\+P\+I Parameters.  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I.\+h$>$}
+
+
+
+Collaboration diagram for S\+P\+I\+\_\+\+Params\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{struct_s_p_i___params__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6f}{S\+P\+I\+\_\+\+Transfer\+Mode} \hyperlink{struct_s_p_i___params_a16dbcc3768a01fb7deae25b48fc0d69c}{transfer\+Mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i___params_a600801907cf396a96825eaf69781913a}{transfer\+Timeout}
+\item 
+\hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} \hyperlink{struct_s_p_i___params_a68d1d610da6a6bf299121b939ef2a352}{transfer\+Callback\+Fxn}
+\item 
+\hyperlink{_s_p_i_8h_a60a7e3d74577b38aa79ea6983362f942}{S\+P\+I\+\_\+\+Mode} \hyperlink{struct_s_p_i___params_abe5eca64adf4ca96bed206a271d9b157}{mode}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i___params_ab3f035044fdbe75adac8c1d729d8cf20}{bit\+Rate}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i___params_a30722b1de5e3b089ecf0c669da42ed2d}{data\+Size}
+\item 
+\hyperlink{_s_p_i_8h_a4e1f33555dfa8147205af5b266f3a489}{S\+P\+I\+\_\+\+Frame\+Format} \hyperlink{struct_s_p_i___params_a67b5ebb8ec72796a0260c427c91cc093}{frame\+Format}
+\item 
+void $\ast$ \hyperlink{struct_s_p_i___params_a909f58a310514d16b4fee1b51033d976}{custom}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I Parameters. 
+
+S\+P\+I Parameters are used to with the \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_p_i_8h_a9c3dd1748332fd6e31c79a6538a71642}{S\+P\+I\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!transfer\+Mode@{transfer\+Mode}}
+\index{transfer\+Mode@{transfer\+Mode}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{transfer\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Transfer\+Mode} S\+P\+I\+\_\+\+Params\+::transfer\+Mode}\label{struct_s_p_i___params_a16dbcc3768a01fb7deae25b48fc0d69c}
+Blocking or Callback mode \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!transfer\+Timeout@{transfer\+Timeout}}
+\index{transfer\+Timeout@{transfer\+Timeout}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{transfer\+Timeout}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+\_\+\+Params\+::transfer\+Timeout}\label{struct_s_p_i___params_a600801907cf396a96825eaf69781913a}
+Transfer timeout in system ticks (Not supported with all implementations \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}}
+\index{transfer\+Callback\+Fxn@{transfer\+Callback\+Fxn}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{transfer\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Callback\+Fxn} S\+P\+I\+\_\+\+Params\+::transfer\+Callback\+Fxn}\label{struct_s_p_i___params_a68d1d610da6a6bf299121b939ef2a352}
+Callback function pointer \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!mode@{mode}}
+\index{mode@{mode}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Mode} S\+P\+I\+\_\+\+Params\+::mode}\label{struct_s_p_i___params_abe5eca64adf4ca96bed206a271d9b157}
+Master or Slave mode \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!bit\+Rate@{bit\+Rate}}
+\index{bit\+Rate@{bit\+Rate}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{bit\+Rate}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+\_\+\+Params\+::bit\+Rate}\label{struct_s_p_i___params_ab3f035044fdbe75adac8c1d729d8cf20}
+S\+P\+I bit rate in Hz \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!data\+Size@{data\+Size}}
+\index{data\+Size@{data\+Size}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{data\+Size}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+\_\+\+Params\+::data\+Size}\label{struct_s_p_i___params_a30722b1de5e3b089ecf0c669da42ed2d}
+S\+P\+I data frame size in bits \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!frame\+Format@{frame\+Format}}
+\index{frame\+Format@{frame\+Format}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{frame\+Format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Frame\+Format} S\+P\+I\+\_\+\+Params\+::frame\+Format}\label{struct_s_p_i___params_a67b5ebb8ec72796a0260c427c91cc093}
+S\+P\+I frame format \index{S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}!custom@{custom}}
+\index{custom@{custom}!S\+P\+I\+\_\+\+Params@{S\+P\+I\+\_\+\+Params}}
+\paragraph[{custom}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+P\+I\+\_\+\+Params\+::custom}\label{struct_s_p_i___params_a909f58a310514d16b4fee1b51033d976}
+Custom argument used by driver implementation 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_8h}{S\+P\+I.\+h}\end{DoxyCompactItemize}

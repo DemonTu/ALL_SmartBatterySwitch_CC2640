@@ -1,0 +1,63 @@
+\subsection{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_i2_c_tiva___h_w_attrs}\index{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}
+
+
+I2\+C\+Tiva Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{struct_i2_c_tiva___h_w_attrs_a12ab64360a0c09bbc1324d0935fcb63a}{base\+Addr}
+\item 
+unsigned int \hyperlink{struct_i2_c_tiva___h_w_attrs_adad44a5cf7a642e83e07b364e7623cb3}{int\+Num}
+\item 
+unsigned int \hyperlink{struct_i2_c_tiva___h_w_attrs_a767c3e84c819ebe48f87e378bb039834}{int\+Priority}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+Tiva Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} I2CTiva_HWAttrs i2cTivaHWAttrs[] = \{
+    \{
+        I2C1\_BASE,
+        INT\_I2C1,
+        ~0               \textcolor{comment}{// Interrupt priority}
+    \},
+    \{
+        I2C3\_BASE,
+        INT\_I2C3,
+        ~0               \textcolor{comment}{// Interrupt priority}
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+Tiva\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_i2_c_tiva___h_w_attrs_a12ab64360a0c09bbc1324d0935fcb63a}
+I2\+C Peripheral\textquotesingle{}s base address \index{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+Tiva\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_i2_c_tiva___h_w_attrs_adad44a5cf7a642e83e07b364e7623cb3}
+I2\+C Peripheral\textquotesingle{}s interrupt vector \index{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!I2\+C\+Tiva\+\_\+\+H\+W\+Attrs@{I2\+C\+Tiva\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int I2\+C\+Tiva\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_i2_c_tiva___h_w_attrs_a767c3e84c819ebe48f87e378bb039834}
+I2\+C Peripheral\textquotesingle{}s interrupt priority 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_tiva_8h}{I2\+C\+Tiva.\+h}\end{DoxyCompactItemize}

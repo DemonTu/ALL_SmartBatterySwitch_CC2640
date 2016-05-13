@@ -1,0 +1,5 @@
+<map id="SPIEUSCIBDMA_Object" name="SPIEUSCIBDMA_Object">
+<area shape="rect" href="$struct_s_p_i___transaction.html" title="A SPI_Transaction data structure is used with SPI_transfer(). It indicates how many SPI_FrameFormat f..." alt="" coords="8,9,128,33" />
+<area shape="rect" href="$struct_s_p_i___config.html" title="SPI Global configuration. " alt="" coords="274,9,362,33" />
+<area shape="rect" href="$struct_s_p_i___fxn_table.html" title="The definition of a SPI function table that contains the required set of functions to control a speci..." alt="" coords="336,187,440,211" />
+</map>

@@ -1,0 +1,15 @@
+package.xdc
+package.xs
+Settings.xdc
+package/gnu.targets.arm.rtsv7M.sch
+package/.vers_g180
+package/.vers_r170
+package/.vers_b160
+package/.xdc-A71
+package/gnu_targets_arm_rtsv7M.java
+package/gnu_targets_arm_rtsv7M.class
+package/package_gnu.targets.arm.rtsv7M.c
+package/package.defs.h
+Settings.h
+package/internal/Settings.xdc.h
+package/gnu.targets.arm.rtsv7M.ccs

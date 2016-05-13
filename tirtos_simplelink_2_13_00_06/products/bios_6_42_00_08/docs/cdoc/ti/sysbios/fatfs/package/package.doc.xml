@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package kind='package' name='ti.sysbios.fatfs' nodoc='0' root='../../../' summary='Contains+FAT+Filesystem+%28FatFS%29+support'>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Erequires%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fpackage.html%22+title%3D%22ti.sysbios%22%3Eti.sysbios%3C%2Fa%3E%3B'/>
+    <line blank='1' always='0'/>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3Eti.sysbios.fatfs%3C%2Fspan%3E%3C%2Fgo%3E+%5B1%2C+0%2C+0%5D+%7B'/>
+    <line tab='0' content='%7D'/>
+    <unit name='FatFS' kind='module' nodoc='0' metaonly='1' summary='Configuration+and+integration+of+the+open-source+FAT+filesystem+project%2C%0A++FatFs%2C+with+SYS%2FBIOS'>
+        <synopSpec>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Ffatfs%2Fpackage.html%22+title%3D%22ti.sysbios.fatfs%22%3Eti.sysbios.fatfs%3C%2Fa%3E%3B'/>
+            <line blank='1' always='0'/>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EFatFS%3C%2Fspan%3E%3C%2Fgo%3E+%7B'/>
+            <line tab='0' content='%7D'/>
+        </synopSpec>
+        <specInfo>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EFatFS%3C%2Fspan%3E%3C%2Fgo%3E+%7B%3Cb%3E%26nbsp%3B%26nbsp%3B...%3C%2Fb%3E'/>
+        </specInfo>
+        <synopMeta>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Evar%3C%2Fspan%3E+FatFS+%3D+%3Cspan+class%3D%22xdoc-kw3%22%3Exdc.useModule%3C%2Fspan%3E%28%3Cspan+class%3D%22xdoc-id%22%3E%27ti.sysbios.fatfs.FatFS%27%3C%2Fspan%3E%29%3B'/>
+        </synopMeta>
+        <docSect name='details'>
+            <docPara content='The+FatFs+project+homepage%3A+http%3A%2F%2Felm-chan.org%2Ffsw%2Fff%2F00index_e.html'/>
+            <docPara content='This+initial+integration+supports+%28only%29+a+simple+RAM+disk.+The+FatFs+source%0A++is+included+and+pre-built%2C+together+with+support+for+SYS%2FBIOS%0A++synchronization.+Also+included+is+an+implementation+of+the+%22device+I%2FO%22%0A++model+for+the+TI+compiler+C+runtime+support+%28RTS%29+library.+This+provides%0A++transparent+support+for+using+the+C+stdio.h+library+functions+%28fopen%2C%0A++fwrite%2C+fclose%29+instead+of+the+raw%2C+project-specific%2C+API+functions%0A++provided+by+FatFs+%28f_open%2C+f_write%29.'/>
+            <docPara content='The+configuration+options+initially+defined+here+are+subject+to+change%0A++as+more+device+driver+support+is+added%2C+such+as+MMC%2FSD%2C+SATA%2C+and+USB.'/>
+            <docPara content='To+incorporate+the+FatFs+functionality+into+an+application%2C+simply+%22use%22%0A++this+module+in+a+SYS%2FBIOS+configuration.+This+will+automatically+generate%0A++a+startup+function+to+%22plug+in%22+the+filesystem+into+the+TI+RTS%2C+and+provide%0A++the+needed+libraries+for+linking.+xgconf+users+can+simply+right-click+on%0A++the+module+icon+and+select+%22Use+Module%22.+Script+users+simply+add+a%0A++xdc.useModule%28%22ti.sysbios.fatfs.FatFS%22%29+to+their+.cfg+file.'/>
+            <docPara content='There+are+currently+three+configuration+options%2C+one+related+to+the+C%0A++RTS+stdio+implementation%2C+and+two+for+the+ramdisk+support.+First%2C+the%0A++fatfsPrefix+parameter+is+used+as+the+namespace+%22prefix%22+for+the+C+RTS%0A++fopen%28%29+function.+See+the+TI+C+Compiler+User%27s+Guide+%28such+as+spru187%29%0A++for+more+details.+Basically%2C+this+prefix+must+be+supplied+as+part+of+the%0A++filename+when+calling+fopen%28%29.+For+example%2C+with+the+default+value+of%0A++%22fat%22%2C+an+application+would+use%3A'/>
+            <docPara content='%3CPRE+class%3D%22Example%22%3E++FILE+*+fp+%3D+fopen%28%22fat%3A%2Fsignal.dat%22%2C+%22w%22%29%3B%0A%3C%2FPRE%3E'/>
+            <docPara content='Note+the+%22%3A%22+as+a+separator.+This+must+be+part+of+the+fopen%28%29+call%2C+but%0A++is+not+specified+as+part+of+the+fatfsPrefix+configuration+parameter.'/>
+            <docPara content='The+other+parameters+control+how+the+RAM+disk+is+configured+into+the%0A++system.+The+ramdiskSymbolName+parameter+can+be+used+to+specify+an%0A++address+of+a+pre-initialized+%28formatted%29+filesystem.+This+would+be%0A++typically+provided+by+linking+in+a+%28large%29+C+data+array.+When+using+this%0A++parameter%2C+the+other+configuration+parameter%2C+ramdiskSize%2C+should+be+set%0A++to+the+size+of+the+data+array+in+units+of+bytes.'/>
+            <docPara content='For+example%2C+assume+a+FAT+filesystem+that+has+been+%22serialized%22%0A++into+the+file+ramdisk.c+that+contains+the+following%3A'/>
+            <docPara content='%3CPRE+class%3D%22Example%22%3E++unsigned+int+ramdiskData%5B32768%5D+%3D+%7B%0A%3C%2FPRE%3E'/>
+            <docPara content='then+the+values+for+these+two+configuration+parameters+should+be%3A'/>
+            <docPara content='%3CPRE+class%3D%22Example%22%3E++var+FatFS+%3D+xdc.useModule%28%22ti.sysbios.fatfs.FatFS%22%29%3B%0A++FatFS.ramdiskSymbolName+%3D+%22ramdiskData%22%3B%0A++FatFS.ramdiskSize+%3D+32768+*+4%3B%0A%3C%2FPRE%3E'/>
+            <docPara content='When+the+ramdiskSymbolName+parameter+is+left+%22empty%22%2C+.ie.%2C+%22%22%2C%0A++then+the+ramdiskSize%0A++parameter+is+used+to+create+an+empty+FAT+filesystem+at+boot+time+of+size%0A++ramdiskSize.'/>
+            <docPara content='User+Defined+Hook+For+get_fattime%28%29'/>
+            <docPara content='The+default+implementation+of+the+get_fattime%28%29+function+uses+the+SYS%2FBIOS%0A++%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%22+title%3D%22ti.sysbios.hal.Seconds%22%3ESeconds%3C%2Fa%3E+module+to+get+the+current+time.%0A++The+user+must+have+called+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%23set%22+title%3D%22ti.sysbios.hal.Seconds.set%22%3ESeconds_set%3C%2Fa%3E%0A++early+on+%28e.g.%2C+from+main%28%29%29+to+initialize+the%0A++%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%22+title%3D%22ti.sysbios.hal.Seconds%22%3ESeconds%3C%2Fa%3E+module%27s+clock+with+the+number+of%0A++seconds+since+1970.++However%2C+it+is+possible+to+override+the+use+of+the%0A++%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%22+title%3D%22ti.sysbios.hal.Seconds%22%3ESeconds%3C%2Fa%3E+module+by+defining+a+hook%0A++function+instead.++This+function+will+then+be+called+from+get_fattime%28%29.'/>
+            <docPara content='A+hook+function+must+be+defined+using+the+following+format%3A'/>
+            <docPara content='%3CPRE+class%3D%22Example%22%3E++++++Int32+%26lt%3BfunctionName%26gt%3B%28Void%29%0A%3C%2FPRE%3E'/>
+            <docPara content='Note+if+the+user+specifies+a+hook+function+in+the+RTSC+configuration%0A++script%2C+but+does+not+define+this+function+in+their+C+code%2C+a+linker+error%0A++will+result.'/>
+        </docSect>
+        <group name='module-wide constants &amp; types'>
+            <decl spacer='1'/>
+            <decl kind='typedef' name='fatTimeHookFxn' anchor='fat.Time.Hook.Fxn' altext='ti.sysbios.fatfs.FatFS.fatTimeHookFxn' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Function+signature+for+user+defined+get_fattime%28%29+hook+function'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Etypedef%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EInt32%3C%2Fspan%3E%26nbsp%3B%28*%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EfatTimeHookFxn%3C%2Fspan%3E%3C%2Fgo%3E%29%28%29%3B'/>
+                </synopSpec>
+                <synopTarg>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Etypedef%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EInt32%3C%2Fspan%3E%26nbsp%3B%28*%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EFatFS_fatTimeHookFxn%3C%2Fspan%3E%3C%2Fgo%3E%29%28%29%3B'/>
+                </synopTarg>
+            </decl>
+        </group>
+        <group name='module-wide config parameters'>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl kind='config' name='fatfsPrefix' anchor='fatfs.Prefix' altext='ti.sysbios.fatfs.FatFS.fatfsPrefix' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='File+name+prefix+for+this+filesystem+for+use+with+TI+C+RTS'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EString%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EfatfsPrefix%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%2522fat%2522%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EFatFS.%3Cspan+class%3D%22xdoc-id%22%3EfatfsPrefix%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EString%3C%2Fspan%3E%3C%2Fi%3E+%2522fat%2522%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='This+prefix+should+be+supplied+as+part+of+the+filename+passed+when%0A+calling+fopen%28%29.++For+example%3A'/>
+                    <docPara content='%3CPRE+class%3D%22Example%22%3E++FILE+*+fp+%3D+fopen%28%22fat%3A%2Fsignal.dat%22%2C+%22w%22%29%3B%0A%3C%2FPRE%3E'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='getFatTimeHook' anchor='get.Fat.Time.Hook' altext='ti.sysbios.fatfs.FatFS.getFatTimeHook' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='User+defined+hook+function+to+return+the+time+from+a+real+time+clock'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Ffatfs%2FFatFS.html%23fat.Time.Hook.Fxn%22+title%3D%22ti.sysbios.fatfs.FatFS.fatTimeHookFxn%22%3EFatFS.fatTimeHookFxn%3C%2Fa%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EgetFatTimeHook%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Enull%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EFatFS.%3Cspan+class%3D%22xdoc-id%22%3EgetFatTimeHook%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EInt32%3C%2Fspan%3E%28*%29%28%29%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Enull%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='By+default%2C+get_fattime%28%29+uses+the+SYS%2FBIOS%0A++%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%22+title%3D%22ti.sysbios.hal.Seconds%22%3ESeconds%3C%2Fa%3E+module+to+get+the+current+time.%0A++By+default%2C+a+hard+coded+time+is+returned+from+get_fattime%28%29.+Although%2C%0A++it+should+not+be+necessary%2C+it+is+possible+to+override+the+use+of%0A++the+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2F..%2Fti%2Fsysbios%2Fhal%2FSeconds.html%22+title%3D%22ti.sysbios.hal.Seconds%22%3ESeconds%3C%2Fa%3E+module+time+with+a+user%0A++defined+hook+function.++This+hook+function+will+then+be+called+from%0A++the+get_fattime%28%29+function.'/>
+                    <docPara content='As+an+example%2C+to+configure+a+hook+function+called+%22myTimeFxn%22%2C+you%0A++would+first+need+to+implement+%22myTimeFxn%22+in+C+to+get+the+time+from%0A++the+real+time+clock+on+your+hardware.++Then%2C+in+your+RTSC+configuration%0A++script%2C+set+%22getFatTimeHook%22+to+point+to+%22myTimeFxn%22%3A'/>
+                    <docPara content='%3CPRE+class%3D%22Example%22%3E++var+FatFS+%3D+xdc.useModule%28%27ti.sysbios.fatfs.FatFS%22%29%3B%0A++FatFS.getFatTimeHook+%3D+%27%26amp%3BmyTimeFxn%27%3B%0A%3C%2FPRE%3E'/>
+                    <docPara content='Note+if+the+user+specifies+a+hook+function+in+the+RTSC+configuration%0A++script%2C+but+does+not+define+this+function+in+their+C+code%2C+a+linker%0A++error+will+result.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='ramdiskDriveId' anchor='ramdisk.Drive.Id' altext='ti.sysbios.fatfs.FatFS.ramdiskDriveId' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Disable+the+ramdisk+or+select+the+drive+ID+for+a+ramdisk+%28-1+to+disable%29'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EInt%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EramdiskDriveId%3C%2Fspan%3E%3C%2Fgo%3E+%3D+-1%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EFatFS.%3Cspan+class%3D%22xdoc-id%22%3EramdiskDriveId%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EInt%3C%2Fspan%3E%3C%2Fi%3E+-1%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='Parameter+used+to+specify+whether+to+create+a+ramdisk+or+not%2C+and+if+so%2C%0A+specify+the+drive+ID+to+use+for+the+ramdisk.++Valid+ID+numbers+are+in+the%0A+set+%5B0%2C+1%2C+2%2C+3%5D.++If+using+a+ramdisk+in+combination+with+other+media%2C%0A+the+user+is+responsible+for+managing+these+drive+IDs+so+that+they+do+not%0A+conflict+with+one+another.'/>
+                    <docPara content='By+default%2C+no+ramdisk+is+created.'/>
+                    <docPara content='-1+%3A+do+not+create+a+ramdisk%0A++0+%3A+create+a+ramdisk+with+drive+ID+0%0A++1+%3A+create+a+ramdisk+with+drive+ID+1%0A++2+%3A+create+a+ramdisk+with+drive+ID+2%0A++3+%3A+create+a+ramdisk+with+drive+ID+3'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='ramdiskSize' anchor='ramdisk.Size' altext='ti.sysbios.fatfs.FatFS.ramdiskSize' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Size+of+the+FAT+filesystem+in+bytes'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EUInt%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EramdiskSize%3C%2Fspan%3E%3C%2Fgo%3E+%3D+512%2B*%2B256%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EFatFS.%3Cspan+class%3D%22xdoc-id%22%3EramdiskSize%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EUInt%3C%2Fspan%3E%3C%2Fi%3E+512%2B*%2B256%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='ramdiskSymbolName' anchor='ramdisk.Symbol.Name' altext='ti.sysbios.fatfs.FatFS.ramdiskSymbolName' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Symbol+name+or+address+of+a+pre-existing+FAT+File+System'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EString%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EramdiskSymbolName%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%2522%2522%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3EFatFS.%3Cspan+class%3D%22xdoc-id%22%3EramdiskSymbolName%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EString%3C%2Fspan%3E%3C%2Fi%3E+%2522%2522%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='The+ramdisk+allows+for+the+loading+of+an+existing+file+system+image%0A+stored+in+an+C+array+or+at+a+particular+address.++The+value+of+this%0A+parameter+should+be+the+name+of+this+array+or+the+address+of+where+the%0A+file+system+image+is+located.+If+left+empty%2C+an+empty+filesystem+will+be%0A+created+at+boot+time.'/>
+                </docSect>
+            </decl>
+        </group>
+        <group name='module-wide data'>
+        </group>
+        <group name='module-wide functions'>
+            <decl spacer='1'/>
+        </group>
+    </unit>
+</package>

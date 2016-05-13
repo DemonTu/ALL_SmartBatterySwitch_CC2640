@@ -1,0 +1,41 @@
+\subsection{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set Struct Reference}
+\label{struct_u_a_r_t_tiva___fxn_set}\index{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set}}
+
+
+Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+Tiva\+\_\+read(). Internal use only.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+Tiva.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool($\ast$ \hyperlink{struct_u_a_r_t_tiva___fxn_set_ad66c0a54b44d0644b62d423d9509f00b}{read\+Isr\+Fxn} )(\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\item 
+int($\ast$ \hyperlink{struct_u_a_r_t_tiva___fxn_set_a2d8d82ae7ddead58689077955772c5fa}{read\+Task\+Fxn} )(\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Complement set of read functions to be used by the U\+A\+R\+T I\+S\+R and U\+A\+R\+T\+Tiva\+\_\+read(). Internal use only. 
+
+These functions should not be used by the user and are solely intended for the U\+A\+R\+T\+Tiva driver. The \hyperlink{struct_u_a_r_t_tiva___fxn_set}{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set} is a pair of complement functions that are design to operate with one another in a task context and in an I\+S\+R context. The read\+Task\+Fxn is called by U\+A\+R\+T\+Tiva\+\_\+read() to drain a circular buffer, whereas the read\+Isr\+Fxn is used by the U\+A\+R\+T\+Tiva\+\_\+hwi\+Int\+Fxn to fill up the circular buffer.
+
+read\+Task\+Fxn\+: Function called by U\+A\+R\+T read These variables are set and avilalable for use to the read\+Task\+Fxn. object-\/$>$read\+Buf = buffer; //\+Pointer to a user buffer object-\/$>$read\+Size = size; //\+Desired no. of bytes to read object-\/$>$read\+Count = size; //\+Remaining no. of bytes to read
+
+read\+Isr\+Fxn\+: The required I\+S\+R counterpart to read\+Task\+Fxn 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set}!read\+Isr\+Fxn@{read\+Isr\+Fxn}}
+\index{read\+Isr\+Fxn@{read\+Isr\+Fxn}!U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set}}
+\paragraph[{read\+Isr\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}bool($\ast$ U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set\+::read\+Isr\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{struct_u_a_r_t_tiva___fxn_set_ad66c0a54b44d0644b62d423d9509f00b}
+\index{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set}!read\+Task\+Fxn@{read\+Task\+Fxn}}
+\index{read\+Task\+Fxn@{read\+Task\+Fxn}!U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set@{U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set}}
+\paragraph[{read\+Task\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ U\+A\+R\+T\+Tiva\+\_\+\+Fxn\+Set\+::read\+Task\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{struct_u_a_r_t_tiva___fxn_set_a2d8d82ae7ddead58689077955772c5fa}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_tiva_8h}{U\+A\+R\+T\+Tiva.\+h}\end{DoxyCompactItemize}

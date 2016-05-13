@@ -1,0 +1,410 @@
+\subsection{G\+P\+I\+O.\+h File Reference}
+\label{_g_p_i_o_8h}\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+
+
+\subsubsection{Detailed Description}
+G\+P\+I\+O driver. 
+
+============================================================================
+
+The G\+P\+I\+O header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/GPIO.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The G\+P\+I\+O module allows you to manage General Purpose I/\+O pins via simple and portable A\+P\+Is. G\+P\+I\+O pin behaviour can be configured completely statically, or dynamically defined at runtime.
+
+The application is required to supply a device specific G\+P\+I\+O\+X\+X\+X\+\_\+\+Config structure to the module. This structure communicates to the G\+P\+I\+O module how to configure the pins that will be used by the application (See the description of G\+P\+I\+O\+\_\+\+Pin\+Config).
+
+The application is required to call \hyperlink{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}{G\+P\+I\+O\+\_\+init()}. This function will initialize all the G\+P\+I\+O pins defined in the G\+P\+I\+O\+\_\+\+Pin\+Config table to the configurations specified. Once that is completed the other A\+P\+Is can be used to access the pins.
+
+Asserts are used to verify that the driver has been initialized and to validate pin indexes within the various A\+P\+Is.
+
+See the device specific G\+P\+I\+O header file for configuration details. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for G\+P\+I\+O.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=85pt]{_g_p_i_o_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_g_p_i_o_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Macros}
+\begin{Indent}{\bf G\+P\+I\+O\+\_\+\+Pin\+Config pin direction configuration macros}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_i_o_8h_aad0c4b9c093f1d57fd03061b7456193a}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T}~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Pin is an output. $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ac52528c42a8eb3be193f49de5ed7d820}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D}~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is not Open Drain $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ae660060d38901c2370d8f104fbb842a2}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L}~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a16cfdcae58be5f77932b36f43e7c1d2f}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U}~(((uint32\+\_\+t) 4) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain w/ pull up $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_af4e7be1d009ff2c25a048ab7fe401d88}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D}~(((uint32\+\_\+t) 6) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain w/ pull dn $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ae86eb6dc677c962a9ad94bdad6752dc0}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H}~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+B\+I\+T) /$\ast$! Set pin\textquotesingle{}s output to 1. $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ad4fd3be9a7bec74d862cb1caecc5d4be}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W}~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+B\+I\+T) /$\ast$! Set pin\textquotesingle{}s output to 0. $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a2917f431dff7eb7f5559643bd8df251d}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W}~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ac1d2c5bf8f2359d26d28abc8aa393b3a}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D}~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a25609d59d41f081ae9759d5862dc9dd9}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H}~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a874e34de3bef2d9415b4311dd6bed234}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T}~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Pin is an input. $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ad2e8d27bfc96ef0de4dd35db10055412}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has no P\+U/P\+D $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a4fb7b60751481b6988049fe8fa94a7d7}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U}~(((uint32\+\_\+t) 3) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has Pullup $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ad09e6716ad1b54cb6509b8c92a6567c6}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D}~(((uint32\+\_\+t) 5) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has Pulldown $\ast$/
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf G\+P\+I\+O\+\_\+\+Pin\+Config pin interrupt configuration macros}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a666c6995ed5737b43a707d1cacd9fe69}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E}~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! No Interrupt $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a7a69ee26049dc2f8b5059b00a24b9f74}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G}~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on falling edge $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a4a9f53e525d1f1659b485274d08ff91f}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G}~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on rising edge $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a0829900a2dd949219edc6ddc8d928f3c}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}~(((uint32\+\_\+t) 3) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on both edges $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ab0f05c331bb66230f175e574d0d317a6}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W}~(((uint32\+\_\+t) 4) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on low level $\ast$/
+\item 
+\#define \hyperlink{_g_p_i_o_8h_a669d2e840e0f934426670a069a5efe0e}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H}~(((uint32\+\_\+t) 5) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on high level $\ast$/
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf Special G\+P\+I\+O\+\_\+\+Pin\+Config configuration macros}\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_g_p_i_o_8h_ac8df4b49e09cb612275ed7d00e8cc1cf}{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y}~(((uint32\+\_\+t) 1) $<$$<$ 27)                  /$\ast$! configure interrupt only $\ast$/
+\begin{DoxyCompactList}\small\item\em \textquotesingle{}Or\textquotesingle{} in this G\+P\+I\+O\+\_\+\+Pin\+Config definition to inform \hyperlink{_g_p_i_o_8h_ae13b9ae70c5d2993d1ac932a91c1f1fa}{G\+P\+I\+O\+\_\+set\+Config()} to only configure the interrupt attributes of a G\+P\+I\+O input pin. \end{DoxyCompactList}\item 
+\#define \hyperlink{_g_p_i_o_8h_a0974eb3af57b7bccef9ac749d4cf23a7}{G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G}~0x7fff0000                              /$\ast$! Do not configure this Pin $\ast$/
+\begin{DoxyCompactList}\small\item\em Use this G\+P\+I\+O\+\_\+\+Pin\+Config definition to inform \hyperlink{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}{G\+P\+I\+O\+\_\+init()} N\+O\+T to configure the corresponding pin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint32\+\_\+t \hyperlink{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}{G\+P\+I\+O\+\_\+\+Pin\+Config}
+\begin{DoxyCompactList}\small\item\em G\+P\+I\+O pin configuration settings. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}{G\+P\+I\+O\+\_\+\+Callback\+Fxn}) (void)
+\begin{DoxyCompactList}\small\item\em G\+P\+I\+O callback function type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_g_p_i_o_8h_ad890aa2518ec2f4c88419dc4036b6197}{G\+P\+I\+O\+\_\+clear\+Int} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Clear a G\+P\+I\+O pin interrupt flag. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_a37f548f4dabd9ee12e3ba4805ce1680e}{G\+P\+I\+O\+\_\+disable\+Int} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Disable a G\+P\+I\+O pin interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_a3192dd50a71f491f45bb8c5d4ba384dc}{G\+P\+I\+O\+\_\+enable\+Int} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Enable a G\+P\+I\+O pin interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}{G\+P\+I\+O\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the G\+P\+I\+O module. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_g_p_i_o_8h_a200db4ea3141abfc9c9a6ca202c2e2e4}{G\+P\+I\+O\+\_\+read} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Reads the value of a G\+P\+I\+O pin. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_adde3a4e1f73a9c9971f91e17d75a2e86}{G\+P\+I\+O\+\_\+set\+Callback} (unsigned int index, \hyperlink{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}{G\+P\+I\+O\+\_\+\+Callback\+Fxn} callback)
+\begin{DoxyCompactList}\small\item\em Bind a callback function to a G\+P\+I\+O pin interrupt. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_ae13b9ae70c5d2993d1ac932a91c1f1fa}{G\+P\+I\+O\+\_\+set\+Config} (unsigned int index, \hyperlink{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}{G\+P\+I\+O\+\_\+\+Pin\+Config} pin\+Config)
+\begin{DoxyCompactList}\small\item\em Configure the gpio pin. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_a5653fbc35078d9140ede8afef074d878}{G\+P\+I\+O\+\_\+toggle} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Toggles the current state of a G\+P\+I\+O. \end{DoxyCompactList}\item 
+void \hyperlink{_g_p_i_o_8h_a9ff149a7866241bb29547ead2d327b70}{G\+P\+I\+O\+\_\+write} (unsigned int index, unsigned int value)
+\begin{DoxyCompactList}\small\item\em Writes the value to a G\+P\+I\+O pin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+P\+U\+T~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Pin is an output. $\ast$/}\label{_g_p_i_o_8h_aad0c4b9c093f1d57fd03061b7456193a}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+D~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is not Open Drain $\ast$/}\label{_g_p_i_o_8h_ac52528c42a8eb3be193f49de5ed7d820}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+N\+O\+P\+U\+L\+L~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain $\ast$/}\label{_g_p_i_o_8h_ae660060d38901c2370d8f104fbb842a2}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+U~(((uint32\+\_\+t) 4) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain w/ pull up $\ast$/}\label{_g_p_i_o_8h_a16cfdcae58be5f77932b36f43e7c1d2f}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+O\+D\+\_\+\+P\+D~(((uint32\+\_\+t) 6) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Output pin is Open Drain w/ pull dn $\ast$/}\label{_g_p_i_o_8h_af4e7be1d009ff2c25a048ab7fe401d88}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+H\+I\+G\+H~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+B\+I\+T) /$\ast$! Set pin\textquotesingle{}s output to 1. $\ast$/}\label{_g_p_i_o_8h_ae86eb6dc677c962a9ad94bdad6752dc0}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+L\+O\+W~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+B\+I\+T) /$\ast$! Set pin\textquotesingle{}s output to 0. $\ast$/}\label{_g_p_i_o_8h_ad4fd3be9a7bec74d862cb1caecc5d4be}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+L\+O\+W~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)}\label{_g_p_i_o_8h_a2917f431dff7eb7f5559643bd8df251d}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+M\+E\+D~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)}\label{_g_p_i_o_8h_ac1d2c5bf8f2359d26d28abc8aa393b3a}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+\_\+\+H\+I\+G\+H~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+O\+U\+T\+\_\+\+S\+T\+R\+E\+N\+G\+T\+H\+\_\+\+L\+S\+B)}\label{_g_p_i_o_8h_a25609d59d41f081ae9759d5862dc9dd9}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+P\+U\+T~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Pin is an input. $\ast$/}\label{_g_p_i_o_8h_a874e34de3bef2d9415b4311dd6bed234}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+N\+O\+P\+U\+L\+L~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has no P\+U/P\+D $\ast$/}\label{_g_p_i_o_8h_ad2e8d27bfc96ef0de4dd35db10055412}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+U~(((uint32\+\_\+t) 3) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has Pullup $\ast$/}\label{_g_p_i_o_8h_a4fb7b60751481b6988049fe8fa94a7d7}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+P\+D~(((uint32\+\_\+t) 5) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+O\+\_\+\+L\+S\+B) /$\ast$! Input pin has Pulldown $\ast$/}\label{_g_p_i_o_8h_ad09e6716ad1b54cb6509b8c92a6567c6}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+N\+O\+N\+E~(((uint32\+\_\+t) 0) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! No Interrupt $\ast$/}\label{_g_p_i_o_8h_a666c6995ed5737b43a707d1cacd9fe69}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+F\+A\+L\+L\+I\+N\+G~(((uint32\+\_\+t) 1) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on falling edge $\ast$/}\label{_g_p_i_o_8h_a7a69ee26049dc2f8b5059b00a24b9f74}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+R\+I\+S\+I\+N\+G~(((uint32\+\_\+t) 2) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on rising edge $\ast$/}\label{_g_p_i_o_8h_a4a9f53e525d1f1659b485274d08ff91f}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+B\+O\+T\+H\+\_\+\+E\+D\+G\+E\+S~(((uint32\+\_\+t) 3) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on both edges $\ast$/}\label{_g_p_i_o_8h_a0829900a2dd949219edc6ddc8d928f3c}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+L\+O\+W~(((uint32\+\_\+t) 4) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on low level $\ast$/}\label{_g_p_i_o_8h_ab0f05c331bb66230f175e574d0d317a6}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+H\+I\+G\+H~(((uint32\+\_\+t) 5) $<$$<$ G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+T\+\_\+\+L\+S\+B)    /$\ast$! Interrupt on high level $\ast$/}\label{_g_p_i_o_8h_a669d2e840e0f934426670a069a5efe0e}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y}}
+\index{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y@{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+C\+F\+G\+\_\+\+I\+N\+\_\+\+I\+N\+T\+\_\+\+O\+N\+L\+Y~(((uint32\+\_\+t) 1) $<$$<$ 27)                  /$\ast$! configure interrupt only $\ast$/}\label{_g_p_i_o_8h_ac8df4b49e09cb612275ed7d00e8cc1cf}
+
+
+\textquotesingle{}Or\textquotesingle{} in this G\+P\+I\+O\+\_\+\+Pin\+Config definition to inform \hyperlink{_g_p_i_o_8h_ae13b9ae70c5d2993d1ac932a91c1f1fa}{G\+P\+I\+O\+\_\+set\+Config()} to only configure the interrupt attributes of a G\+P\+I\+O input pin. 
+
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G@{G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G}}
+\index{G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G@{G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\+P\+I\+O\+\_\+\+D\+O\+\_\+\+N\+O\+T\+\_\+\+C\+O\+N\+F\+I\+G~0x7fff0000                              /$\ast$! Do not configure this Pin $\ast$/}\label{_g_p_i_o_8h_a0974eb3af57b7bccef9ac749d4cf23a7}
+
+
+Use this G\+P\+I\+O\+\_\+\+Pin\+Config definition to inform \hyperlink{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}{G\+P\+I\+O\+\_\+init()} N\+O\+T to configure the corresponding pin. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+Pin\+Config@{G\+P\+I\+O\+\_\+\+Pin\+Config}}
+\index{G\+P\+I\+O\+\_\+\+Pin\+Config@{G\+P\+I\+O\+\_\+\+Pin\+Config}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+Pin\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\+\_\+t {\bf G\+P\+I\+O\+\_\+\+Pin\+Config}}\label{_g_p_i_o_8h_a7f5d979226db633309b3fdc0f4a8aef6}
+
+
+G\+P\+I\+O pin configuration settings. 
+
+The upper 16 bits of the 32 bit Pin\+Config is reserved for pin configuration settings.
+
+The lower 16 bits are reserved for device-\/specific port/pin identifications \index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+\+Callback\+Fxn@{G\+P\+I\+O\+\_\+\+Callback\+Fxn}}
+\index{G\+P\+I\+O\+\_\+\+Callback\+Fxn@{G\+P\+I\+O\+\_\+\+Callback\+Fxn}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+\+Callback\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ G\+P\+I\+O\+\_\+\+Callback\+Fxn) (void)}\label{_g_p_i_o_8h_a033bc79f1a530381da2b74711e6b8971}
+
+
+G\+P\+I\+O callback function type. 
+
+
+
+\subsubsection{Function Documentation}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+clear\+Int@{G\+P\+I\+O\+\_\+clear\+Int}}
+\index{G\+P\+I\+O\+\_\+clear\+Int@{G\+P\+I\+O\+\_\+clear\+Int}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+clear\+Int}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+clear\+Int (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_ad890aa2518ec2f4c88419dc4036b6197}
+
+
+Clear a G\+P\+I\+O pin interrupt flag. 
+
+Clears the G\+P\+I\+O interrupt for the specified index.
+
+Note\+: It is not necessary to call this A\+P\+I within a callback assigned to a pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+disable\+Int@{G\+P\+I\+O\+\_\+disable\+Int}}
+\index{G\+P\+I\+O\+\_\+disable\+Int@{G\+P\+I\+O\+\_\+disable\+Int}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+disable\+Int}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+disable\+Int (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a37f548f4dabd9ee12e3ba4805ce1680e}
+
+
+Disable a G\+P\+I\+O pin interrupt. 
+
+Disables interrupts for the specified G\+P\+I\+O index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+enable\+Int@{G\+P\+I\+O\+\_\+enable\+Int}}
+\index{G\+P\+I\+O\+\_\+enable\+Int@{G\+P\+I\+O\+\_\+enable\+Int}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+enable\+Int}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+enable\+Int (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a3192dd50a71f491f45bb8c5d4ba384dc}
+
+
+Enable a G\+P\+I\+O pin interrupt. 
+
+Enables G\+P\+I\+O interrupts for the selected index to occur.
+
+Note\+: Prior to enabling a G\+P\+I\+O pin interrupt, make sure that a corresponding callback function has been provided. Use the \hyperlink{_g_p_i_o_8h_adde3a4e1f73a9c9971f91e17d75a2e86}{G\+P\+I\+O\+\_\+set\+Callback()} A\+P\+I for this purpose at runtime. Alternatively, the callback function can be statically configured in the G\+P\+I\+O\+\_\+\+Callback\+Fxn array provided.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+init@{G\+P\+I\+O\+\_\+init}}
+\index{G\+P\+I\+O\+\_\+init@{G\+P\+I\+O\+\_\+init}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a7aaec489dca5ac4d278d2eb3ae38a2d2}
+
+
+Initializes the G\+P\+I\+O module. 
+
+The pins defined in the application-\/provided {\itshape G\+P\+I\+O\+X\+X\+X\+\_\+config} structure are initialized accordingly.
+
+\begin{DoxyPrecond}{Precondition}
+The G\+P\+I\+O\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other G\+P\+I\+O driver A\+P\+Is. 
+\end{DoxyPrecond}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+read@{G\+P\+I\+O\+\_\+read}}
+\index{G\+P\+I\+O\+\_\+read@{G\+P\+I\+O\+\_\+read}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int G\+P\+I\+O\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a200db4ea3141abfc9c9a6ca202c2e2e4}
+
+
+Reads the value of a G\+P\+I\+O pin. 
+
+The value returned will either be zero or one depending on the state of the pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or 1, depending on the state of the pin. 
+\end{DoxyReturn}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+set\+Callback@{G\+P\+I\+O\+\_\+set\+Callback}}
+\index{G\+P\+I\+O\+\_\+set\+Callback@{G\+P\+I\+O\+\_\+set\+Callback}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+set\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+set\+Callback (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf G\+P\+I\+O\+\_\+\+Callback\+Fxn}}]{callback}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_adde3a4e1f73a9c9971f91e17d75a2e86}
+
+
+Bind a callback function to a G\+P\+I\+O pin interrupt. 
+
+Associate a callback function with a particular G\+P\+I\+O pin interrupt.
+
+Callbacks can be changed at any time, making it easy to switch between efficient, state-\/specific interrupt handlers.
+
+Note\+: The callback function is called within the context of an interrupt handler.
+
+Note\+: This A\+P\+I does not enable the G\+P\+I\+O pin interrupt. Use \hyperlink{_g_p_i_o_8h_a3192dd50a71f491f45bb8c5d4ba384dc}{G\+P\+I\+O\+\_\+enable\+Int()} and \hyperlink{_g_p_i_o_8h_a37f548f4dabd9ee12e3ba4805ce1680e}{G\+P\+I\+O\+\_\+disable\+Int()} to enable and disable the pin interrupt as necessary.
+
+Note\+: it is not necessary to call \hyperlink{_g_p_i_o_8h_ad890aa2518ec2f4c88419dc4036b6197}{G\+P\+I\+O\+\_\+clear\+Int()} within a callback. That operation is performed internally before the callback is invoked.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+{\em callback} & address of the callback function \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+set\+Config@{G\+P\+I\+O\+\_\+set\+Config}}
+\index{G\+P\+I\+O\+\_\+set\+Config@{G\+P\+I\+O\+\_\+set\+Config}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+set\+Config}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+set\+Config (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf G\+P\+I\+O\+\_\+\+Pin\+Config}}]{pin\+Config}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_ae13b9ae70c5d2993d1ac932a91c1f1fa}
+
+
+Configure the gpio pin. 
+
+Dynamically configure a gpio pin to a device specific setting. For many applications, the pin configurations provided in the static G\+P\+I\+O\+\_\+\+Pin\+Config array is sufficient.
+
+For input pins with interrupt configurations, a corresponding interrupt object will be created as needed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+{\em pin\+Config} & device specific pin configuration settings \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+toggle@{G\+P\+I\+O\+\_\+toggle}}
+\index{G\+P\+I\+O\+\_\+toggle@{G\+P\+I\+O\+\_\+toggle}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+toggle}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+toggle (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a5653fbc35078d9140ede8afef074d878}
+
+
+Toggles the current state of a G\+P\+I\+O. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+\end{DoxyParams}
+\index{G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}!G\+P\+I\+O\+\_\+write@{G\+P\+I\+O\+\_\+write}}
+\index{G\+P\+I\+O\+\_\+write@{G\+P\+I\+O\+\_\+write}!G\+P\+I\+O.\+h@{G\+P\+I\+O.\+h}}
+\paragraph[{G\+P\+I\+O\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{unsigned int}]{value}
+\end{DoxyParamCaption}
+)}\label{_g_p_i_o_8h_a9ff149a7866241bb29547ead2d327b70}
+
+
+Writes the value to a G\+P\+I\+O pin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & G\+P\+I\+O index \\
+\hline
+{\em value} & must be either 0 or 1 \\
+\hline
+\end{DoxyParams}

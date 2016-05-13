@@ -1,0 +1,8 @@
+<map id="LCD_Config" name="LCD_Config">
+<area shape="rect" href="$struct_l_c_d___h_w_attrs.html" title="LCD Hardware attributes. " alt="" coords="17,188,121,212" />
+<area shape="rect" href="$struct_l_c_d___command.html" title="Format of LCD commands used by the LCD controller. " alt="" coords="8,9,125,33" />
+<area shape="rect" href="$struct_l_c_d___object.html" title="LCD Object. " alt="" coords="148,188,241,212" />
+<area shape="rect" href="$struct_l_c_d___buffer.html" title="LCD_Buffer used to store data to be printed on the LCD display. " alt="" coords="149,9,240,33" />
+<area shape="rect" href="$struct_s_p_i___config.html" title="SPI Global configuration. " alt="" coords="337,9,425,33" />
+<area shape="rect" href="$struct_s_p_i___fxn_table.html" title="The definition of a SPI function table that contains the required set of functions to control a speci..." alt="" coords="398,188,502,212" />
+</map>

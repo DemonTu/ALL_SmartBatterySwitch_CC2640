@@ -1,0 +1,59 @@
+\subsection{I2\+S\+\_\+\+Config Struct Reference}
+\label{struct_i2_s___config}\index{I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}}
+
+
+I2\+S Global configuration.  
+
+
+
+
+{\ttfamily \#include $<$I2\+S.\+h$>$}
+
+
+
+Collaboration diagram for I2\+S\+\_\+\+Config\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{struct_i2_s___config__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_i2_s___fxn_table}{I2\+S\+\_\+\+Fxn\+Table} const $\ast$ \hyperlink{struct_i2_s___config_a99407a28338a873ebf0ccbe18b7cfd24}{fxn\+Table\+Ptr}
+\item 
+void $\ast$ \hyperlink{struct_i2_s___config_aa7e7ee65f8c52e2ca5de1cfb7fea1276}{object}
+\item 
+void const $\ast$ \hyperlink{struct_i2_s___config_a6ebd7b14353f66a0e0d1c406ff5b481e}{hw\+Attrs}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+S Global configuration. 
+
+The \hyperlink{struct_i2_s___config}{I2\+S\+\_\+\+Config} structure contains a set of pointers used to characterize the I2\+S driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_i2_s_8h_a79e8fdf40ee80c49b2cac09a3e428a82}{I2\+S\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Field Documentation}
+\index{I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}!fxn\+Table\+Ptr@{fxn\+Table\+Ptr}}
+\index{fxn\+Table\+Ptr@{fxn\+Table\+Ptr}!I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}}
+\paragraph[{fxn\+Table\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Fxn\+Table} const$\ast$ I2\+S\+\_\+\+Config\+::fxn\+Table\+Ptr}\label{struct_i2_s___config_a99407a28338a873ebf0ccbe18b7cfd24}
+Pointer to a table of a driver-\/specific implementation of I2\+S functions \index{I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}!object@{object}}
+\index{object@{object}!I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}}
+\paragraph[{object}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+S\+\_\+\+Config\+::object}\label{struct_i2_s___config_aa7e7ee65f8c52e2ca5de1cfb7fea1276}
+Pointer to a driver specific data object \index{I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}!hw\+Attrs@{hw\+Attrs}}
+\index{hw\+Attrs@{hw\+Attrs}!I2\+S\+\_\+\+Config@{I2\+S\+\_\+\+Config}}
+\paragraph[{hw\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}void const$\ast$ I2\+S\+\_\+\+Config\+::hw\+Attrs}\label{struct_i2_s___config_a6ebd7b14353f66a0e0d1c406ff5b481e}
+Pointer to a driver specific hardware attributes structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h}{I2\+S.\+h}\end{DoxyCompactItemize}

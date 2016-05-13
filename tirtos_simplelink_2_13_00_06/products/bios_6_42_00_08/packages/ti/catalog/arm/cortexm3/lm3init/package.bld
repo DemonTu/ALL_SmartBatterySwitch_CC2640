@@ -1,0 +1,21 @@
+/*
+ *  ======== package.bld ========
+ *
+ *! Revision History
+ *! ================
+ *! 03-Jun-2011 sg      removed setting of profile
+ *! 10-Aug-2009 agd     created
+ */
+
+Pkg.otherFiles = [
+    'Boot.c', 'Boot.xml', '_sysctl.h', 'package.bld'
+];
+
+Pkg.attrs.relScript = null;
+
+for (var i = 0; i < Build.targets.length; i++) {
+    var targ = Build.targets[i];
+    if (targ.isa == 'v7M' || targ.isa == 'v7M4') {
+        Pkg.addLibrary("lib/Boot", targ).addObjects(["Boot"]);
+    }
+}

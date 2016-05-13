@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<descTool>
+    <toolOptions>
+        <runGUI>1</runGUI>
+        <workspace>C:\Users\a0272858\Desktop\hidk</workspace>
+        <projectName>n/a</projectName>
+    </toolOptions>
+    <toolConfig>
+        <treeConfig>
+            <MSP mcuFam="0">
+                <mspConfig>
+                    <disableXtalOnSus>1</disableXtalOnSus>
+                    <XT2OscFreq>14</XT2OscFreq>
+                    <DMAChannel>1</DMAChannel>
+                    <bypassXT2>0</bypassXT2>
+                    <useSYSBIOS>1</useSYSBIOS>
+                    <driveVBUSfromExtSupp>0</driveVBUSfromExtSupp>
+                </mspConfig>
+                <USBDevice>
+                    <deviceProp>
+                        <vid>0x2047</vid>
+                        <pid>0xbeef</pid>
+                        <vndStr>Texas Instruments</vndStr>
+                        <prodStr>MSP430-Keyboard Example</prodStr>
+                        <devRelNum>0x200</devRelNum>
+                        <useSerNum>1</useSerNum>
+                    </deviceProp>
+                    <config>
+                        <configParam>
+                            <selfPowered>0</selfPowered>
+                            <remWkupSup>0</remWkupSup>
+                            <maxPowDrain>0</maxPowDrain>
+                            <configStr>MSP430 USB</configStr>
+                        </configParam>
+                        <interfaces>
+                            <hidInterface intString="HID Interface">
+                                <hidParams>
+                                    <pollIntv>15</pollIntv>
+                                    <hidRepType>1</hidRepType>
+                                </hidParams>
+                            </hidInterface>
+                        </interfaces>
+                    </config>
+                </USBDevice>
+            </MSP>
+        </treeConfig>
+    </toolConfig>
+    <codeGeneration generate="0" generateINF="0"/>
+</descTool>

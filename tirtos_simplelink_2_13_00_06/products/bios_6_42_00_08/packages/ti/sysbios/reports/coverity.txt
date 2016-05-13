@@ -1,0 +1,1097 @@
+==== Results for ti.sysbios.family.arm.a8.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.a8/lib/sysbios/debug/ti.sysbios.family.arm.a8.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 7339
+Functions analyzed             : 17
+Paths analyzed                 : 658
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a15.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.a15/lib/sysbios/debug/ti.sysbios.family.arm.a15.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 7
+Total LoC input to cov-analyze : 16463
+Functions analyzed             : 33
+Paths analyzed                 : 675
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a8.ti81xx.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.a8.ti81xx/lib/sysbios/debug/ti.sysbios.family.arm.a8.ti81xx.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 2955
+Functions analyzed             : 2
+Paths analyzed                 : 2
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a8.intcps.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.a8.intcps/lib/sysbios/debug/ti.sysbios.family.arm.a8.intcps.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 9805
+Functions analyzed             : 49
+Paths analyzed                 : 324
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.family.arm/lib/sysbios/debug/ti.sysbios.family.arm.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 10703
+Functions analyzed             : 6
+Paths analyzed                 : 14
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a15.tci66xx.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.a15.tci66xx/lib/sysbios/debug/ti.sysbios.family.arm.a15.tci66xx.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 9144
+Functions analyzed             : 17
+Paths analyzed                 : 147
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a15.smp.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.a15.smp/lib/sysbios/debug/ti.sysbios.family.arm.a15.smp.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 17989
+Functions analyzed             : 27
+Paths analyzed                 : 236
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.a8.omap3430.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.a8.omap3430/lib/sysbios/debug/ti.sysbios.family.arm.a8.omap3430.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 2993
+Functions analyzed             : 2
+Paths analyzed                 : 3
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.cc26xx.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.cc26xx/lib/sysbios/debug/ti.sysbios.family.arm.cc26xx.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 20
+Total LoC input to cov-analyze : 29423
+Functions analyzed             : 114
+Paths analyzed                 : 734
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../coverity/ti.sysbios/lib/sysbios/debug/ti.sysbios.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 4952
+Functions analyzed             : 6
+Paths analyzed                 : 8
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../coverity/ti.sysbios/lib/sysbios/debug/ti.sysbios.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 4947
+Functions analyzed             : 6
+Paths analyzed                 : 8
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../coverity/ti.sysbios/lib/sysbios/debug/ti.sysbios.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5044
+Functions analyzed             : 6
+Paths analyzed                 : 8
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../coverity/ti.sysbios/lib/sysbios/debug/ti.sysbios.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 7075
+Functions analyzed             : 6
+Paths analyzed                 : 8
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../coverity/ti.sysbios/lib/sysbios/debug/ti.sysbios.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 8821
+Functions analyzed             : 6
+Paths analyzed                 : 8
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.ducati.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.ducati/lib/sysbios/debug/ti.sysbios.family.arm.ducati.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 9
+Total LoC input to cov-analyze : 10744
+Functions analyzed             : 58
+Paths analyzed                 : 1164
+Defect occurrences found       : 1 NO_EFFECT
+
+Error: NO_EFFECT:
+/db/vtree/library/trees/avala/avala-x08/src/ti/sysbios/family/arm/ducati/GateSmp.c:98:
+self_assign: Assignment operation "*gateBytePtr = *gateBytePtr" has no effect.
+/db/vtree/library/trees/avala/avala-x08/src/ti/sysbios/family/arm/ducati/GateSmp.c:99:
+self_assign: Assignment operation "*gateBytePtr = *gateBytePtr" has no effect.
+/db/vtree/library/trees/avala/avala-x08/src/ti/sysbios/family/arm/ducati/GateSmp.c:100:
+self_assign: Assignment operation "*gateBytePtr = *gateBytePtr" has no effect.
+ 
+==== Results for ti.sysbios.family.arm.ducati.dm8148.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.ducati.dm8148/lib/sysbios/debug/ti.sysbios.family.arm.ducati.dm8148.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5621
+Functions analyzed             : 2
+Paths analyzed                 : 278
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.ducati.omap4430.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.ducati.omap4430/lib/sysbios/debug/ti.sysbios.family.arm.ducati.omap4430.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 12956
+Functions analyzed             : 2
+Paths analyzed                 : 1050
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.ducati.smp.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.ducati.smp/lib/sysbios/debug/ti.sysbios.family.arm.ducati.smp.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 13624
+Functions analyzed             : 5
+Paths analyzed                 : 1270
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.f28m35x.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.f28m35x/lib/sysbios/debug/ti.sysbios.family.arm.f28m35x.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 6127
+Functions analyzed             : 5
+Paths analyzed                 : 5
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.exc.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.exc/lib/sysbios/debug/ti.sysbios.family.arm.exc.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 12096
+Functions analyzed             : 3
+Paths analyzed                 : 140
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.gic.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.gic/lib/sysbios/debug/ti.sysbios.family.arm.gic.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 14369
+Functions analyzed             : 41
+Paths analyzed                 : 593
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.lm3.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.lm3/lib/sysbios/debug/ti.sysbios.family.arm.lm3.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 9115
+Functions analyzed             : 39
+Paths analyzed                 : 246
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.m3.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.m3/lib/sysbios/debug/ti.sysbios.family.arm.m3.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 7
+Total LoC input to cov-analyze : 12253
+Functions analyzed             : 90
+Paths analyzed                 : 844
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.systimer.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.systimer/lib/sysbios/debug/ti.sysbios.family.arm.systimer.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 10866
+Functions analyzed             : 37
+Paths analyzed                 : 587
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.v7a.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.v7a/lib/sysbios/debug/ti.sysbios.family.arm.v7a.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 6884
+Functions analyzed             : 41
+Paths analyzed                 : 755
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.v7a.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.v7a/lib/sysbios/debug/ti.sysbios.family.arm.v7a.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 12274
+Functions analyzed             : 58
+Paths analyzed                 : 772
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.v7a.smp.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../../coverity/ti.sysbios.family.arm.v7a.smp/lib/sysbios/debug/ti.sysbios.family.arm.v7a.smp.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 7894
+Functions analyzed             : 9
+Paths analyzed                 : 107
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arm.xen.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.arm.xen/lib/sysbios/debug/ti.sysbios.family.arm.xen.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 9548
+Functions analyzed             : 6
+Paths analyzed                 : 7
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.arp32.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.family.arp32/lib/sysbios/debug/ti.sysbios.family.arp32.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 7
+Total LoC input to cov-analyze : 12679
+Functions analyzed             : 83
+Paths analyzed                 : 1795
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c62.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.family.c62/lib/sysbios/debug/ti.sysbios.family.c62.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 7212
+Functions analyzed             : 6
+Paths analyzed                 : 14
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c64p.primus.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.c64p.primus/lib/sysbios/debug/ti.sysbios.family.c64p.primus.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 2701
+Functions analyzed             : 1
+Paths analyzed                 : 2
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c64p.omap3430.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.c64p.omap3430/lib/sysbios/debug/ti.sysbios.family.c64p.omap3430.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 3249
+Functions analyzed             : 10
+Paths analyzed                 : 141
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c64p.ti81xx.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.c64p.ti81xx/lib/sysbios/debug/ti.sysbios.family.c64p.ti81xx.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 2850
+Functions analyzed             : 2
+Paths analyzed                 : 2
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.ammu.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.hal.ammu/lib/sysbios/debug/ti.sysbios.hal.ammu.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 7765
+Functions analyzed             : 3
+Paths analyzed                 : 63
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c674.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.family.c674/lib/sysbios/debug/ti.sysbios.family.c674.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 10329
+Functions analyzed             : 34
+Paths analyzed                 : 1375
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.shared.vayu.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.shared.vayu/lib/sysbios/debug/ti.sysbios.family.shared.vayu.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5078
+Functions analyzed             : 6
+Paths analyzed                 : 618
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.shared.vayu.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../../coverity/ti.sysbios.family.shared.vayu/lib/sysbios/debug/ti.sysbios.family.shared.vayu.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 12253
+Functions analyzed             : 8
+Paths analyzed                 : 857
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.family.c64p.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.family.c64p/lib/sysbios/debug/ti.sysbios.family.c64p.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 7
+Total LoC input to cov-analyze : 13945
+Functions analyzed             : 94
+Paths analyzed                 : 2217
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.unicache.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.hal.unicache/lib/sysbios/debug/ti.sysbios.hal.unicache.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 9039
+Functions analyzed             : 23
+Paths analyzed                 : 385
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.misc.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.misc/lib/sysbios/debug/ti.sysbios.misc.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5465
+Functions analyzed             : 10
+Paths analyzed                 : 11
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.misc.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.misc/lib/sysbios/debug/ti.sysbios.misc.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5508
+Functions analyzed             : 10
+Paths analyzed                 : 11
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.misc.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.misc/lib/sysbios/debug/ti.sysbios.misc.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5557
+Functions analyzed             : 10
+Paths analyzed                 : 11
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.misc.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.misc/lib/sysbios/debug/ti.sysbios.misc.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 7773
+Functions analyzed             : 10
+Paths analyzed                 : 11
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.misc.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.misc/lib/sysbios/debug/ti.sysbios.misc.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 11472
+Functions analyzed             : 12
+Paths analyzed                 : 13
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.io.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.io/lib/sysbios/debug/ti.sysbios.io.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 8
+Total LoC input to cov-analyze : 8772
+Functions analyzed             : 34
+Paths analyzed                 : 566
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.io.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.io/lib/sysbios/debug/ti.sysbios.io.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 8
+Total LoC input to cov-analyze : 8809
+Functions analyzed             : 34
+Paths analyzed                 : 566
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.io.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.io/lib/sysbios/debug/ti.sysbios.io.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 8
+Total LoC input to cov-analyze : 8916
+Functions analyzed             : 34
+Paths analyzed                 : 566
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.io.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.io/lib/sysbios/debug/ti.sysbios.io.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 8
+Total LoC input to cov-analyze : 10419
+Functions analyzed             : 34
+Paths analyzed                 : 566
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.io.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.io/lib/sysbios/debug/ti.sysbios.io.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 9
+Total LoC input to cov-analyze : 15461
+Functions analyzed             : 36
+Paths analyzed                 : 568
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.gates.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.gates/lib/sysbios/debug/ti.sysbios.gates.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 12
+Total LoC input to cov-analyze : 12842
+Functions analyzed             : 44
+Paths analyzed                 : 1030
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.gates.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.gates/lib/sysbios/debug/ti.sysbios.gates.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 12
+Total LoC input to cov-analyze : 12885
+Functions analyzed             : 44
+Paths analyzed                 : 1030
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.gates.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.gates/lib/sysbios/debug/ti.sysbios.gates.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 12
+Total LoC input to cov-analyze : 12934
+Functions analyzed             : 44
+Paths analyzed                 : 1030
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.gates.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.gates/lib/sysbios/debug/ti.sysbios.gates.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 12
+Total LoC input to cov-analyze : 13912
+Functions analyzed             : 44
+Paths analyzed                 : 1030
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.gates.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.gates/lib/sysbios/debug/ti.sysbios.gates.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 14
+Total LoC input to cov-analyze : 17611
+Functions analyzed             : 47
+Paths analyzed                 : 1033
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.heaps.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.heaps/lib/sysbios/debug/ti.sysbios.heaps.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12365
+Functions analyzed             : 76
+Paths analyzed                 : 7680
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.heaps.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.heaps/lib/sysbios/debug/ti.sysbios.heaps.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12402
+Functions analyzed             : 76
+Paths analyzed                 : 7680
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.heaps.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.heaps/lib/sysbios/debug/ti.sysbios.heaps.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12490
+Functions analyzed             : 76
+Paths analyzed                 : 7680
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.heaps.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.heaps/lib/sysbios/debug/ti.sysbios.heaps.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 13993
+Functions analyzed             : 76
+Paths analyzed                 : 7680
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.heaps.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.heaps/lib/sysbios/debug/ti.sysbios.heaps.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 16
+Total LoC input to cov-analyze : 19192
+Functions analyzed             : 78
+Paths analyzed                 : 7682
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.hal/lib/sysbios/debug/ti.sysbios.hal.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 13
+Total LoC input to cov-analyze : 12652
+Functions analyzed             : 103
+Paths analyzed                 : 131
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.hal/lib/sysbios/debug/ti.sysbios.hal.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 13
+Total LoC input to cov-analyze : 12695
+Functions analyzed             : 103
+Paths analyzed                 : 131
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.hal/lib/sysbios/debug/ti.sysbios.hal.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 13
+Total LoC input to cov-analyze : 12744
+Functions analyzed             : 103
+Paths analyzed                 : 131
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.hal/lib/sysbios/debug/ti.sysbios.hal.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 13
+Total LoC input to cov-analyze : 13722
+Functions analyzed             : 103
+Paths analyzed                 : 131
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.hal.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.hal/lib/sysbios/debug/ti.sysbios.hal.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 14
+Total LoC input to cov-analyze : 17421
+Functions analyzed             : 106
+Paths analyzed                 : 134
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rta.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.rta/lib/sysbios/debug/ti.sysbios.rta.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5286
+Functions analyzed             : 1
+Paths analyzed                 : 6
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rta.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.rta/lib/sysbios/debug/ti.sysbios.rta.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5281
+Functions analyzed             : 1
+Paths analyzed                 : 6
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rta.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.rta/lib/sysbios/debug/ti.sysbios.rta.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5378
+Functions analyzed             : 1
+Paths analyzed                 : 6
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rta.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.rta/lib/sysbios/debug/ti.sysbios.rta.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 5375
+Functions analyzed             : 1
+Paths analyzed                 : 6
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rta.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.rta/lib/sysbios/debug/ti.sysbios.rta.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 1
+Total LoC input to cov-analyze : 9155
+Functions analyzed             : 1
+Paths analyzed                 : 6
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.rts.gnu.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.rts.gnu/lib/sysbios/debug/ti.sysbios.rts.gnu.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 15808
+Functions analyzed             : 4
+Paths analyzed                 : 62
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.smp.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.smp/lib/sysbios/debug/ti.sysbios.smp.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 7
+Total LoC input to cov-analyze : 16391
+Functions analyzed             : 58
+Paths analyzed                 : 940
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.smp.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.smp/lib/sysbios/debug/ti.sysbios.smp.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 9
+Total LoC input to cov-analyze : 22046
+Functions analyzed             : 62
+Paths analyzed                 : 944
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.knl.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.knl/lib/sysbios/debug/ti.sysbios.knl.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 18
+Total LoC input to cov-analyze : 14870
+Functions analyzed             : 161
+Paths analyzed                 : 8676
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.knl.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.knl/lib/sysbios/debug/ti.sysbios.knl.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 18
+Total LoC input to cov-analyze : 14516
+Functions analyzed             : 161
+Paths analyzed                 : 8676
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.knl.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.knl/lib/sysbios/debug/ti.sysbios.knl.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 18
+Total LoC input to cov-analyze : 14582
+Functions analyzed             : 161
+Paths analyzed                 : 8676
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.knl.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.knl/lib/sysbios/debug/ti.sysbios.knl.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 18
+Total LoC input to cov-analyze : 15560
+Functions analyzed             : 161
+Paths analyzed                 : 8676
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.knl.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.knl/lib/sysbios/debug/ti.sysbios.knl.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 20
+Total LoC input to cov-analyze : 20583
+Functions analyzed             : 165
+Paths analyzed                 : 8680
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.gptimer.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.gptimer/lib/sysbios/debug/ti.sysbios.timers.gptimer.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 2
+Total LoC input to cov-analyze : 6592
+Functions analyzed             : 30
+Paths analyzed                 : 316
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.dmtimer.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.dmtimer/lib/sysbios/debug/ti.sysbios.timers.dmtimer.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 10115
+Functions analyzed             : 43
+Paths analyzed                 : 633
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.dmtimer.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.dmtimer/lib/sysbios/debug/ti.sysbios.timers.dmtimer.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 10218
+Functions analyzed             : 43
+Paths analyzed                 : 633
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.dmtimer.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.dmtimer/lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 11196
+Functions analyzed             : 43
+Paths analyzed                 : 633
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.dmtimer.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.dmtimer/lib/sysbios/debug/ti.sysbios.timers.dmtimer.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 14325
+Functions analyzed             : 39
+Paths analyzed                 : 595
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.syncs.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.syncs/lib/sysbios/debug/ti.sysbios.syncs.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 8993
+Functions analyzed             : 14
+Paths analyzed                 : 136
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.syncs.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.syncs/lib/sysbios/debug/ti.sysbios.syncs.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 8988
+Functions analyzed             : 14
+Paths analyzed                 : 136
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.syncs.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.syncs/lib/sysbios/debug/ti.sysbios.syncs.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 9085
+Functions analyzed             : 14
+Paths analyzed                 : 136
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.syncs.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.syncs/lib/sysbios/debug/ti.sysbios.syncs.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 9082
+Functions analyzed             : 14
+Paths analyzed                 : 136
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.syncs.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.syncs/lib/sysbios/debug/ti.sysbios.syncs.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 12862
+Functions analyzed             : 14
+Paths analyzed                 : 136
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.utils.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.utils/lib/sysbios/debug/ti.sysbios.utils.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 11662
+Functions analyzed             : 25
+Paths analyzed                 : 551
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.utils.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.utils/lib/sysbios/debug/ti.sysbios.utils.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 11705
+Functions analyzed             : 25
+Paths analyzed                 : 551
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.utils.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.utils/lib/sysbios/debug/ti.sysbios.utils.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 11754
+Functions analyzed             : 25
+Paths analyzed                 : 551
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.utils.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.utils/lib/sysbios/debug/ti.sysbios.utils.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 12732
+Functions analyzed             : 25
+Paths analyzed                 : 551
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.utils.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.utils/lib/sysbios/debug/ti.sysbios.utils.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 4
+Total LoC input to cov-analyze : 16431
+Functions analyzed             : 27
+Paths analyzed                 : 553
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.timer64.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.timer64/lib/sysbios/debug/ti.sysbios.timers.timer64.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 3
+Total LoC input to cov-analyze : 10986
+Functions analyzed             : 36
+Paths analyzed                 : 1021
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.timers.timer64.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../../coverity/ti.sysbios.timers.timer64/lib/sysbios/debug/ti.sysbios.timers.timer64.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 5
+Total LoC input to cov-analyze : 14784
+Functions analyzed             : 39
+Paths analyzed                 : 667
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.xdcruntime.ae674 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.xdcruntime/lib/sysbios/debug/ti.sysbios.xdcruntime.ae674 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12373
+Functions analyzed             : 50
+Paths analyzed                 : 144
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.xdcruntime.aearp32 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.xdcruntime/lib/sysbios/debug/ti.sysbios.xdcruntime.aearp32 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12368
+Functions analyzed             : 50
+Paths analyzed                 : 144
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.xdcruntime.aea8f ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.xdcruntime/lib/sysbios/debug/ti.sysbios.xdcruntime.aea8f --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12465
+Functions analyzed             : 50
+Paths analyzed                 : 144
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.xdcruntime.aem3 ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.xdcruntime/lib/sysbios/debug/ti.sysbios.xdcruntime.aem3 --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 12462
+Functions analyzed             : 50
+Paths analyzed                 : 144
+Defect occurrences found       : 0
+
+ 
+==== Results for ti.sysbios.xdcruntime.aa15fg ====
+/apps/coverity/5.5.3/bin/cov-analyze --verbose 0 --config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/cfg/coverity_config.xml --dir ../../../coverity/ti.sysbios.xdcruntime/lib/sysbios/debug/ti.sysbios.xdcruntime.aa15fg --all --disable SECURE_CODING --checker-option OVERRUN_DYNAMIC:allow_symbol --checker-option USE_AFTER_FREE:allow_report_args:true --parse-warnings-config /db/toolsrc/library/toolsE57/packages/tisb/coverity/filters/parse_warnings.conf 
+Analysis summary report:
+------------------------
+Files analyzed                 : 15
+Total LoC input to cov-analyze : 16242
+Functions analyzed             : 50
+Paths analyzed                 : 144
+Defect occurrences found       : 0
+
+ 
+Totals - LoC: 1089387, Defects: 1

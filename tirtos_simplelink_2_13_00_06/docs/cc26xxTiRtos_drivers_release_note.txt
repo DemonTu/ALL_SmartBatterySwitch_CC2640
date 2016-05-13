@@ -1,0 +1,428 @@
+===============================================================================
+TI-RTOS CC26XX DRIVERS RELEASE NOTE
+===============================================================================
+
+===============================================================================
+Release date: 2015.04.23
+Dependencies:
+    - Tested with:
+        xdctools_3_30_06_67
+        bios_6_42_00_04
+        cc26xxware_2_21_01_15600
+        cc13xxware_2_00_01_15600
+
+-------------------------------------------------------------------------------
+1. Overview
+-------------------------------------------------------------------------------
+
+New Features and Enhancements
+
+    [PIN]    Support for CC13xx in the PIN driver (7x7 has one less IO).
+    [PIN]    Support for external LF clock (PIN driver will allocate this IO)
+
+Breaking Changes
+
+    None
+
+Issues fixed
+
+    [3]    LCD_close(...) does not close the SPI channel.
+    [9]    Add doxygen documentation on how customers can minimize leakage in SPI driver
+    [11]    PIN driver must support CC13xx which has one less IO
+    [46]     DUT cannot enter standby after a blocking UART_read(...) times out
+    [49]     PIN driver should allocate pin used for external 32kHz LF clock
+
+Known Issues
+
+     None
+
+Misc
+
+     Driver sizes compiled with IAR_7.40.2 -Ohz
+        Module                 ro code  ro data  rw data  rw data
+                                                           (abs)
+        ------                 -------  -------  -------  -------
+        Board.o*                            244      908
+        CryptoCC26XX.o           1 088                29
+        I2C.o                       26
+        I2CCC26XX.o              1 148       20       17
+        LCDDogm1286.o            4 640                16
+        LCDDogm1286_util.o         214
+        PINCC26XX.o              1 530               220
+        SPI.o                       72
+        SPICC26XXDMA.o           1 900       28        1       64
+        UART.o                      68
+        UARTCC26XX.o             2 148       40       17
+        UDMACC26XX.o               168
+
+        * Includes config for PIN, UART, UDMA, SPIDMA0/1, LCD, Crypto and I2C.
+
+-------------------------------------------------------------------------------
+2. Bug Item Details
+-------------------------------------------------------------------------------
+
+Item 3
+
+    Summary       : LCD_close(...) does not close the SPI channel.
+    Severity      : Blocker
+    Affected Comp : LCDDogm1286
+    Release Notes : The LCD_close(...) function did not close the SPI channel,
+    resulting in the user being unable to open the SPI driver
+    for the same channel used by the LCD, after the LCD driver
+    had been used once.
+    This has now been fixed by also closing the SPI driver
+    in LCD_close(...)
+    Workaround    : Add to LCD_close(...) this line:
+    /* Close SPI */
+    SPI_close(object->spiHandle);
+
+Item 9
+
+    Summary       : Add doxygen documentation on how customers can minimize leakage in SPI driver
+    Severity      : Minor
+    Affected Comp : SPICC26XXDMA
+    Release Notes : External hardware connected on the SPI, i.e. SPI host/slave, might have configured
+    a pull on one or more of the SPI lines. Dependent on the hardware, it might conflict
+    with the pull used for the CC26XX SPI.
+    To avoid increased leakage and ensure the lowest possible power consumption
+    when the SPI is inactive, the application must configure a matching pull
+    on the SPI IOs. An example of how this can be done is now included in the doxygen
+    documentation for the SPI driver
+    Workaround    : After having opened the SPI driver, configure the desired pull (below shows example for MISO):
+
+    // Get pinHandle
+pinHandle = ((SPICC26XX_Object *)spiHandle->object)->pinHandle;
+// Get miso pin id
+misoPinId = ((SPICC26XX_HWAttrs *)spiHandle->hwAttrs)->misoPin;
+// Apply low power sleep pull config for MISO
+PIN_setConfig(pinHandle, PIN_BM_PULLING, PIN_PULLUP | misoPinId);
+
+Item 11
+
+    Summary       : PIN driver must support CC13xx which has one less IO
+    Severity      : Major
+    Affected Comp : PINCC26XX
+    Release Notes : CC13xx does not have DIO_0, so the PIN driver now does not allow
+    application to allocate this PIN if the device is a CC13xx.
+    However the application should be able to allocate all the other pins
+    which for a CC13xx 7x7 is DIO_1 to DIO_30.
+    Workaround    : None
+
+Item 46
+
+    Summary       : DUT cannot enter standby after a blocking UART_read(...) times out
+    Severity      : Critical
+    Affected Comp : UARTCC26XX
+    Release Notes : If the application calls UART_read(...) in blocking mode, and the
+    read times out, the SB_DISALLOW is never released. As a result
+    the application is not able to enter standby.
+    Workaround    : Add the following lines to UART_read(...) when the timeout occurs:
+
+    /* Disable RX interrupts */
+            UARTIntDisable(hwAttrs->baseAddr, UART_INT_OE | UART_INT_BE | UART_INT_PE |
+                                              UART_INT_FE | UART_INT_RT | UART_INT_RX);
+            /* Release constraint since transaction timed out, allowed to enter standby */
+            threadSafeStdbyDisRelease();
+            /* Reset the read buffer so we can pass it back */
+            object->readBuf = (unsigned char *)object->readBuf - object->readCount;
+
+Item 49
+
+    Summary       : PIN driver should allocate pin used for external 32kHz LF clock
+    Severity      : Major
+    Affected Comp : PINCC26XX
+    Release Notes : There's now support in CCFG to use an external IO as source for the 32 kHz
+    LF clock source. The pin driver now also reserves this pin, thus assuring that
+    the application cannot allocate this IO for other purposes.
+    Workaround    : None
+
+-------------------------------------------------------------------------------
+3. Known Issue Details
+-------------------------------------------------------------------------------
+
+Issue [N/A]
+
+    Summary       : N/A
+    Severity      : N/A
+    Affected Comp : N/A
+    Description   : N/A
+    Workaround    : N/A
+
+
+
+===============================================================================
+Version: 1_06_00
+Release date: 2015.03.27
+Dependencies:
+    - Tested with:
+        xdctools_3_30_06_67
+        bios_6_42_00_00
+        cc26xxware_2_21_00_15402
+
+-------------------------------------------------------------------------------
+1. Overview
+-------------------------------------------------------------------------------
+
+New Features and Enhancements
+
+    [UART]   Flow Control (enabled through hwAttrs).
+
+Breaking Changes
+
+    [UART]   Aligning define format: renamed UARTCC26XX_RETURN_PARTIAL_ENABLE
+             to UARTCC26XX_CMD_RETURN_PARTIAL_ENABLE.
+    [SPIDMA] Using defines from SPI.h: replaced
+             SPICC26XXDMA_CMD_SUCCESS with SPI_STATUS_SUCCESS,
+             SPICC26XXDMA_CMD_NO_SUCCESS with SPI_STATUS_ERROR and
+             SPICC26XXDMA_CMD_UNDEFINED with SPI_STATUS_UNDEFINEDCMD.
+    [I2C]    Using defines from I2C.h: replaced
+             I2CCC26XX_SUCCESS with I2C_STATUS_SUCCESS,
+             I2CCC26XX_ERROR with I2C_STATUS_ERROR and
+             I2CCC26XX_CMD_UNDEFINED with I2C_STATUS_UNDEFINEDCMD.
+    [CRPT]   Aligning defines with other drivers: replaced
+             CRYPTOCC26XX_SUCCESS with CRYPTOCC26XX_STATUS_SUCCESS,
+             CRYPTOCC26XX_ERROR with CRYPTOCC26XX_STATUS_ERROR and
+             CRYPTOCC26XX_CMD_UNDEFINED with CRYPTOCC26XX_STATUS_UNDEFINEDCMD.
+
+Bug fixes
+
+    [5960]   UARTCC26XX missing flow-control.
+    [6074]   Board files should include RFp.n comment for pins.
+    [6540]   All drivers must set/release SB disallow constraint thread-safely.
+    [6603]   [UART] timeout description needs update.
+    [6604]   [UART] align timeout behavior with other error behavior.
+    [6655]   [UART] - hwi must check UART_INT_TX not object->writeSize.
+    [6661]   [UART] - wrong estimation of TX FIFO Empty Clock time.
+    [6729]   SPI_control set CSn doesn't work if originally PIN_UNASSIGNED.
+    [6730]   Board.c should not hard-code IOIDs but always use eg
+             Board_SPI0_CSN.
+
+Known Issues
+
+     None
+
+Misc
+
+    Driver sizes 1_06_00, Compiled with IAR_7.40.1 -Ohz
+        Module                 ro code  ro data  rw data  rw data
+                                                           (abs)
+        ------                 -------  -------  -------  -------
+        Board.o*                            244      908
+        CryptoCC26XX.o           1 092                29
+        I2C.o                       26
+        I2CCC26XX.o              1 160       20       17
+        LCDDogm1286.o            4 652                16
+        LCDDogm1286_util.o         214
+        PINCC26XX.o              1 440               220
+        SPI.o                       68
+        SPICC26XXDMA.o           1 904       28        1       64
+        UART.o                      68
+        UARTCC26XX.o             2 160       40       17
+        UDMACC26XX.o               168
+
+        * Includes config for PIN, UART, UDMA, SPIDMA0/1, LCD, Crypto and I2C.
+
+
+-------------------------------------------------------------------------------
+2. Bug Item Details
+-------------------------------------------------------------------------------
+
+Item 5960
+
+    Summary       : UARTCC26XX missing flow-control
+    Fixed in      : 1_06_00
+    Severity      : P1 - Enhancement
+    Affected Comp : UARTCC26XX
+    Release Notes : The UART for CC26XX has flow control support. Flow control
+                    is enabled by assigning valid IOID for the CTS and RTS pins
+                    in the UARTCC26XX_HWAttrs.
+    Workaround    : None
+
+Item 6074
+
+    Summary       : Board files should include RFp.n comment for pins
+    Fixed in      : 1_06_00
+    Severity      : P2 - Normal
+    Affected Comp : Board files
+    Release Notes : The board files for SRF06EB are updated to include RF
+                    connector information, e.g. LED3 for CC2650EM_4XS:
+                        #define Board_LED3    IOID_5    // RF1.2
+    Workaround    : N/A
+
+Item 6540
+
+    Summary       : All drivers must set/release SB disallow constraint
+                    thread-safely.
+    Fixed in      : 1_06_00
+    Severity      : P1 - Critical
+    Affected Comp : UARTCC26XX, SPIXX26XX and I2CCC26XX.
+    Release Notes : Some of the drivers was releasing power constraints in both
+                    task context and hwi context. Since the one in task context
+                    did not release in a thread safe manner, the risk of
+                    releasing the power constraint twice was present. This
+                    update ensures that each driver disable it's hwi before
+                    setting and releasing the constraint and also holds a flag
+                    to keep track of it's current constraint setting.
+    Workaround    : None
+
+Item 6603
+
+    Summary       : [UART] timeout description needs update
+    Fixed in      : 1_06_00
+    Severity      : P2 - Normal
+    Affected Comp : UARTCC26XX
+    Release Notes : The doxygen documentation is updated with information
+                    regarding timeout.
+                    Summary - The timeout can only be specified for
+                    blocking mode. If a timeout occurs during a read, the
+                    number of bytes received will be returned and the
+                    UART_Object.status will be set to UART_TIMED_OUT.
+                    If a timeout occurs during a write, an UART_ERROR will be
+                    returned and the UART_Object.status will be set to
+                    UART_TIMED_OUT. All bytes that are not transmitted, will
+                    be flushed.
+    Workaround    : N/A
+
+Item 6604
+
+    Summary       : [UART] align timeout behavior with other error behavior
+    Fixed in      : 1_06_00
+    Severity      : P1 - Normal
+    Affected Comp : UARTCC26XX
+    Release Notes : The standby disallow constraint is released after timeout
+                    as well to allow the device to enter standby.
+    Workaround    : None
+
+Item 6655
+
+    Summary       : [UART] - hwi must check UART_INT_TX not object->writeSize
+    Fixed in      : 1_06_00
+    Severity      : P1 - Normal
+    Affected Comp : UARTCC26XX
+    Release Notes : The TX FIFO empty clock event computation assumed that the
+                    UART_INT_TX event triggered the write, but the hwi was
+                    checking object->writeSize. So if another UART interrupt
+                    triggered the hwi and the last write bytes are fitted into
+                    the TX FIFO, the computation would be wrong and the TX FIFO
+                    empty function would hang, waiting for the UART busy flag
+                    to be deasserted.
+                    By checking both UART_INT_TX flag and object->writeSize in
+                    the hwi, the computation is done correctly.
+    Workaround    : None
+
+Item 6661
+
+    Summary       : [UART] - wrong estimation of TX FIFO Empty Clock time
+    Fixed in      : 1_06_00
+    Severity      : P1 - Normal
+    Affected Comp : UARTCC26XX
+    Release Notes : In some situations the timeout happened too early. The
+                    mapping of the object->stopBits was not done correctly.
+                    An extra byte was included in the TX FIFO Empty clock
+                    event computation to get the correct mapping.
+    Workaround    : None
+
+Item 6729
+
+    Summary       : SPI_control set CSn doesn't work if originally
+                    PIN_UNASSIGNED.
+    Fixed in      : 1_06_00
+    Severity      : P2 - Normal
+    Affected Comp : SPICC26XX
+    Release Notes : The new assigned chip select pins is always configured with
+                    input enabled and pull-up.
+    Workaround    : None
+
+Item 6730
+
+    Summary       : Board.c should not hard-code IOIDs but always use eg
+                    Board_SPI0_CSN.
+    Fixed in      : 1_06_00
+    Severity      : P1 - Normal
+    Affected Comp : Board files
+    Release Notes : By assigning Board_SPI0_CSN and Board_SPI1_CSN pins to
+                    the chip select pins in the board source file, the customer
+                    should only have to modify the header files when moving
+                    the chip select pins to work with their design.
+    Workaround    : None
+
+
+-------------------------------------------------------------------------------
+3. Known Issue Details
+-------------------------------------------------------------------------------
+
+Issue [N/A]
+
+    Summary       : N/A
+    Severity      : N/A
+    Affected Comp : N/A
+    Description   : N/A
+    Workaround    : N/A
+
+
+===============================================================================
+Version 1_05_03
+Release date: 2015.01.30
+Dependencies:
+    - Tested with:
+        xdctools_3_30_06_66
+        bios_6_41_02_39
+        cc26xxware_2_20_06_14829
+
+-------------------------------------------------------------------------------
+1. Overview
+-------------------------------------------------------------------------------
+
+New Features and Enhancements
+
+    [GEN]    No longer exposing the CC26XX specific API for I2C, UART, SPIDMA.
+    [SPIDMA] Correcting return value from _transfer if time out (ref. bug 6370).
+    [DOC]    Doxygen updated for all drivers.
+    [XMPL]   Pin interrupt example - updated debounce logic.
+    [STAG]   Added separate board files for sensor tag PCB version 1.0, 1.1, and
+             1.2.
+    [STAG]   Magnetometer support added.
+    [STAG]   Support for TI HDC1000 Humidity Sensor.
+
+Bug fixes
+
+    [6068]   Pin interrupt example need update.
+    [6159]   PIN driver needs updated doxygen with 'Use Case' code examples.
+    [6178]   I2C driver does not report error if I2C pins are already allocated.
+    [6226]   SPIDMA - close() function does not include unregisterNotify().
+    [6297]   Driver documentation (Doxygen) clean up.
+    [6312]   SPICC26XXDMA driver has a NULL pointer dereference.
+    [6331]   sensor.c conformance with TI Compiler syntax (sensortag).
+    [6337]   TI compiler warning (in sensor_mpu9250.c).
+    [6338]   Missing board definition in SensorTag Board.h (SensorTag/CC26XXST).
+    [6355]   Pin driver should set IO_PAD_SLEEP_DIS bit at end of PIN_init().
+    [6370]   SPI_transfer with a timeout results in failed subsequent
+             SPI_transfers.
+    [6389]   Compile errors in tirtos_simplelink_2_11_00_07 board files
+             (CryptoCC26XX_fxnTable).
+
+Known Issues
+
+    [STAG]   Power consumption too high (+40 uA)
+    [STAG]   Board files for PCB version 1.1 and 1.2 untested.
+
+Misc
+
+    Driver sizes 1_05_03, Compiled with IAR_7.30.3 -Ohz
+        Module                      ro code  ro data  rw data  rw data
+                                                                (abs)
+        ------                      -------  -------  -------  -------
+        Board.o*                                 308    1 244
+        CryptoCC26XX.o                1 108                29
+        I2C.o                            26
+        I2CCC26XX.o                   1 128       20       20
+        LCDDogm1286.o                 4 624                16
+        LCDDogm1286_util.o              214
+        PINCC26XX.o                   1 440               220
+        SPI.o                            68
+        SPICC26XXDMA.o                1 832       28                64
+        UART.o                           68
+        UARTCC26XX.o                  1 812       40       16
+        UDMACC26XX.o                    168
+
+        *Including master and slave configurations for both SPIs.

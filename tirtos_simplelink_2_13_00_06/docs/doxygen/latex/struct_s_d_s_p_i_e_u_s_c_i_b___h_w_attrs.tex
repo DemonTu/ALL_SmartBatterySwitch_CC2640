@@ -1,0 +1,117 @@
+\subsection{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs}\index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+
+
+S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_afd8979c081ca348a10f1894eb647cb55}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a9679db27cd498a286edd0fa472d9ecdd}{clock\+Source}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a06794ada31d2570b7ec9f6cf17b40eda}{port\+S\+C\+K}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_acf04a6e03db4580245427e6b71e86b3d}{pin\+S\+C\+K}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a07a2ae46993c19e425d0ed690ceace8e}{port\+M\+I\+S\+O}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a03fb1a364c99bac2010c533553f6ffcc}{pin\+M\+I\+S\+O}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_ab6f2f052acf4fbc2469b84dfd5a3a7fd}{port\+M\+O\+S\+I}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a76e4ea3cba4e266ff0699f85d7bd042a}{pin\+M\+O\+S\+I}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_ac7a742be07f6c2d4cd75f3c1e0cb62db}{port\+C\+S}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_acbca6e53d49d2367d170d54add9ababd}{pin\+C\+S}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B Hardware attributes. 
+
+The S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B configuration structure describes to the S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B driver implementation hardware specifies on which S\+P\+I peripheral, G\+P\+I\+O Pins and Ports are to be used.
+
+The S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B driver uses this information to\+:
+\begin{DoxyItemize}
+\item configure and reconfigure specific ports/pins to initialize the S\+D Card for S\+P\+I mode
+\item identify which S\+P\+I peripheral is used for data communications
+\item identify which G\+P\+I\+O port and pin is used for the S\+P\+I chip select mechanism
+\item identify which G\+P\+I\+O port and pin is concurrently located on the S\+P\+I\textquotesingle{}s M\+O\+S\+I (T\+X) pin.
+\end{DoxyItemize}
+
+\begin{DoxyRemark}{Remarks}
+To initialize the S\+D Card into S\+P\+I mode, the S\+D\+S\+P\+I driver changes the S\+P\+I\textquotesingle{}s M\+O\+S\+I pin into a G\+P\+I\+O pin so it can kept driven H\+I\+G\+H while the S\+P\+I S\+C\+K pin can toggle. After the initialization, the T\+X pin is reverted back to the S\+P\+I M\+O\+S\+I mode.
+\end{DoxyRemark}
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For Tiva\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item eusci\+\_\+b\+\_\+spi.\+h
+\end{DoxyItemize}
+
+An example configuration structure could look as the following\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SDSPIEUSCIB_HWAttrs sdspiUSCIBHWAttrs = \{
+    \{
+         EUSCI\_B0\_BASE, \textcolor{comment}{// SPI Peripheral's base address}
+         EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK, \textcolor{comment}{// Clock source}
+
+         GPIO\_PORT\_P2,  \textcolor{comment}{// SPI SCK PORT}
+         GPIO\_PIN2,     \textcolor{comment}{// SPI SCK PIN}
+
+         GPIO\_PORT\_P1,  \textcolor{comment}{// SPI MISO PORT}
+         GPIO\_PIN7,     \textcolor{comment}{// SPI MIS0 PIN}
+
+         GPIO\_PORT\_P1,  \textcolor{comment}{// SPI MOSI PORT}
+         GPIO\_PIN6,     \textcolor{comment}{// SPI MOSI PIN}
+
+         GPIO\_PORT\_P3,  \textcolor{comment}{// GPIO Chip select port}
+         GPIO\_PIN4,     \textcolor{comment}{// GPIO Chip select pin}
+     \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_afd8979c081ca348a10f1894eb647cb55}
+S\+P\+I Peripheral\textquotesingle{}s base address \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a9679db27cd498a286edd0fa472d9ecdd}
+S\+P\+I\+U\+S\+C\+I Clock source \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!port\+S\+C\+K@{port\+S\+C\+K}}
+\index{port\+S\+C\+K@{port\+S\+C\+K}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+S\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::port\+S\+C\+K}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a06794ada31d2570b7ec9f6cf17b40eda}
+S\+P\+I port uses for the S\+C\+K, M\+I\+S\+O, and M\+O\+S\+I pins \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!pin\+S\+C\+K@{pin\+S\+C\+K}}
+\index{pin\+S\+C\+K@{pin\+S\+C\+K}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+S\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::pin\+S\+C\+K}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_acf04a6e03db4580245427e6b71e86b3d}
+S\+P\+I S\+C\+K pin \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!port\+M\+I\+S\+O@{port\+M\+I\+S\+O}}
+\index{port\+M\+I\+S\+O@{port\+M\+I\+S\+O}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+M\+I\+S\+O}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::port\+M\+I\+S\+O}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a07a2ae46993c19e425d0ed690ceace8e}
+S\+P\+I port uses for the S\+C\+K, M\+I\+S\+O, and M\+O\+S\+I pins \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!pin\+M\+I\+S\+O@{pin\+M\+I\+S\+O}}
+\index{pin\+M\+I\+S\+O@{pin\+M\+I\+S\+O}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+M\+I\+S\+O}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::pin\+M\+I\+S\+O}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a03fb1a364c99bac2010c533553f6ffcc}
+S\+P\+I M\+I\+S\+O pin \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!port\+M\+O\+S\+I@{port\+M\+O\+S\+I}}
+\index{port\+M\+O\+S\+I@{port\+M\+O\+S\+I}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+M\+O\+S\+I}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::port\+M\+O\+S\+I}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_ab6f2f052acf4fbc2469b84dfd5a3a7fd}
+S\+P\+I port uses for the S\+C\+K, M\+I\+S\+O, and M\+O\+S\+I pins \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!pin\+M\+O\+S\+I@{pin\+M\+O\+S\+I}}
+\index{pin\+M\+O\+S\+I@{pin\+M\+O\+S\+I}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+M\+O\+S\+I}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::pin\+M\+O\+S\+I}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_a76e4ea3cba4e266ff0699f85d7bd042a}
+S\+P\+I M\+O\+S\+I pin \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!port\+C\+S@{port\+C\+S}}
+\index{port\+C\+S@{port\+C\+S}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{port\+C\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::port\+C\+S}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_ac7a742be07f6c2d4cd75f3c1e0cb62db}
+G\+P\+I\+O Port used for the chip select \index{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}!pin\+C\+S@{pin\+C\+S}}
+\index{pin\+C\+S@{pin\+C\+S}!S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs@{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs}}
+\paragraph[{pin\+C\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B\+\_\+\+H\+W\+Attrs\+::pin\+C\+S}\label{struct_s_d_s_p_i_e_u_s_c_i_b___h_w_attrs_acbca6e53d49d2367d170d54add9ababd}
+G\+P\+I\+O Pin used for the chip select 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_d_s_p_i_e_u_s_c_i_b_8h}{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B.\+h}\end{DoxyCompactItemize}

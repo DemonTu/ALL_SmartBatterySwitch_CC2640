@@ -1,0 +1,50 @@
+\subsection{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg Struct Reference}
+\label{struct_i2_c_c_c26_x_x___i2_c_pin_cfg}\index{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg@{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg}}
+
+
+I2\+C\+C\+C26\+X\+X Pin Configuration.  
+
+
+
+
+{\ttfamily \#include $<$I2\+C\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___i2_c_pin_cfg_a07155d4bf6fac9ed7181eca65563e2c9}{pin\+S\+D\+A}
+\item 
+uint8\+\_\+t \hyperlink{struct_i2_c_c_c26_x_x___i2_c_pin_cfg_af6a6d421ac74746b80065a3e9de338d6}{pin\+S\+C\+L}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+C\+C\+C26\+X\+X Pin Configuration. 
+
+Pin configuration that holds non-\/default pins. The default pin configuration is typically defined in \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs}{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} placed in the board file. The pin configuration structure is used by setting the custom void pointer in the \hyperlink{struct_i2_c___params}{I2\+C\+\_\+\+Params} to point to this struct. If the custom void pointer is N\+U\+L\+L, the \hyperlink{struct_i2_c_c_c26_x_x___h_w_attrs}{I2\+C\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} pin mapping will be used. 
+\begin{DoxyCode}
+I2C_Handle handle;
+I2C_Params i2cParams;
+I2CCC26XX_I2CPinCfg pinCfg;
+
+I2C_Params_init(&i2cParams);     \textcolor{comment}{// sets custom to NULL}
+pinCfg.pinSDA = Board\_I2C0\_SDA1;
+pinCfg.pinSCL = Board\_I2C0\_SCL1;
+i2cParams.custom = &pinCfg;
+
+handle = I2C_open(Board\_I2C, &i2cParams);
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg@{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg}!pin\+S\+D\+A@{pin\+S\+D\+A}}
+\index{pin\+S\+D\+A@{pin\+S\+D\+A}!I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg@{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg}}
+\paragraph[{pin\+S\+D\+A}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg\+::pin\+S\+D\+A}\label{struct_i2_c_c_c26_x_x___i2_c_pin_cfg_a07155d4bf6fac9ed7181eca65563e2c9}
+\index{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg@{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg}!pin\+S\+C\+L@{pin\+S\+C\+L}}
+\index{pin\+S\+C\+L@{pin\+S\+C\+L}!I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg@{I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg}}
+\paragraph[{pin\+S\+C\+L}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t I2\+C\+C\+C26\+X\+X\+\_\+\+I2\+C\+Pin\+Cfg\+::pin\+S\+C\+L}\label{struct_i2_c_c_c26_x_x___i2_c_pin_cfg_af6a6d421ac74746b80065a3e9de338d6}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_c_c_c26_x_x_8h}{I2\+C\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

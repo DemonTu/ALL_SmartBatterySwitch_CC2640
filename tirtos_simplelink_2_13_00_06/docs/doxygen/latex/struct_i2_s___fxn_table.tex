@@ -1,0 +1,75 @@
+\subsection{I2\+S\+\_\+\+Fxn\+Table Struct Reference}
+\label{struct_i2_s___fxn_table}\index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+
+
+The definition of a I2\+S function table that contains the required set of functions to control a specific I2\+S driver implementation.  
+
+
+
+
+{\ttfamily \#include $<$I2\+S.\+h$>$}
+
+
+
+Collaboration diagram for I2\+S\+\_\+\+Fxn\+Table\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{struct_i2_s___fxn_table__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h_a91bfa91197cb8ff2388744088177dde8}{I2\+S\+\_\+\+Close\+Fxn} \hyperlink{struct_i2_s___fxn_table_a8fecb9511011ad3dc7166f96f2faf4a9}{close\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_aec416642887dbc181166c479a79c5615}{I2\+S\+\_\+\+Control\+Fxn} \hyperlink{struct_i2_s___fxn_table_ad7a198cbe91c9df75202579bbe8033c8}{control\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_a17f21fcbc2627ef97044ee7ff6cfdee6}{I2\+S\+\_\+\+Init\+Fxn} \hyperlink{struct_i2_s___fxn_table_ae851340eaf8b8604b820b7673a4421da}{init\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_a0a8c4787b4a5a262dc86d9dfa7da2840}{I2\+S\+\_\+\+Open\+Fxn} \hyperlink{struct_i2_s___fxn_table_afd1a3ac570d096b92407681b55936489}{open\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}{I2\+S\+\_\+\+Issue\+Fxn} \hyperlink{struct_i2_s___fxn_table_ab91dca8f762e825eb15b9c75c19d989b}{read\+Issue\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}{I2\+S\+\_\+\+Reclaim\+Fxn} \hyperlink{struct_i2_s___fxn_table_aa13910b4544fdf48044543614915b769}{read\+Reclaim\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_a29e133c66e4e69905690c63157ca662d}{I2\+S\+\_\+\+Issue\+Fxn} \hyperlink{struct_i2_s___fxn_table_a8213ff3590792c7d5044ff7959f2c68a}{write\+Issue\+Fxn}
+\item 
+\hyperlink{_i2_s_8h_aeb85638443d9071ae1e46233cb7ed82c}{I2\+S\+\_\+\+Reclaim\+Fxn} \hyperlink{struct_i2_s___fxn_table_a829e8e190e442f69e19d2568a339409a}{write\+Reclaim\+Fxn}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The definition of a I2\+S function table that contains the required set of functions to control a specific I2\+S driver implementation. 
+
+\subsubsection{Field Documentation}
+\index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!close\+Fxn@{close\+Fxn}}
+\index{close\+Fxn@{close\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Close\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::close\+Fxn}\label{struct_i2_s___fxn_table_a8fecb9511011ad3dc7166f96f2faf4a9}
+Function to close the specified peripheral \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!control\+Fxn@{control\+Fxn}}
+\index{control\+Fxn@{control\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Control\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::control\+Fxn}\label{struct_i2_s___fxn_table_ad7a198cbe91c9df75202579bbe8033c8}
+Function to implementation specific control function \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!init\+Fxn@{init\+Fxn}}
+\index{init\+Fxn@{init\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Init\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::init\+Fxn}\label{struct_i2_s___fxn_table_ae851340eaf8b8604b820b7673a4421da}
+Function to initialize the given data object \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!open\+Fxn@{open\+Fxn}}
+\index{open\+Fxn@{open\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Open\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::open\+Fxn}\label{struct_i2_s___fxn_table_afd1a3ac570d096b92407681b55936489}
+Function to open the specified peripheral \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!read\+Issue\+Fxn@{read\+Issue\+Fxn}}
+\index{read\+Issue\+Fxn@{read\+Issue\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{read\+Issue\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Issue\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::read\+Issue\+Fxn}\label{struct_i2_s___fxn_table_ab91dca8f762e825eb15b9c75c19d989b}
+Function to queue a buffer for reading from the specified peripheral \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!read\+Reclaim\+Fxn@{read\+Reclaim\+Fxn}}
+\index{read\+Reclaim\+Fxn@{read\+Reclaim\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{read\+Reclaim\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Reclaim\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::read\+Reclaim\+Fxn}\label{struct_i2_s___fxn_table_aa13910b4544fdf48044543614915b769}
+Function to retrieve a received buffer of data from the specified peripheral \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!write\+Issue\+Fxn@{write\+Issue\+Fxn}}
+\index{write\+Issue\+Fxn@{write\+Issue\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{write\+Issue\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Issue\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::write\+Issue\+Fxn}\label{struct_i2_s___fxn_table_a8213ff3590792c7d5044ff7959f2c68a}
+Function to queue a buffer for writing from the specified peripheral \index{I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}!write\+Reclaim\+Fxn@{write\+Reclaim\+Fxn}}
+\index{write\+Reclaim\+Fxn@{write\+Reclaim\+Fxn}!I2\+S\+\_\+\+Fxn\+Table@{I2\+S\+\_\+\+Fxn\+Table}}
+\paragraph[{write\+Reclaim\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I2\+S\+\_\+\+Reclaim\+Fxn} I2\+S\+\_\+\+Fxn\+Table\+::write\+Reclaim\+Fxn}\label{struct_i2_s___fxn_table_a829e8e190e442f69e19d2568a339409a}
+Function to retrieve a sent buffer of data from the specified peripheral 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h}{I2\+S.\+h}\end{DoxyCompactItemize}

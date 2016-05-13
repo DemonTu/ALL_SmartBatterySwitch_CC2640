@@ -1,0 +1,5 @@
+package/lib/lib/drivers_ccware_instrumented/Camera.oem4: Camera.c /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h Camera.h /db/vendors/ti/arm/5.2.2/Linux/include/stddef.h 
+Camera.c:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+Camera.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stddef.h:

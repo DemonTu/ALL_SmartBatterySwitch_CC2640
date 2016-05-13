@@ -1,0 +1,137 @@
+\subsection{P\+W\+M\+Timer\+M\+S\+P432.\+h File Reference}
+\label{_p_w_m_timer_m_s_p432_8h}\index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M driver implementation. 
+
+============================================================================
+
+The P\+W\+M header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/PWM.h>}
+\textcolor{preprocessor}{#include <ti/drivers/pwm/PWMTimerMSP432.h>}
+\end{DoxyCode}
+
+
+\paragraph*{Operation}
+
+This driver configures an M\+S\+P432 Timer\+\_\+\+A peripheral for P\+W\+M. Opening a P\+W\+M instance will make the corresponding timer unavailable to the T\+I-\/\+R\+T\+O\+S kernel until all P\+W\+M instances dependant on that timer are closed. Additionally, if the required timer is already used by the kernel, P\+W\+M instances will not be opened.
+
+When used for P\+W\+M generation, each Timer\+\_\+\+A can produce up to 6 P\+W\+M outputs. This driver manages each output as an independent P\+W\+M instance. However since a single period and prescalar are used for all Timer outputs, there are limitations in place to ensure proper operation\+:
+\begin{DoxyEnumerate}
+\item The P\+W\+M period and prescalar are calculated and set based on the first instance opened. Opening a second instance will fail if the period is not the same as what was set by the first instance.
+\end{DoxyEnumerate}
+
+The timer is automatically configured in count-\/up mode using the S\+M\+C\+L\+K clock as the source. In P\+W\+M mode, the timers capture/compare register 0 is used as the period register and cannot be used to generate a P\+W\+M output.
+
+The period and duty registers are 16 bits wide, thus a prescalar is used to divide the input clock and allow for larger periods. The maximum period supported is calculated as\+: M\+A\+X\+\_\+\+P\+E\+R\+I\+O\+D = (M\+A\+X\+\_\+\+P\+R\+E\+S\+C\+A\+L\+A\+R $\ast$ M\+A\+X\+\_\+\+M\+A\+T\+C\+H\+\_\+\+V\+A\+L\+U\+E) / C\+Y\+C\+L\+E\+S\+\_\+\+P\+E\+R\+\_\+\+U\+S 12 M\+Hz clock\+: (64 $\ast$ 65535) / 12 = 349520 microseconds 6 M\+Hz clock\+: (64 $\ast$ 65535) / 6 = 699040 microseconds 3 M\+Hz clock\+: (64 $\ast$ 65535) / 3 = 1398080 microseconds
+
+After opening, the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} A\+P\+I can be used to change the P\+W\+M period. Keep in mind the period is shared by all other P\+W\+Ms on the timer. Below is an example of how to use the \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} A\+P\+I to change a period\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} rc = 0;
+\textcolor{keywordtype}{int} newPeriod = 6000;   \textcolor{comment}{// Period in microseconds}
+
+rc = PWM_control(pwmHandle, PWMTimerMSP432_CHANGE_PERIOD, &newPeriod);
+\textcolor{keywordflow}{if} (rc < 0) \{
+  \textcolor{comment}{// handle error condition}
+\}
+\end{DoxyCode}
+
+
+Updates to a P\+W\+M instance will occur instantaneously. If the duty supplied is greater than the period, the output will remain in active state. 
+
+{\ttfamily \#include $<$ti/drivers/\+P\+W\+M.\+h$>$}\\*
+Include dependency graph for P\+W\+M\+Timer\+M\+S\+P432.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_p_w_m_timer_m_s_p432_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_w_m_timer_m_s_p432___h_w_attrs}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+M\+S\+P432 Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m_timer_m_s_p432___status}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_p_w_m_timer_m_s_p432___status}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m_timer_m_s_p432___object}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+M\+S\+P432 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_w_m_timer_m_s_p432_8h_a763d487bae17c79c424242127b53518c}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S}~4
+\item 
+\#define \hyperlink{_p_w_m_timer_m_s_p432_8h_af4889b739a2240171923e90324ddf94b}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}~\hyperlink{_p_w_m_8h_ad731f4db58c72d280900da4be6e3434c}{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_p_w_m_timer_m_s_p432___h_w_attrs}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs} \hyperlink{_p_w_m_timer_m_s_p432_8h_a63353889735b1371acd138ea0927cefc}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+M\+S\+P432 Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m_timer_m_s_p432___status}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status} \hyperlink{_p_w_m_timer_m_s_p432_8h_af75fb1cc6f34e3383ce5d416b90961de}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_p_w_m_timer_m_s_p432___status}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m_timer_m_s_p432___object}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object} \hyperlink{_p_w_m_timer_m_s_p432_8h_af38839ac281ee06be9b0aaa2b5f04d13}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em P\+W\+M\+Timer\+M\+S\+P432 Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table} \hyperlink{_p_w_m_timer_m_s_p432_8h_a59f5d0f3c3d7da66fbfb61dc70dcac30}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+N\+U\+M\+\_\+\+T\+I\+M\+E\+R\+S~4}\label{_p_w_m_timer_m_s_p432_8h_a763d487bae17c79c424242127b53518c}
+\index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+I\+O\+D~{\bf P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D} + 0}\label{_p_w_m_timer_m_s_p432_8h_af4889b739a2240171923e90324ddf94b}
+
+
+\subsubsection{Typedef Documentation}
+\index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}  {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}\label{_p_w_m_timer_m_s_p432_8h_a63353889735b1371acd138ea0927cefc}
+
+
+P\+W\+M\+Timer\+M\+S\+P432 Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item timer\+\_\+a.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const PWMTimerMSP432\_HWAttrs PWMTimerMSP432HWAttrs[] = \{
+2     \{
+3         .baseAddr = TIMER\_A0\_BASE,
+4         .compareRegister = TIMER\_A\_CAPTURECOMPARE\_REGISTER\_1
+5     \},
+6 \};
+\end{DoxyCode}
+ \index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}  {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}}\label{_p_w_m_timer_m_s_p432_8h_af75fb1cc6f34e3383ce5d416b90961de}
+
+
+\hyperlink{struct_p_w_m_timer_m_s_p432___status}{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Status}. 
+
+The application must not access any member variables of this structure! \index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}  {\bf P\+W\+M\+Timer\+M\+S\+P432\+\_\+\+Object}}\label{_p_w_m_timer_m_s_p432_8h_af38839ac281ee06be9b0aaa2b5f04d13}
+
+
+P\+W\+M\+Timer\+M\+S\+P432 Object. 
+
+The application must not access any member variables of this structure! 
+
+\subsubsection{Variable Documentation}
+\index{P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}!P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table}}
+\index{P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table@{P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table}!P\+W\+M\+Timer\+M\+S\+P432.\+h@{P\+W\+M\+Timer\+M\+S\+P432.\+h}}
+\paragraph[{P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+W\+M\+\_\+\+Fxn\+Table} P\+W\+M\+Timer\+M\+S\+P432\+\_\+fxn\+Table}\label{_p_w_m_timer_m_s_p432_8h_a59f5d0f3c3d7da66fbfb61dc70dcac30}

@@ -1,0 +1,69 @@
+\subsection{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_watchdog_m_s_p432___h_w_attrs}\index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+
+
+Watchdog hardware attributes for M\+S\+P432 These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+:  
+
+
+
+
+{\ttfamily \#include $<$Watchdog\+M\+S\+P432.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_watchdog_m_s_p432___h_w_attrs_a176998d12aea7a88091a774d2808c812}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_watchdog_m_s_p432___h_w_attrs_ab8e3bf204cffaec1738b0ac6dde3d591}{int\+Num}
+\item 
+uint8\+\_\+t \hyperlink{struct_watchdog_m_s_p432___h_w_attrs_a64f3c82ab3ce0e2834ac466cbe74569c}{int\+Priority}
+\item 
+uint8\+\_\+t \hyperlink{struct_watchdog_m_s_p432___h_w_attrs_aa1318d649694d7c5537cc1f9594aac01}{clock\+Source}
+\item 
+uint8\+\_\+t \hyperlink{struct_watchdog_m_s_p432___h_w_attrs_a047e52982463266b23febfd2835b538f}{clock\+Divider}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Watchdog hardware attributes for M\+S\+P432 These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+: 
+
+
+\begin{DoxyItemize}
+\item wdt\+\_\+a.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} WatchdogMSP432_HWAttrs watchdogMSP432HWAttrs[MSP\_EXP432P401RLP\_WATCHDOGCOUNT] = \{
+    \{
+        .baseAddr = WDT\_A\_BASE,
+        .intNum = INT\_WDT\_A,
+        .intPriority = ~0,
+        .clockSource = WDT\_A\_CLOCKSOURCE\_SMCLK,
+        .clockDivider = WDT\_A\_CLOCKDIVIDER\_8192K
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_watchdog_m_s_p432___h_w_attrs_a176998d12aea7a88091a774d2808c812}
+Base address of Watchdog \index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_watchdog_m_s_p432___h_w_attrs_ab8e3bf204cffaec1738b0ac6dde3d591}
+W\+D\+T interrupt number \index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_watchdog_m_s_p432___h_w_attrs_a64f3c82ab3ce0e2834ac466cbe74569c}
+W\+D\+T interrupt number \index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_watchdog_m_s_p432___h_w_attrs_aa1318d649694d7c5537cc1f9594aac01}
+Clock source for Watchdog \index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!clock\+Divider@{clock\+Divider}}
+\index{clock\+Divider@{clock\+Divider}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Divider}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs\+::clock\+Divider}\label{struct_watchdog_m_s_p432___h_w_attrs_a047e52982463266b23febfd2835b538f}
+Clock divider for Watchdog 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_watchdog_m_s_p432_8h}{Watchdog\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

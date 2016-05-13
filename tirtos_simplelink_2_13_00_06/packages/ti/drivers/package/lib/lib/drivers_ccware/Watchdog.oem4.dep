@@ -1,0 +1,6 @@
+package/lib/lib/drivers_ccware/Watchdog.oem4: Watchdog.c /db/vendors/ti/arm/5.2.2/Linux/include/stdint.h /db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h Watchdog.h /db/vendors/ti/arm/5.2.2/Linux/include/linkage.h 
+Watchdog.c:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdint.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/stdlib.h:
+Watchdog.h:
+/db/vendors/ti/arm/5.2.2/Linux/include/linkage.h:

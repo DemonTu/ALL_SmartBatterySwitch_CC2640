@@ -1,0 +1,365 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.drivers.SDSPI</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> * Copyright (c) 2015, Texas Instruments Incorporated
+</span>     3    <span class="comment"> * All rights reserved.
+</span>     4    <span class="comment"> *
+</span>     5    <span class="comment"> * Redistribution and use in source and binary forms, with or without
+</span>     6    <span class="comment"> * modification, are permitted provided that the following conditions
+</span>     7    <span class="comment"> * are met:
+</span>     8    <span class="comment"> *
+</span>     9    <span class="comment"> * *  Redistributions of source code must retain the above copyright
+</span>    10    <span class="comment"> *    notice, this list of conditions and the following disclaimer.
+</span>    11    <span class="comment"> *
+</span>    12    <span class="comment"> * *  Redistributions in binary form must reproduce the above copyright
+</span>    13    <span class="comment"> *    notice, this list of conditions and the following disclaimer in the
+</span>    14    <span class="comment"> *    documentation and/or other materials provided with the distribution.
+</span>    15    <span class="comment"> *
+</span>    16    <span class="comment"> * *  Neither the name of Texas Instruments Incorporated nor the names of
+</span>    17    <span class="comment"> *    its contributors may be used to endorse or promote products derived
+</span>    18    <span class="comment"> *    from this software without specific prior written permission.
+</span>    19    <span class="comment"> *
+</span>    20    <span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+</span>    21    <span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+</span>    22    <span class="comment"> * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+</span>    23    <span class="comment"> * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+</span>    24    <span class="comment"> * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+</span>    25    <span class="comment"> * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+</span>    26    <span class="comment"> * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+</span>    27    <span class="comment"> * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+</span>    28    <span class="comment"> * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+</span>    29    <span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+</span>    30    <span class="comment"> * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</span>    31    <span class="comment"> */</span>
+    32    <span class="comment">/*
+</span>    33    <span class="comment"> *  ======== SDSPI.xdc ========
+</span>    34    <span class="comment"> */</span>
+    35    <span class=key>package</span> ti.drivers;
+    36    import xdc.rov.ViewInfo;
+    37    
+    38    <span class="xdoc">/*!
+</span>    39    <span class="xdoc"> *  ======== SDSPI ========
+</span>    40    <span class="xdoc"> */</span>
+    41    @NoRuntime
+    42    @HeaderName(<span class="string">""</span>)
+    43    <span class=key>module</span> SDSPI {
+    44    
+    45        <span class="xdoc">/*!
+</span>    46    <span class="xdoc">     *  ======== LibType ========
+</span>    47    <span class="xdoc">     *  SDSPI library selection options
+</span>    48    <span class="xdoc">     *
+</span>    49    <span class="xdoc">     *  This enumeration defines all the SDSPI library type
+</span>    50    <span class="xdoc">     *  provided by the product.  You can select the library type by setting
+</span>    51    <span class="xdoc">     *  the {<b>@link</b> #libType SDSPI.libType} configuration parameter.
+</span>    52    <span class="xdoc">     *
+</span>    53    <span class="xdoc">     *  <b>@field(LibType_Instrumented)</b> The library supplied is prebuilt with
+</span>    54    <span class="xdoc">     *  logging and assertions enabled.
+</span>    55    <span class="xdoc">     *  Diags_USER1 mask logs basic information
+</span>    56    <span class="xdoc">     *  Diags_USER2 mask logs detailed information
+</span>    57    <span class="xdoc">     *
+</span>    58    <span class="xdoc">     *  <b>@field(LibType_NonInstrumented)</b> The library supplied is prebuilt
+</span>    59    <span class="xdoc">     *  with logging and assertions disabled.
+</span>    60    <span class="xdoc">     */</span>
+    61        <span class=key>enum</span> LibType {
+    62            LibType_Instrumented,           <span class="xdoc">/*! instrumented */</span>
+    63            LibType_NonInstrumented         <span class="xdoc">/*! non-instrumented */</span>
+    64        };
+    65    
+    66        <span class="xdoc">/*!
+</span>    67    <span class="xdoc">     *  ======== libType ========
+</span>    68    <span class="xdoc">     *  SDSPI Library type
+</span>    69    <span class="xdoc">     *
+</span>    70    <span class="xdoc">     *  Deprecated: Please use ti.tirtos.TIRTOS.libType instead.
+</span>    71    <span class="xdoc">     *
+</span>    72    <span class="xdoc">     *  The SDSPI runtime is provided in the form of a library that is
+</span>    73    <span class="xdoc">     *  linked with your application.  Several forms of this library are
+</span>    74    <span class="xdoc">     *  provided with the SDSPI product. This configuration parameter
+</span>    75    <span class="xdoc">     *  allows you to select the form of SDSPI to use.
+</span>    76    <span class="xdoc">     *
+</span>    77    <span class="xdoc">     *  The default value of libType is
+</span>    78    <span class="xdoc">     *  {<b>@link</b> #LibType_Instrumented SDSPI_LibType_Instrumented}.  For a
+</span>    79    <span class="xdoc">     *  complete list of options and what they offer see {<b>@link</b> #LibType}.
+</span>    80    <span class="xdoc">     */</span>
+    81        <span class=key>metaonly</span> <span class=key>config</span> LibType libType = LibType_Instrumented;
+    82    
+    83        <span class="xdoc">/*!
+</span>    84    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    85    <span class="xdoc">     *  ======== maxPeripheralCount ========
+</span>    86    <span class="xdoc">     */</span>
+    87        <span class=key>metaonly</span> <span class=key>config</span> UInt maxPeripheralCount = 32;
+    88    
+    89        <span class="xdoc">/*!
+</span>    90    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    91    <span class="xdoc">     *  ======== SDSPI_Config ========
+</span>    92    <span class="xdoc">     *  Structure must match the SDSPI_Config structure defined in SDSPI.h
+</span>    93    <span class="xdoc">     */</span>
+    94        <span class=key>struct</span> SDSPI_Config {
+    95            Void               *fxnTablePtr; <span class=comment>//Used to determine the implementation</span>
+    96            Void               *object;      <span class=comment>//Used to access the data</span>
+    97            Void               *hwAttrs;     <span class=comment>//Used to get the attributes</span>
+    98        };
+    99    
+   100        <span class="xdoc">/*!
+</span>   101    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   102    <span class="xdoc">     *  ======== SDSPI_CardType ========
+</span>   103    <span class="xdoc">     *  Structure must match the SDSPI_CardType structure defined in SDSPI.h
+</span>   104    <span class="xdoc">     */</span>
+   105        <span class=key>enum</span> SDSPITiva_CardType {
+   106            NOCARD = 0x0,
+   107            MMC = 1,
+   108            SDSC = 2,
+   109            SDHC = 3
+   110        };
+   111    
+   112        <span class="xdoc">/*!
+</span>   113    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   114    <span class="xdoc">     *  ======== SDSPITiva_hwAttrs ========
+</span>   115    <span class="xdoc">     *  Structure must match the SDSPITivaDMA_hwAttrs structure defined in sdspi/SDSPITivaDMA.h
+</span>   116    <span class="xdoc">     */</span>
+   117        <span class=key>struct</span> SDSPITiva_HWAttrs {
+   118            Bits32 baseAddr;
+   119    
+   120            Bits32 portSPI;
+   121            Bits32 pinSCK;
+   122            Bits32 pinMISO;
+   123            Bits32 pinMOSI;
+   124    
+   125            Bits32 portCS;
+   126            Bits32 pinCS;
+   127    
+   128            Bits32 portTX;
+   129            Bits32 pinTX;
+   130        };
+   131    
+   132        <span class="xdoc">/*!
+</span>   133    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   134    <span class="xdoc">     *  ======== SDSPITiva_object ========
+</span>   135    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   136    <span class="xdoc">     */</span>
+   137        <span class=key>struct</span> SDSPITiva_Object {
+   138            Bits32               driveNumber;
+   139            UChar                diskState;
+   140            SDSPITiva_CardType   cardType;
+   141            Bits32               bitRate;
+   142        };
+   143    
+   144        <span class="xdoc">/*!
+</span>   145    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   146    <span class="xdoc">     *  ======== SDSPIUSCI_hwAttrs ========
+</span>   147    <span class="xdoc">     *  Structure must match the SDSPITivaDMA_hwAttrs structure defined in sdspi/SDSPITivaDMA.h
+</span>   148    <span class="xdoc">     */</span>
+   149        <span class=key>struct</span> SDSPIUSCIA_HWAttrs {
+   150            Bits32 baseAddr;
+   151    
+   152            Bits8  clockSource;
+   153    
+   154            Bits8  portSPI;
+   155            Bits32 pinSCK;
+   156            Bits32 pinMISO;
+   157            Bits32 pinMOSI;
+   158    
+   159            Bits8  portCS;
+   160            Bits32 pinCS;
+   161        };
+   162    
+   163        <span class=key>struct</span> SDSPIUSCIB_HWAttrs {
+   164            Bits32 baseAddr;
+   165    
+   166            Bits8  clockSource;
+   167    
+   168            Bits8  portSPI;
+   169            Bits32 pinSCK;
+   170            Bits32 pinMISO;
+   171            Bits32 pinMOSI;
+   172    
+   173            Bits8  portCS;
+   174            Bits32 pinCS;
+   175        };
+   176    
+   177        <span class="xdoc">/*!
+</span>   178    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   179    <span class="xdoc">     *  ======== SDSPIUSCIA_object ========
+</span>   180    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   181    <span class="xdoc">     */</span>
+   182        <span class=key>struct</span> SDSPIUSCIA_Object {
+   183            Bits16               driveNumber;
+   184            UChar                diskState;
+   185            SDSPITiva_CardType   cardType; <span class=comment>// Same as SDSPITiva_CardType</span>
+   186            Bits32               bitRate;
+   187        };
+   188    
+   189        <span class="xdoc">/*!
+</span>   190    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   191    <span class="xdoc">     *  ======== SDSPIUSCIB_object ========
+</span>   192    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   193    <span class="xdoc">     */</span>
+   194        <span class=key>struct</span> SDSPIUSCIB_Object {
+   195            Bits16               driveNumber;
+   196            UChar                diskState;
+   197            SDSPITiva_CardType   cardType; <span class=comment>// Same as SDSPITiva_CardType</span>
+   198            Bits32               bitRate;
+   199        };
+   200    
+   201        <span class="xdoc">/*!
+</span>   202    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   203    <span class="xdoc">     *  ======== SDSPIEUSCI_hwAttrs ========
+</span>   204    <span class="xdoc">     *  Structure must match the SDSPITivaDMA_hwAttrs structure defined in sdspi/SDSPITivaDMA.h
+</span>   205    <span class="xdoc">     */</span>
+   206        <span class=key>struct</span> SDSPIEUSCIA_HWAttrs {
+   207            Bits32 baseAddr;
+   208    
+   209            Bits8  clockSource;
+   210    
+   211            Bits8  portSCK;
+   212            Bits32 pinSCK;
+   213            Bits8  portMISO;
+   214            Bits32 pinMISO;
+   215            Bits8  portMOSI;
+   216            Bits32 pinMOSI;
+   217    
+   218            Bits8  portCS;
+   219            Bits32 pinCS;
+   220        };
+   221    
+   222        <span class=key>struct</span> SDSPIEUSCIB_HWAttrs {
+   223            Bits32 baseAddr;
+   224    
+   225            Bits8  clockSource;
+   226    
+   227            Bits8  portSCK;
+   228            Bits32 pinSCK;
+   229            Bits8  portMISO;
+   230            Bits32 pinMISO;
+   231            Bits8  portMOSI;
+   232            Bits32 pinMOSI;
+   233    
+   234            Bits8  portCS;
+   235            Bits32 pinCS;
+   236        };
+   237    
+   238        <span class="xdoc">/*!
+</span>   239    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   240    <span class="xdoc">     *  ======== SDSPIEUSCIA_object ========
+</span>   241    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   242    <span class="xdoc">     */</span>
+   243        <span class=key>struct</span> SDSPIEUSCIA_Object {
+   244            Bits16               driveNumber;
+   245            UChar                diskState;
+   246            SDSPITiva_CardType   cardType; <span class=comment>// Same as SDSPITiva_CardType</span>
+   247            Bits32               bitRate;
+   248        };
+   249    
+   250        <span class="xdoc">/*!
+</span>   251    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   252    <span class="xdoc">     *  ======== SDSPIEUSCIB_object ========
+</span>   253    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   254    <span class="xdoc">     */</span>
+   255        <span class=key>struct</span> SDSPIEUSCIB_Object {
+   256            Bits16               driveNumber;
+   257            UChar                diskState;
+   258            SDSPITiva_CardType   cardType; <span class=comment>// Same as SDSPITiva_CardType</span>
+   259            Bits32               bitRate;
+   260        };
+   261    
+   262        <span class="xdoc">/*!
+</span>   263    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   264    <span class="xdoc">     *  ======== SDSPICC3200_HWAttrs ========
+</span>   265    <span class="xdoc">     *  Structure must match the SDSPITivaDMA_hwAttrs structure defined in sdspi/SDSPITivaDMA.h
+</span>   266    <span class="xdoc">     */</span>
+   267        <span class=key>struct</span> SDSPICC3200_HWAttrs {
+   268            Bits32 baseAddr;
+   269            Bits32 spiPRCM;
+   270            Bits32 csGPIOBase;
+   271            Bits32 csGPIOPin;
+   272            Bits32 txGPIOBase;
+   273            Bits32 txGPIOPin;
+   274            Bits32 txGPIOMode;
+   275            Bits32 txSPIMode;
+   276            Bits32 txPackPin;
+   277        };
+   278    
+   279        <span class="xdoc">/*!
+</span>   280    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   281    <span class="xdoc">     *  ======== SDSPITiva_object ========
+</span>   282    <span class="xdoc">     *  Structure must match the SDSPITiva_object structure defined in sdspi/SDSPITivaDMA.h
+</span>   283    <span class="xdoc">     */</span>
+   284        <span class=key>struct</span> SDSPICC3200_Object {
+   285            Bits32               driveNumber;
+   286            UChar                diskState;
+   287            SDSPITiva_CardType   cardType;
+   288            Bits32               bitRate;
+   289        };
+   290    
+   291        <span class="xdoc">/*!
+</span>   292    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   293    <span class="xdoc">     *  ======== SDSPIMSP432_HWAttrs ========
+</span>   294    <span class="xdoc">     *  Structure must match the SDSPIMSP432_HWAttrs structure defined in sdspi/SDSPIMSP432DMA.h
+</span>   295    <span class="xdoc">     */</span>
+   296        <span class=key>struct</span> SDSPIMSP432_HWAttrs {
+   297            Bits32 baseAddr;
+   298            Bits8  clockSource;
+   299    
+   300            Bits8  portSCK;
+   301            Bits16 pinSCK;
+   302            Bits8  sckMode;
+   303    
+   304            Bits8  portMISO;
+   305            Bits32 pinMISO;
+   306            Bits8  misoMode;
+   307    
+   308            Bits8  portMOSI;
+   309            Bits16 pinMOSI;
+   310            Bits8  mosiMode;
+   311    
+   312            Bits8  portCS;
+   313            Bits32 pinCS;
+   314        };
+   315    
+   316        <span class="xdoc">/*!
+</span>   317    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   318    <span class="xdoc">     *  ======== SDSPIMSP432_Object ========
+</span>   319    <span class="xdoc">     *  Structure must match the SDSPIMSP432_Object structure defined in sdspi/SDSPIMSP432DMA.h
+</span>   320    <span class="xdoc">     */</span>
+   321        <span class=key>struct</span> SDSPIMSP432_Object {
+   322            Bits16               driveNumber;
+   323            UChar                diskState;
+   324            SDSPITiva_CardType   cardType;
+   325            Bits32               bitRate;
+   326            Bits32               filesystem;
+   327        };
+   328    
+   329        <span class="xdoc">/*!
+</span>   330    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   331    <span class="xdoc">     *  ======== BasicView ========
+</span>   332    <span class="xdoc">     */</span>
+   333        <span class=key>metaonly</span> <span class=key>struct</span> BasicView {
+   334            String              sdspiHandle;
+   335            String              baseAddr;
+   336            String              functionTable;
+   337        };
+   338    
+   339        <span class="xdoc">/*!
+</span>   340    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   341    <span class="xdoc">     *  ======== rovViewInfo ========
+</span>   342    <span class="xdoc">     */</span>
+   343        @Facet
+   344        <span class=key>metaonly</span> <span class=key>config</span> ViewInfo.Instance rovViewInfo =
+   345            ViewInfo.create({
+   346                viewMap: [
+   347                    [<span class="string">'Basic'</span>,
+   348                        {
+   349                            type: ViewInfo.MODULE_DATA,
+   350                            viewInitFxn: <span class="string">'viewInitBasic'</span>,
+   351                            structName: <span class="string">'BasicView'</span>
+   352                        }
+   353                    ],
+   354                ]
+   355            });
+   356    }
+</pre>
+</body></html>

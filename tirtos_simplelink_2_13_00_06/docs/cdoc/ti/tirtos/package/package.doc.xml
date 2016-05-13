@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package kind='package' name='ti.tirtos' nodoc='0' root='../../' summary=''>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Erequires%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Fsysbios%2Fpackage.html%22+title%3D%22ti.sysbios%22%3Eti.sysbios%3C%2Fa%3E%3B'/>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Erequires%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Fsysbios%2Ffatfs%2Fpackage.html%22+title%3D%22ti.sysbios.fatfs%22%3Eti.sysbios.fatfs%3C%2Fa%3E%3B'/>
+    <line blank='1' always='0'/>
+    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3Eti.tirtos%3C%2Fspan%3E%3C%2Fgo%3E+%5B1%2C+0%2C+0%5D+%7B'/>
+    <line tab='0' content='%7D'/>
+    <unit name='TIRTOS' kind='module' nodoc='0' metaonly='1' summary=''>
+        <synopSpec>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Epackage%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Ftirtos%2Fpackage.html%22+title%3D%22ti.tirtos%22%3Eti.tirtos%3C%2Fa%3E%3B'/>
+            <line blank='1' always='0'/>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ETIRTOS%3C%2Fspan%3E%3C%2Fgo%3E+%7B'/>
+            <line tab='0' content='%7D'/>
+        </synopSpec>
+        <specInfo>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Emetaonly+%3C%2Fspan%3E%3Cspan+class%3D%22xdoc-kw1%22%3Emodule%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ETIRTOS%3C%2Fspan%3E%3C%2Fgo%3E+%7B%3Cb%3E%26nbsp%3B%26nbsp%3B...%3C%2Fb%3E'/>
+        </specInfo>
+        <synopMeta>
+            <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Evar%3C%2Fspan%3E+TIRTOS+%3D+%3Cspan+class%3D%22xdoc-kw3%22%3Exdc.useModule%3C%2Fspan%3E%28%3Cspan+class%3D%22xdoc-id%22%3E%27ti.tirtos.TIRTOS%27%3C%2Fspan%3E%29%3B'/>
+        </synopMeta>
+        <group name='module-wide constants &amp; types'>
+            <decl spacer='1'/>
+            <decl kind='enum' name='LibType' anchor='.Lib.Type' altext='ti.tirtos.TIRTOS.LibType' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='TI-RTOS+driver+library+selection+options'>
+                <decl kind='enumval' name='LibType_Instrumented' anchor='.Lib.Type_.Instrumented'/>
+                <decl kind='enumval' name='LibType_NonInstrumented' anchor='.Lib.Type_.Non.Instrumented'/>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Eenum%3C%2Fspan%3E+%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ELibType%3C%2Fspan%3E%3C%2Fgo%3E+%7B'/>
+                    <line tab='1' comment='instrumented+%28with+asserts+and+logs%29' content='%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ELibType_Instrumented%3C%2Fspan%3E%3C%2Fgo%3E%2C+'/>
+                    <line tab='1' comment='non-instrumented' content='%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ELibType_NonInstrumented%3C%2Fspan%3E%3C%2Fgo%3E'/>
+                    <line tab='0' content='%7D%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Ci%3Evalues+of+type+%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3ELibType%3C%2Fspan%3E%3C%2Fgo%3E%3C%2Fi%3E'/>
+                    <line tab='1' comment='instrumented+%28with+asserts+and+logs%29' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econst%3C%2Fspan%3E+%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3ELibType_Instrumented%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                    <line tab='1' comment='non-instrumented' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econst%3C%2Fspan%3E+%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3ELibType_NonInstrumented%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopMeta>
+                <docSect name='VALUES'>
+                    <docChild name='LibType_Instrumented' summary='The+library+supplied+is+prebuilt+with%0A++logging+and+assertions+enabled.%0A++Diags_USER1+mask+logs+basic+information%0A++Diags_USER2+mask+logs+more+detailed+information'>
+                    </docChild>
+                    <docChild name='LibType_NonInstrumented' summary='The+library+supplied+is+prebuilt%0A++with+logging+and+assertions+disabled.'>
+                    </docChild>
+                </docSect>
+                <docSect name='details'>
+                    <docPara content='You+can+select+the+library+type+by+setting%0A++the+%3Ca+class%3D%22xdoc-link%22+href%3D%22TIRTOS.html%23lib.Type%22+title%3D%22libType%22%3ETIRTOS.libType%3C%2Fa%3E+configuration+parameter.'/>
+                </docSect>
+            </decl>
+            <decl spacer='1'/>
+        </group>
+        <group name='module-wide config parameters'>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl spacer='1'/>
+            <decl kind='config' name='libType' anchor='lib.Type' altext='ti.tirtos.TIRTOS.libType' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='TI-RTOS+Driver+Library+type'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Ftirtos%2FTIRTOS.html%23.Lib.Type%22+title%3D%22ti.tirtos.TIRTOS.LibType%22%3ETIRTOS.LibType%3C%2Fa%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3ElibType%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Ca%2Bclass%253D%2522xdoc-link%2522%2Bhref%253D%2522..%252F..%252Fti%252Ftirtos%252FTIRTOS.html%2523.Lib.Type_.Non.Instrumented%2522%2Btitle%253D%2522ti.tirtos.TIRTOS.LibType_NonInstrumented%2522%253ETIRTOS.LibType_NonInstrumented%253C%252Fa%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3ElibType%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Ca+class%3D%22xdoc-link%22+href%3D%22..%2F..%2Fti%2Ftirtos%2FTIRTOS.html%23.Lib.Type%22+title%3D%22ti.tirtos.TIRTOS.LibType%22%3ETIRTOS.LibType%3C%2Fa%3E%3C%2Fi%3E+%253Ca%2Bclass%253D%2522xdoc-link%2522%2Bhref%253D%2522..%252F..%252Fti%252Ftirtos%252FTIRTOS.html%2523.Lib.Type_.Non.Instrumented%2522%2Btitle%253D%2522ti.tirtos.TIRTOS.LibType_NonInstrumented%2522%253ETIRTOS.LibType_NonInstrumented%253C%252Fa%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='The+driver+library+is+provided+in+the+form+of+a+library+that+is%0A++linked+with+your+application.++Two+forms+of+this+library+are%0A++provided+with+the+TI-RTOS+product.+This+configuration+parameter%0A++allows+you+to+select+the+form+of+the+driver+library+to+use.'/>
+                    <docPara content='The+default+value+of+libType+is%0A++%3Ca+class%3D%22xdoc-link%22+href%3D%22TIRTOS.html%23.Lib.Type_.Instrumented%22+title%3D%22LibType_Instrumented%22%3ETIRTOS_LibType_NonInstrumented%3C%2Fa%3E.++For+a%0A++complete+list+of+options+and+what+they+offer+see+%3Ca+class%3D%22xdoc-link%22+href%3D%22TIRTOS.html%23.Lib.Type%22+title%3D%22LibType%22%3ELibType%3C%2Fa%3E.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='supportsCamera' anchor='supports.Camera' altext='ti.tirtos.TIRTOS.supportsCamera' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsCamera%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsCamera%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsEMAC' anchor='supports.E.M.A.C' altext='ti.tirtos.TIRTOS.supportsEMAC' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsEMAC%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsEMAC%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsGPIO' anchor='supports.G.P.I.O' altext='ti.tirtos.TIRTOS.supportsGPIO' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsGPIO%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsGPIO%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsI2C' anchor='supports.I2.C' altext='ti.tirtos.TIRTOS.supportsI2C' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsI2C%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsI2C%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsI2S' anchor='supports.I2.S' altext='ti.tirtos.TIRTOS.supportsI2S' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsI2S%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsI2S%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsPWM' anchor='supports.P.W.M' altext='ti.tirtos.TIRTOS.supportsPWM' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsPWM%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsPWM%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsPower' anchor='supports.Power' altext='ti.tirtos.TIRTOS.supportsPower' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsPower%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsPower%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsSDSPI' anchor='supports.S.D.S.P.I' altext='ti.tirtos.TIRTOS.supportsSDSPI' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsSDSPI%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsSDSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsSPI' anchor='supports.S.P.I' altext='ti.tirtos.TIRTOS.supportsSPI' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsSPI%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsUART' anchor='supports.U.A.R.T' altext='ti.tirtos.TIRTOS.supportsUART' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsUART%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsUART%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsUSBMSCHFatFs' anchor='supports.U.S.B.M.S.C.H.Fat.Fs' altext='ti.tirtos.TIRTOS.supportsUSBMSCHFatFs' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsUSBMSCHFatFs%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsUSBMSCHFatFs%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='supportsWatchdog' anchor='supports.Watchdog' altext='ti.tirtos.TIRTOS.supportsWatchdog' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary=''>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EsupportsWatchdog%3C%2Fspan%3E%3C%2Fgo%3E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EsupportsWatchdog%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%3Cspan+class%3D%22xdoc-kw2%22%3Eundefined%3C%2Fspan%3E%3B'/>
+                </synopMeta>
+            </decl>
+            <decl kind='config' name='useCamera' anchor='use.Camera' altext='ti.tirtos.TIRTOS.useCamera' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+Camera+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseCamera%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseCamera%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useEMAC' anchor='use.E.M.A.C' altext='ti.tirtos.TIRTOS.useEMAC' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+EMAC+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseEMAC%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseEMAC%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useGPIO' anchor='use.G.P.I.O' altext='ti.tirtos.TIRTOS.useGPIO' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+GPIO+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseGPIO%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseGPIO%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useI2C' anchor='use.I2.C' altext='ti.tirtos.TIRTOS.useI2C' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+I2C+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseI2C%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseI2C%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useI2S' anchor='use.I2.S' altext='ti.tirtos.TIRTOS.useI2S' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+I2S+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseI2S%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseI2S%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='usePWM' anchor='use.P.W.M' altext='ti.tirtos.TIRTOS.usePWM' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+PWM+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EusePWM%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EusePWM%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='usePower' anchor='use.Power' altext='ti.tirtos.TIRTOS.usePower' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+Power+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EusePower%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EusePower%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are+automatically+pulled+in.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useSDSPI' anchor='use.S.D.S.P.I' altext='ti.tirtos.TIRTOS.useSDSPI' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+SDSPI+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseSDSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseSDSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useSPI' anchor='use.S.P.I' altext='ti.tirtos.TIRTOS.useSPI' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+SPI+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseSPI%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useUART' anchor='use.U.A.R.T' altext='ti.tirtos.TIRTOS.useUART' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+UART+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseUART%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseUART%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useUSBMSCHFatFs' anchor='use.U.S.B.M.S.C.H.Fat.Fs' altext='ti.tirtos.TIRTOS.useUSBMSCHFatFs' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+USBMSCHFatFs+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseUSBMSCHFatFs%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseUSBMSCHFatFs%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+            <decl kind='config' name='useWatchdog' anchor='use.Watchdog' altext='ti.tirtos.TIRTOS.useWatchdog' nodoc='0' external='1' overrides='0' readonly='0' instance='0' summary='Using+Watchdog+driver'>
+                <synopSpec>
+                    <line tab='0' content='%3Cspan+class%3D%22xdoc-kw1%22%3Econfig%3C%2Fspan%3E+%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%26nbsp%3B%3Cgo%3E%3Cspan+class%3D%22xdoc-id%22%3EuseWatchdog%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopSpec>
+                <synopMeta>
+                    <line tab='0' content='%3Cgo%3ETIRTOS.%3Cspan+class%3D%22xdoc-id%22%3EuseWatchdog%3C%2Fspan%3E%3C%2Fgo%3E+%3D+%3Ci%3E%3Cspan+class%3D%22xdoc-kw2%22%3EBool%3C%2Fspan%3E%3C%2Fi%3E+%253Cspan%2Bclass%253D%2522xdoc-kw2%2522%253Efalse%253C%252Fspan%253E%3B'/>
+                </synopMeta>
+                <docSect name='details'>
+                    <docPara content='If+set+to+true%2C+any+modules+that+this+driver+requires%0A++are++automatically+pulled+in.+Also+ROV+support+for+the%0A++driver+is+enabled.'/>
+                    <docPara content='The+default+value+is+false.'/>
+                </docSect>
+            </decl>
+        </group>
+        <group name='module-wide data'>
+        </group>
+        <group name='module-wide functions'>
+            <decl spacer='1'/>
+        </group>
+    </unit>
+</package>

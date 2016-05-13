@@ -1,0 +1,114 @@
+\subsection{Power\+C\+C3200\+\_\+\+Config Struct Reference}
+\label{struct_power_c_c3200___config}\index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+
+
+Power global configuration.  
+
+
+
+
+{\ttfamily \#include $<$Power\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_8h_a435fdeb71d13ea6be86f599c9b6a0d78}{Power\+\_\+\+Policy\+Init\+Fxn} \hyperlink{struct_power_c_c3200___config_af931539deba8a64c4478af415aa9e260}{policy\+Init\+Fxn}
+\item 
+\hyperlink{_power_8h_a333038d1e9cd5f93dda7b83f8a1afa8b}{Power\+\_\+\+Policy\+Fxn} \hyperlink{struct_power_c_c3200___config_a11d7ce6a88c2ab91fceed9ea4cc24d59}{policy\+Fxn}
+\item 
+void($\ast$ \hyperlink{struct_power_c_c3200___config_a141ea8a9f0777ecbef65e5f1fa468823}{enter\+L\+P\+D\+S\+Hook\+Fxn} )(void)
+\item 
+void($\ast$ \hyperlink{struct_power_c_c3200___config_acd30f63935e03d3d90b32a27ac5c9787}{resume\+L\+P\+D\+S\+Hook\+Fxn} )(void)
+\item 
+bool \hyperlink{struct_power_c_c3200___config_a5ab4fa1286917e2ec3676e000fc355c2}{enable\+Policy}
+\item 
+bool \hyperlink{struct_power_c_c3200___config_a792fbe4d81f78db9fc1c1fdb7ab2bfd4}{enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S}
+\item 
+bool \hyperlink{struct_power_c_c3200___config_a17e5e5237ae1e22628d8e3e20f2d6450}{enable\+G\+P\+I\+O\+Wakeup\+Shutdown}
+\item 
+bool \hyperlink{struct_power_c_c3200___config_a0e23cab4699b252b7014101107525773}{enable\+Network\+Wakeup\+L\+P\+D\+S}
+\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c3200___config_aea02bf2fcfdcac23a63c9d981775cf9a}{wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S}
+\begin{DoxyCompactList}\small\item\em The G\+P\+I\+O source for wakeup from L\+P\+D\+S. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c3200___config_a5125aca3ead9428e8d3bc41fab9740b3}{wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S}
+\begin{DoxyCompactList}\small\item\em The G\+P\+I\+O trigger type for wakeup from L\+P\+D\+S. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c3200___config_a1ba7e114e7d9d1497827dd091306ea9b}{wakeup\+G\+P\+I\+O\+Source\+Shutdown}
+\begin{DoxyCompactList}\small\item\em The G\+P\+I\+O sources for wakeup from shutdown. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c3200___config_abc6ba79edc3a18cc50df359d0e15b04e}{wakeup\+G\+P\+I\+O\+Type\+Shutdown}
+\begin{DoxyCompactList}\small\item\em The G\+P\+I\+O trigger type for wakeup from shutdown. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{struct_power_c_c3200___config_a747fa07fcfe34f7a787c1edab75a4b85}{ram\+Retention\+Mask\+L\+P\+D\+S}
+\begin{DoxyCompactList}\small\item\em S\+R\+A\+M retention mask for L\+P\+D\+S. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Power global configuration. 
+
+\subsubsection{Field Documentation}
+\index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!policy\+Init\+Fxn@{policy\+Init\+Fxn}}
+\index{policy\+Init\+Fxn@{policy\+Init\+Fxn}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{policy\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Policy\+Init\+Fxn} Power\+C\+C3200\+\_\+\+Config\+::policy\+Init\+Fxn}\label{struct_power_c_c3200___config_af931539deba8a64c4478af415aa9e260}
+Init function for power policy \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!policy\+Fxn@{policy\+Fxn}}
+\index{policy\+Fxn@{policy\+Fxn}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{policy\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Power\+\_\+\+Policy\+Fxn} Power\+C\+C3200\+\_\+\+Config\+::policy\+Fxn}\label{struct_power_c_c3200___config_a11d7ce6a88c2ab91fceed9ea4cc24d59}
+The power policy function \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!enter\+L\+P\+D\+S\+Hook\+Fxn@{enter\+L\+P\+D\+S\+Hook\+Fxn}}
+\index{enter\+L\+P\+D\+S\+Hook\+Fxn@{enter\+L\+P\+D\+S\+Hook\+Fxn}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{enter\+L\+P\+D\+S\+Hook\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ Power\+C\+C3200\+\_\+\+Config\+::enter\+L\+P\+D\+S\+Hook\+Fxn) (void)}\label{struct_power_c_c3200___config_a141ea8a9f0777ecbef65e5f1fa468823}
+Hook function called when entering L\+P\+D\+S mode \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!resume\+L\+P\+D\+S\+Hook\+Fxn@{resume\+L\+P\+D\+S\+Hook\+Fxn}}
+\index{resume\+L\+P\+D\+S\+Hook\+Fxn@{resume\+L\+P\+D\+S\+Hook\+Fxn}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{resume\+L\+P\+D\+S\+Hook\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ Power\+C\+C3200\+\_\+\+Config\+::resume\+L\+P\+D\+S\+Hook\+Fxn) (void)}\label{struct_power_c_c3200___config_acd30f63935e03d3d90b32a27ac5c9787}
+Hook function called when resuming from L\+P\+D\+S mode \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!enable\+Policy@{enable\+Policy}}
+\index{enable\+Policy@{enable\+Policy}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{enable\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C3200\+\_\+\+Config\+::enable\+Policy}\label{struct_power_c_c3200___config_a5ab4fa1286917e2ec3676e000fc355c2}
+Determines whether to run the power policy function \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S@{enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S}}
+\index{enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S@{enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C3200\+\_\+\+Config\+::enable\+G\+P\+I\+O\+Wakeup\+L\+P\+D\+S}\label{struct_power_c_c3200___config_a792fbe4d81f78db9fc1c1fdb7ab2bfd4}
+Enable G\+P\+I\+O as a wakeup source for L\+P\+D\+S \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!enable\+G\+P\+I\+O\+Wakeup\+Shutdown@{enable\+G\+P\+I\+O\+Wakeup\+Shutdown}}
+\index{enable\+G\+P\+I\+O\+Wakeup\+Shutdown@{enable\+G\+P\+I\+O\+Wakeup\+Shutdown}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{enable\+G\+P\+I\+O\+Wakeup\+Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C3200\+\_\+\+Config\+::enable\+G\+P\+I\+O\+Wakeup\+Shutdown}\label{struct_power_c_c3200___config_a17e5e5237ae1e22628d8e3e20f2d6450}
+Enable G\+P\+I\+O as a wakeup source for shutdown \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!enable\+Network\+Wakeup\+L\+P\+D\+S@{enable\+Network\+Wakeup\+L\+P\+D\+S}}
+\index{enable\+Network\+Wakeup\+L\+P\+D\+S@{enable\+Network\+Wakeup\+L\+P\+D\+S}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{enable\+Network\+Wakeup\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}bool Power\+C\+C3200\+\_\+\+Config\+::enable\+Network\+Wakeup\+L\+P\+D\+S}\label{struct_power_c_c3200___config_a0e23cab4699b252b7014101107525773}
+Enable Network activity as a wakeup source for L\+P\+D\+S \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S@{wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S}}
+\index{wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S@{wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C3200\+\_\+\+Config\+::wakeup\+G\+P\+I\+O\+Source\+L\+P\+D\+S}\label{struct_power_c_c3200___config_aea02bf2fcfdcac23a63c9d981775cf9a}
+
+
+The G\+P\+I\+O source for wakeup from L\+P\+D\+S. 
+
+Only one of the following G\+P\+I\+Os \{2,4,11,13,17,24,26\} can be the wakeup source for L\+P\+D\+S. The following values are taken from the driverlib prcm.\+h file.
+
+Value can be one of the following (defined in driverlib/prcm.\+h)\+: P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O2, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O4, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O11, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O13, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O17, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O24, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+G\+P\+I\+O26 \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S@{wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S}}
+\index{wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S@{wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C3200\+\_\+\+Config\+::wakeup\+G\+P\+I\+O\+Type\+L\+P\+D\+S}\label{struct_power_c_c3200___config_a5125aca3ead9428e8d3bc41fab9740b3}
+
+
+The G\+P\+I\+O trigger type for wakeup from L\+P\+D\+S. 
+
+Value can be one of the following (defined in driverlib/prcm.\+h)\+: P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+F\+A\+L\+L\+\_\+\+E\+D\+G\+E, P\+R\+C\+M\+\_\+\+L\+P\+D\+S\+\_\+\+R\+I\+S\+E\+\_\+\+E\+D\+G\+E \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!wakeup\+G\+P\+I\+O\+Source\+Shutdown@{wakeup\+G\+P\+I\+O\+Source\+Shutdown}}
+\index{wakeup\+G\+P\+I\+O\+Source\+Shutdown@{wakeup\+G\+P\+I\+O\+Source\+Shutdown}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{wakeup\+G\+P\+I\+O\+Source\+Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C3200\+\_\+\+Config\+::wakeup\+G\+P\+I\+O\+Source\+Shutdown}\label{struct_power_c_c3200___config_a1ba7e114e7d9d1497827dd091306ea9b}
+
+
+The G\+P\+I\+O sources for wakeup from shutdown. 
+
+Any one of the following G\+P\+I\+Os \{2,4,11,13,17,24,26\} can be a wakeup source for shutdown. The following values are taken from the driverlib prcm.\+h file
+
+Value can be one or more of the following (defined in driverlib/prcm.\+h)\+: P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O2, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O4, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O11, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O13, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O17, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O24, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+G\+P\+I\+O26 \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!wakeup\+G\+P\+I\+O\+Type\+Shutdown@{wakeup\+G\+P\+I\+O\+Type\+Shutdown}}
+\index{wakeup\+G\+P\+I\+O\+Type\+Shutdown@{wakeup\+G\+P\+I\+O\+Type\+Shutdown}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{wakeup\+G\+P\+I\+O\+Type\+Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C3200\+\_\+\+Config\+::wakeup\+G\+P\+I\+O\+Type\+Shutdown}\label{struct_power_c_c3200___config_abc6ba79edc3a18cc50df359d0e15b04e}
+
+
+The G\+P\+I\+O trigger type for wakeup from shutdown. 
+
+Value can be one of the following (defined in driverlib/prcm.\+h)\+: P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+L\+O\+W\+\_\+\+L\+E\+V\+E\+L, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+H\+I\+G\+H\+\_\+\+L\+E\+V\+E\+L, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+F\+A\+L\+L\+\_\+\+E\+D\+G\+E, P\+R\+C\+M\+\_\+\+H\+I\+B\+\_\+\+R\+I\+S\+E\+\_\+\+E\+D\+G\+E \index{Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}!ram\+Retention\+Mask\+L\+P\+D\+S@{ram\+Retention\+Mask\+L\+P\+D\+S}}
+\index{ram\+Retention\+Mask\+L\+P\+D\+S@{ram\+Retention\+Mask\+L\+P\+D\+S}!Power\+C\+C3200\+\_\+\+Config@{Power\+C\+C3200\+\_\+\+Config}}
+\paragraph[{ram\+Retention\+Mask\+L\+P\+D\+S}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+C\+C3200\+\_\+\+Config\+::ram\+Retention\+Mask\+L\+P\+D\+S}\label{struct_power_c_c3200___config_a747fa07fcfe34f7a787c1edab75a4b85}
+
+
+S\+R\+A\+M retention mask for L\+P\+D\+S. 
+
+Value can be a mask of the following (defined in driverlib/prcm.\+h)\+: P\+R\+C\+M\+\_\+\+S\+R\+A\+M\+\_\+\+C\+O\+L\+\_\+1, P\+R\+C\+M\+\_\+\+S\+R\+A\+M\+\_\+\+C\+O\+L\+\_\+2, P\+R\+C\+M\+\_\+\+S\+R\+A\+M\+\_\+\+C\+O\+L\+\_\+3, P\+R\+C\+M\+\_\+\+S\+R\+A\+M\+\_\+\+C\+O\+L\+\_\+4 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}\end{DoxyCompactItemize}

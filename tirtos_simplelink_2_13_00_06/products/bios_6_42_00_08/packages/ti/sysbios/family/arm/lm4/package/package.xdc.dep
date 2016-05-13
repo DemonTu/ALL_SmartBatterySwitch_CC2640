@@ -1,0 +1,107 @@
+clean::
+	$(RM) package/ti.sysbios.family.arm.lm4.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_family_arm_lm4.java
+	$(RM) package/ti_sysbios_family_arm_lm4.class
+	$(RM) package/package_ti.sysbios.family.arm.lm4.c
+	$(RM) package/package.defs.h
+	$(RM) Seconds.h
+	$(RM) package/internal/Seconds.xdc.h
+	$(RM) TimestampProvider.h
+	$(RM) package/internal/TimestampProvider.xdc.h
+	$(RM) Timer.h
+	$(RM) package/internal/Timer.xdc.h
+	$(RM) package/ti.sysbios.family.arm.lm4.ccs
+
+.interfaces: package/ti.sysbios.family.arm.lm4.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_family_arm_lm4.java package/package_ti.sysbios.family.arm.lm4.c package/package.defs.h Seconds.h package/internal/Seconds.xdc.h TimestampProvider.h package/internal/TimestampProvider.xdc.h Timer.h package/internal/Timer.xdc.h package/ti.sysbios.family.arm.lm4.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Seconds.xdc TimestampProvider.xdc Timer.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+Seconds.xs:
+package/package.xdc.inc: Seconds.xs
+TimestampProvider.xs:
+package/package.xdc.inc: TimestampProvider.xs
+Timer.xs:
+package/package.xdc.inc: Timer.xs
+
+# schema update dependencies
+package/package.xdc.inc: Seconds.xdc
+package/package.xdc.inc: TimestampProvider.xdc
+package/package.xdc.inc: Timer.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ISeconds.xdc
+ti/sysbios/interfaces/ISeconds.xdc:
+vpath ti/sysbios/interfaces/ISeconds.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimestamp.xdc
+ti/sysbios/interfaces/ITimestamp.xdc:
+vpath ti/sysbios/interfaces/ITimestamp.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampProvider.xdc
+xdc/runtime/ITimestampProvider.xdc:
+vpath xdc/runtime/ITimestampProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampClient.xdc
+xdc/runtime/ITimestampClient.xdc:
+vpath xdc/runtime/ITimestampClient.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/family/arm/m3/Hwi.xdc
+ti/sysbios/family/arm/m3/Hwi.xdc:
+vpath ti/sysbios/family/arm/m3/Hwi.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/BIOS.xdc
+ti/sysbios/BIOS.xdc:
+vpath ti/sysbios/BIOS.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IHwi.xdc
+ti/sysbios/interfaces/IHwi.xdc:
+vpath ti/sysbios/interfaces/IHwi.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: Seconds.h
+Seconds.h:
+package/package.xdc.inc: package/internal/Seconds.xdc.h
+package/internal/Seconds.xdc.h:
+package/package.xdc.inc: TimestampProvider.h
+TimestampProvider.h:
+package/package.xdc.inc: package/internal/TimestampProvider.xdc.h
+package/internal/TimestampProvider.xdc.h:
+package/package.xdc.inc: Timer.h
+Timer.h:
+package/package.xdc.inc: package/internal/Timer.xdc.h
+package/internal/Timer.xdc.h:
+

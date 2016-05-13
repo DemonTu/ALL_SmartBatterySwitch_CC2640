@@ -1,0 +1,12 @@
+/*
+ *  Copyright 2015 by Texas Instruments Incorporated.
+ *
+ */
+
+Pkg.otherFiles = ["runh", "linkcmd.xdt", "linkUtils.xs", "std.h", "_utils.xs"];
+Pkg.otherSrcs  = ["linkcmd.xdt", "linkUtils.xs"];
+/*
+ *  @(#) gnu.targets; 1, 0, 1,5; 2-27-2015 12:11:22; /db/ztree/library/trees/xdctargets/xdctargets-i02/src/ xlibrary
+
+ */
+

@@ -1,0 +1,98 @@
+\subsection{Watchdog\+C\+C3200.\+h File Reference}
+\label{_watchdog_c_c3200_8h}\index{Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}}
+
+
+\subsubsection{Detailed Description}
+Watchdog driver implementation for C\+C3200. 
+
+============================================================================
+
+The Watchdog header file for C\+C3200 should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Watchdog.h>}
+\textcolor{preprocessor}{#include <ti/drivers/watchdog/WatchdogCC3200.h>}
+\end{DoxyCode}
+
+
+This Watchdog driver implementation is designed to operate on a C\+C3200 device. Once opened, C\+C3200 Watchdog will count down from the reload value specified in the \hyperlink{struct_watchdog_c_c3200___h_w_attrs}{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}. If it times out, the Watchdog interrupt flag will be set, and a user-\/provided callback function will be called. If resets have been enabled in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} and the Watchdog Timer is allowed to time out again while the interrupt flag is still pending, a reset signal will be generated. To prevent a reset, \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} must be called to clear the interrupt flag.
+
+The reload value from which the Watchdog Timer counts down may be changed during runtime using \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload()}.
+
+\hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()} is {\bfseries not} supported by this driver implementation.
+
+By default the Watchdog driver has resets turned on. However, they may be turned off in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} which allows the Watchdog Timer to be used like another timer interrupt. This functionality is {\bfseries not} supported by all platforms, refer to device specific documentation for details.
+
+To have a user-\/defined function run at the warning interrupt, first define a void-\/type function that takes a Watchdog\+\_\+\+Handle cast to a U\+Arg as an argument such as the one shown below.
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} callback(UArg handle);
+
+...
+
+Watchdog\_Handle handle;
+Watchdog_Params params;
+
+Watchdog_Params_init(&params);
+params.callbackFxn = callback;
+handle = Watchdog_open(Watchdog\_configIndex, &params);
+\end{DoxyCode}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Watchdog.\+h$>$}\\*
+Include dependency graph for Watchdog\+C\+C3200.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{_watchdog_c_c3200_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_watchdog_c_c3200___h_w_attrs}{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C3200. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog_c_c3200___object}{Watchdog\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C3200. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_watchdog_c_c3200___h_w_attrs}{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs} \hyperlink{_watchdog_c_c3200_8h_a93a2e6a65ad04b5f64ba46a7ad314fa0}{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C3200. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog_c_c3200___object}{Watchdog\+C\+C3200\+\_\+\+Object} \hyperlink{_watchdog_c_c3200_8h_acac7932b9436e05c5f1a1901739cad15}{Watchdog\+C\+C3200\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C3200. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} \hyperlink{_watchdog_c_c3200_8h_aa8da6260d2ca5dbe363e6d82748e9375}{Watchdog\+C\+C3200\+\_\+fxn\+Table}
+\begin{DoxyCompactList}\small\item\em Watchdog function table for C\+C3200. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}!Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\index{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}!Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}}
+\paragraph[{Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}  {\bf Watchdog\+C\+C3200\+\_\+\+H\+W\+Attrs}}\label{_watchdog_c_c3200_8h_a93a2e6a65ad04b5f64ba46a7ad314fa0}
+
+
+Watchdog hardware attributes for C\+C3200. 
+
+\index{Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}!Watchdog\+C\+C3200\+\_\+\+Object@{Watchdog\+C\+C3200\+\_\+\+Object}}
+\index{Watchdog\+C\+C3200\+\_\+\+Object@{Watchdog\+C\+C3200\+\_\+\+Object}!Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}}
+\paragraph[{Watchdog\+C\+C3200\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C3200\+\_\+\+Object}  {\bf Watchdog\+C\+C3200\+\_\+\+Object}}\label{_watchdog_c_c3200_8h_acac7932b9436e05c5f1a1901739cad15}
+
+
+Watchdog Object for C\+C3200. 
+
+Not to be accessed by the user. 
+
+\subsubsection{Variable Documentation}
+\index{Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}!Watchdog\+C\+C3200\+\_\+fxn\+Table@{Watchdog\+C\+C3200\+\_\+fxn\+Table}}
+\index{Watchdog\+C\+C3200\+\_\+fxn\+Table@{Watchdog\+C\+C3200\+\_\+fxn\+Table}!Watchdog\+C\+C3200.\+h@{Watchdog\+C\+C3200.\+h}}
+\paragraph[{Watchdog\+C\+C3200\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Watchdog\+\_\+\+Fxn\+Table} Watchdog\+C\+C3200\+\_\+fxn\+Table}\label{_watchdog_c_c3200_8h_aa8da6260d2ca5dbe363e6d82748e9375}
+
+
+Watchdog function table for C\+C3200. 
+

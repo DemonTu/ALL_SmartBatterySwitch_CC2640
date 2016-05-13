@@ -1,0 +1,18 @@
+digraph "I2SCC3200DMA_Object"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="I2SCC3200DMA_Object",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" serialPinVars" ];
+  Node2 [label="I2SCC3200DMA_SerialPinVars",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_i2_s_c_c3200_d_m_a___serial_pin_vars.html",tooltip="I2SCC3200DMA Serial pin variables. "];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" readWriteCallback" ];
+  Node3 [label="I2S_Config",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_i2_s___config.html",tooltip="I2S Global configuration. "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fxnTablePtr" ];
+  Node4 [label="I2S_FxnTable",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_i2_s___fxn_table.html",tooltip="The definition of a I2S function table that contains the required set of functions to control a speci..."];
+  Node3 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" readIssueFxn\ncloseFxn\nwriteIssueFxn\nwriteReclaimFxn\ninitFxn\nreadReclaimFxn\ncontrolFxn\nopenFxn" ];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" writeDoneQueue\nreadActiveQueue\nreadDoneQueue\nwriteActiveQueue" ];
+  Node5 [label="ListP_List",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_list_p___list.html"];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" head\ntail" ];
+  Node6 [label="ListP_Elem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct_list_p___elem.html"];
+  Node6 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" prev\nnext" ];
+}

@@ -1,0 +1,196 @@
+clean::
+	$(RM) package/ti.uia.events.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_uia_events.java
+	$(RM) package/ti_uia_events.class
+	$(RM) package/package_ti.uia.events.c
+	$(RM) package/package.defs.h
+	$(RM) DvtTypes.h
+	$(RM) package/internal/DvtTypes.xdc.h
+	$(RM) IUIAEvent.h
+	$(RM) IUIACtx.h
+	$(RM) UIAAppCtx.h
+	$(RM) package/internal/UIAAppCtx.xdc.h
+	$(RM) UIABenchmark.h
+	$(RM) package/internal/UIABenchmark.xdc.h
+	$(RM) UIAChanCtx.h
+	$(RM) package/internal/UIAChanCtx.xdc.h
+	$(RM) UIAErr.h
+	$(RM) package/internal/UIAErr.xdc.h
+	$(RM) UIAEvt.h
+	$(RM) package/internal/UIAEvt.xdc.h
+	$(RM) UIAFrameCtx.h
+	$(RM) package/internal/UIAFrameCtx.xdc.h
+	$(RM) UIAMessage.h
+	$(RM) package/internal/UIAMessage.xdc.h
+	$(RM) UIAHWICtx.h
+	$(RM) package/internal/UIAHWICtx.xdc.h
+	$(RM) UIAProfile.h
+	$(RM) package/internal/UIAProfile.xdc.h
+	$(RM) UIARoundtrip.h
+	$(RM) package/internal/UIARoundtrip.xdc.h
+	$(RM) UIASWICtx.h
+	$(RM) package/internal/UIASWICtx.xdc.h
+	$(RM) UIASnapshot.h
+	$(RM) package/internal/UIASnapshot.xdc.h
+	$(RM) UIAStatistic.h
+	$(RM) package/internal/UIAStatistic.xdc.h
+	$(RM) UIASync.h
+	$(RM) package/internal/UIASync.xdc.h
+	$(RM) UIAThreadCtx.h
+	$(RM) package/internal/UIAThreadCtx.xdc.h
+	$(RM) UIAUserCtx.h
+	$(RM) package/internal/UIAUserCtx.xdc.h
+	$(RM) IUIAMetaProvider.h
+	$(RM) package/ti.uia.events.ccs
+
+.interfaces: package/ti.uia.events.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_uia_events.java package/package_ti.uia.events.c package/package.defs.h DvtTypes.h package/internal/DvtTypes.xdc.h IUIAEvent.h IUIACtx.h UIAAppCtx.h package/internal/UIAAppCtx.xdc.h UIABenchmark.h package/internal/UIABenchmark.xdc.h UIAChanCtx.h package/internal/UIAChanCtx.xdc.h UIAErr.h package/internal/UIAErr.xdc.h UIAEvt.h package/internal/UIAEvt.xdc.h UIAFrameCtx.h package/internal/UIAFrameCtx.xdc.h UIAMessage.h package/internal/UIAMessage.xdc.h UIAHWICtx.h package/internal/UIAHWICtx.xdc.h UIAProfile.h package/internal/UIAProfile.xdc.h UIARoundtrip.h package/internal/UIARoundtrip.xdc.h UIASWICtx.h package/internal/UIASWICtx.xdc.h UIASnapshot.h package/internal/UIASnapshot.xdc.h UIAStatistic.h package/internal/UIAStatistic.xdc.h UIASync.h package/internal/UIASync.xdc.h UIAThreadCtx.h package/internal/UIAThreadCtx.xdc.h UIAUserCtx.h package/internal/UIAUserCtx.xdc.h IUIAMetaProvider.h package/ti.uia.events.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: DvtTypes.xdc UIAAppCtx.xdc UIABenchmark.xdc UIAChanCtx.xdc UIAErr.xdc UIAEvt.xdc UIAFrameCtx.xdc UIAMessage.xdc UIAHWICtx.xdc UIAProfile.xdc UIARoundtrip.xdc UIASWICtx.xdc UIASnapshot.xdc UIAStatistic.xdc UIASync.xdc UIAThreadCtx.xdc UIAUserCtx.xdc IUIACtx.xdc IUIAEvent.xdc IUIAMetaProvider.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+UIAAppCtx.xs:
+package/package.xdc.inc: UIAAppCtx.xs
+UIAChanCtx.xs:
+package/package.xdc.inc: UIAChanCtx.xs
+UIAFrameCtx.xs:
+package/package.xdc.inc: UIAFrameCtx.xs
+UIAProfile.xs:
+package/package.xdc.inc: UIAProfile.xs
+UIAThreadCtx.xs:
+package/package.xdc.inc: UIAThreadCtx.xs
+UIAUserCtx.xs:
+package/package.xdc.inc: UIAUserCtx.xs
+
+# schema update dependencies
+package/package.xdc.inc: DvtTypes.xdc
+package/package.xdc.inc: UIAAppCtx.xdc
+package/package.xdc.inc: UIABenchmark.xdc
+package/package.xdc.inc: UIAChanCtx.xdc
+package/package.xdc.inc: UIAErr.xdc
+package/package.xdc.inc: UIAEvt.xdc
+package/package.xdc.inc: UIAFrameCtx.xdc
+package/package.xdc.inc: UIAMessage.xdc
+package/package.xdc.inc: UIAHWICtx.xdc
+package/package.xdc.inc: UIAProfile.xdc
+package/package.xdc.inc: UIARoundtrip.xdc
+package/package.xdc.inc: UIASWICtx.xdc
+package/package.xdc.inc: UIASnapshot.xdc
+package/package.xdc.inc: UIAStatistic.xdc
+package/package.xdc.inc: UIASync.xdc
+package/package.xdc.inc: UIAThreadCtx.xdc
+package/package.xdc.inc: UIAUserCtx.xdc
+package/package.xdc.inc: IUIACtx.xdc
+package/package.xdc.inc: IUIAEvent.xdc
+package/package.xdc.inc: IUIAMetaProvider.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: DvtTypes.h
+DvtTypes.h:
+package/package.xdc.inc: package/internal/DvtTypes.xdc.h
+package/internal/DvtTypes.xdc.h:
+package/package.xdc.inc: IUIAEvent.h
+IUIAEvent.h:
+package/package.xdc.inc: IUIACtx.h
+IUIACtx.h:
+package/package.xdc.inc: UIAAppCtx.h
+UIAAppCtx.h:
+package/package.xdc.inc: package/internal/UIAAppCtx.xdc.h
+package/internal/UIAAppCtx.xdc.h:
+package/package.xdc.inc: UIABenchmark.h
+UIABenchmark.h:
+package/package.xdc.inc: package/internal/UIABenchmark.xdc.h
+package/internal/UIABenchmark.xdc.h:
+package/package.xdc.inc: UIAChanCtx.h
+UIAChanCtx.h:
+package/package.xdc.inc: package/internal/UIAChanCtx.xdc.h
+package/internal/UIAChanCtx.xdc.h:
+package/package.xdc.inc: UIAErr.h
+UIAErr.h:
+package/package.xdc.inc: package/internal/UIAErr.xdc.h
+package/internal/UIAErr.xdc.h:
+package/package.xdc.inc: UIAEvt.h
+UIAEvt.h:
+package/package.xdc.inc: package/internal/UIAEvt.xdc.h
+package/internal/UIAEvt.xdc.h:
+package/package.xdc.inc: UIAFrameCtx.h
+UIAFrameCtx.h:
+package/package.xdc.inc: package/internal/UIAFrameCtx.xdc.h
+package/internal/UIAFrameCtx.xdc.h:
+package/package.xdc.inc: UIAMessage.h
+UIAMessage.h:
+package/package.xdc.inc: package/internal/UIAMessage.xdc.h
+package/internal/UIAMessage.xdc.h:
+package/package.xdc.inc: UIAHWICtx.h
+UIAHWICtx.h:
+package/package.xdc.inc: package/internal/UIAHWICtx.xdc.h
+package/internal/UIAHWICtx.xdc.h:
+package/package.xdc.inc: UIAProfile.h
+UIAProfile.h:
+package/package.xdc.inc: package/internal/UIAProfile.xdc.h
+package/internal/UIAProfile.xdc.h:
+package/package.xdc.inc: UIARoundtrip.h
+UIARoundtrip.h:
+package/package.xdc.inc: package/internal/UIARoundtrip.xdc.h
+package/internal/UIARoundtrip.xdc.h:
+package/package.xdc.inc: UIASWICtx.h
+UIASWICtx.h:
+package/package.xdc.inc: package/internal/UIASWICtx.xdc.h
+package/internal/UIASWICtx.xdc.h:
+package/package.xdc.inc: UIASnapshot.h
+UIASnapshot.h:
+package/package.xdc.inc: package/internal/UIASnapshot.xdc.h
+package/internal/UIASnapshot.xdc.h:
+package/package.xdc.inc: UIAStatistic.h
+UIAStatistic.h:
+package/package.xdc.inc: package/internal/UIAStatistic.xdc.h
+package/internal/UIAStatistic.xdc.h:
+package/package.xdc.inc: UIASync.h
+UIASync.h:
+package/package.xdc.inc: package/internal/UIASync.xdc.h
+package/internal/UIASync.xdc.h:
+package/package.xdc.inc: UIAThreadCtx.h
+UIAThreadCtx.h:
+package/package.xdc.inc: package/internal/UIAThreadCtx.xdc.h
+package/internal/UIAThreadCtx.xdc.h:
+package/package.xdc.inc: UIAUserCtx.h
+UIAUserCtx.h:
+package/package.xdc.inc: package/internal/UIAUserCtx.xdc.h
+package/internal/UIAUserCtx.xdc.h:
+package/package.xdc.inc: IUIAMetaProvider.h
+IUIAMetaProvider.h:
+

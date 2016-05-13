@@ -1,0 +1,117 @@
+\subsection{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs}\index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a2d0c61d4d3b6d0bc7be6c8099777218b}{base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a55287dc23a355a59426281488f93751c}{clock\+Source}
+\item 
+uint16\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a334de16b0d88008d2a2861c7fbfd12c9}{bit\+Order}
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a7dbf1b486afe617017a67f00deb66c7f}{scratch\+Buf\+Ptr}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_af8f32ede102305173f56ad61394af36b}{default\+Tx\+Buf\+Value}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a6a3751b0693770600e990c1db9980da4}{dma\+Base\+Addr}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a7d9c5ce7284e01f13535ffb1aaacd039}{rx\+D\+M\+A\+Channel\+Index}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_ac6ae7a900452d8f24381f26e2b8a2e1b}{rx\+D\+M\+A\+Source\+Trigger}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_ae0154552cc397e1b4d99a490bc9676e1}{tx\+D\+M\+A\+Channel\+Index}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a381d4d773f4c309e35eec9da42305037}{tx\+D\+M\+A\+Source\+Trigger}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item usci\+\_\+b\+\_\+spi.\+h
+\item dma.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SPIEUSCIADMA_HWAttrs spiUSCIADMAHWAttrs[] = \{
+    \{
+        EUSCI\_A1\_BASE,
+        EUSCI\_A\_SPI\_CLOCKSOURCE\_SMCLK,
+        EUSCI\_A\_SPI\_MSB\_FIRST,
+
+        \textcolor{comment}{// DMA base address}
+        DMA\_BASE,
+        \textcolor{comment}{// Rx Channel}
+        DMA\_CHANNEL\_1,
+        DMA\_TRIGGERSOURCE\_22,
+        \textcolor{comment}{// Tx Channel}
+        DMA\_CHANNEL\_0,
+        DMA\_TRIGGERSOURCE\_23
+    \},
+    \{
+        EUSCI\_A1\_BASE,
+        EUSCI\_A\_SPI\_CLOCKSOURCE\_SMCLK,
+        EUSCI\_A\_SPI\_MSB\_FIRST,
+
+        \textcolor{comment}{// DMA base address}
+        DMA\_BASE,
+        \textcolor{comment}{// Rx Channel}
+        DMA\_CHANNEL\_1,
+        DMA\_TRIGGERSOURCE\_18,
+        \textcolor{comment}{// Tx Channel}
+        DMA\_CHANNEL\_0,
+        DMA\_TRIGGERSOURCE\_19
+    \},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a2d0c61d4d3b6d0bc7be6c8099777218b}
+$<$ E\+U\+S\+C\+I\+\_\+\+A\+\_\+\+S\+P\+I Peripheral\textquotesingle{}s base address E\+U\+S\+C\+I\+\_\+\+A\+\_\+\+S\+P\+I Clock source \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a55287dc23a355a59426281488f93751c}
+E\+U\+S\+C\+I\+\_\+\+A\+\_\+\+S\+P\+I Bit order \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!bit\+Order@{bit\+Order}}
+\index{bit\+Order@{bit\+Order}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{bit\+Order}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::bit\+Order}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a334de16b0d88008d2a2861c7fbfd12c9}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!scratch\+Buf\+Ptr@{scratch\+Buf\+Ptr}}
+\index{scratch\+Buf\+Ptr@{scratch\+Buf\+Ptr}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{scratch\+Buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t$\ast$ S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::scratch\+Buf\+Ptr}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a7dbf1b486afe617017a67f00deb66c7f}
+Address of a scratch buffer of size uint32\+\_\+t \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}}
+\index{default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{default\+Tx\+Buf\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::default\+Tx\+Buf\+Value}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_af8f32ede102305173f56ad61394af36b}
+Default T\+X value if tx\+Buf == N\+U\+L\+L D\+M\+A Peripheral\textquotesingle{}s base address \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!dma\+Base\+Addr@{dma\+Base\+Addr}}
+\index{dma\+Base\+Addr@{dma\+Base\+Addr}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{dma\+Base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::dma\+Base\+Addr}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a6a3751b0693770600e990c1db9980da4}
+D\+M\+A rx\+D\+M\+A\+Channel for Rx data \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+D\+M\+A\+Channel\+Index@{rx\+D\+M\+A\+Channel\+Index}}
+\index{rx\+D\+M\+A\+Channel\+Index@{rx\+D\+M\+A\+Channel\+Index}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+D\+M\+A\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+D\+M\+A\+Channel\+Index}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a7d9c5ce7284e01f13535ffb1aaacd039}
+D\+M\+A trigger source for Rx data \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+D\+M\+A\+Source\+Trigger@{rx\+D\+M\+A\+Source\+Trigger}}
+\index{rx\+D\+M\+A\+Source\+Trigger@{rx\+D\+M\+A\+Source\+Trigger}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+D\+M\+A\+Source\+Trigger}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+D\+M\+A\+Source\+Trigger}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_ac6ae7a900452d8f24381f26e2b8a2e1b}
+D\+M\+A tx\+D\+M\+A\+Channel for Tx data \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+D\+M\+A\+Channel\+Index@{tx\+D\+M\+A\+Channel\+Index}}
+\index{tx\+D\+M\+A\+Channel\+Index@{tx\+D\+M\+A\+Channel\+Index}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+D\+M\+A\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+D\+M\+A\+Channel\+Index}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_ae0154552cc397e1b4d99a490bc9676e1}
+D\+M\+A trigger source for Tx data \index{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+D\+M\+A\+Source\+Trigger@{tx\+D\+M\+A\+Source\+Trigger}}
+\index{tx\+D\+M\+A\+Source\+Trigger@{tx\+D\+M\+A\+Source\+Trigger}!S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+D\+M\+A\+Source\+Trigger}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+D\+M\+A\+Source\+Trigger}\label{struct_s_p_i_e_u_s_c_i_a_d_m_a___h_w_attrs_a381d4d773f4c309e35eec9da42305037}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_e_u_s_c_i_a_d_m_a_8h}{S\+P\+I\+E\+U\+S\+C\+I\+A\+D\+M\+A.\+h}\end{DoxyCompactItemize}

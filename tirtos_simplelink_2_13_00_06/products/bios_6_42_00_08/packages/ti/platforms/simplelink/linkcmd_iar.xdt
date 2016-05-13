@@ -1,0 +1,78 @@
+%%{
+/*
+ *  Copyright (c) 2015 by Texas Instruments and others.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *      Texas Instruments - initial implementation
+ *
+ * */
+
+%%}
+%/*
+% * ======== linkcmd.xdt ========
+% *  This is template file is used to generate a linker command file for
+% *  executables.  It provides a single place where we can embed information
+% *  necessary to load/run executables.
+% *
+% *  This template is expanded after the configuration script runs and the
+% *  results placed in a file (with extension .xdl) associated with the
+% *  executable.
+% *
+% *  Linker templates are passed the following arguments:
+% *     $out        - an open file stream for the generated linker
+% *                   command file
+% *     $args[]     - an array of zero or more libraries that should be linked
+% *                   with (in the order they appear in the argument list)
+% *
+% *  In addition to these arguments, there is a global variable named
+% *  'this' that is set as follows:
+% *     this        - the program object
+% */
+%var prog = this;    /* meaningful alias for this (== xdc.cfg.Program) */
+/*
+ * Do not modify this file; it is automatically generated from the template
+ * linkcmd.xdt in the ti.platforms.simplelink package and will be overwritten.
+ */
+
+%for (var i = 0; i < $args.length; i++) {
+"`$args[i]`"
+%}
+
+%/*
+% * Linker command file contributions from all loaded packages:
+% */
+%var _utils = xdc.loadCapsule("ti/targets/linkUtils.xs");
+`_utils.genContributions($args)`
+
+%for (var sym in prog.symbol) {
+    %var inst = prog.symbol[sym];
+    %if ((typeof(inst) == 'number') && sym.match(/xdc_runtime_Startup/)) {
+--define_symbol `sym`=`inst`
+    %}
+%}
+
+%if (prog.platform.$orig.includeLinkCmdFile) {
+%var linkFile = prog.build.target.rootDir
+%    + '/config/linker/TexasInstruments/' + prog.cpu.deviceName.toUpperCase() 
+%    + '.icf';
+--config "`linkFile`"
+%}
+
+%/* force linker to include xdcmeta which is needed by ROV*/
+--keep __ASM__
+--keep __PLAT__
+--keep __ISA__
+--keep __TARG__
+%if (prog.build.target.binaryParser != null) {
+--keep __TRDR__
+%}
+%%{
+/*
+ * @(#) ti.platforms.simplelink; 1, 0, 0,; 4-24-2015 20:40:51; /db/ztree/library/trees/platform/platform-p07/src/
+ */
+
+%%}

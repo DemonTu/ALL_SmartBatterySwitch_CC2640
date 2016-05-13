@@ -1,0 +1,102 @@
+\subsection{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs}\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+
+
+S\+P\+I\+M\+S\+P432\+D\+M\+A Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ac717a44bf8e6f70118fc8802bb79a1b8}{base\+Addr}
+\item 
+uint16\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ac3af678c0dbd1595ff87dea784278edf}{bit\+Order}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a92b4e4a7b8a07a95c96328091d4b969d}{clock\+Source}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a02b680a5c302e4303be9f045384b8dae}{default\+Tx\+Buf\+Value}
+\item 
+uint8\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a3a478ee4e4dce0ce76c6e894db179b47}{dma\+Int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a1be451f769c36e6924f5a25f63592cb2}{int\+Priority}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ae317a28e3bc9f3da0ffa31f08569a3fe}{rx\+D\+M\+A\+Channel\+Index}
+\item 
+uint32\+\_\+t \hyperlink{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a11be81dbcc615865601d1a3511324f1e}{tx\+D\+M\+A\+Channel\+Index}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I\+M\+S\+P432\+D\+M\+A Hardware attributes These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+: 
+
+
+\begin{DoxyItemize}
+\item dma.\+h
+\item spi.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} SPIMSP432DMA_HWAttrs spiMSP432DMAHWAttrs[] = \{
+    \{
+        .baseAddr = EUSCI\_B0\_BASE,
+        .clockSource = EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+        .bitOrder = EUSCI\_B\_SPI\_MSB\_FIRST,
+
+        .defaultTxBufValue = 0,
+
+        .dmaIntNum = INT\_DMA\_INT1,
+        .intPriority = ~0,
+        .rxDMAChannelIndex = DMA\_CH1\_EUSCIB0RX0,
+        .txDMAChannelIndex = DMA\_CH0\_EUSCIB0TX0
+    \},
+    \{
+        .baseAddr = EUSCI\_B2\_BASE,
+        .clockSource = EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+        .bitOrder = EUSCI\_B\_SPI\_MSB\_FIRST,
+
+        .defaultTxBufValue = 0,
+
+        .dmaIntNum = INT\_DMA\_INT2,
+        .intPriority = ~0,
+        .rxDMAChannelIndex = DMA\_CH5\_EUSCIB2RX0,
+        .txDMAChannelIndex = DMA\_CH4\_EUSCIB2TX0
+    \}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ac717a44bf8e6f70118fc8802bb79a1b8}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+S\+P\+I Peripheral\textquotesingle{}s base address \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!bit\+Order@{bit\+Order}}
+\index{bit\+Order@{bit\+Order}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{bit\+Order}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::bit\+Order}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ac3af678c0dbd1595ff87dea784278edf}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+S\+P\+I Bit order \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!clock\+Source@{clock\+Source}}
+\index{clock\+Source@{clock\+Source}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{clock\+Source}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::clock\+Source}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a92b4e4a7b8a07a95c96328091d4b969d}
+E\+U\+S\+C\+I\+\_\+\+B\+\_\+\+S\+P\+I Clock source \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}}
+\index{default\+Tx\+Buf\+Value@{default\+Tx\+Buf\+Value}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{default\+Tx\+Buf\+Value}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::default\+Tx\+Buf\+Value}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a02b680a5c302e4303be9f045384b8dae}
+\index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!dma\+Int\+Num@{dma\+Int\+Num}}
+\index{dma\+Int\+Num@{dma\+Int\+Num}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{dma\+Int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::dma\+Int\+Num}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a3a478ee4e4dce0ce76c6e894db179b47}
+Default T\+X value if tx\+Buf == N\+U\+L\+L D\+M\+A interrupt number \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!int\+Priority@{int\+Priority}}
+\index{int\+Priority@{int\+Priority}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Priority}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::int\+Priority}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a1be451f769c36e6924f5a25f63592cb2}
+D\+M\+A interrupt priority \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!rx\+D\+M\+A\+Channel\+Index@{rx\+D\+M\+A\+Channel\+Index}}
+\index{rx\+D\+M\+A\+Channel\+Index@{rx\+D\+M\+A\+Channel\+Index}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+D\+M\+A\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::rx\+D\+M\+A\+Channel\+Index}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_ae317a28e3bc9f3da0ffa31f08569a3fe}
+D\+M\+A rx\+D\+M\+A\+Channel for Rx data \index{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}!tx\+D\+M\+A\+Channel\+Index@{tx\+D\+M\+A\+Channel\+Index}}
+\index{tx\+D\+M\+A\+Channel\+Index@{tx\+D\+M\+A\+Channel\+Index}!S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+D\+M\+A\+Channel\+Index}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t S\+P\+I\+M\+S\+P432\+D\+M\+A\+\_\+\+H\+W\+Attrs\+::tx\+D\+M\+A\+Channel\+Index}\label{struct_s_p_i_m_s_p432_d_m_a___h_w_attrs_a11be81dbcc615865601d1a3511324f1e}
+D\+M\+A tx\+D\+M\+A\+Channel for Tx data 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_m_s_p432_d_m_a_8h}{S\+P\+I\+M\+S\+P432\+D\+M\+A.\+h}\end{DoxyCompactItemize}

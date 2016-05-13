@@ -1,0 +1,17 @@
+package/package.bld.xml
+package/build.cfg
+package/package.xdc.inc
+package.bld
+logger.c
+loggerStreamer2.c
+stairstep.c
+c28/stairstep_JTAGStopMode.cfg
+cc26xx/stairstep_JTAGStopMode.cfg
+cortexm/stairstep_JTAGStopMode.cfg
+c6000/stairstep_JTAGRunMode.cfg
+default/logger.cfg
+default/loggerStreamer2.cfg
+default/stairstep_JTAGStopMode.cfg
+evm6472/stairstep_Ethernet.cfg
+msp430/stairstep_JTAGStopMode.cfg
+package/package.cfg.xdc.inc

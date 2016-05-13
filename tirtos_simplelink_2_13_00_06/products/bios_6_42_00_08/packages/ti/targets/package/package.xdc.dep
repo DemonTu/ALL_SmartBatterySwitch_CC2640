@@ -1,0 +1,147 @@
+clean::
+	$(RM) package/ti.targets.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_targets.java
+	$(RM) package/ti_targets.class
+	$(RM) package/package_ti.targets.c
+	$(RM) package/package.defs.h
+	$(RM) ITarget.h
+	$(RM) C64P.h
+	$(RM) C64P_big_endian.h
+	$(RM) C674.h
+	$(RM) C674_big_endian.h
+	$(RM) C67P.h
+	$(RM) C64T.h
+	$(RM) C64T_big_endian.h
+	$(RM) C66.h
+	$(RM) C66_big_endian.h
+	$(RM) C28.h
+	$(RM) C28_large.h
+	$(RM) C28_float.h
+	$(RM) C62.h
+	$(RM) C62_big_endian.h
+	$(RM) C64.h
+	$(RM) C64_big_endian.h
+	$(RM) C67.h
+	$(RM) C67_big_endian.h
+	$(RM) package/ti.targets.ccs
+
+.interfaces: package/ti.targets.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_targets.java package/package_ti.targets.c package/package.defs.h ITarget.h C64P.h C64P_big_endian.h C674.h C674_big_endian.h C67P.h C64T.h C64T_big_endian.h C66.h C66_big_endian.h C28.h C28_large.h C28_float.h C62.h C62_big_endian.h C64.h C64_big_endian.h C67.h C67_big_endian.h package/ti.targets.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: C64P.xdc C64P_big_endian.xdc C674.xdc C674_big_endian.xdc C67P.xdc C64T.xdc C64T_big_endian.xdc C66.xdc C66_big_endian.xdc C28.xdc C28_large.xdc C28_float.xdc C62.xdc C62_big_endian.xdc C64.xdc C64_big_endian.xdc C67.xdc C67_big_endian.xdc ITarget.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+ITarget.xs:
+package/package.xdc.inc: ITarget.xs
+C28_large.xs:
+package/package.xdc.inc: C28_large.xs
+C28_float.xs:
+package/package.xdc.inc: C28_float.xs
+
+# schema update dependencies
+package/package.xdc.inc: C64P.xdc
+package/package.xdc.inc: C64P_big_endian.xdc
+package/package.xdc.inc: C674.xdc
+package/package.xdc.inc: C674_big_endian.xdc
+package/package.xdc.inc: C67P.xdc
+package/package.xdc.inc: C64T.xdc
+package/package.xdc.inc: C64T_big_endian.xdc
+package/package.xdc.inc: C66.xdc
+package/package.xdc.inc: C66_big_endian.xdc
+package/package.xdc.inc: C28.xdc
+package/package.xdc.inc: C28_large.xdc
+package/package.xdc.inc: C28_float.xdc
+package/package.xdc.inc: C62.xdc
+package/package.xdc.inc: C62_big_endian.xdc
+package/package.xdc.inc: C64.xdc
+package/package.xdc.inc: C64_big_endian.xdc
+package/package.xdc.inc: C67.xdc
+package/package.xdc.inc: C67_big_endian.xdc
+package/package.xdc.inc: ITarget.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget3.xdc
+xdc/bld/ITarget3.xdc:
+vpath xdc/bld/ITarget3.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget2.xdc
+xdc/bld/ITarget2.xdc:
+vpath xdc/bld/ITarget2.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITarget.xdc
+xdc/bld/ITarget.xdc:
+vpath xdc/bld/ITarget.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/bld/ITargetFilter.xdc
+xdc/bld/ITargetFilter.xdc:
+vpath xdc/bld/ITargetFilter.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: ITarget.h
+ITarget.h:
+package/package.xdc.inc: C64P.h
+C64P.h:
+package/package.xdc.inc: C64P_big_endian.h
+C64P_big_endian.h:
+package/package.xdc.inc: C674.h
+C674.h:
+package/package.xdc.inc: C674_big_endian.h
+C674_big_endian.h:
+package/package.xdc.inc: C67P.h
+C67P.h:
+package/package.xdc.inc: C64T.h
+C64T.h:
+package/package.xdc.inc: C64T_big_endian.h
+C64T_big_endian.h:
+package/package.xdc.inc: C66.h
+C66.h:
+package/package.xdc.inc: C66_big_endian.h
+C66_big_endian.h:
+package/package.xdc.inc: C28.h
+C28.h:
+package/package.xdc.inc: C28_large.h
+C28_large.h:
+package/package.xdc.inc: C28_float.h
+C28_float.h:
+package/package.xdc.inc: C62.h
+C62.h:
+package/package.xdc.inc: C62_big_endian.h
+C62_big_endian.h:
+package/package.xdc.inc: C64.h
+C64.h:
+package/package.xdc.inc: C64_big_endian.h
+C64_big_endian.h:
+package/package.xdc.inc: C67.h
+C67.h:
+package/package.xdc.inc: C67_big_endian.h
+C67_big_endian.h:
+

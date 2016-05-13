@@ -1,0 +1,13 @@
+fix_for_ipc.xdt
+ldrun.js
+message.c
+package.bld
+package.xdc
+evm6472/message.cfg
+package/package.bld.xml
+package/build.cfg
+package/package.xdc.inc
+message.c
+package.bld
+evm6472/message.cfg
+package/package.cfg.xdc.inc

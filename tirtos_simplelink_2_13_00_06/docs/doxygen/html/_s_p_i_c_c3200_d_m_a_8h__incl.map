@@ -1,0 +1,7 @@
+<map id="SPICC3200DMA.h" name="SPICC3200DMA.h">
+<area shape="rect" href="$_hwi_p_8h.html" title="Hardware Interrupt module for the RTOS Porting Interface. " alt="" coords="7,158,157,182" />
+<area shape="rect" href="$_semaphore_p_8h.html" title="Semaphore module for the RTOS Porting Interface. " alt="" coords="181,158,378,182" />
+<area shape="rect" href="$_power_8h.html" title="Power manager interface. " alt="" coords="546,84,669,108" />
+<area shape="rect" href="$_s_p_i_8h.html" title="SPI driver interface. " alt="" coords="402,158,509,182" />
+<area shape="rect" href="$_list_p_8h.html" title="Linked List interface for the RTOS Ports Interface. " alt="" coords="533,158,682,182" />
+</map>

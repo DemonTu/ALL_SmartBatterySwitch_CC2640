@@ -1,0 +1,221 @@
+clean::
+	$(RM) package/ti.sysbios.hal.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_sysbios_hal.java
+	$(RM) package/ti_sysbios_hal.class
+	$(RM) package/package_ti.sysbios.hal.c
+	$(RM) package/package.defs.h
+	$(RM) Cache.h
+	$(RM) package/internal/Cache.xdc.h
+	$(RM) CacheNull.h
+	$(RM) package/internal/CacheNull.xdc.h
+	$(RM) Core.h
+	$(RM) package/internal/Core.xdc.h
+	$(RM) CoreNull.h
+	$(RM) package/internal/CoreNull.xdc.h
+	$(RM) Hwi.h
+	$(RM) package/internal/Hwi.xdc.h
+	$(RM) Power.h
+	$(RM) package/internal/Power.xdc.h
+	$(RM) PowerNull.h
+	$(RM) package/internal/PowerNull.xdc.h
+	$(RM) Seconds.h
+	$(RM) package/internal/Seconds.xdc.h
+	$(RM) SecondsCallback.h
+	$(RM) package/internal/SecondsCallback.xdc.h
+	$(RM) SecondsClock.h
+	$(RM) package/internal/SecondsClock.xdc.h
+	$(RM) Timer.h
+	$(RM) package/internal/Timer.xdc.h
+	$(RM) TimerNull.h
+	$(RM) package/internal/TimerNull.xdc.h
+	$(RM) package/Cache_CacheProxy.h
+	$(RM) package/internal/Cache_CacheProxy.xdc.h
+	$(RM) package/Core_CoreProxy.h
+	$(RM) package/internal/Core_CoreProxy.xdc.h
+	$(RM) package/Hwi_HwiProxy.h
+	$(RM) package/internal/Hwi_HwiProxy.xdc.h
+	$(RM) package/Power_PowerProxy.h
+	$(RM) package/internal/Power_PowerProxy.xdc.h
+	$(RM) package/Seconds_SecondsProxy.h
+	$(RM) package/internal/Seconds_SecondsProxy.xdc.h
+	$(RM) package/Timer_TimerProxy.h
+	$(RM) package/internal/Timer_TimerProxy.xdc.h
+	$(RM) package/ti.sysbios.hal.ccs
+
+.interfaces: package/ti.sysbios.hal.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_sysbios_hal.java package/package_ti.sysbios.hal.c package/package.defs.h Cache.h package/internal/Cache.xdc.h CacheNull.h package/internal/CacheNull.xdc.h Core.h package/internal/Core.xdc.h CoreNull.h package/internal/CoreNull.xdc.h Hwi.h package/internal/Hwi.xdc.h Power.h package/internal/Power.xdc.h PowerNull.h package/internal/PowerNull.xdc.h Seconds.h package/internal/Seconds.xdc.h SecondsCallback.h package/internal/SecondsCallback.xdc.h SecondsClock.h package/internal/SecondsClock.xdc.h Timer.h package/internal/Timer.xdc.h TimerNull.h package/internal/TimerNull.xdc.h package/Cache_CacheProxy.h package/internal/Cache_CacheProxy.xdc.h package/Core_CoreProxy.h package/internal/Core_CoreProxy.xdc.h package/Hwi_HwiProxy.h package/internal/Hwi_HwiProxy.xdc.h package/Power_PowerProxy.h package/internal/Power_PowerProxy.xdc.h package/Seconds_SecondsProxy.h package/internal/Seconds_SecondsProxy.xdc.h package/Timer_TimerProxy.h package/internal/Timer_TimerProxy.xdc.h package/ti.sysbios.hal.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: Cache.xdc CacheNull.xdc Core.xdc CoreNull.xdc Hwi.xdc Power.xdc PowerNull.xdc Seconds.xdc SecondsCallback.xdc SecondsClock.xdc Timer.xdc TimerNull.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+Cache.xs:
+package/package.xdc.inc: Cache.xs
+Core.xs:
+package/package.xdc.inc: Core.xs
+Hwi.xs:
+package/package.xdc.inc: Hwi.xs
+Power.xs:
+package/package.xdc.inc: Power.xs
+PowerNull.xs:
+package/package.xdc.inc: PowerNull.xs
+Seconds.xs:
+package/package.xdc.inc: Seconds.xs
+SecondsClock.xs:
+package/package.xdc.inc: SecondsClock.xs
+Timer.xs:
+package/package.xdc.inc: Timer.xs
+TimerNull.xs:
+package/package.xdc.inc: TimerNull.xs
+
+# schema update dependencies
+package/package.xdc.inc: Cache.xdc
+package/package.xdc.inc: CacheNull.xdc
+package/package.xdc.inc: Core.xdc
+package/package.xdc.inc: CoreNull.xdc
+package/package.xdc.inc: Hwi.xdc
+package/package.xdc.inc: Power.xdc
+package/package.xdc.inc: PowerNull.xdc
+package/package.xdc.inc: Seconds.xdc
+package/package.xdc.inc: SecondsCallback.xdc
+package/package.xdc.inc: SecondsClock.xdc
+package/package.xdc.inc: Timer.xdc
+package/package.xdc.inc: TimerNull.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ICache.xdc
+ti/sysbios/interfaces/ICache.xdc:
+vpath ti/sysbios/interfaces/ICache.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ICore.xdc
+ti/sysbios/interfaces/ICore.xdc:
+vpath ti/sysbios/interfaces/ICore.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IHwi.xdc
+ti/sysbios/interfaces/IHwi.xdc:
+vpath ti/sysbios/interfaces/IHwi.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/IPower.xdc
+ti/sysbios/interfaces/IPower.xdc:
+vpath ti/sysbios/interfaces/IPower.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ISeconds.xdc
+ti/sysbios/interfaces/ISeconds.xdc:
+vpath ti/sysbios/interfaces/ISeconds.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Clock.xdc
+ti/sysbios/knl/Clock.xdc:
+vpath ti/sysbios/knl/Clock.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/interfaces/ITimer.xdc
+ti/sysbios/interfaces/ITimer.xdc:
+vpath ti/sysbios/interfaces/ITimer.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Queue.xdc
+ti/sysbios/knl/Queue.xdc:
+vpath ti/sysbios/knl/Queue.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/sysbios/knl/Swi.xdc
+ti/sysbios/knl/Swi.xdc:
+vpath ti/sysbios/knl/Swi.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: Cache.h
+Cache.h:
+package/package.xdc.inc: package/internal/Cache.xdc.h
+package/internal/Cache.xdc.h:
+package/package.xdc.inc: CacheNull.h
+CacheNull.h:
+package/package.xdc.inc: package/internal/CacheNull.xdc.h
+package/internal/CacheNull.xdc.h:
+package/package.xdc.inc: Core.h
+Core.h:
+package/package.xdc.inc: package/internal/Core.xdc.h
+package/internal/Core.xdc.h:
+package/package.xdc.inc: CoreNull.h
+CoreNull.h:
+package/package.xdc.inc: package/internal/CoreNull.xdc.h
+package/internal/CoreNull.xdc.h:
+package/package.xdc.inc: Hwi.h
+Hwi.h:
+package/package.xdc.inc: package/internal/Hwi.xdc.h
+package/internal/Hwi.xdc.h:
+package/package.xdc.inc: Power.h
+Power.h:
+package/package.xdc.inc: package/internal/Power.xdc.h
+package/internal/Power.xdc.h:
+package/package.xdc.inc: PowerNull.h
+PowerNull.h:
+package/package.xdc.inc: package/internal/PowerNull.xdc.h
+package/internal/PowerNull.xdc.h:
+package/package.xdc.inc: Seconds.h
+Seconds.h:
+package/package.xdc.inc: package/internal/Seconds.xdc.h
+package/internal/Seconds.xdc.h:
+package/package.xdc.inc: SecondsCallback.h
+SecondsCallback.h:
+package/package.xdc.inc: package/internal/SecondsCallback.xdc.h
+package/internal/SecondsCallback.xdc.h:
+package/package.xdc.inc: SecondsClock.h
+SecondsClock.h:
+package/package.xdc.inc: package/internal/SecondsClock.xdc.h
+package/internal/SecondsClock.xdc.h:
+package/package.xdc.inc: Timer.h
+Timer.h:
+package/package.xdc.inc: package/internal/Timer.xdc.h
+package/internal/Timer.xdc.h:
+package/package.xdc.inc: TimerNull.h
+TimerNull.h:
+package/package.xdc.inc: package/internal/TimerNull.xdc.h
+package/internal/TimerNull.xdc.h:
+package/package.xdc.inc: package/Cache_CacheProxy.h
+package/Cache_CacheProxy.h:
+package/package.xdc.inc: package/internal/Cache_CacheProxy.xdc.h
+package/internal/Cache_CacheProxy.xdc.h:
+package/package.xdc.inc: package/Core_CoreProxy.h
+package/Core_CoreProxy.h:
+package/package.xdc.inc: package/internal/Core_CoreProxy.xdc.h
+package/internal/Core_CoreProxy.xdc.h:
+package/package.xdc.inc: package/Hwi_HwiProxy.h
+package/Hwi_HwiProxy.h:
+package/package.xdc.inc: package/internal/Hwi_HwiProxy.xdc.h
+package/internal/Hwi_HwiProxy.xdc.h:
+package/package.xdc.inc: package/Power_PowerProxy.h
+package/Power_PowerProxy.h:
+package/package.xdc.inc: package/internal/Power_PowerProxy.xdc.h
+package/internal/Power_PowerProxy.xdc.h:
+package/package.xdc.inc: package/Seconds_SecondsProxy.h
+package/Seconds_SecondsProxy.h:
+package/package.xdc.inc: package/internal/Seconds_SecondsProxy.xdc.h
+package/internal/Seconds_SecondsProxy.xdc.h:
+package/package.xdc.inc: package/Timer_TimerProxy.h
+package/Timer_TimerProxy.h:
+package/package.xdc.inc: package/internal/Timer_TimerProxy.xdc.h
+package/internal/Timer_TimerProxy.xdc.h:
+

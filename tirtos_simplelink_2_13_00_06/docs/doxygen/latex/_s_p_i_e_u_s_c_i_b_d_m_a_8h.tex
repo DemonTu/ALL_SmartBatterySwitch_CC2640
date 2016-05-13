@@ -1,0 +1,177 @@
+\subsection{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h File Reference}
+\label{_s_p_i_e_u_s_c_i_b_d_m_a_8h}\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}}
+
+
+\subsubsection{Detailed Description}
+S\+P\+I driver implementation for a U\+S\+C\+I\+B peripheral using the micro D\+M\+A controller. 
+
+============================================================================
+
+The S\+P\+I header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/SPI.h>}
+\textcolor{preprocessor}{#include <ti/drivers/spi/SPIEUSCIBDMA.h>}
+\end{DoxyCode}
+
+
+This S\+P\+I driver implementation is designed to operate on a U\+C\+S\+I controller in S\+P\+I mode. It uses the A\+P\+Is for a U\+S\+C\+I\+B controller.
+
+\paragraph*{S\+P\+I Chip Select}
+
+The S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A operates the controller in 3-\/pin mode; therefore it is not safe to use in a multi-\/master S\+P\+I bus environment. It is the application\textquotesingle{}s responsibility to assert and de-\/assert a G\+P\+I\+O pin for chip select purposes.
+
+\begin{TabularC}{3}
+\hline
+\rowcolor{lightgray}{\bf Chip select type }&{\bf S\+P\+I\+\_\+\+M\+A\+S\+T\+E\+R mode }&{\bf S\+P\+I\+\_\+\+S\+L\+A\+V\+E mode  }\\\cline{1-3}
+Hardware chip select &Not available on this peripheral.  \\\cline{1-3}
+Software chip select &The application is responsible to ensure that correct S\+P\+I slave is selected before performing a \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. &Up to the application\textquotesingle{}s implementation.  \\\cline{1-3}
+\end{TabularC}
+
+
+\paragraph*{D\+M\+A Interrupts}
+
+The M\+S\+P430 D\+M\+A controller uses a single interrupt vector to handle all D\+M\+A related I\+R\+Q. Because of the \char`\"{}shared\char`\"{} nature, of the D\+M\+A\textquotesingle{}s I\+S\+R, this driver implementation provides a simple I\+S\+R function S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+hwi\+Int\+Fxn() which needs to be called from within the D\+M\+A\textquotesingle{}s I\+S\+R. S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+hwi\+Int\+Fxn() will only service D\+M\+A channel interrupts that are associated with the S\+P\+I\+\_\+\+Handle. Each S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A instance will require a call from within the D\+M\+A\textquotesingle{}s I\+S\+R.
+
+
+\begin{DoxyCode}
+SPI_Handle spi0uscidma;
+SPI_Handle spi1uscidma;
+
+\textcolor{comment}{// As this DMA controller uses a single interrupt vector for all DMA}
+\textcolor{comment}{// channels (regardless of the triggering source), its left up to the user}
+\textcolor{comment}{// to call SPI\_serviceISR() to service its associated DMA channels.}
+Void myDMAISR(UArg arg)
+\{
+    \textcolor{comment}{// Services and clears its assigned DMA channel interrupts}
+    SPI_serviceISR(spi0uscidma);
+
+    \textcolor{comment}{// Services and clears its assigned DMA channel interrupts}
+    SPI_serviceISR(spi1uscidma);
+
+    \textcolor{comment}{// some other user application code that's not related to the SPI driver,}
+    \textcolor{comment}{// but is used to service remaining DMA channels}
+\}
+
+spi0uscidma = SPI_open(someSPI\_configIndexValue, &params);
+...
+
+spi1uscidma = SPI_open(someSPI\_configIndexValue, &params);
+....
+\end{DoxyCode}
+
+
+\paragraph*{S\+P\+I data frames}
+
+The E\+U\+S\+C\+I controller only supports 8-\/bit data frames.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf data\+Size }&{\bf buffer element size  }\\\cline{1-2}
+8 bits &uint8\+\_\+t \\\cline{1-2}
+\end{TabularC}
+\paragraph*{D\+M\+A transfer size limit}
+
+The M\+S\+P430 D\+M\+A controller supports 2$^\wedge$16 data frames per transfer. Each S\+P\+I driver instance requires 2 D\+M\+A channels (Tx and Rx) to operate.
+
+\paragraph*{D\+M\+A accessible memory}
+
+Ensure that the tx\+Buf and rx\+Buf (in \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction}) point to memory that is accessible by the D\+M\+A. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+S\+P\+I.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/knl/\+Semaphore.\+h$>$}\\*
+Include dependency graph for S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{_s_p_i_e_u_s_c_i_b_d_m_a_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_p_i_e_u_s_c_i_b_d_m_a___h_w_attrs}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Hardware attributes. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_p_i_e_u_s_c_i_b_d_m_a___object}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_s_p_i_e_u_s_c_i_b_d_m_a___h_w_attrs}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs} \hyperlink{_s_p_i_e_u_s_c_i_b_d_m_a_8h_a749c57472b0dd55a73f1cd1c6ef78927}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Hardware attributes. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i_e_u_s_c_i_b_d_m_a___object}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object} \hyperlink{_s_p_i_e_u_s_c_i_b_d_m_a_8h_a2ec8ab315cc978ab2308a24ba6b6f82f}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Object. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_p_i_e_u_s_c_i_b_d_m_a___object}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object} $\ast$ \hyperlink{_s_p_i_e_u_s_c_i_b_d_m_a_8h_af48075210fdae29550dff1b9074cd29b}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle}
+\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_s_p_i___fxn_table}{S\+P\+I\+\_\+\+Fxn\+Table} \hyperlink{_s_p_i_e_u_s_c_i_b_d_m_a_8h_acd20860a4e9835980bcee70691aa726a}{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}  {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+H\+W\+Attrs}}\label{_s_p_i_e_u_s_c_i_b_d_m_a_8h_a749c57472b0dd55a73f1cd1c6ef78927}
+
+
+S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P430\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item usci\+\_\+b\+\_\+spi.\+h
+\item dma.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const SPIEUSCIBDMA\_HWAttrs spiEUSCIBDMAHWAttrs[] = \{
+2     \{
+3         EUSCI\_B1\_BASE,
+4         EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+5         EUSCI\_B\_SPI\_MSB\_FIRST,
+6 
+7         // DMA base address
+8         DMA\_BASE,
+9         // Rx Channel
+10         DMA\_CHANNEL\_1,
+11         DMA\_TRIGGERSOURCE\_22,
+12         // Tx Channel
+13         DMA\_CHANNEL\_0,
+14         DMA\_TRIGGERSOURCE\_23
+15     \},
+16     \{
+17         EUSCI\_B1\_BASE,
+18         EUSCI\_B\_SPI\_CLOCKSOURCE\_SMCLK,
+19         EUSCI\_B\_SPI\_MSB\_FIRST,
+20 
+21         // DMA base address
+22         DMA\_BASE,
+23         // Rx Channel
+24         DMA\_CHANNEL\_1,
+25         DMA\_TRIGGERSOURCE\_18,
+26         // Tx Channel
+27         DMA\_CHANNEL\_0,
+28         DMA\_TRIGGERSOURCE\_19
+29     \},
+30 \};
+\end{DoxyCode}
+ \index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}  {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object}}\label{_s_p_i_e_u_s_c_i_b_d_m_a_8h_a2ec8ab315cc978ab2308a24ba6b6f82f}
+
+
+S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A Object. 
+
+The application must not access any member variables of this structure! \index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle}}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Object} $\ast$ {\bf S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+\+Handle}}\label{_s_p_i_e_u_s_c_i_b_d_m_a_8h_af48075210fdae29550dff1b9074cd29b}
+
+
+\subsubsection{Variable Documentation}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table}}
+\index{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table}!S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h@{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A.\+h}}
+\paragraph[{S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf S\+P\+I\+\_\+\+Fxn\+Table} S\+P\+I\+E\+U\+S\+C\+I\+B\+D\+M\+A\+\_\+fxn\+Table}\label{_s_p_i_e_u_s_c_i_b_d_m_a_8h_acd20860a4e9835980bcee70691aa726a}

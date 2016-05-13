@@ -1,0 +1,440 @@
+/*
+ * Copyright (c) 2015, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ *  ======== package.bld ========
+ */
+
+/*
+ *  ======== makeLibs ========
+ */
+function makeLibs(name, targets, objects, copts, part, mspware, msp430Headers)
+{
+    var lib;
+    var target;
+    var localcopts;
+    var attrs = {
+        copts: copts,
+        profile: "release"
+    };
+
+    if (part != undefined) {
+        msp43xOptions = xdc.loadCapsule("ti/drivers/msp43xOptions.xs");
+    }
+
+    for (t in targets) {
+        target = xdc.module(targets[t]);
+        localcopts = "";
+
+        /* add MSP430-specific compiler arguments */
+        if (part != undefined) {
+            var msp43xcopts =
+            msp43xOptions.getCompilerLinkerOptions(part, mspware, target).copts;
+
+            localcopts = msp43xcopts + " -I" + msp430Headers + copts;
+        }
+        else {
+            localcopts = copts;
+        }
+
+        /* disable asserts and logs for the non-instrumented library */
+        attrs.copts = localcopts +
+              " -Dxdc_runtime_Log_DISABLE_ALL -Dxdc_runtime_Assert_DISABLE_ALL";
+
+        lib = Pkg.addLibrary(name, target, attrs);
+        lib.addObjects(objects);
+
+        /* enable asserts and logs for the non-instrumented library */
+        attrs.copts = localcopts +
+        " -Dxdc_runtime_Assert_DISABLE_CONDITIONAL_ASSERT -DDebugP_ASSERT_ENABLED -DDebugP_LOG_ENABLED";
+        lib = Pkg.addLibrary(name + "_instrumented", target, attrs);
+        lib.addObjects(objects);
+    }
+}
+
+var MWareObjList = [
+    "EMAC.c",
+    "./emac/EMACTiva.c",
+    "./gpio/GPIOTiva.c",
+    "I2C.c",
+    "./i2c/I2CTiva.c",
+    "SDSPI.c",
+    "./sdspi/SDSPITiva.c",
+    "SPI.c",
+    "./spi/SPITivaDMA.c",
+    "UART.c",
+    "./uart/UARTTiva.c",
+    "./uart/RingBuf.c",
+    "USBMSCHFatFs.c",
+    "./usbmschfatfs/USBMSCHFatFsTiva.c",
+    "Watchdog.c",
+    "./watchdog/WatchdogTiva.c",
+];
+
+var TivaObjList = [
+    "EMAC.c",
+    "./emac/EMACSnow.c",
+    "./gpio/GPIOTiva.c",
+    "I2C.c",
+    "./i2c/I2CTiva.c",
+    "PWM.c",
+    "./pwm/PWMTimerTiva.c",
+    "./pwm/PWMTiva.c",
+    "SDSPI.c",
+    "./sdspi/SDSPITiva.c",
+    "SPI.c",
+    "./spi/SPITivaDMA.c",
+    "UART.c",
+    "./uart/UARTTiva.c",
+    "./uart/RingBuf.c",
+    "./uart/UARTTivaDMA.c",
+    "USBMSCHFatFs.c",
+    "./usbmschfatfs/USBMSCHFatFsTiva.c",
+    "Watchdog.c",
+    "./watchdog/WatchdogTiva.c",
+];
+
+var CC3200ObjList = [
+    "Camera.c",
+    "./camera/CameraCC3200DMA.c",
+    "./gpio/GPIOCC3200.c",
+    "I2C.c",
+    "./i2c/I2CCC3200.c",
+    "I2S.c",
+    "./i2s/I2SCC3200DMA.c",
+    "PWM.c",
+    "./pwm/PWMTimerCC3200.c",
+    "SDSPI.c",
+    "./sdspi/SDSPICC3200.c",
+    "SPI.c",
+    "./spi/SPICC3200DMA.c",
+    "UART.c",
+    "./uart/UARTCC3200.c",
+    "./uart/RingBuf.c",
+    "./uart/UARTCC3200DMA.c",
+    "Watchdog.c",
+    "./watchdog/WatchdogCC3200.c",
+    "./power/PowerCC3200.c",
+    "./power/PowerCC3200_asm",
+];
+
+var CC26xxObjList = [
+    "./crypto/CryptoCC26XX.c",
+    "./dma/UDMACC26XX.c",
+    "I2C.c",
+    "./i2c/I2CCC26XX.c",
+    "./lcd/LCDDogm1286.c",
+    "./lcd/LCDDogm1286_util.c",
+    "./pin/PINCC26XX.c",
+    "SPI.c",
+    "./spi/SPICC26XXDMA.c",
+    "UART.c",
+    "./uart/UARTCC26XX.c",
+];
+
+var CC13xxObjList = [
+    "./crypto/CryptoCC26XX.c",
+    "./dma/UDMACC26XX.c",
+    "I2C.c",
+    "./i2c/I2CCC26XX.c",
+    "./lcd/LCDDogm1286.c",
+    "./lcd/LCDDogm1286_util.c",
+    "./pin/PINCC26XX.c",
+    "SPI.c",
+    "./spi/SPICC26XXDMA.c",
+    "UART.c",
+    "./uart/UARTCC26XX.c",
+];
+
+var MSP432ObjList = [
+    "./gpio/GPIOMSP432.c",
+    "I2C.c",
+    "./i2c/I2CMSP432.c",
+    "PWM.c",
+    "./pwm/PWMTimerMSP432.c",
+    "SDSPI.c",
+    "./sdspi/SDSPIMSP432.c",
+    "SPI.c",
+    "./spi/SPIMSP432DMA.c",
+    "UART.c",
+    "./uart/UARTMSP432.c",
+    "./uart/RingBuf.c",
+    "Watchdog.c",
+    "./watchdog/WatchdogMSP432.c",
+    "./power/PowerMSP432.c",
+];
+
+var MSP430GenericObjList = [
+    "./gpio/GPIOMSP430.c",
+    "Watchdog.c",
+    "./watchdog/WatchdogMSP430.c",
+];
+
+var PowerMSP432TIRTOSObjList = [
+    "./power/PowerMSP432_tirtos.c",
+];
+
+
+var I2CUSCIObjList = [
+    "I2C.c",
+    "./i2c/I2CUSCIB.c",
+];
+
+var I2CEUSCIObjList = [
+    "I2C.c",
+    "./i2c/I2CEUSCIB.c",
+];
+
+var PowerCC3200TiRtosObjList = [
+    "./power/PowerCC3200_tirtos_policy.c",
+];
+
+var SDSPIUSCIObjList = [
+    "SDSPI.c",
+    "./sdspi/SDSPIUSCIA.c",
+    "./sdspi/SDSPIUSCIB.c",
+];
+
+var SDSPIEUSCIObjList = [
+    "SDSPI.c",
+    "./sdspi/SDSPIEUSCIA.c",
+    "./sdspi/SDSPIEUSCIB.c",
+];
+
+var SPIUSCIObjList = [
+    "SPI.c",
+    "./spi/SPIUSCIADMA.c",
+    "./spi/SPIUSCIBDMA.c",
+];
+
+var SPIEUSCIObjList = [
+    "SPI.c",
+    "./spi/SPIEUSCIBDMA.c",
+    "./spi/SPIEUSCIADMA.c",
+];
+
+var UARTUSCIObjList = [
+    "UART.c",
+    "./uart/UARTUSCIA.c",
+];
+
+var UARTEUSCIObjList = [
+    "UART.c",
+    "./uart/UARTEUSCIA.c",
+];
+
+var WiFiCC3100ObjList = [
+    "WiFi.c",
+    "./wifi/cc3100/Simplelink/osi_tirtos.c",
+    "./wifi/cc3100/Simplelink/Source/device.c",
+    "./wifi/cc3100/Simplelink/Source/driver.c",
+    "./wifi/cc3100/Simplelink/Source/flowcont.c",
+    "./wifi/cc3100/Simplelink/Source/fs.c",
+    "./wifi/cc3100/Simplelink/Source/netapp.c",
+    "./wifi/cc3100/Simplelink/Source/netcfg.c",
+    "./wifi/cc3100/Simplelink/Source/socket.c",
+    "./wifi/cc3100/Simplelink/Source/spawn.c",
+    "./wifi/cc3100/Simplelink/Source/wlan.c",
+    "./wifi/WiFiCC3100.c"
+];
+
+/* generate libraries */
+if (MWareDir != "") {
+    var copts = " -I" + MWareDir + " -DMWARE"
+              + " -I./wifi/cc3100/Simplelink"
+              + " -I./wifi/cc3100/Simplelink/Include";
+    var targets = [
+        "ti.targets.arm.elf.M3",
+    ];
+
+    makeLibs("lib/drivers_mware", targets, MWareObjList, copts);
+    makeLibs("lib/wifi_cc3100_mware", targets, WiFiCC3100ObjList, copts);
+}
+
+if (CCWareDir != "") {
+    var copts = " -I" + CCWareDir + " -DCCWARE ";
+    var targets = [
+        "ti.targets.arm.elf.M4",
+        "gnu.targets.arm.M4",
+        "iar.targets.arm.M4",
+    ];
+
+    makeLibs("lib/drivers_ccware", targets, CC3200ObjList, copts);
+    makeLibs("lib/power_cc3200_tirtos", targets,
+             PowerCC3200TiRtosObjList, copts);
+}
+
+if (CC26xxWareDir != "") {
+    var copts = " -I" + CC26xxWareDir;
+    var targets = [
+        "ti.targets.arm.elf.M3",
+        "iar.targets.arm.M3",
+    ];
+
+    /*
+     * optimize CC26xx IAR object files for size (not speed)
+     */
+    var M3 = xdc.module('iar.targets.arm.M3');
+    M3.profiles["release"].compileOpts.copts =
+                 M3.profiles["release"].compileOpts.copts.replace("Ohs", "Ohz");
+
+    makeLibs("lib/drivers_cc26xxware", targets, CC26xxObjList, copts);
+}
+
+if (CC13xxWareDir != "") {
+    var copts = " -I" + CC13xxWareDir;
+    var targets = [
+        "ti.targets.arm.elf.M3",
+        "iar.targets.arm.M3",
+    ];
+
+    /*
+     * optimize CC13xx IAR object files for size (not speed)
+     */
+    var M3 = xdc.module('iar.targets.arm.M3');
+    M3.profiles["release"].compileOpts.copts =
+                 M3.profiles["release"].compileOpts.copts.replace("Ohs", "Ohz");
+
+    makeLibs("lib/drivers_cc13xxware", targets, CC13xxObjList, copts);
+}
+
+if (TivaWareDir != "") {
+    var copts = " -I" + TivaWareDir + " -DTIVAWARE"
+              + " -I./wifi/cc3100/Simplelink"
+              + " -I./wifi/cc3100/Simplelink/Include";
+    var targets = [
+        "ti.targets.arm.elf.M4F",
+        "gnu.targets.arm.M4F",
+        "iar.targets.arm.M4F",
+    ];
+
+    makeLibs("lib/drivers_tivaware", targets, TivaObjList, copts);
+    makeLibs("lib/wifi_cc3100_tivaware", targets, WiFiCC3100ObjList, copts);
+}
+
+if (MSPWareDir != "") {
+    var copts;
+    var targets;
+
+    /* MSP432 drivers */
+    if (MSP432DevList != "") {
+        targets = [
+            "ti.targets.arm.elf.M4F",
+            "gnu.targets.arm.M4F",
+            "iar.targets.arm.M4F",
+        ];
+
+        /*
+         * For each device in the MSP432DevList create a set of MSP432 TI-RTOS
+         * drivers
+         */
+        for (dev in MSP432DevList) {
+            copts = " -DMSP432WARE"
+                  + " -I./wifi/cc3100/Simplelink"
+                  + " -I./wifi/cc3100/Simplelink/Include";
+
+            makeLibs("lib/drivers_" + MSP432DevList[dev], targets,
+                     MSP432ObjList, copts, MSP432DevList[dev], MSPWareDir,
+                     MSP430Headers);
+
+            makeLibs("lib/wifi_cc3100_" + MSP432DevList[dev], targets,
+                     WiFiCC3100ObjList, copts, MSP432DevList[dev], MSPWareDir,
+                     MSP430Headers);
+
+            makeLibs("lib/power_tirtos_" + MSP432DevList[dev], targets,
+                     PowerMSP432TIRTOSObjList, copts, MSP432DevList[dev],
+                     MSPWareDir, MSP430Headers);
+        }
+    }
+
+    /* MSP430 drivers */
+    if (MSP430DevList != "" ) {
+        tiTargets = ["ti.targets.msp430.elf.MSP430X"];
+        iarTargets = ["iar.targets.msp430.MSP430X_small"];
+
+        /*
+         * For each device in the MSP430DevList create a set
+         * of MSP430 TI-RTOS drivers
+         */
+        for (dev in MSP430DevList) {
+            var MSP430ObjList;
+
+            copts = " -DMSP430WARE"
+                  + " -I./wifi/cc3100/Simplelink"
+                  + " -I./wifi/cc3100/Simplelink/Include";
+
+            if (MSP430DevList[dev].match(/MSP430F[56][\d\w]*/g)) {
+                MSP430ObjList = MSP430GenericObjList.concat(I2CUSCIObjList,
+                                                            UARTUSCIObjList,
+                                                            SDSPIUSCIObjList,
+                                                            SPIUSCIObjList);
+
+                makeLibs("lib/drivers_" + MSP430DevList[dev], tiTargets,
+                         MSP430ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                         MSP430Headers);
+
+                makeLibs("lib/drivers_" + MSP430DevList[dev], iarTargets,
+                         MSP430ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                         IAR_MSP430Headers);
+            }
+
+            if (MSP430DevList[dev].match(/MSP430FR[56][\d\w]*/g)) {
+                MSP430ObjList = MSP430GenericObjList.concat(I2CEUSCIObjList,
+                                                            UARTEUSCIObjList,
+                                                            SDSPIEUSCIObjList,
+                                                            SPIEUSCIObjList);
+
+                makeLibs("lib/drivers_" + MSP430DevList[dev], tiTargets,
+                         MSP430ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                         MSP430Headers);
+
+                makeLibs("lib/drivers_" + MSP430DevList[dev], iarTargets,
+                         MSP430ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                         IAR_MSP430Headers);
+            }
+
+            makeLibs("lib/wifi_cc3100_" + MSP430DevList[dev], tiTargets,
+                     WiFiCC3100ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                     MSP430Headers);
+
+            makeLibs("lib/wifi_cc3100_" + MSP430DevList[dev], iarTargets,
+                     WiFiCC3100ObjList, copts, MSP430DevList[dev], MSPWareDir,
+                     IAR_MSP430Headers);
+        }
+    }
+    else {
+        print ("WARNING: No MSP430 devices defined. Check that you're passing"
+                + "in a 'MSP430DEVLIST' in XDCARGS");
+    }
+}
+
+Pkg.attrs.exportAll = true;

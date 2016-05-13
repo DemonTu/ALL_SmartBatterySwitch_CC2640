@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<gep name="WiFi" title="WiFi Driver Configuration Options" version="1">
+
+<page name="Basic" title="Basic">
+<html><body><table>
+  <tr>
+    <td>
+      <form>
+        <p>The WiFi module allows an application to automatically bring in the WiFi Driver.</p>
+        <p> </p>
+      </form>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <control type="checkbox" label="Add WiFi to my configuration" value="value:this.$used" bold="true"/>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <h1>Wi-Fi Device Selection</h1>
+      <table>
+        <tr>
+          <td><control type="radiogroup" value="value:ti.drivers.WiFi.deviceType" label="Wi-Fi device" tooltip="value:ti.drivers.WiFi.deviceType.$summary" align="left" /></td>
+        </tr>
+      </table>
+      <form>
+        <p>The device selection options above allows you to select which <br/> SimpleLink Wi-Fi device will be used.</p>
+        <p></p>
+      </form>
+    </td>
+
+    <td>
+      <h1>Library Selection Options</h1>
+      <table>
+        <tr>
+          <td><control type="radiogroup" value="value:ti.drivers.WiFi.libType" label="WiFi Driver Library Type" tooltip="value:ti.drivers.WiFi.libType.$summary" align="left" /></td>
+        </tr>
+      </table>
+      <form>
+        <p>The library options above allows you to select either instrumented or non-instrumented WiFi runtime support.</p>
+        <p></p>
+      </form>
+    </td>
+  </tr>
+
+  <tr>
+    <td> <!-- SimpleLink CC3100 Configuration -->
+      <table>
+        <tr>
+          <td>
+            <h1>SpawnTask Priority</h1>
+            <form>
+              <p>The SpawnTask is a task created for the host driver that will enable a function to run in a temporary context.</p>
+            </form>
+            <table>
+              <tr>
+                <td><control type="label" label="SpawnTask priority" align="left"/></td>
+                <td><control type="editbox" value="value:ti.drivers.WiFi.spawnTaskPriority" tooltip="Priority of the SpawnTask."/>
+                </td>
+              </tr>
+             </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table></body></html>
+</page>
+
+<properties name="Advanced" title="All Options" enabled="true" visible="true" link="ti.drivers.WiFi"/>
+</gep>

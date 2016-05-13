@@ -1,0 +1,84 @@
+\subsection{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs}\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+
+
+U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+C\+C26\+X\+X.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_aa7747b4d98279e8cad825a56df846af7}{base\+Addr}
+\item 
+int \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_ab16717e96a640f0908f868e48624d3dd}{int\+Num}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a4b66ad587cd8c36b48b7cabc166e3c92}{power\+Mngr\+Id}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_abe8dcea54ebbdebdaae1504908a96b95}{tx\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a45fd697b8735c682ce7d12af6348d229}{rx\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a03d0531a1fdcf84206163376c6eefaba}{cts\+Pin}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a1a9efb86deefbf00c440787513fc8d96}{rts\+Pin}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+C\+C26\+X\+X Hardware attributes. 
+
+These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C26xx\+Ware these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item inc/hw\+\_\+ints.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTCC26XX_HWAttrs uartCC26xxHWAttrs[] = \{
+    \{
+        .baseAddr = UART0\_BASE,
+        .intNum = INT\_UART0,
+        .powerMngrId = PERIPH\_UART0,
+        .txPin = Board\_UART\_TX,
+        .rxPin = Board\_UART\_RX,
+        .ctsPin = PIN_UNASSIGNED,
+        .rtsPin = PIN_UNASSIGNED
+    \}
+\};
+\end{DoxyCode}
+
+
+The .cts\+Pin and .rts\+Pin must be assigned to enable flow control. 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_aa7747b4d98279e8cad825a56df846af7}
+U\+A\+R\+T Peripheral\textquotesingle{}s base address \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!int\+Num@{int\+Num}}
+\index{int\+Num@{int\+Num}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{int\+Num}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::int\+Num}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_ab16717e96a640f0908f868e48624d3dd}
+U\+A\+R\+T Peripheral\textquotesingle{}s interrupt vector \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!power\+Mngr\+Id@{power\+Mngr\+Id}}
+\index{power\+Mngr\+Id@{power\+Mngr\+Id}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{power\+Mngr\+Id}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::power\+Mngr\+Id}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a4b66ad587cd8c36b48b7cabc166e3c92}
+U\+A\+R\+T Peripheral\textquotesingle{}s power manager I\+D \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!tx\+Pin@{tx\+Pin}}
+\index{tx\+Pin@{tx\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{tx\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::tx\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_abe8dcea54ebbdebdaae1504908a96b95}
+U\+A\+R\+T T\+X pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!rx\+Pin@{rx\+Pin}}
+\index{rx\+Pin@{rx\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rx\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::rx\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a45fd697b8735c682ce7d12af6348d229}
+U\+A\+R\+T R\+X pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!cts\+Pin@{cts\+Pin}}
+\index{cts\+Pin@{cts\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{cts\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::cts\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a03d0531a1fdcf84206163376c6eefaba}
+U\+A\+R\+T C\+T\+S pin \index{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!rts\+Pin@{rts\+Pin}}
+\index{rts\+Pin@{rts\+Pin}!U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\paragraph[{rts\+Pin}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs\+::rts\+Pin}\label{struct_u_a_r_t_c_c26_x_x___h_w_attrs_a1a9efb86deefbf00c440787513fc8d96}
+U\+A\+R\+T R\+T\+S pin 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_c_c26_x_x_8h}{U\+A\+R\+T\+C\+C26\+X\+X.\+h}\end{DoxyCompactItemize}

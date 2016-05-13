@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.sysbios.timers.dmtimer" version="2, 0, 0, 0" producerId="undefined">
+    <units>
+        <module name="Timer"/>
+        <module name="TimestampProvider"/>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <srcFile name="Timer.c"/>
+        <srcFile name="Timer_asm.sv7M"/>
+        <srcFile name="TimestampProvider.c"/>
+        <srcFile name="Timer_asm_gnu.sv7M"/>
+    </sources>
+    <configscripts>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem3.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/package/package_ti.sysbios.timers.dmtimer.oem3.dep" src="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer.oem3.dep" src="Timer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer_asm.oem3.dep" src="Timer_asm.sv7M"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/TimestampProvider.oem3.dep" src="TimestampProvider.c"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem4.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/package/package_ti.sysbios.timers.dmtimer.oem4.dep" src="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer.oem4.dep" src="Timer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer_asm.oem4.dep" src="Timer_asm.sv7M"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/TimestampProvider.oem4.dep" src="TimestampProvider.c"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am3g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/package/package_ti.sysbios.timers.dmtimer.om3g.dep" src="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer.om3g.dep" src="Timer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer_asm_gnu.om3g.dep" src="Timer_asm_gnu.sv7M"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/TimestampProvider.om3g.dep" src="TimestampProvider.c"/>
+        <srcFile name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am4g.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/package/package_ti.sysbios.timers.dmtimer.om4g.dep" src="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer.om4g.dep" src="Timer.c"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/Timer_asm_gnu.om4g.dep" src="Timer_asm_gnu.sv7M"/>
+        <srcFile name="package/lib/lib/sysbios/debug/ti.sysbios.timers.dmtimer/TimestampProvider.om4g.dep" src="TimestampProvider.c"/>
+        <srcFile name="package/rel/ti_sysbios_timers_dmtimer.tar.dep" src="package/rel/ti_sysbios_timers_dmtimer.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.arm.elf.M3"
+            version="ti.targets.arm.elf.M3{1,0,5.2,2"
+            rawVersion="5.2.2"
+            platform="ti.platforms.simCM3"
+            isa="v7M"
+            suffix="em3"
+            rootDir="/db/vendors/ti/arm/5.2.2/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.arm.elf.M4"
+            version="ti.targets.arm.elf.M4{1,0,5.2,2"
+            rawVersion="5.2.2"
+            platform="ti.platforms.stellaris:LM4FSXLH5BB:1"
+            isa="v7M4"
+            suffix="em4"
+            rootDir="/db/vendors/ti/arm/5.2.2/Linux"
+            os="undefined"
+            rts="ti.targets.arm.rtsarm">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M3"
+            version="gnu.targets.arm.M3{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:LM3S9B90"
+            isa="v7M"
+            suffix="m3g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+        <target name="gnu.targets.arm.M4"
+            version="gnu.targets.arm.M4{1,0,4.8,4"
+            rawVersion="4.8.4"
+            platform="ti.platforms.tiva:LM4F232H5QD"
+            isa="v7M4"
+            suffix="m4g"
+            rootDir="/db/vendors/linaro/gcc-arm-none-eabi-4_8-2014q3"
+            os="undefined"
+            rts="gnu.targets.arm.rtsv7M">
+            <model endian="little"
+                codeModel="thumb2"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/sysbios/debug/ti.sysbios.timers.dmtimer"
+        pname="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem3"
+        profile="debug"
+        target="ti.targets.arm.elf.M3"/>
+    <library name="lib/sysbios/debug/ti.sysbios.timers.dmtimer"
+        pname="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem4"
+        profile="debug"
+        target="ti.targets.arm.elf.M4"/>
+    <library name="lib/sysbios/debug/ti.sysbios.timers.dmtimer"
+        pname="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am3g"
+        profile="debug"
+        target="gnu.targets.arm.M3"/>
+    <library name="lib/sysbios/debug/ti.sysbios.timers.dmtimer"
+        pname="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am4g"
+        profile="debug"
+        target="gnu.targets.arm.M4"/>
+    </libraries>
+    <configurations>
+    </configurations>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_sysbios_timers_dmtimer"
+        pname="ti_sysbios_timers_dmtimer.tar"
+        label="default"
+        relScript="ti/sysbios/libFilter.xs">
+        <file name="package/package.bld.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="doc-files"/>
+        <file name="package.bld"/>
+        <file name="custom.mak"/>
+        <file name="Timer.xml"/>
+        <file name="TimestampProvider.xml"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem3"/>
+        <file name="package/package_ti.sysbios.timers.dmtimer.c"/>
+        <file name="Timer.c"/>
+        <file name="Timer_asm.sv7M"/>
+        <file name="TimestampProvider.c"/>
+        <file name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.aem4"/>
+        <file name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am3g"/>
+        <file name="Timer_asm_gnu.sv7M"/>
+        <file name="lib/sysbios/debug/ti.sysbios.timers.dmtimer.am4g"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

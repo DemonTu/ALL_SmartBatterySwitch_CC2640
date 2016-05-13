@@ -1,0 +1,50 @@
+\subsection{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs Struct Reference}
+\label{struct_p_w_m_timer_c_c3200___h_w_attrs}\index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+
+
+P\+W\+M\+Timer\+C\+C3200 Hardware attributes.  
+
+
+
+
+{\ttfamily \#include $<$P\+W\+M\+Timer\+C\+C3200.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_p_w_m_timer_c_c3200___h_w_attrs_a2cc366b46e3f710f761ad990afa1aea0}{base\+Addr}
+\item 
+uint16\+\_\+t \hyperlink{struct_p_w_m_timer_c_c3200___h_w_attrs_aa25fe5589d4a5c924759293c334fb40d}{timer}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M\+Timer\+C\+C3200 Hardware attributes. 
+
+These fields are used by C\+C3200 driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For C\+C3200 driverlib these definitions are found in\+:
+\begin{DoxyItemize}
+\item inc/hw\+\_\+memmap.\+h
+\item driverlib/timer.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} PWMTimerCC3200_HWAttrs PWMTimerCC3200HWAttrs[] = \{
+    \{TIMERA3\_BASE, TIMER\_A\},
+    \{TIMERA3\_BASE, TIMER\_B\},
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}!base\+Addr@{base\+Addr}}
+\index{base\+Addr@{base\+Addr}!P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{base\+Addr}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs\+::base\+Addr}\label{struct_p_w_m_timer_c_c3200___h_w_attrs_a2cc366b46e3f710f761ad990afa1aea0}
+Timer peripheral base address \index{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}!timer@{timer}}
+\index{timer@{timer}!P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs@{P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs}}
+\paragraph[{timer}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t P\+W\+M\+Timer\+C\+C3200\+\_\+\+H\+W\+Attrs\+::timer}\label{struct_p_w_m_timer_c_c3200___h_w_attrs_aa25fe5589d4a5c924759293c334fb40d}
+Half-\/timers to generate outputs 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_w_m_timer_c_c3200_8h}{P\+W\+M\+Timer\+C\+C3200.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,4 @@
+<map id="PowerCC3200_SaveRegisters" name="PowerCC3200_SaveRegisters">
+<area shape="rect" href="$struct_power_c_c3200___n_v_i_c_registers.html" title="NVIC registers that need to be save on entering LPDS. " alt="" coords="7,9,210,33" />
+<area shape="rect" href="$struct_power_c_c3200___m_c_u_registers.html" title="MCU core registers that need to be save on entering LPDS. " alt="" coords="234,9,437,33" />
+</map>

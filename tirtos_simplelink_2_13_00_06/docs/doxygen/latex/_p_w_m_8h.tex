@@ -1,0 +1,576 @@
+\subsection{P\+W\+M.\+h File Reference}
+\label{_p_w_m_8h}\index{P\+W\+M.\+h@{P\+W\+M.\+h}}
+
+
+\subsubsection{Detailed Description}
+P\+W\+M driver interface. 
+
+============================================================================
+
+The P\+W\+M header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/PWM.h>}
+\end{DoxyCode}
+
+
+\paragraph*{Operation}
+
+The P\+W\+M driver in T\+I-\/\+R\+T\+O\+S facilitates the generation of Pulse Width Modulated signals via simple and portable A\+P\+Is. A device\textquotesingle{}s P\+W\+M peripheral pins must be configured before initializing the P\+W\+M driver. The application initializes the P\+W\+M driver by calling \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()}. P\+W\+M instances must be opened by calling \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} while passing in a P\+W\+M index and a parameters data structure.
+
+The driver A\+P\+Is serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible of creating all S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+When a P\+W\+M instance is opened, the period, units of the duty, and polarity can be set. The maximum period supported is device dependent; refer to the implementation specific documentation for values. A P\+W\+M instance can be configured to interpret the duty as one of three units\+: P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S\+: The duty is in P\+W\+M timer ticks. P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R\+: The duty is an integer scaled to the period where 0 corresponds to a duty of 0\% and 65535 corresponds to 100\% duty. P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E\+: The duty is specified in microseconds. The driver calculates the appropriate amount of P\+W\+M timer ticks.
+
+The polarity is used to set the output during the active duty portion of the period; it can be set to produce low output or a high output when active.
+
+By default P\+W\+M output is set to a duty of 0. It is the applications responsability to set the duty for each P\+W\+M output used.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+PWM_Handle      handle;
+PWM_Params      params;
+
+PWM_Params_init(&params);
+params.period = 20000;             \textcolor{comment}{// Period in microseconds}
+params.dutyMode = PWM_DUTY_TIME;   \textcolor{comment}{// Duty specified in microseconds}
+handle = PWM_open(Board\_PWM0, &params);
+\textcolor{keywordflow}{if} (handle == NULL) \{
+    System\_printf(\textcolor{stringliteral}{"PWM did not open"});
+\}
+
+\textcolor{comment}{// Update PWM to have a duty of 3000 microseconds}
+PWM_setDuty(handle, 3000);
+\end{DoxyCode}
+
+
+\paragraph*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module A\+P\+Is to specific peripheral implementations specified by a pointer to a \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table}.
+
+The P\+W\+M driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_p_w_m___config}{P\+W\+M\+\_\+\+Config} data structures named {\itshape P\+W\+M\+\_\+config}. {\itshape P\+W\+M\+\_\+config} is implemented in the application with each entry being an instance of a P\+W\+M peripheral. Each entry in {\itshape P\+W\+M\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a P\+W\+M peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following P\+W\+M peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_p_w_m_timer_c_c3200_8h}{P\+W\+M\+Timer\+C\+C3200.\+h}
+\item \hyperlink{_p_w_m_timer_m_s_p432_8h}{P\+W\+M\+Timer\+M\+S\+P432.\+h}
+\item \hyperlink{_p_w_m_tiva_8h}{P\+W\+M\+Tiva.\+h}
+\item \hyperlink{_p_w_m_timer_tiva_8h}{P\+W\+M\+Timer\+Tiva.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Calling Context}
+
+\begin{TabularC}{5}
+\hline
+\rowcolor{lightgray}{\bf Function }&{\bf Hwi }&{\bf Swi }&{\bf Task  }&{\bf Main   }\\\cline{1-5}
+P\+W\+M\+\_\+\+Params\+\_\+init  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+close  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+control  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+get\+Period\+Counts  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+get\+Period\+Micro\+Secs  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+init  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+open  &Y &Y &Y &Y   \\\cline{1-5}
+P\+W\+M\+\_\+set\+Duty  &Y &Y &Y &Y   \\\cline{1-5}
+\multicolumn{5}{|p{(\linewidth-\tabcolsep*5-\arrayrulewidth*1)*5/5}|}{
+\begin{DoxyItemize}
+\item {\bfseries Hwi}\+: A\+P\+I is callable from Hwi context.  
+\item {\bfseries Swi}\+: A\+P\+I is callable from Swi context.  
+\item {\bfseries Task}\+: A\+P\+I is callable from a Task thread.  
+\item {\bfseries Main}\+: A\+P\+I is callable from main().  
+\end{DoxyItemize}}\\\cline{1-5}
+\end{TabularC}
+
+
+\subsubsection*{Instrumentation}
+
+The P\+W\+M driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for P\+W\+M.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_p_w_m_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_p_w_m_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+W\+M Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a P\+W\+M function table that contains the required set of functions to control a specific P\+W\+M driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_p_w_m___config}{P\+W\+M\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em P\+W\+M Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_p_w_m_8h_ad731f4db58c72d280900da4be6e3434c}{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_p_w_m_8h_a88616e9288d6e3a4dbab321af26cc04a}{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_p_w_m_8h_a9b234f3cd0bdffc3da5b56a6c4db9563}{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_w_m_8h_a739297dfb10ab4363e7b5db30fdd1ce0}{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_p_w_m_8h_afed58384f49ce364218eeaabb0858bea}{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_p_w_m___config}{P\+W\+M\+\_\+\+Config} $\ast$ \hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607}{P\+W\+M\+\_\+\+Duty\+Mode} \hyperlink{_p_w_m_8h_a19cd06b0c3560cfdf4125d1bc70a155e}{P\+W\+M\+\_\+\+Duty\+Mode}
+\begin{DoxyCompactList}\small\item\em Definitions for various units for specifying the P\+W\+M duty. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593}{P\+W\+M\+\_\+\+Polarity} \hyperlink{_p_w_m_8h_a15b860dd4dbdba68833b71c4d9f2b929}{P\+W\+M\+\_\+\+Polarity}
+\begin{DoxyCompactList}\small\item\em Definitions for various P\+W\+M output polarity. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} \hyperlink{_p_w_m_8h_ac7349e4fc779fd744daf79b403269167}{P\+W\+M\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em P\+W\+M Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_w_m_8h_a1643d365dfa900197b324ea74035d2ec}{P\+W\+M\+\_\+\+Close\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a0e0f5899b067d27653db566fb148db11}{P\+W\+M\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_p_w_m_8h_af538c912f876c434c62e7e0e28d41b75}{P\+W\+M\+\_\+\+Control\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef unsigned int($\ast$ \hyperlink{_p_w_m_8h_a4ac091a98716ff54c33b0d300a2a7fee}{P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_af7c6d8e045f6f5cc8b978d68bead5b41}{P\+W\+M\+\_\+get\+Period\+Counts()}. \end{DoxyCompactList}\item 
+typedef unsigned int($\ast$ \hyperlink{_p_w_m_8h_a4eb84d54d5b3a05e6ae9d8a580a48b45}{P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a150ccda2b9cb65f8c12d173bba10df53}{P\+W\+M\+\_\+get\+Period\+Micro\+Secs()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_w_m_8h_a38666ae4b117b81d35758258012b251a}{P\+W\+M\+\_\+\+Init\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle}($\ast$ \hyperlink{_p_w_m_8h_a16b7b446398f8b90e4fa287c6e4a0981}{P\+W\+M\+\_\+\+Open\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle, \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_p_w_m_8h_a4d729a443944bea99ae30cb09a0035ee}{P\+W\+M\+\_\+\+Set\+Duty\+Fxn}) (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle, uint32\+\_\+t duty)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a9b4c4b744af933d4f2678dc18b49bfb4}{P\+W\+M\+\_\+set\+Duty()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m___fxn_table}{P\+W\+M\+\_\+\+Fxn\+Table} \hyperlink{_p_w_m_8h_a05890cc4f17c4343ff0ee612561fe267}{P\+W\+M\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a P\+W\+M function table that contains the required set of functions to control a specific P\+W\+M driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_p_w_m___config}{P\+W\+M\+\_\+\+Config} \hyperlink{_p_w_m_8h_a007c9e36d0b1afcff70e1f2201845236}{P\+W\+M\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em P\+W\+M Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607}{P\+W\+M\+\_\+\+Duty\+Mode} \{ \\*
+\hyperlink{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a4a20018a9620ed669dff0893858a44b2}{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S} = 0, 
+\\*
+\hyperlink{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a2611c911a0eba0b814c8da5e464d2864}{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R}, 
+\\*
+\hyperlink{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a4e450c41a62390183087c6ec32e65bd5}{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for various units for specifying the P\+W\+M duty. \end{DoxyCompactList}\item 
+enum \hyperlink{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593}{P\+W\+M\+\_\+\+Polarity} \{ \\*
+\hyperlink{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593a9a0765651cee5c3bb3f4ca3dc87a328e}{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H} = 0, 
+\\*
+\hyperlink{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593a4862fe820788c4fec725cc91db2649c5}{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Definitions for various P\+W\+M output polarity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_p_w_m_8h_a0e0f5899b067d27653db566fb148db11}{P\+W\+M\+\_\+close} (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a P\+W\+M peripheral specified by the P\+W\+M handle. \end{DoxyCompactList}\item 
+int \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control} (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given P\+W\+M\+\_\+\+Handle. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_p_w_m_8h_af7c6d8e045f6f5cc8b978d68bead5b41}{P\+W\+M\+\_\+get\+Period\+Counts} (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Get the P\+W\+M handle period in timer counts. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_p_w_m_8h_a150ccda2b9cb65f8c12d173bba10df53}{P\+W\+M\+\_\+get\+Period\+Micro\+Secs} (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Get the P\+W\+M handle period in microseconds. \end{DoxyCompactList}\item 
+void \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the P\+W\+M module. \end{DoxyCompactList}\item 
+\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open} (unsigned int index, \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em This function opens a given P\+W\+M peripheral. \end{DoxyCompactList}\item 
+void \hyperlink{_p_w_m_8h_acbdd3192f9f06bf689e4a3855926dcac}{P\+W\+M\+\_\+\+Params\+\_\+init} (\hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+void \hyperlink{_p_w_m_8h_a9b4c4b744af933d4f2678dc18b49bfb4}{P\+W\+M\+\_\+set\+Duty} (\hyperlink{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}{P\+W\+M\+\_\+\+Handle} handle, uint32\+\_\+t duty)
+\begin{DoxyCompactList}\small\item\em Function to set the duty cycle of the specified P\+W\+M handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_p_w_m_8h_ad731f4db58c72d280900da4be6e3434c}
+Common P\+W\+M\+\_\+control command code reservation offset. P\+W\+M driver implementations should offset command codes with P\+W\+M\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define PWMXYZ\_COMMAND0         PWM\_CMD\_RESERVED + 0
+2 #define PWMXYZ\_COMMAND1         PWM\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_p_w_m_8h_a88616e9288d6e3a4dbab321af26cc04a}
+Common P\+W\+M\+\_\+control status code reservation offset. P\+W\+M driver implementations should offset status codes with P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define PWMXYZ\_STATUS\_ERROR0    PWM\_STATUS\_RESERVED - 0
+2 #define PWMXYZ\_STATUS\_ERROR1    PWM\_STATUS\_RESERVED - 1
+3 #define PWMXYZ\_STATUS\_ERROR2    PWM\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_p_w_m_8h_a9b234f3cd0bdffc3da5b56a6c4db9563}
+
+
+Successful status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. 
+
+\hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} returns P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_p_w_m_8h_a739297dfb10ab4363e7b5db30fdd1ce0}
+
+
+Generic error status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. 
+
+\hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} returns P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_p_w_m_8h_afed58384f49ce364218eeaabb0858bea}
+
+
+An error status code returned by \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()} returns P\+W\+M\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 
+
+\subsubsection{Typedef Documentation}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Handle@{P\+W\+M\+\_\+\+Handle}}
+\index{P\+W\+M\+\_\+\+Handle@{P\+W\+M\+\_\+\+Handle}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+\_\+\+Config}$\ast$ {\bf P\+W\+M\+\_\+\+Handle}}\label{_p_w_m_8h_afdefc765f42bbad4dca246fda6e1354b}
+
+
+A handle that is returned from a \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} call. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Duty\+Mode@{P\+W\+M\+\_\+\+Duty\+Mode}}
+\index{P\+W\+M\+\_\+\+Duty\+Mode@{P\+W\+M\+\_\+\+Duty\+Mode}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Duty\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+W\+M\+\_\+\+Duty\+Mode}  {\bf P\+W\+M\+\_\+\+Duty\+Mode}}\label{_p_w_m_8h_a19cd06b0c3560cfdf4125d1bc70a155e}
+
+
+Definitions for various units for specifying the P\+W\+M duty. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Polarity@{P\+W\+M\+\_\+\+Polarity}}
+\index{P\+W\+M\+\_\+\+Polarity@{P\+W\+M\+\_\+\+Polarity}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf P\+W\+M\+\_\+\+Polarity}  {\bf P\+W\+M\+\_\+\+Polarity}}\label{_p_w_m_8h_a15b860dd4dbdba68833b71c4d9f2b929}
+
+
+Definitions for various P\+W\+M output polarity. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Params@{P\+W\+M\+\_\+\+Params}}
+\index{P\+W\+M\+\_\+\+Params@{P\+W\+M\+\_\+\+Params}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+\_\+\+Params}  {\bf P\+W\+M\+\_\+\+Params}}\label{_p_w_m_8h_ac7349e4fc779fd744daf79b403269167}
+
+
+P\+W\+M Parameters. 
+
+P\+W\+M Parameters are used to with the \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_p_w_m_8h_acbdd3192f9f06bf689e4a3855926dcac}{P\+W\+M\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_acbdd3192f9f06bf689e4a3855926dcac}{P\+W\+M\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Close\+Fxn@{P\+W\+M\+\_\+\+Close\+Fxn}}
+\index{P\+W\+M\+\_\+\+Close\+Fxn@{P\+W\+M\+\_\+\+Close\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+W\+M\+\_\+\+Close\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle)}\label{_p_w_m_8h_a1643d365dfa900197b324ea74035d2ec}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a0e0f5899b067d27653db566fb148db11}{P\+W\+M\+\_\+close()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Control\+Fxn@{P\+W\+M\+\_\+\+Control\+Fxn}}
+\index{P\+W\+M\+\_\+\+Control\+Fxn@{P\+W\+M\+\_\+\+Control\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ P\+W\+M\+\_\+\+Control\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_p_w_m_8h_af538c912f876c434c62e7e0e28d41b75}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}{P\+W\+M\+\_\+control()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn@{P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn}}
+\index{P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn@{P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int($\ast$ P\+W\+M\+\_\+\+Get\+Period\+Counts\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle)}\label{_p_w_m_8h_a4ac091a98716ff54c33b0d300a2a7fee}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_af7c6d8e045f6f5cc8b978d68bead5b41}{P\+W\+M\+\_\+get\+Period\+Counts()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn@{P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn}}
+\index{P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn@{P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int($\ast$ P\+W\+M\+\_\+\+Get\+Period\+Micro\+Secs\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle)}\label{_p_w_m_8h_a4eb84d54d5b3a05e6ae9d8a580a48b45}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a150ccda2b9cb65f8c12d173bba10df53}{P\+W\+M\+\_\+get\+Period\+Micro\+Secs()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Init\+Fxn@{P\+W\+M\+\_\+\+Init\+Fxn}}
+\index{P\+W\+M\+\_\+\+Init\+Fxn@{P\+W\+M\+\_\+\+Init\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+W\+M\+\_\+\+Init\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle)}\label{_p_w_m_8h_a38666ae4b117b81d35758258012b251a}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Open\+Fxn@{P\+W\+M\+\_\+\+Open\+Fxn}}
+\index{P\+W\+M\+\_\+\+Open\+Fxn@{P\+W\+M\+\_\+\+Open\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf P\+W\+M\+\_\+\+Handle}($\ast$ P\+W\+M\+\_\+\+Open\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle, {\bf P\+W\+M\+\_\+\+Params} $\ast$params)}\label{_p_w_m_8h_a16b7b446398f8b90e4fa287c6e4a0981}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Set\+Duty\+Fxn@{P\+W\+M\+\_\+\+Set\+Duty\+Fxn}}
+\index{P\+W\+M\+\_\+\+Set\+Duty\+Fxn@{P\+W\+M\+\_\+\+Set\+Duty\+Fxn}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Set\+Duty\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ P\+W\+M\+\_\+\+Set\+Duty\+Fxn) ({\bf P\+W\+M\+\_\+\+Handle} handle, uint32\+\_\+t duty)}\label{_p_w_m_8h_a4d729a443944bea99ae30cb09a0035ee}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_p_w_m_8h_a9b4c4b744af933d4f2678dc18b49bfb4}{P\+W\+M\+\_\+set\+Duty()}. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Fxn\+Table@{P\+W\+M\+\_\+\+Fxn\+Table}}
+\index{P\+W\+M\+\_\+\+Fxn\+Table@{P\+W\+M\+\_\+\+Fxn\+Table}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+\_\+\+Fxn\+Table}  {\bf P\+W\+M\+\_\+\+Fxn\+Table}}\label{_p_w_m_8h_a05890cc4f17c4343ff0ee612561fe267}
+
+
+The definition of a P\+W\+M function table that contains the required set of functions to control a specific P\+W\+M driver implementation. 
+
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Config@{P\+W\+M\+\_\+\+Config}}
+\index{P\+W\+M\+\_\+\+Config@{P\+W\+M\+\_\+\+Config}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf P\+W\+M\+\_\+\+Config}  {\bf P\+W\+M\+\_\+\+Config}}\label{_p_w_m_8h_a007c9e36d0b1afcff70e1f2201845236}
+
+
+P\+W\+M Global configuration. 
+
+The \hyperlink{struct_p_w_m___config}{P\+W\+M\+\_\+\+Config} structure contains a set of pointers used to characterize the P\+W\+M driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Duty\+Mode@{P\+W\+M\+\_\+\+Duty\+Mode}}
+\index{P\+W\+M\+\_\+\+Duty\+Mode@{P\+W\+M\+\_\+\+Duty\+Mode}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Duty\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+W\+M\+\_\+\+Duty\+Mode}}\label{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607}
+
+
+Definitions for various units for specifying the P\+W\+M duty. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S}!P\+W\+M.\+h@{P\+W\+M.\+h}}\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S}}\item[{\em 
+P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+C\+O\+U\+N\+T\+S\label{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a4a20018a9620ed669dff0893858a44b2}
+}]\index{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R}!P\+W\+M.\+h@{P\+W\+M.\+h}}\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R}}\item[{\em 
+P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+S\+C\+A\+L\+A\+R\label{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a2611c911a0eba0b814c8da5e464d2864}
+}]\index{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E}!P\+W\+M.\+h@{P\+W\+M.\+h}}\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E@{P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E}}\item[{\em 
+P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E\label{_p_w_m_8h_a6c5ba2703cb9cc02773b5073046c1607a4e450c41a62390183087c6ec32e65bd5}
+}]\end{description}
+\end{Desc}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Polarity@{P\+W\+M\+\_\+\+Polarity}}
+\index{P\+W\+M\+\_\+\+Polarity@{P\+W\+M\+\_\+\+Polarity}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Polarity}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+W\+M\+\_\+\+Polarity}}\label{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593}
+
+
+Definitions for various P\+W\+M output polarity. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H@{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H}!P\+W\+M.\+h@{P\+W\+M.\+h}}\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H@{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H}}\item[{\em 
+P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H\label{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593a9a0765651cee5c3bb3f4ca3dc87a328e}
+}]P\+W\+M output active high \index{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W@{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W}!P\+W\+M.\+h@{P\+W\+M.\+h}}\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W@{P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W}}\item[{\em 
+P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+L\+O\+W\label{_p_w_m_8h_affa60cc974f99db4aeafc9f6524ec593a4862fe820788c4fec725cc91db2649c5}
+}]P\+W\+M output active low \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+close@{P\+W\+M\+\_\+close}}
+\index{P\+W\+M\+\_\+close@{P\+W\+M\+\_\+close}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void P\+W\+M\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_a0e0f5899b067d27653db566fb148db11}
+
+
+Function to close a P\+W\+M peripheral specified by the P\+W\+M handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+W\+M handle returned from \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+control@{P\+W\+M\+\_\+control}}
+\index{P\+W\+M\+\_\+control@{P\+W\+M\+\_\+control}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int P\+W\+M\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_ade999f5b12997479efa1ac85aaf46ef5}
+
+
+Function performs implementation specific features on a given P\+W\+M\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+W\+M handle returned from \hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+get\+Period\+Counts@{P\+W\+M\+\_\+get\+Period\+Counts}}
+\index{P\+W\+M\+\_\+get\+Period\+Counts@{P\+W\+M\+\_\+get\+Period\+Counts}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+get\+Period\+Counts}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int P\+W\+M\+\_\+get\+Period\+Counts (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_af7c6d8e045f6f5cc8b978d68bead5b41}
+
+
+Get the P\+W\+M handle period in timer counts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+W\+M\+\_\+\+Handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Period in timer counts.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+get\+Period\+Micro\+Secs@{P\+W\+M\+\_\+get\+Period\+Micro\+Secs}}
+\index{P\+W\+M\+\_\+get\+Period\+Micro\+Secs@{P\+W\+M\+\_\+get\+Period\+Micro\+Secs}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+get\+Period\+Micro\+Secs}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int P\+W\+M\+\_\+get\+Period\+Micro\+Secs (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_a150ccda2b9cb65f8c12d173bba10df53}
+
+
+Get the P\+W\+M handle period in microseconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+W\+M\+\_\+\+Handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Period in microseconds.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+init@{P\+W\+M\+\_\+init}}
+\index{P\+W\+M\+\_\+init@{P\+W\+M\+\_\+init}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void P\+W\+M\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}
+
+
+This function initializes the P\+W\+M module. 
+
+\begin{DoxyPrecond}{Precondition}
+The P\+W\+M\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other P\+W\+M driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+open@{P\+W\+M\+\_\+open}}
+\index{P\+W\+M\+\_\+open@{P\+W\+M\+\_\+open}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf P\+W\+M\+\_\+\+Handle} P\+W\+M\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf P\+W\+M\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}
+
+
+This function opens a given P\+W\+M peripheral. 
+
+\begin{DoxyPrecond}{Precondition}
+P\+W\+M controller has been initialized using \hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()}
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the P\+W\+M indexed into the P\+W\+M\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A P\+W\+M\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_aadae3fe77e36cbf9643a22eeb99fb01e}{P\+W\+M\+\_\+init()} 
+
+\hyperlink{_p_w_m_8h_a0e0f5899b067d27653db566fb148db11}{P\+W\+M\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+\+Params\+\_\+init@{P\+W\+M\+\_\+\+Params\+\_\+init}}
+\index{P\+W\+M\+\_\+\+Params\+\_\+init@{P\+W\+M\+\_\+\+Params\+\_\+init}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void P\+W\+M\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_acbdd3192f9f06bf689e4a3855926dcac}
+
+
+Function to initialize the \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_p_w_m___params}{P\+W\+M\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: period = 10000 (microseconds) duty\+Mode = P\+W\+M\+\_\+\+D\+U\+T\+Y\+\_\+\+T\+I\+M\+E polarity = P\+W\+M\+\_\+\+P\+O\+L\+\_\+\+A\+C\+T\+I\+V\+E\+\_\+\+H\+I\+G\+H \index{P\+W\+M.\+h@{P\+W\+M.\+h}!P\+W\+M\+\_\+set\+Duty@{P\+W\+M\+\_\+set\+Duty}}
+\index{P\+W\+M\+\_\+set\+Duty@{P\+W\+M\+\_\+set\+Duty}!P\+W\+M.\+h@{P\+W\+M.\+h}}
+\paragraph[{P\+W\+M\+\_\+set\+Duty}]{\setlength{\rightskip}{0pt plus 5cm}void P\+W\+M\+\_\+set\+Duty (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+W\+M\+\_\+\+Handle}}]{handle, }
+\item[{uint32\+\_\+t}]{duty}
+\end{DoxyParamCaption}
+)}\label{_p_w_m_8h_a9b4c4b744af933d4f2678dc18b49bfb4}
+
+
+Function to set the duty cycle of the specified P\+W\+M handle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A P\+W\+M\+\_\+\+Handle\\
+\hline
+{\em duty} & P\+W\+M duty cycle.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_p_w_m_8h_ac963beab0c5c6901bf852f175028aeaf}{P\+W\+M\+\_\+open} 
+\end{DoxySeeAlso}

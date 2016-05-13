@@ -1,0 +1,588 @@
+\subsection{Power.\+h File Reference}
+\label{_power_8h}\index{Power.\+h@{Power.\+h}}
+
+
+\subsubsection{Detailed Description}
+Power manager interface. 
+
+============================================================================
+
+The Power header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Power.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The Power manager facilitates the transition of the M\+C\+U from active state to one of the sleep states and vice versa. It provides drivers the ability to set and release dependencies on hardware resources and keeps a reference count on each resource to know when to enable or disable the peripheral clock to the resource. It provides drivers the ability to register a callback function upon a specific power event. In addition, drivers and apps can set or release constraints to prevent the M\+C\+U from transitioning into a particular sleep state. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+List\+P.\+h$>$}\\*
+Include dependency graph for Power.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{_power_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_power_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj}
+\begin{DoxyCompactList}\small\item\em Power notify object structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_power_8h_aa5e33b10202cc5a261c1800b4ae1de3e}{Power\+\_\+\+T\+O\+T\+A\+L}~1
+\item 
+\#define \hyperlink{_power_8h_a7343f6504f2df361dca3760a97584371}{Power\+\_\+\+R\+E\+S\+U\+M\+E}~2
+\item 
+\#define \hyperlink{_power_8h_a98c91c03b469de0cf4f53b89a867ee19}{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E}~0
+\item 
+\#define \hyperlink{_power_8h_a98066f45fce59fd38d8edcb6f2ac96fd}{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R}~1
+\item 
+\#define \hyperlink{_power_8h_a92eed670a5d7e3d43f612ca0da9d3fe2}{Power\+\_\+\+S\+O\+K}~0
+\item 
+\#define \hyperlink{_power_8h_aed2f92a8c72bfa183e14d10a2e35789f}{Power\+\_\+\+E\+F\+A\+I\+L}~1
+\item 
+\#define \hyperlink{_power_8h_a0d24bacb087e8282be2e4394503a429a}{Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R}~2
+\item 
+\#define \hyperlink{_power_8h_aa4e7b580b1c9c026036bf53befe5723b}{Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D}~3
+\item 
+\#define \hyperlink{_power_8h_a3132904395c5631392bd6301d9a2181e}{Power\+\_\+\+E\+B\+U\+S\+Y}~4
+\item 
+\#define \hyperlink{_power_8h_a01074d8221d330077fbe040b9143e183}{Power\+\_\+\+A\+C\+T\+I\+V\+E}~1
+\item 
+\#define \hyperlink{_power_8h_a6038b3877b09c908834af7d46595b989}{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}~2
+\item 
+\#define \hyperlink{_power_8h_a1ea41cdfb6fb053eaed2792c4edf886d}{Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}~3
+\item 
+\#define \hyperlink{_power_8h_ad09d75dfaa5d799c4f044df9814db485}{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}~4
+\item 
+\#define \hyperlink{_power_8h_a2b7d4ba49a9418af10c84132a8cbf108}{Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L}~5
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void($\ast$ \hyperlink{_power_8h_a435fdeb71d13ea6be86f599c9b6a0d78}{Power\+\_\+\+Policy\+Init\+Fxn}) (void)
+\begin{DoxyCompactList}\small\item\em Power policy initialization function pointer. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_power_8h_a333038d1e9cd5f93dda7b83f8a1afa8b}{Power\+\_\+\+Policy\+Fxn}) (void)
+\begin{DoxyCompactList}\small\item\em Power policy function pointer. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_power_8h_a91335240b2081eeefec80d043030c857}{Power\+\_\+\+Notify\+Fxn}) (unsigned int event\+Type, uintptr\+\_\+t event\+Arg, uintptr\+\_\+t client\+Arg)
+\begin{DoxyCompactList}\small\item\em Power notify function pointer. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} \hyperlink{_power_8h_a27497a9f3e7d41b6a0c12aa96c2dc766}{Power\+\_\+\+Notify\+Obj}
+\begin{DoxyCompactList}\small\item\em Power notify object structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_power_8h_ae8d6092a8fb35b6db52a69a35fcc327f}{Power\+\_\+enable\+Policy} (void)
+\begin{DoxyCompactList}\small\item\em Enable the configured power policy to run when the C\+P\+U is idle. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_ac5382aa1050fdf893b55d14041ca0b09}{Power\+\_\+get\+Constraint\+Mask} (void)
+\begin{DoxyCompactList}\small\item\em Get the constraints that have been declared with Power. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_aee0ed212807eebbed776dbbde19b9567}{Power\+\_\+get\+Dependency\+Count} (unsigned int resource\+Id)
+\begin{DoxyCompactList}\small\item\em Get the current dependency count for a resource. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_a992dabafbcd2ed75308dd3e166d9e658}{Power\+\_\+get\+Performance\+Level} (void)
+\begin{DoxyCompactList}\small\item\em Get the current performance level. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{_power_8h_a46c52f4c1e6801fdce3d5307257bf2a6}{Power\+\_\+get\+Transition\+Latency} (unsigned int sleep\+State, unsigned int type)
+\begin{DoxyCompactList}\small\item\em Get the hardware transition latency for a sleep state. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_a6be3927156b139cf59cd4bec912f62f6}{Power\+\_\+get\+Transition\+State} (void)
+\begin{DoxyCompactList}\small\item\em Get the current transition state of the Power manager. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_a873219012923300f3b3b958b951a4ea1}{Power\+\_\+idle\+Func} (void)
+\begin{DoxyCompactList}\small\item\em Power function to be added to the application idle loop. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_ac778e1f0fbf930a8dabd35fe0a49cb8d}{Power\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Power initialization function. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify} (\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} $\ast$p\+Notify\+Obj, unsigned int event\+Types, \hyperlink{_power_8h_a91335240b2081eeefec80d043030c857}{Power\+\_\+\+Notify\+Fxn} notify\+Fxn, uintptr\+\_\+t client\+Arg)
+\begin{DoxyCompactList}\small\item\em Register a function to be called upon a specific power event. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_a51ac80ce389379e25ad94347d567ea1f}{Power\+\_\+release\+Constraint} (unsigned int constraint\+Id)
+\begin{DoxyCompactList}\small\item\em Release a previously declared constraint. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_a5ff8c1b6df212c2ff41c5e38b4d4a9cd}{Power\+\_\+release\+Dependency} (unsigned int resource\+Id)
+\begin{DoxyCompactList}\small\item\em Release a previously declared dependency. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint} (unsigned int constraint\+Id)
+\begin{DoxyCompactList}\small\item\em Declare an operational constraint. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_a2f2f4dfed7da8eed50a5b82e2bad26b5}{Power\+\_\+set\+Dependency} (unsigned int resource\+Id)
+\begin{DoxyCompactList}\small\item\em Declare a dependency upon a resource. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_ade9f8442c59deb341f6f5da729e90635}{Power\+\_\+set\+Performance\+Level} (unsigned int level)
+\begin{DoxyCompactList}\small\item\em Set the M\+C\+U performance level. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_a29fb5d887d2b49ffbe86472dee8cd338}{Power\+\_\+shutdown} (unsigned int shutdown\+State, uint32\+\_\+t shutdown\+Time)
+\begin{DoxyCompactList}\small\item\em Put the device into a shutdown state. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_power_8h_ad26ff0368295bc388f8cbcaa289fb4b2}{Power\+\_\+sleep} (unsigned int sleep\+State)
+\begin{DoxyCompactList}\small\item\em Transition the device into a sleep state. \end{DoxyCompactList}\item 
+void \hyperlink{_power_8h_ac32c17ce6da099da97957f08ddb000b4}{Power\+\_\+unregister\+Notify} (\hyperlink{struct_power___notify_obj}{Power\+\_\+\+Notify\+Obj} $\ast$p\+Notify\+Obj)
+\begin{DoxyCompactList}\small\item\em Unregister previously registered notifications. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+\+T\+O\+T\+A\+L@{Power\+\_\+\+T\+O\+T\+A\+L}}
+\index{Power\+\_\+\+T\+O\+T\+A\+L@{Power\+\_\+\+T\+O\+T\+A\+L}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+T\+O\+T\+A\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+T\+O\+T\+A\+L~1}\label{_power_8h_aa5e33b10202cc5a261c1800b4ae1de3e}
+total latency \index{Power.\+h@{Power.\+h}!Power\+\_\+\+R\+E\+S\+U\+M\+E@{Power\+\_\+\+R\+E\+S\+U\+M\+E}}
+\index{Power\+\_\+\+R\+E\+S\+U\+M\+E@{Power\+\_\+\+R\+E\+S\+U\+M\+E}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+R\+E\+S\+U\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+R\+E\+S\+U\+M\+E~2}\label{_power_8h_a7343f6504f2df361dca3760a97584371}
+resume latency \index{Power.\+h@{Power.\+h}!Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E@{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E}}
+\index{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E@{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E~0}\label{_power_8h_a98c91c03b469de0cf4f53b89a867ee19}
+O\+K, notify completed \index{Power.\+h@{Power.\+h}!Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R@{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R}}
+\index{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R@{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R~1}\label{_power_8h_a98066f45fce59fd38d8edcb6f2ac96fd}
+an error occurred during notify \index{Power.\+h@{Power.\+h}!Power\+\_\+\+S\+O\+K@{Power\+\_\+\+S\+O\+K}}
+\index{Power\+\_\+\+S\+O\+K@{Power\+\_\+\+S\+O\+K}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+S\+O\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+S\+O\+K~0}\label{_power_8h_a92eed670a5d7e3d43f612ca0da9d3fe2}
+O\+K, operation succeeded \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+F\+A\+I\+L@{Power\+\_\+\+E\+F\+A\+I\+L}}
+\index{Power\+\_\+\+E\+F\+A\+I\+L@{Power\+\_\+\+E\+F\+A\+I\+L}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+F\+A\+I\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+F\+A\+I\+L~1}\label{_power_8h_aed2f92a8c72bfa183e14d10a2e35789f}
+general failure \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R@{Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R}}
+\index{Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R@{Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+I\+N\+V\+A\+L\+I\+D\+P\+O\+I\+N\+T\+E\+R~2}\label{_power_8h_a0d24bacb087e8282be2e4394503a429a}
+invalid pointer \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D@{Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D}}
+\index{Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D@{Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D~3}\label{_power_8h_aa4e7b580b1c9c026036bf53befe5723b}
+change is not allowed \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+B\+U\+S\+Y@{Power\+\_\+\+E\+B\+U\+S\+Y}}
+\index{Power\+\_\+\+E\+B\+U\+S\+Y@{Power\+\_\+\+E\+B\+U\+S\+Y}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+B\+U\+S\+Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+B\+U\+S\+Y~4}\label{_power_8h_a3132904395c5631392bd6301d9a2181e}
+busy with another transition \index{Power.\+h@{Power.\+h}!Power\+\_\+\+A\+C\+T\+I\+V\+E@{Power\+\_\+\+A\+C\+T\+I\+V\+E}}
+\index{Power\+\_\+\+A\+C\+T\+I\+V\+E@{Power\+\_\+\+A\+C\+T\+I\+V\+E}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+A\+C\+T\+I\+V\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+A\+C\+T\+I\+V\+E~1}\label{_power_8h_a01074d8221d330077fbe040b9143e183}
+normal active state \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P@{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}}
+\index{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P@{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P~2}\label{_power_8h_a6038b3877b09c908834af7d46595b989}
+entering a sleep state \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P@{Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}}
+\index{Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P@{Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P~3}\label{_power_8h_a1ea41cdfb6fb053eaed2792c4edf886d}
+exiting a sleep state \index{Power.\+h@{Power.\+h}!Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}}
+\index{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N@{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N~4}\label{_power_8h_ad09d75dfaa5d799c4f044df9814db485}
+entering a shutdown state \index{Power.\+h@{Power.\+h}!Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L@{Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L}}
+\index{Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L@{Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L}]{\setlength{\rightskip}{0pt plus 5cm}\#define Power\+\_\+\+C\+H\+A\+N\+G\+I\+N\+G\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L~5}\label{_power_8h_a2b7d4ba49a9418af10c84132a8cbf108}
+moving to new performance level 
+
+\subsubsection{Typedef Documentation}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+\+Policy\+Init\+Fxn@{Power\+\_\+\+Policy\+Init\+Fxn}}
+\index{Power\+\_\+\+Policy\+Init\+Fxn@{Power\+\_\+\+Policy\+Init\+Fxn}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+Policy\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Power\+\_\+\+Policy\+Init\+Fxn) (void)}\label{_power_8h_a435fdeb71d13ea6be86f599c9b6a0d78}
+
+
+Power policy initialization function pointer. 
+
+\index{Power.\+h@{Power.\+h}!Power\+\_\+\+Policy\+Fxn@{Power\+\_\+\+Policy\+Fxn}}
+\index{Power\+\_\+\+Policy\+Fxn@{Power\+\_\+\+Policy\+Fxn}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+Policy\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Power\+\_\+\+Policy\+Fxn) (void)}\label{_power_8h_a333038d1e9cd5f93dda7b83f8a1afa8b}
+
+
+Power policy function pointer. 
+
+\index{Power.\+h@{Power.\+h}!Power\+\_\+\+Notify\+Fxn@{Power\+\_\+\+Notify\+Fxn}}
+\index{Power\+\_\+\+Notify\+Fxn@{Power\+\_\+\+Notify\+Fxn}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+Notify\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ Power\+\_\+\+Notify\+Fxn) (unsigned int event\+Type, uintptr\+\_\+t event\+Arg, uintptr\+\_\+t client\+Arg)}\label{_power_8h_a91335240b2081eeefec80d043030c857}
+
+
+Power notify function pointer. 
+
+\index{Power.\+h@{Power.\+h}!Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}}
+\index{Power\+\_\+\+Notify\+Obj@{Power\+\_\+\+Notify\+Obj}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+\+Notify\+Obj}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Power\+\_\+\+Notify\+Obj}  {\bf Power\+\_\+\+Notify\+Obj}}\label{_power_8h_a27497a9f3e7d41b6a0c12aa96c2dc766}
+
+
+Power notify object structure. 
+
+This struct specification is for internal use. Notification clients must pre-\/allocate a notify object when registering for a notification; \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify()} will take care initializing the internal elements appropriately. 
+
+\subsubsection{Function Documentation}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+enable\+Policy@{Power\+\_\+enable\+Policy}}
+\index{Power\+\_\+enable\+Policy@{Power\+\_\+enable\+Policy}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+enable\+Policy}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+enable\+Policy (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ae8d6092a8fb35b6db52a69a35fcc327f}
+
+
+Enable the configured power policy to run when the C\+P\+U is idle. 
+
+Calling this function sets a flag that will cause the configured power policy function to be invoked on each pass through the Idle loop. This runtime function call will essentially override a \textquotesingle{}false\textquotesingle{} setting of the \char`\"{}enable\+Policy\char`\"{} setting in the Power manager configuration object.
+
+For some processor families automatic power transitions are at odds with the debugger, and having the policy running by default makes application debug difficult. This convenience function allows an application to be initially configured, built, and debugged, without automatic power transitions during idle time. When the application is found to be working, this function can be called (typically in main()) to enable the policy to run, without having to change the application configuration. Note that there is no comparable \textquotesingle{}disable\textquotesingle{} policy function; once the policy has been enabled to run, it will always run until the applicaiton is rebooted. \index{Power.\+h@{Power.\+h}!Power\+\_\+get\+Constraint\+Mask@{Power\+\_\+get\+Constraint\+Mask}}
+\index{Power\+\_\+get\+Constraint\+Mask@{Power\+\_\+get\+Constraint\+Mask}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+get\+Constraint\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+get\+Constraint\+Mask (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ac5382aa1050fdf893b55d14041ca0b09}
+
+
+Get the constraints that have been declared with Power. 
+
+This function returns a bitmask indicating the constraints that are currently declared to the Power manager (via previous calls to \hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint()}). For each constraint that is currently declared, the corresponding bit in the bitmask will be set. For example, if two clients have independently declared two different constraints, the returned bitmask will have two bits set.
+
+Constraint identifiers are device specific, and defined in the device-\/specific Power include file. For example, the constraints for M\+S\+P432 are defined in \hyperlink{_power_m_s_p432_8h}{Power\+M\+S\+P432.\+h}. The corresponding bit in the bitmask returned by this function can be derived by a left-\/shift using the constraint identifier. For example, for M\+S\+P432, for the corresponding bit for the Power\+M\+S\+P432\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+L\+E\+E\+P constraint, the bit position is determined by the operation\+: (1 $<$$<$ Power\+M\+S\+P432\+\_\+\+D\+I\+S\+A\+L\+L\+O\+W\+\_\+\+S\+L\+E\+E\+P)
+
+\begin{DoxyReturn}{Returns}
+A bitmask of the currently declared constraints.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+get\+Dependency\+Count@{Power\+\_\+get\+Dependency\+Count}}
+\index{Power\+\_\+get\+Dependency\+Count@{Power\+\_\+get\+Dependency\+Count}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+get\+Dependency\+Count}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+get\+Dependency\+Count (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{resource\+Id}
+\end{DoxyParamCaption}
+)}\label{_power_8h_aee0ed212807eebbed776dbbde19b9567}
+
+
+Get the current dependency count for a resource. 
+
+This function returns the number of dependencies that are currently declared upon a resource.
+
+Resource identifiers are device specific, and defined in the device-\/specific Power include file. For example, the resources for C\+C3200 are defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource\+Id} & resource id\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of dependencies declared upon the resource.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a2f2f4dfed7da8eed50a5b82e2bad26b5}{Power\+\_\+set\+Dependency} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+get\+Performance\+Level@{Power\+\_\+get\+Performance\+Level}}
+\index{Power\+\_\+get\+Performance\+Level@{Power\+\_\+get\+Performance\+Level}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+get\+Performance\+Level}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+get\+Performance\+Level (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a992dabafbcd2ed75308dd3e166d9e658}
+
+
+Get the current performance level. 
+
+This function returns the current device performance level in effect.
+
+If performance scaling is not supported for the device, this function will always indicate a performance level of zero.
+
+\begin{DoxyReturn}{Returns}
+The current performance level.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_ade9f8442c59deb341f6f5da729e90635}{Power\+\_\+set\+Performance\+Level} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+get\+Transition\+Latency@{Power\+\_\+get\+Transition\+Latency}}
+\index{Power\+\_\+get\+Transition\+Latency@{Power\+\_\+get\+Transition\+Latency}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+get\+Transition\+Latency}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t Power\+\_\+get\+Transition\+Latency (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{sleep\+State, }
+\item[{unsigned int}]{type}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a46c52f4c1e6801fdce3d5307257bf2a6}
+
+
+Get the hardware transition latency for a sleep state. 
+
+This function reports the minimal hardware transition latency for a specific sleep state. The reported latency is that for a direct transition, and does not include any additional latency that might occur due to software-\/based notifications.
+
+Sleep states are device specific, and defined in the device-\/specific Power include file. For example, the sleep states for C\+C3200 are defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}.
+
+This function is typically called by the power policy function. The latency is reported in units of microseconds.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sleep\+State} & the sleep state\\
+\hline
+{\em type} & the latency type (Power\+\_\+\+T\+O\+T\+A\+L or Power\+\_\+\+R\+E\+S\+U\+M\+E)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The latency value, in units of microseconds. 
+\end{DoxyReturn}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+get\+Transition\+State@{Power\+\_\+get\+Transition\+State}}
+\index{Power\+\_\+get\+Transition\+State@{Power\+\_\+get\+Transition\+State}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+get\+Transition\+State}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+get\+Transition\+State (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a6be3927156b139cf59cd4bec912f62f6}
+
+
+Get the current transition state of the Power manager. 
+
+This function returns the current transition state for the Power manager. For example, when no transitions are in progress, a status of Power\+\_\+\+A\+C\+T\+I\+V\+E is returned. Power\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P is returned during the transition to sleep, before sleep has occurred. And Power\+\_\+\+E\+X\+I\+T\+I\+N\+G\+\_\+\+S\+L\+E\+E\+P will be returned after wakeup, as the device is being transtioned back to Power\+\_\+\+A\+C\+T\+I\+V\+E.
+
+\begin{DoxyReturn}{Returns}
+The current Power manager transition state. 
+\end{DoxyReturn}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+idle\+Func@{Power\+\_\+idle\+Func}}
+\index{Power\+\_\+idle\+Func@{Power\+\_\+idle\+Func}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+idle\+Func}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+idle\+Func (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a873219012923300f3b3b958b951a4ea1}
+
+
+Power function to be added to the application idle loop. 
+
+This function should be added to the application idle loop. (The method to do this depends upon the operating system being used.) This function will invoke the configured power policy function when appropriate. The specific policy function to be invoked is configured as the \textquotesingle{}policy\+Fxn\textquotesingle{} in the application-\/defined Power configuration object. \index{Power.\+h@{Power.\+h}!Power\+\_\+init@{Power\+\_\+init}}
+\index{Power\+\_\+init@{Power\+\_\+init}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ac778e1f0fbf930a8dabd35fe0a49cb8d}
+
+
+Power initialization function. 
+
+This function initializes Power manager internal state. It must be called prior to any other Power A\+P\+I. This function is normally called as part of T\+I-\/\+R\+T\+O\+S board initialization, for example, from within the the $<$board name$>$\+\_\+init\+General() function. \index{Power.\+h@{Power.\+h}!Power\+\_\+register\+Notify@{Power\+\_\+register\+Notify}}
+\index{Power\+\_\+register\+Notify@{Power\+\_\+register\+Notify}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+register\+Notify}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+register\+Notify (
+\begin{DoxyParamCaption}
+\item[{{\bf Power\+\_\+\+Notify\+Obj} $\ast$}]{p\+Notify\+Obj, }
+\item[{unsigned int}]{event\+Types, }
+\item[{{\bf Power\+\_\+\+Notify\+Fxn}}]{notify\+Fxn, }
+\item[{uintptr\+\_\+t}]{client\+Arg}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}
+
+
+Register a function to be called upon a specific power event. 
+
+This function registers a function to be called when a Power event occurs. Registrations and the corresponding notifications are processed in first-\/in-\/first-\/out (F\+I\+F\+O) order. The function registered must behave as described later, below.
+
+The p\+Notify\+Obj parameter is a pointer to a pre-\/allocated, opaque object that will be used by Power to support the notification. This object could be dynamically allocated, or declared as a global object. This function will properly initialized the object\textquotesingle{}s fields as appropriate; the caller just needs to provide a pointer to this pre-\/existing object.
+
+The event\+Types parameter identifies the type of power event(s) for which the notify function being registered is to be called. (Event identifiers are device specific, and defined in the device-\/specific Power include file. For example, the events for M\+S\+P432 are defined in \hyperlink{_power_m_s_p432_8h}{Power\+M\+S\+P432.\+h}.) The event\+Types parameter for this function call is treated as a bitmask, so multiple event types can be registered at once, using a common callback function. For example, to call the specified notify\+Fxn when both the entering deepsleep and awake from deepsleep events occur, event\+Types should be specified as\+: Power\+M\+S\+P432\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P $\vert$ Power\+M\+S\+P432\+\_\+\+A\+W\+A\+K\+E\+\_\+\+D\+E\+E\+P\+S\+L\+E\+E\+P
+
+The notify\+Fxn parameter specifies a callback function to be called when the specified Power event occurs. The notify\+Fxn must implement the following signature\+: status = notify\+Fxn(event\+Type, event\+Arg, client\+Arg);
+
+Where\+: event\+Type identifies the event being signalled, event\+Arg is an optional event-\/specific argument, and client\+Arg is an abitrary argument specified by the client at registration. Note that multipe types of events can be specified when registering the notification callback function, but when the callback function is actually called by Power, only a single event\+Type will be specified for the callback (i.\+e., the current event). The status returned by the client notification function must be one of the following constants\+: Power\+\_\+\+N\+O\+T\+I\+F\+Y\+D\+O\+N\+E if the client processed the notification successfully, or Power\+\_\+\+N\+O\+T\+I\+F\+Y\+E\+R\+R\+O\+R if an error occurred during notification.
+
+The client\+Arg parameter is an arbitrary, client-\/defined argument to be passed back to the client upon notification. This argument may allow one notify function to be used by multiple instances of a driver (that is, the client\+Arg can be used to identify the instance of the driver that is being notified).
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Notify\+Obj} & notification object (preallocated by caller)\\
+\hline
+{\em event\+Types} & event type or types\\
+\hline
+{\em notify\+Fxn} & client\textquotesingle{}s callback function\\
+\hline
+{\em client\+Arg} & client-\/specified argument to pass with notification\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Power\+\_\+\+S\+O\+K
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_ac32c17ce6da099da97957f08ddb000b4}{Power\+\_\+unregister\+Notify} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+release\+Constraint@{Power\+\_\+release\+Constraint}}
+\index{Power\+\_\+release\+Constraint@{Power\+\_\+release\+Constraint}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+release\+Constraint}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+release\+Constraint (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{constraint\+Id}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a51ac80ce389379e25ad94347d567ea1f}
+
+
+Release a previously declared constraint. 
+
+This function releases a constraint that was previously declared with \hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint()}. For example, if a device driver is starting an I/\+O transaction and wants to prohibit activation of a sleep state during the transaction, it uses \hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint()} to declare the constraint, before starting the transaction. When the transaction completes, the driver calls this function to release the constraint, to allow the Power manager to once again allow transitions to sleep.
+
+Constraint identifiers are device specific, and defined in the device-\/specific Power include file. For example, the constraints for M\+S\+P432 are defined in \hyperlink{_power_m_s_p432_8h}{Power\+M\+S\+P432.\+h}.
+
+Only one constraint can be specified with each call to this function; to release multiple constraints this function must be called multiple times.
+
+It is critical that clients call \hyperlink{_power_8h_a51ac80ce389379e25ad94347d567ea1f}{Power\+\_\+release\+Constraint()} when operational constraints no longer exists. Otherwise, Power may be left unnecessarily restricted from activating power savings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraint\+Id} & constraint id\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a8533319df1b463beddc5b910241fde7d}{Power\+\_\+set\+Constraint} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+release\+Dependency@{Power\+\_\+release\+Dependency}}
+\index{Power\+\_\+release\+Dependency@{Power\+\_\+release\+Dependency}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+release\+Dependency}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+release\+Dependency (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{resource\+Id}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a5ff8c1b6df212c2ff41c5e38b4d4a9cd}
+
+
+Release a previously declared dependency. 
+
+This function releases a dependency that had been previously declared upon a resource (by a call to \hyperlink{_power_8h_a2f2f4dfed7da8eed50a5b82e2bad26b5}{Power\+\_\+set\+Dependency()}).
+
+Resource identifiers are device specific, and defined in the device-\/specific Power include file. For example, the resources for C\+C3200 are defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource\+Id} & resource id\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a2f2f4dfed7da8eed50a5b82e2bad26b5}{Power\+\_\+set\+Dependency} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+set\+Constraint@{Power\+\_\+set\+Constraint}}
+\index{Power\+\_\+set\+Constraint@{Power\+\_\+set\+Constraint}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+set\+Constraint}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+set\+Constraint (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{constraint\+Id}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a8533319df1b463beddc5b910241fde7d}
+
+
+Declare an operational constraint. 
+
+Before taking certain actions, the Power manager checks to see if the requested action would conflict with a client-\/declared constraint. If the action does conflict, Power will not proceed with the request. This is the function that allows clients to declare their constraints with Power.
+
+Constraint identifiers are device specific, and defined in the device-\/specific Power include file. For example, the constraints for M\+S\+P432 are defined in \hyperlink{_power_m_s_p432_8h}{Power\+M\+S\+P432.\+h}.
+
+Only one constraint can be specified with each call to this function; to declare multiple constraints this function must be called multiple times.
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraint\+Id} & constraint id\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a51ac80ce389379e25ad94347d567ea1f}{Power\+\_\+release\+Constraint} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+set\+Dependency@{Power\+\_\+set\+Dependency}}
+\index{Power\+\_\+set\+Dependency@{Power\+\_\+set\+Dependency}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+set\+Dependency}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+set\+Dependency (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{resource\+Id}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a2f2f4dfed7da8eed50a5b82e2bad26b5}
+
+
+Declare a dependency upon a resource. 
+
+This function declares a dependency upon a resource. For example, if a U\+A\+R\+T driver needs a specific U\+A\+R\+T peripheral, it uses this function to declare this to the Power manager. If the resource had been inactive, then Power will activate the peripheral during this function call.
+
+What is needed to make a peripheral resource \textquotesingle{}active\textquotesingle{} will vary by device family. For some devices this may be a simple enable of a clock to the specified peripheral. For others it may also require a power on of a power domain. In either case, the Power manager will take care of these details, and will also implement reference counting for resources and their interdependencies. For example, if multiple U\+A\+R\+T peripherals reside in a shared serial power domain, the Power manager will power up the serial domain when it is first needed, and then automatically power the domain off later, when all related dependencies for the relevant peripherals are released.
+
+Resource identifiers are device specific, and defined in the device-\/specific Power include file. For example, the resources for C\+C3200 are defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource\+Id} & resource id\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a5ff8c1b6df212c2ff41c5e38b4d4a9cd}{Power\+\_\+release\+Dependency} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+set\+Performance\+Level@{Power\+\_\+set\+Performance\+Level}}
+\index{Power\+\_\+set\+Performance\+Level@{Power\+\_\+set\+Performance\+Level}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+set\+Performance\+Level}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+set\+Performance\+Level (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{level}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ade9f8442c59deb341f6f5da729e90635}
+
+
+Set the M\+C\+U performance level. 
+
+This function manages a transition to a new device performance level. Before the actual transition is initiated, notifications will be sent to any clients who\textquotesingle{}ve registered (with \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify()}) for a \textquotesingle{}start change performance level\textquotesingle{} notification. The event name is device specific, and defined in the device-\/specific Power include file. For example, for M\+S\+P432, the event is \char`\"{}\+Power\+M\+S\+P432\+\_\+\+S\+T\+A\+R\+T\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L\char`\"{}, which is defined in \hyperlink{_power_m_s_p432_8h}{Power\+M\+S\+P432.\+h}. Once notifications have been completed, the change to the performance level is initiated. After the level change is completed, there is a comparable event that can be used to signal a client that the change has completed. For example, on M\+S\+P432 the \char`\"{}\+Power\+M\+S\+P432\+\_\+\+D\+O\+N\+E\+\_\+\+C\+H\+A\+N\+G\+E\+\_\+\+P\+E\+R\+F\+\_\+\+L\+E\+V\+E\+L\char`\"{} event can be used to signal completion.
+
+This function will not return until the new performance level is in effect. If performance scaling is not supported for the device, or is prohibited by an active constraint, or if the specified level is invalid, then an error status will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em level} & the new performance level\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Power\+\_\+\+S\+O\+K on success. Power\+\_\+\+E\+F\+A\+I\+L if\+: performance scaling is not supported, or if the scaling routines encountered an error during initialization, or if the specified performance level is out of range of valid levels. Power\+\_\+\+E\+B\+U\+S\+Y is returned if the Power manager is already busy with another transition, or if a single constraint that locks any performance level changes has been declared. Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D is returned if the requested level has been explicitly prohibited by a level-\/specific constraint.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a992dabafbcd2ed75308dd3e166d9e658}{Power\+\_\+get\+Performance\+Level} 
+\end{DoxySeeAlso}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+shutdown@{Power\+\_\+shutdown}}
+\index{Power\+\_\+shutdown@{Power\+\_\+shutdown}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+shutdown}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+shutdown (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{shutdown\+State, }
+\item[{uint32\+\_\+t}]{shutdown\+Time}
+\end{DoxyParamCaption}
+)}\label{_power_8h_a29fb5d887d2b49ffbe86472dee8cd338}
+
+
+Put the device into a shutdown state. 
+
+This function will transition the device into a shutdown state. Before the actual transition is initiated, notifications will be sent to any clients who\textquotesingle{}ve registered (with \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify()}) for an \textquotesingle{}entering shutdown\textquotesingle{} event. The event name is device specific, and defined in the device-\/specific Power include file. For example, for C\+C3200, the event is \char`\"{}\+Power\+C\+C3200\+\_\+\+E\+N\+T\+E\+R\+I\+N\+G\+\_\+\+S\+H\+U\+T\+D\+O\+W\+N\char`\"{}, which is defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}. Once notifications have been completed, the device shutdown will commmence.
+
+If the device is successfully transitioned to shutdown, this function call will never return. Upon wakeup, the device and application will be rebooted (through a device reset). If the transition is not successful, one of the error codes listed below will be returned.
+
+On some devices a timed wakeup from shutdown can be specified, using the shutdown\+Time parameter. This enables an autonomous application reboot at a future time. For example, an application can go to shutdown, and then automatically reboot at a future time to do some work. And once that work is done, the application can shutdown again, for another timed interval. The time interval is specified via the shutdown\+Time parameter. (On devices that do not support this feature, any value specified for shutdown\+Time will be ignored.) If the specified shutdown\+Time is less than the total shutdown latency for the device, then shutdown\+Time will be ignored. The shutdown latency for the device can be found in the device-\/specific Power include file. For example, for the C\+C3200, this latency is defined in \hyperlink{_power_c_c3200_8h}{Power\+C\+C3200.\+h}, as \char`\"{}\+Power\+C\+C3200\+\_\+\+T\+O\+T\+A\+L\+T\+I\+M\+E\+S\+H\+U\+T\+D\+O\+W\+N\char`\"{}.)
+
+
+\begin{DoxyParams}{Parameters}
+{\em shutdown\+State} & the device-\/specific shutdown state\\
+\hline
+{\em shutdown\+Time} & the amount of time (in milliseconds) to keep the the device in the shutdown state; this parameter is not supported on all device families\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An error status if the transition did not occur\+: Power\+\_\+\+E\+C\+H\+A\+N\+G\+E\+\_\+\+N\+O\+T\+\_\+\+A\+L\+L\+O\+W\+E\+D if the transition is prohibited by a constraint; Power\+\_\+\+E\+B\+U\+S\+Y if the Power manager is already busy with another transition. 
+\end{DoxyReturn}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+sleep@{Power\+\_\+sleep}}
+\index{Power\+\_\+sleep@{Power\+\_\+sleep}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+sleep}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Power\+\_\+sleep (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{sleep\+State}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ad26ff0368295bc388f8cbcaa289fb4b2}
+
+
+Transition the device into a sleep state. 
+
+This function is called from the power policy when it has made a decision to put the device in a specific sleep state. This function returns to the caller (the policy function) once the device has awoken from sleep.
+
+This function must be called with interrupts disabled, and should not be called directly by the application, or by any drivers. This function does not check declared constraints; the policy function must check constraints before calling this function to initiate sleep.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sleep\+State} & the sleep state\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A status code indicating success or failure\+: Power\+\_\+\+S\+O\+K if the device was put to sleep and then awoken; Power\+\_\+\+E\+F\+A\+I\+L if a failure occurred during client notifications; or Power\+\_\+\+E\+B\+U\+S\+Y if the Power manager is already busy with another transition. 
+\end{DoxyReturn}
+\index{Power.\+h@{Power.\+h}!Power\+\_\+unregister\+Notify@{Power\+\_\+unregister\+Notify}}
+\index{Power\+\_\+unregister\+Notify@{Power\+\_\+unregister\+Notify}!Power.\+h@{Power.\+h}}
+\paragraph[{Power\+\_\+unregister\+Notify}]{\setlength{\rightskip}{0pt plus 5cm}void Power\+\_\+unregister\+Notify (
+\begin{DoxyParamCaption}
+\item[{{\bf Power\+\_\+\+Notify\+Obj} $\ast$}]{p\+Notify\+Obj}
+\end{DoxyParamCaption}
+)}\label{_power_8h_ac32c17ce6da099da97957f08ddb000b4}
+
+
+Unregister previously registered notifications. 
+
+This function unregisters for event notifications that were previously registered with \hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify()}. The caller must specify a pointer to the same notification object used during registration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Notify\+Obj} & notify object\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_power_8h_a8e73c431e3d1aab1a31181513ceb8adb}{Power\+\_\+register\+Notify} 
+\end{DoxySeeAlso}

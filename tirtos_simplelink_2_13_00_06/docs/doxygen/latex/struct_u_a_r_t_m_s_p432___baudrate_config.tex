@@ -1,0 +1,72 @@
+\subsection{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config Struct Reference}
+\label{struct_u_a_r_t_m_s_p432___baudrate_config}\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+
+
+U\+A\+R\+T\+M\+S\+P432 Baudrate configuration.  
+
+
+
+
+{\ttfamily \#include $<$U\+A\+R\+T\+M\+S\+P432.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_a903e0a3558989cce5cb81d244669f293}{output\+Baudrate}
+\item 
+uint32\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_ae8dc8424fd4457d5b9234678d0edaa10}{input\+Clock\+Freq}
+\item 
+uint16\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_a2a49b530580e8d6a2826dc9eab79d699}{prescalar}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_ab0bd32e5fbee49e6f205aefed9b16407}{hw\+Reg\+U\+C\+B\+R\+Fx}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_a32214f6731b6cbaa74b3498e7e3f0732}{hw\+Reg\+U\+C\+B\+R\+Sx}
+\item 
+uint8\+\_\+t \hyperlink{struct_u_a_r_t_m_s_p432___baudrate_config_a8c636ac0031b571cf9821758ce85a3de}{sampling}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T\+M\+S\+P432 Baudrate configuration. 
+
+This structure is used to specifiy the E\+U\+S\+C\+I controller\textquotesingle{}s clock divider settings to achieve the desired baudrate given the a clock input frequency. Divider values can be determined by referring to the M\+S\+P430 baudrate calculator. \href{http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSP430BaudRateConverter/index.html}{\tt http\+://software-\/dl.\+ti.\+com/msp430/msp430\+\_\+public\+\_\+sw/mcu/msp430/\+M\+S\+P430\+Baud\+Rate\+Converter/index.\+html}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{const} UARTMSP432_BaudrateConfig uartBaudrates[] = \{
+    \textcolor{comment}{// \{baudrate, input clock, prescalar, UCBRFx, UCBRSx, oversampling\}}
+    \{115200, 12000000,  6,  8,  32, 1\},
+    \{115200, 6000000,   3,  4,   2, 1\},
+    \{115200, 3000000,   1, 10,   0, 1\},
+    \{9600,   12000000, 78,  2,   0, 1\},
+    \{9600,   6000000,  39,  1,   0, 1\},
+    \{9600,   3000000,  19,  8,  85, 1\},
+    \{9600,   32768,     3,  0, 146, 0\}
+\};
+\end{DoxyCode}
+ 
+
+\subsubsection{Field Documentation}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!output\+Baudrate@{output\+Baudrate}}
+\index{output\+Baudrate@{output\+Baudrate}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{output\+Baudrate}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::output\+Baudrate}\label{struct_u_a_r_t_m_s_p432___baudrate_config_a903e0a3558989cce5cb81d244669f293}
+\index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!input\+Clock\+Freq@{input\+Clock\+Freq}}
+\index{input\+Clock\+Freq@{input\+Clock\+Freq}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{input\+Clock\+Freq}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::input\+Clock\+Freq}\label{struct_u_a_r_t_m_s_p432___baudrate_config_ae8dc8424fd4457d5b9234678d0edaa10}
+Search criteria\+: desired baudrate \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!prescalar@{prescalar}}
+\index{prescalar@{prescalar}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{prescalar}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::prescalar}\label{struct_u_a_r_t_m_s_p432___baudrate_config_a2a49b530580e8d6a2826dc9eab79d699}
+Search criteria\+: given this input clock frequency \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!hw\+Reg\+U\+C\+B\+R\+Fx@{hw\+Reg\+U\+C\+B\+R\+Fx}}
+\index{hw\+Reg\+U\+C\+B\+R\+Fx@{hw\+Reg\+U\+C\+B\+R\+Fx}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{hw\+Reg\+U\+C\+B\+R\+Fx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::hw\+Reg\+U\+C\+B\+R\+Fx}\label{struct_u_a_r_t_m_s_p432___baudrate_config_ab0bd32e5fbee49e6f205aefed9b16407}
+Clock prescalar \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!hw\+Reg\+U\+C\+B\+R\+Sx@{hw\+Reg\+U\+C\+B\+R\+Sx}}
+\index{hw\+Reg\+U\+C\+B\+R\+Sx@{hw\+Reg\+U\+C\+B\+R\+Sx}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{hw\+Reg\+U\+C\+B\+R\+Sx}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::hw\+Reg\+U\+C\+B\+R\+Sx}\label{struct_u_a_r_t_m_s_p432___baudrate_config_a32214f6731b6cbaa74b3498e7e3f0732}
+U\+C\+B\+R\+Fx lookup entry \index{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}!sampling@{sampling}}
+\index{sampling@{sampling}!U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config@{U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config}}
+\paragraph[{sampling}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t U\+A\+R\+T\+M\+S\+P432\+\_\+\+Baudrate\+Config\+::sampling}\label{struct_u_a_r_t_m_s_p432___baudrate_config_a8c636ac0031b571cf9821758ce85a3de}
+U\+C\+B\+R\+Sx lookup entry 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_u_a_r_t_m_s_p432_8h}{U\+A\+R\+T\+M\+S\+P432.\+h}\end{DoxyCompactItemize}

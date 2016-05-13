@@ -1,0 +1,24 @@
+digraph "SPI.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="SPI.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="LCDDogm1286.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_c_d_dogm1286_8h.html",tooltip="LCD driver implementation for a DOGM128W-6 LCD display. "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="SPICC26XXDMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_c_c26_x_x_d_m_a_8h.html",tooltip="SPI driver implementation for a CC26XX SPI controller using the UDMA controller. "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="SPICC3200DMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_c_c3200_d_m_a_8h.html",tooltip="SPI driver implementation for a CC3200 SPI controller using the micro DMA controller. "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="SPIEUSCIADMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_e_u_s_c_i_a_d_m_a_8h.html",tooltip="SPI driver implementation for a USCIA peripheral using the micro DMA controller. "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="SPIEUSCIBDMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_e_u_s_c_i_b_d_m_a_8h.html",tooltip="SPI driver implementation for a USCIB peripheral using the micro DMA controller. "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="SPIMSP432DMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_m_s_p432_d_m_a_8h.html",tooltip="SPI driver implementation for a EUSCI peripheral on MSP432 using the micro DMA controller. "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="SPITivaDMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_tiva_d_m_a_8h.html",tooltip="SPI driver implementation for a TivaSPIcontroller using the micro DMA controller. ..."];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="SPIUSCIADMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_u_s_c_i_a_d_m_a_8h.html",tooltip="SPI driver implementation for a USCIA peripheral using the micro DMA controller. "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="SPIUSCIBDMA.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_p_i_u_s_c_i_b_d_m_a_8h.html",tooltip="SPI driver implementation for a USCIB peripheral using the micro DMA controller. "];
+}

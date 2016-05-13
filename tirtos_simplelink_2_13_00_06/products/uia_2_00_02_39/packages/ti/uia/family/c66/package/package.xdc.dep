@@ -1,0 +1,107 @@
+clean::
+	$(RM) package/ti.uia.family.c66.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_uia_family_c66.java
+	$(RM) package/ti_uia_family_c66.class
+	$(RM) package/package_ti.uia.family.c66.c
+	$(RM) package/package.defs.h
+	$(RM) GemTraceSync.h
+	$(RM) package/internal/GemTraceSync.xdc.h
+	$(RM) TimestampC66XGlobal.h
+	$(RM) package/internal/TimestampC66XGlobal.xdc.h
+	$(RM) TimestampC66XLocal.h
+	$(RM) package/internal/TimestampC66XLocal.xdc.h
+	$(RM) package/GemTraceSync_Module_GateProxy.h
+	$(RM) package/internal/GemTraceSync_Module_GateProxy.xdc.h
+	$(RM) package/ti.uia.family.c66.ccs
+
+.interfaces: package/ti.uia.family.c66.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_uia_family_c66.java package/package_ti.uia.family.c66.c package/package.defs.h GemTraceSync.h package/internal/GemTraceSync.xdc.h TimestampC66XGlobal.h package/internal/TimestampC66XGlobal.xdc.h TimestampC66XLocal.h package/internal/TimestampC66XLocal.xdc.h package/GemTraceSync_Module_GateProxy.h package/internal/GemTraceSync_Module_GateProxy.xdc.h package/ti.uia.family.c66.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: GemTraceSync.xdc TimestampC66XGlobal.xdc TimestampC66XLocal.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+GemTraceSync.xs:
+package/package.xdc.inc: GemTraceSync.xs
+TimestampC66XGlobal.xs:
+package/package.xdc.inc: TimestampC66XGlobal.xs
+TimestampC66XLocal.xs:
+package/package.xdc.inc: TimestampC66XLocal.xs
+
+# schema update dependencies
+package/package.xdc.inc: GemTraceSync.xdc
+package/package.xdc.inc: TimestampC66XGlobal.xdc
+package/package.xdc.inc: TimestampC66XLocal.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/runtime/IUIATraceSyncProvider.xdc
+ti/uia/runtime/IUIATraceSyncProvider.xdc:
+vpath ti/uia/runtime/IUIATraceSyncProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/IUIAMetaProvider.xdc
+ti/uia/events/IUIAMetaProvider.xdc:
+vpath ti/uia/events/IUIAMetaProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/UIASync.xdc
+ti/uia/events/UIASync.xdc:
+vpath ti/uia/events/UIASync.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/IUIAEvent.xdc
+ti/uia/events/IUIAEvent.xdc:
+vpath ti/uia/events/IUIAEvent.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/runtime/IUIATimestampProvider.xdc
+ti/uia/runtime/IUIATimestampProvider.xdc:
+vpath ti/uia/runtime/IUIATimestampProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampProvider.xdc
+xdc/runtime/ITimestampProvider.xdc:
+vpath xdc/runtime/ITimestampProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampClient.xdc
+xdc/runtime/ITimestampClient.xdc:
+vpath xdc/runtime/ITimestampClient.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: GemTraceSync.h
+GemTraceSync.h:
+package/package.xdc.inc: package/internal/GemTraceSync.xdc.h
+package/internal/GemTraceSync.xdc.h:
+package/package.xdc.inc: TimestampC66XGlobal.h
+TimestampC66XGlobal.h:
+package/package.xdc.inc: package/internal/TimestampC66XGlobal.xdc.h
+package/internal/TimestampC66XGlobal.xdc.h:
+package/package.xdc.inc: TimestampC66XLocal.h
+TimestampC66XLocal.h:
+package/package.xdc.inc: package/internal/TimestampC66XLocal.xdc.h
+package/internal/TimestampC66XLocal.xdc.h:
+package/package.xdc.inc: package/GemTraceSync_Module_GateProxy.h
+package/GemTraceSync_Module_GateProxy.h:
+package/package.xdc.inc: package/internal/GemTraceSync_Module_GateProxy.xdc.h
+package/internal/GemTraceSync_Module_GateProxy.xdc.h:
+

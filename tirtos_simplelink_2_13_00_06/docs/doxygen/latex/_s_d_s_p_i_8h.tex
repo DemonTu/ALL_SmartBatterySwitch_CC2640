@@ -1,0 +1,380 @@
+\subsection{S\+D\+S\+P\+I.\+h File Reference}
+\label{_s_d_s_p_i_8h}\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+
+
+\subsubsection{Detailed Description}
+S\+D\+S\+P\+I driver interface. 
+
+============================================================================
+
+The S\+D\+S\+P\+I header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/SDSPI.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The S\+D\+S\+P\+I driver is a driver designed to hook into Fat\+Fs. It implements a set of functions that Fat\+Fs needs to call to perform basic block data transfers.
+
+A S\+D\+S\+P\+I driver peripheral implementation doesn\textquotesingle{}t require R\+T\+O\+S protection primitives due to the resource protection provided with Fat\+Fs. The only functions that can be called by the application are the standard driver framework functions (\+\_\+open, \+\_\+close, etc...).
+
+Once the driver has been opened, the application may used the Fat\+Fs A\+P\+Is or the standard C runtime file I/\+O calls (fopen, fclose, etc...). Once the driver has been closed, ensure the application does N\+O\+T make any file I/\+O calls.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+SDSPI_Handle      handle;
+SDSPI_Params      params;
+
+SDSPI_Params_init(&params);
+params.bitRate  = someNewBitRate;
+handle = SDSPI_open(someSDSPI\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"SDSPI did not open"});
+\}
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}.
+
+The S\+D\+S\+P\+I driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_s_d_s_p_i___config}{S\+D\+S\+P\+I\+\_\+\+Config} data structures named {\itshape S\+D\+S\+P\+I\+\_\+config}. {\itshape S\+D\+S\+P\+I\+\_\+config} is implemented in the application with each entry being an instance of a S\+D\+S\+P\+I peripheral. Each entry in {\itshape S\+D\+S\+P\+I\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a S\+D\+S\+P\+I peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following S\+D\+S\+P\+I peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_s_d_s_p_i_tiva_8h}{S\+D\+S\+P\+I\+Tiva.\+h}
+\item \hyperlink{_s_d_s_p_i_c_c3200_8h}{S\+D\+S\+P\+I\+C\+C3200.\+h}
+\item \hyperlink{_s_d_s_p_i_u_s_c_i_a_8h}{S\+D\+S\+P\+I\+U\+S\+C\+I\+A.\+h}
+\item \hyperlink{_s_d_s_p_i_u_s_c_i_b_8h}{S\+D\+S\+P\+I\+U\+S\+C\+I\+B.\+h}
+\item \hyperlink{_s_d_s_p_i_e_u_s_c_i_a_8h}{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+A.\+h}
+\item \hyperlink{_s_d_s_p_i_e_u_s_c_i_b_8h}{S\+D\+S\+P\+I\+E\+U\+S\+C\+I\+B.\+h}
+\item \hyperlink{_s_d_s_p_i_m_s_p432_8h}{S\+D\+S\+P\+I\+M\+S\+P432.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The S\+D\+S\+P\+I driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+Include dependency graph for S\+D\+S\+P\+I.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=91pt]{_s_d_s_p_i_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_d_s_p_i_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a S\+D\+S\+P\+I function table that contains the required set of functions to control a specific S\+D\+S\+P\+I driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_s_d_s_p_i___config}{S\+D\+S\+P\+I\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_d_s_p_i_8h_a2912b6627b0f64de874048a5ebea2a85}{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_s_d_s_p_i_8h_a3037f55e94a7ef536986738c721a690a}{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_s_d_s_p_i_8h_a5ebecb6ddc00b47b11c1d5ab3ce04108}{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_s_p_i_8h_a61e58103fc719d0afafddfc7dd11b49d}{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_s_d_s_p_i_8h_af65a39f487c0da299c3e0fc77a70a4c3}{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_s_d_s_p_i___config}{S\+D\+S\+P\+I\+\_\+\+Config} $\ast$ \hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} \hyperlink{_s_d_s_p_i_8h_a3fd9e0fa28415b0c0cf6ab03c37ca4d1}{S\+D\+S\+P\+I\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_d_s_p_i_8h_af13f4dd690895ef9905b94eb35186f39}{S\+D\+S\+P\+I\+\_\+\+Init\+Fxn}) (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle}($\ast$ \hyperlink{_s_d_s_p_i_8h_ad5e9c96037fb86b0337f0183dec6457d}{S\+D\+S\+P\+I\+\_\+\+Open\+Fxn}) (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle, unsigned char drv, \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_s_d_s_p_i_8h_a93cc6dafba2c319c8f2662c9e109f0cd}{S\+D\+S\+P\+I\+\_\+\+Close\+Fxn}) (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a8816c223935b575f10acd5277b9a8ca5}{S\+D\+S\+P\+I\+\_\+close()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_s_d_s_p_i_8h_a0fe214b1dedf57fb70d9c83426a4b135}{S\+D\+S\+P\+I\+\_\+\+Control\+Fxn}) (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_s_p_i___fxn_table}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table} \hyperlink{_s_d_s_p_i_8h_a5d2665a5c69ea532a94acdc45ac1f456}{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a S\+D\+S\+P\+I function table that contains the required set of functions to control a specific S\+D\+S\+P\+I driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_s_d_s_p_i___config}{S\+D\+S\+P\+I\+\_\+\+Config} \hyperlink{_s_d_s_p_i_8h_acd04506a18457faefc4f3639b6e0a0a1}{S\+D\+S\+P\+I\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em S\+D\+S\+P\+I Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_s_d_s_p_i_8h_a8816c223935b575f10acd5277b9a8ca5}{S\+D\+S\+P\+I\+\_\+close} (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a S\+D\+S\+P\+I peripheral specified by the S\+D\+S\+P\+I handle. This function unmounts the file system mounted by S\+D\+S\+P\+I\+\_\+open and unregisters the S\+D\+S\+P\+I driver from B\+I\+O\+S\textquotesingle{} Fat\+Fs module. \end{DoxyCompactList}\item 
+int \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control} (\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given S\+D\+S\+P\+I\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the S\+D\+S\+P\+I driver module. \end{DoxyCompactList}\item 
+\hyperlink{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}{S\+D\+S\+P\+I\+\_\+\+Handle} \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open} (unsigned int index, unsigned char drv, \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em This function registers the S\+D\+S\+P\+I driver with B\+I\+O\+S\textquotesingle{} Fat\+Fs module and mounts the Fat\+Fs file system. \end{DoxyCompactList}\item 
+void \hyperlink{_s_d_s_p_i_8h_a6fe24eaba1cca88242c5df360a074ca8}{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init} (\hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_s_d_s_p_i_8h_a2912b6627b0f64de874048a5ebea2a85}
+Common S\+D\+S\+P\+I\+\_\+control command code reservation offset. S\+D\+S\+P\+I driver implementations should offset command codes with S\+D\+S\+P\+I\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define SDSPIXYZ\_COMMAND0        SDSPI\_CMD\_RESERVED + 0
+2 #define SDSPIXYZ\_COMMAND1        SDSPI\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_s_d_s_p_i_8h_a3037f55e94a7ef536986738c721a690a}
+Common S\+D\+S\+P\+I\+\_\+control status code reservation offset. S\+D\+S\+P\+I driver implementations should offset status codes with S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define SDSPIXYZ\_STATUS\_ERROR0   SDSPI\_STATUS\_RESERVED - 0
+2 #define SDSPIXYZ\_STATUS\_ERROR1   SDSPI\_STATUS\_RESERVED - 1
+3 #define SDSPIXYZ\_STATUS\_ERROR2   SDSPI\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_s_d_s_p_i_8h_a5ebecb6ddc00b47b11c1d5ab3ce04108}
+
+
+Successful status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()} returns S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_s_d_s_p_i_8h_a61e58103fc719d0afafddfc7dd11b49d}
+
+
+Generic error status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. 
+
+\hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()} returns S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_s_d_s_p_i_8h_af65a39f487c0da299c3e0fc77a70a4c3}
+
+
+An error status code returned by \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()} returns S\+D\+S\+P\+I\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. 
+
+\subsubsection{Typedef Documentation}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Handle@{S\+D\+S\+P\+I\+\_\+\+Handle}}
+\index{S\+D\+S\+P\+I\+\_\+\+Handle@{S\+D\+S\+P\+I\+\_\+\+Handle}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+\_\+\+Config}$\ast$ {\bf S\+D\+S\+P\+I\+\_\+\+Handle}}\label{_s_d_s_p_i_8h_abd3d22133d60c2e5afd49722d6bafb7e}
+
+
+A handle that is returned from a \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} call. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Params@{S\+D\+S\+P\+I\+\_\+\+Params}}
+\index{S\+D\+S\+P\+I\+\_\+\+Params@{S\+D\+S\+P\+I\+\_\+\+Params}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+\_\+\+Params}  {\bf S\+D\+S\+P\+I\+\_\+\+Params}}\label{_s_d_s_p_i_8h_a3fd9e0fa28415b0c0cf6ab03c37ca4d1}
+
+
+S\+D\+S\+P\+I Parameters. 
+
+S\+D\+S\+P\+I Parameters are used to with the \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_s_d_s_p_i_8h_a6fe24eaba1cca88242c5df360a074ca8}{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_s_p_i_8h_a6fe24eaba1cca88242c5df360a074ca8}{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Init\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Init\+Fxn}}
+\index{S\+D\+S\+P\+I\+\_\+\+Init\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Init\+Fxn}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+D\+S\+P\+I\+\_\+\+Init\+Fxn) ({\bf S\+D\+S\+P\+I\+\_\+\+Handle} handle)}\label{_s_d_s_p_i_8h_af13f4dd690895ef9905b94eb35186f39}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()}. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Open\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Open\+Fxn}}
+\index{S\+D\+S\+P\+I\+\_\+\+Open\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Open\+Fxn}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf S\+D\+S\+P\+I\+\_\+\+Handle}($\ast$ S\+D\+S\+P\+I\+\_\+\+Open\+Fxn) ({\bf S\+D\+S\+P\+I\+\_\+\+Handle} handle, unsigned char drv, {\bf S\+D\+S\+P\+I\+\_\+\+Params} $\ast$params)}\label{_s_d_s_p_i_8h_ad5e9c96037fb86b0337f0183dec6457d}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()}. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Close\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Close\+Fxn}}
+\index{S\+D\+S\+P\+I\+\_\+\+Close\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Close\+Fxn}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ S\+D\+S\+P\+I\+\_\+\+Close\+Fxn) ({\bf S\+D\+S\+P\+I\+\_\+\+Handle} handle)}\label{_s_d_s_p_i_8h_a93cc6dafba2c319c8f2662c9e109f0cd}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a8816c223935b575f10acd5277b9a8ca5}{S\+D\+S\+P\+I\+\_\+close()}. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Control\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Control\+Fxn}}
+\index{S\+D\+S\+P\+I\+\_\+\+Control\+Fxn@{S\+D\+S\+P\+I\+\_\+\+Control\+Fxn}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ S\+D\+S\+P\+I\+\_\+\+Control\+Fxn) ({\bf S\+D\+S\+P\+I\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_s_d_s_p_i_8h_a0fe214b1dedf57fb70d9c83426a4b135}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}{S\+D\+S\+P\+I\+\_\+control()}. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Fxn\+Table@{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}}
+\index{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table@{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}  {\bf S\+D\+S\+P\+I\+\_\+\+Fxn\+Table}}\label{_s_d_s_p_i_8h_a5d2665a5c69ea532a94acdc45ac1f456}
+
+
+The definition of a S\+D\+S\+P\+I function table that contains the required set of functions to control a specific S\+D\+S\+P\+I driver implementation. 
+
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Config@{S\+D\+S\+P\+I\+\_\+\+Config}}
+\index{S\+D\+S\+P\+I\+\_\+\+Config@{S\+D\+S\+P\+I\+\_\+\+Config}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf S\+D\+S\+P\+I\+\_\+\+Config}  {\bf S\+D\+S\+P\+I\+\_\+\+Config}}\label{_s_d_s_p_i_8h_acd04506a18457faefc4f3639b6e0a0a1}
+
+
+S\+D\+S\+P\+I Global configuration. 
+
+The \hyperlink{struct_s_d_s_p_i___config}{S\+D\+S\+P\+I\+\_\+\+Config} structure contains a set of pointers used to characterize the S\+D\+S\+P\+I driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Function Documentation}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+close@{S\+D\+S\+P\+I\+\_\+close}}
+\index{S\+D\+S\+P\+I\+\_\+close@{S\+D\+S\+P\+I\+\_\+close}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+S\+P\+I\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+S\+P\+I\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_s_d_s_p_i_8h_a8816c223935b575f10acd5277b9a8ca5}
+
+
+Function to close a S\+D\+S\+P\+I peripheral specified by the S\+D\+S\+P\+I handle. This function unmounts the file system mounted by S\+D\+S\+P\+I\+\_\+open and unregisters the S\+D\+S\+P\+I driver from B\+I\+O\+S\textquotesingle{} Fat\+Fs module. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+D\+S\+P\+I handle returned from S\+D\+S\+P\+I\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+control@{S\+D\+S\+P\+I\+\_\+control}}
+\index{S\+D\+S\+P\+I\+\_\+control@{S\+D\+S\+P\+I\+\_\+control}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+S\+P\+I\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+S\+P\+I\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_s_d_s_p_i_8h_a541a1db109382fe090ed7a9209a34f61}
+
+
+Function performs implementation specific features on a given S\+D\+S\+P\+I\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A S\+D\+S\+P\+I handle returned from \hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}{S\+D\+S\+P\+I\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+init@{S\+D\+S\+P\+I\+\_\+init}}
+\index{S\+D\+S\+P\+I\+\_\+init@{S\+D\+S\+P\+I\+\_\+init}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+S\+P\+I\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}
+
+
+This function initializes the S\+D\+S\+P\+I driver module. 
+
+\begin{DoxyPrecond}{Precondition}
+The S\+D\+S\+P\+I\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other S\+D\+S\+P\+I driver A\+P\+Is. This function call does not modify any peripheral registers. 
+\end{DoxyPrecond}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+open@{S\+D\+S\+P\+I\+\_\+open}}
+\index{S\+D\+S\+P\+I\+\_\+open@{S\+D\+S\+P\+I\+\_\+open}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+S\+P\+I\+\_\+\+Handle} S\+D\+S\+P\+I\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{unsigned char}]{drv, }
+\item[{{\bf S\+D\+S\+P\+I\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_s_d_s_p_i_8h_af4a5ca9bb35e8a7df02acf20ceeae66d}
+
+
+This function registers the S\+D\+S\+P\+I driver with B\+I\+O\+S\textquotesingle{} Fat\+Fs module and mounts the Fat\+Fs file system. 
+
+\begin{DoxyPrecond}{Precondition}
+S\+D\+S\+P\+I controller has been initialized using \hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()}
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the S\+D\+S\+P\+I indexed into the S\+D\+S\+P\+I\+\_\+config table\\
+\hline
+{\em drv} & Drive number to be associated with the S\+D\+S\+P\+I Fat\+Fs driver\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A S\+D\+S\+P\+I\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_s_d_s_p_i_8h_a83cfcebe7875d9d8b5e08e57e6785ae6}{S\+D\+S\+P\+I\+\_\+init()} 
+
+\hyperlink{_s_d_s_p_i_8h_a8816c223935b575f10acd5277b9a8ca5}{S\+D\+S\+P\+I\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}!S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init@{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init}}
+\index{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init@{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init}!S\+D\+S\+P\+I.\+h@{S\+D\+S\+P\+I.\+h}}
+\paragraph[{S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+S\+P\+I\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+S\+P\+I\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_s_d_s_p_i_8h_a6fe24eaba1cca88242c5df360a074ca8}
+
+
+Function to initialize the \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_s_d_s_p_i___params}{S\+D\+S\+P\+I\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: bit\+Rate = 12500000 (Hz) 

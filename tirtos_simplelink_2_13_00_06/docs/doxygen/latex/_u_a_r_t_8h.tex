@@ -1,0 +1,954 @@
+\subsection{U\+A\+R\+T.\+h File Reference}
+\label{_u_a_r_t_8h}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+
+
+\subsubsection{Detailed Description}
+U\+A\+R\+T driver interface. 
+
+============================================================================
+
+The U\+A\+R\+T header file should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/UART.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Operation}
+
+The U\+A\+R\+T driver simplifies reading and writing to any of the U\+A\+R\+T peripherals on the board with multiple modes of operation and performance. These include blocking, non-\/blocking, and polling as well as text/binary mode, echo and return characters. The boards U\+A\+R\+T peripheral and pins must be configured before initializing the U\+A\+R\+T driver. The application initializes the U\+A\+R\+T driver by calling \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} and is then ready to open a U\+A\+R\+T by calling \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} and passing in a U\+A\+R\+T parameters data structure.
+
+The A\+P\+Is in this driver serve as an interface to a typical T\+I-\/\+R\+T\+O\+S application. The specific peripheral implementations are responsible to create all the S\+Y\+S/\+B\+I\+O\+S specific primitives to allow for thread-\/safe operation.
+
+\paragraph*{Opening the driver}
+
+
+\begin{DoxyCode}
+UART_Handle      handle;
+UART_Params      params;
+
+UART_Params_init(&params);
+params.baudRate  = someNewBaudRate;
+params.writeDataMode = UART_DATA_BINARY;
+params.readDataMode = UART_DATA_BINARY;
+params.readReturnMode = UART_RETURN_FULL;
+params.readEcho = UART_ECHO_OFF;
+handle = UART_open(someUART\_configIndexValue, &params);
+\textcolor{keywordflow}{if} (!handle) \{
+    System\_printf(\textcolor{stringliteral}{"UART did not open"});
+\}
+\end{DoxyCode}
+
+
+\paragraph*{Writing data}
+
+
+\begin{DoxyCode}
+\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} hello[] = \textcolor{stringliteral}{"Hello World\(\backslash\)n"};
+
+ret = UART_write(handle, hello, \textcolor{keyword}{sizeof}(hello));
+System\_printf(\textcolor{stringliteral}{"The UART wrote %d bytes\(\backslash\)n"}, ret);
+\end{DoxyCode}
+
+
+\paragraph*{Reading data}
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rxBuffer[20];
+
+ret = UART_read(handle, rxBuffer, \textcolor{keyword}{sizeof}(rxBuffer));
+System\_printf(\textcolor{stringliteral}{"The UART read %d bytes\(\backslash\)n"}, ret);
+\end{DoxyCode}
+
+
+\subsubsection*{Implementation}
+
+This module serves as the main interface for T\+I-\/\+R\+T\+O\+S applications. Its purpose is to redirect the module\textquotesingle{}s A\+P\+Is to specific peripheral implementations which are specified using a pointer to a \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table}.
+
+The U\+A\+R\+T driver interface module is joined (at link time) to a N\+U\+L\+L-\/terminated array of \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config} data structures named {\itshape U\+A\+R\+T\+\_\+config}. {\itshape U\+A\+R\+T\+\_\+config} is implemented in the application with each entry being an instance of a U\+A\+R\+T peripheral. Each entry in {\itshape U\+A\+R\+T\+\_\+config} contains a\+:
+\begin{DoxyItemize}
+\item (\hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} $\ast$) to a set of functions that implement a U\+A\+R\+T peripheral
+\item (void $\ast$) data object that is associated with the \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table}
+\item (void $\ast$) hardware attributes that are associated to the \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table}
+\end{DoxyItemize}
+
+Currently the following U\+A\+R\+T peripheral implementations are supported\+:
+\begin{DoxyItemize}
+\item \hyperlink{_u_a_r_t_c_c26_x_x_8h}{U\+A\+R\+T\+C\+C26\+X\+X.\+h}
+\item \hyperlink{_u_a_r_t_c_c3200_8h}{U\+A\+R\+T\+C\+C3200.\+h}
+\item \hyperlink{_u_a_r_t_e_u_s_c_i_a_8h}{U\+A\+R\+T\+E\+U\+S\+C\+I\+A.\+h}
+\item \hyperlink{_u_a_r_t_m_s_p432_8h}{U\+A\+R\+T\+M\+S\+P432.\+h}
+\item \hyperlink{_u_a_r_t_tiva_8h}{U\+A\+R\+T\+Tiva.\+h}
+\item \hyperlink{_u_a_r_t_u_s_c_i_a_8h}{U\+A\+R\+T\+U\+S\+C\+I\+A.\+h}
+\end{DoxyItemize}
+
+\subsubsection*{Instrumentation}
+
+The U\+A\+R\+T driver interface produces log statements if instrumentation is enabled.
+
+\begin{TabularC}{2}
+\hline
+\rowcolor{lightgray}{\bf Diagnostics Mask }&{\bf Log details  }\\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R1 &basic operations performed \\\cline{1-2}
+Diags\+\_\+\+U\+S\+E\+R2 &detailed operations performed \\\cline{1-2}
+\end{TabularC}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for U\+A\+R\+T.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=155pt]{_u_a_r_t_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_u_a_r_t_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T Parameters. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a U\+A\+R\+T function table that contains the required set of functions to control a specific U\+A\+R\+T driver implementation. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_u_a_r_t_8h_a0f5a809e0884da33fef102236eb51644}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~32
+\item 
+\#define \hyperlink{_u_a_r_t_8h_a8f35027907fbab6a9ee302d2ee52a879}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}~-\/32
+\item 
+\#define \hyperlink{_u_a_r_t_8h_a101b7761f89b3ec49f0c6726669acfed}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}~0
+\begin{DoxyCompactList}\small\item\em Successful status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_a2ae076f4aae13ca8e2aea674207df0ad}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}~-\/1
+\begin{DoxyCompactList}\small\item\em Generic error status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_a61125a2eb8059fd8b96ad95edc68ac2b}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}~-\/2
+\begin{DoxyCompactList}\small\item\em An error status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} for undefined command codes. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_a942596a37cb2109ae021f88f3d907bdc}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K}~0
+\begin{DoxyCompactList}\small\item\em Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to read the next unsigned char. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_af5be6db621c5b048637dc93b26797693}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E}~1
+\begin{DoxyCompactList}\small\item\em Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to determine if the read buffer is empty. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_a470321cbd9eccf137ffbe6553ae7f35f}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T}~2
+\begin{DoxyCompactList}\small\item\em Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to determine how many unsigned chars are in the read buffer. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_ad67d01fa376f25bb28141d819647e8d3}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E}~3
+\begin{DoxyCompactList}\small\item\em Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to enable data received by the U\+A\+R\+T. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_ac0b19ce2fa9f43d3fe255bcdbd3cda7b}{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E}~4
+\begin{DoxyCompactList}\small\item\em Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to disable data received by the U\+A\+R\+T. \end{DoxyCompactList}\item 
+\#define \hyperlink{_u_a_r_t_8h_a7e3562e7931cf51b41a32d8109072251}{U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R}~\hyperlink{_u_a_r_t_8h_a2ae076f4aae13ca8e2aea674207df0ad}{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}
+\item 
+\#define \hyperlink{_u_a_r_t_8h_ada620b673241eb6335a71e75da291716}{U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}~($\sim$0)
+\begin{DoxyCompactList}\small\item\em Wait forever define. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config} $\ast$ \hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle}
+\begin{DoxyCompactList}\small\item\em A handle that is returned from a \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} call. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_a_r_t_8h_a44620a9d91e0357ebc6f0a79984d9e1e}{U\+A\+R\+T\+\_\+\+Callback}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle}, void $\ast$buf, size\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em The definition of a callback function used by the U\+A\+R\+T driver when used in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90}{U\+A\+R\+T\+\_\+\+Mode} \hyperlink{_u_a_r_t_8h_a247ea9ec7b19a8e46dab1ac86b3eb0a7}{U\+A\+R\+T\+\_\+\+Mode}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914f}{U\+A\+R\+T\+\_\+\+Return\+Mode} \hyperlink{_u_a_r_t_8h_a5fe0b5a28881f05c198e4226536cf62b}{U\+A\+R\+T\+\_\+\+Return\+Mode}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T return mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8}{U\+A\+R\+T\+\_\+\+Data\+Mode} \hyperlink{_u_a_r_t_8h_a5d5d37ac84acc0ea543ef3737460d41a}{U\+A\+R\+T\+\_\+\+Data\+Mode}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T data mode settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2}{U\+A\+R\+T\+\_\+\+Echo} \hyperlink{_u_a_r_t_8h_a5372f2a3d7f68aa38ea560ed5fe520a9}{U\+A\+R\+T\+\_\+\+Echo}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T echo settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694}{U\+A\+R\+T\+\_\+\+L\+E\+N} \hyperlink{_u_a_r_t_8h_a9290f6d71215e218998106ddff83911b}{U\+A\+R\+T\+\_\+\+L\+E\+N}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T data length settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P} \hyperlink{_u_a_r_t_8h_a7f2ba2e85c63055e158e5e4b51b1f9fd}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T stop bit settings. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4}{U\+A\+R\+T\+\_\+\+P\+A\+R} \hyperlink{_u_a_r_t_8h_a12584e934e85933c6b20b59b0ac5c343}{U\+A\+R\+T\+\_\+\+P\+A\+R}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T parity type settings. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} \hyperlink{_u_a_r_t_8h_a533d172a10c22e1e5b94e9d0a055d882}{U\+A\+R\+T\+\_\+\+Params}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T Parameters. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}{U\+A\+R\+T\+\_\+\+Close\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}{U\+A\+R\+T\+\_\+\+Close\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_a_r_t_8h_a4fc98447e6dd805e2d072917e8e6da3b}{U\+A\+R\+T\+\_\+\+Control\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_a_r_t_8h_a2b3e89df3065fffb47e7354067c14d1b}{U\+A\+R\+T\+\_\+\+Init\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()}. \end{DoxyCompactList}\item 
+typedef \hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle}($\ast$ \hyperlink{_u_a_r_t_8h_a39e21ac60f24eb9ce32286e21de713d1}{U\+A\+R\+T\+\_\+\+Open\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a39e21ac60f24eb9ce32286e21de713d1}{U\+A\+R\+T\+\_\+\+Open\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_a_r_t_8h_a4d855b637a26d787afec822d4cd2978e}{U\+A\+R\+T\+\_\+\+Read\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a4d855b637a26d787afec822d4cd2978e}{U\+A\+R\+T\+\_\+\+Read\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_a_r_t_8h_a6b57fb6a7c48272141a727c7de7290e4}{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a6b57fb6a7c48272141a727c7de7290e4}{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_a_r_t_8h_aa46296acc2c197a775d44458e1eca197}{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_aa46296acc2c197a775d44458e1eca197}{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_a_r_t_8h_abe7ee32e202ad90d912b27693fe33672}{U\+A\+R\+T\+\_\+\+Write\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}{U\+A\+R\+T\+\_\+\+Close\+Fxn()}. \end{DoxyCompactList}\item 
+typedef int($\ast$ \hyperlink{_u_a_r_t_8h_a68d0b77abdb9da6a868edc6529ae70ff}{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a68d0b77abdb9da6a868edc6529ae70ff}{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn()}. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{_u_a_r_t_8h_ac5a3d974279a2d161746dfbc8ca91774}{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn}) (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ac5a3d974279a2d161746dfbc8ca91774}{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn()}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t___fxn_table}{U\+A\+R\+T\+\_\+\+Fxn\+Table} \hyperlink{_u_a_r_t_8h_a24d497f125179ba5e5b16ad9a0aa249d}{U\+A\+R\+T\+\_\+\+Fxn\+Table}
+\begin{DoxyCompactList}\small\item\em The definition of a U\+A\+R\+T function table that contains the required set of functions to control a specific U\+A\+R\+T driver implementation. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config} \hyperlink{_u_a_r_t_8h_ae513322c7d3184d66173cba9349989a4}{U\+A\+R\+T\+\_\+\+Config}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T Global configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90}{U\+A\+R\+T\+\_\+\+Mode} \{ \\*
+\hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}, 
+\\*
+\hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914f}{U\+A\+R\+T\+\_\+\+Return\+Mode} \{ \\*
+\hyperlink{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914fa50c07cbaf7518a0acd14137e801687e5}{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L}, 
+\\*
+\hyperlink{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914fa3b8e419e0e12abf80b25f72d17745f76}{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E}
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T return mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8}{U\+A\+R\+T\+\_\+\+Data\+Mode} \{ \\*
+\hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8aaa8edcbf6c236b0d86491ea1e7c9e4d8}{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y} = 0, 
+\\*
+\hyperlink{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8a87fdfb7ca981eab7f56c51380fd7094e}{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T data mode settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2}{U\+A\+R\+T\+\_\+\+Echo} \{ \\*
+\hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2a2b286f182793d4a71bdf99409b9600dd}{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F} = 0, 
+\\*
+\hyperlink{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2a6c4d8a2d4e30c22cf9fa45cd1bf79306}{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T echo settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694}{U\+A\+R\+T\+\_\+\+L\+E\+N} \{ \\*
+\hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a27d04dd1fa818f764eb9b8e849feb7ff}{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5} = 0, 
+\\*
+\hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a5bfd5507335d394d826e560930ce2a12}{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6} = 1, 
+\\*
+\hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a2ac8467047f55cc1954388bf94c72e35}{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7} = 2, 
+\\*
+\hyperlink{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a31abbaaeaa38a5c66fbe13bfc8ece221}{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T data length settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P} \{ \\*
+\hyperlink{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243a9bfa599e95c5da9cfe5f964dab8a9c6c}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E} = 0, 
+\\*
+\hyperlink{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243a3f41137f3775e7d33fdb250471c0248e}{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T stop bit settings. \end{DoxyCompactList}\item 
+enum \hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4}{U\+A\+R\+T\+\_\+\+P\+A\+R} \{ \\*
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a469955a283c95f261990ad07043d5d2d}{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E} = 0, 
+\\*
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a5405c8d842bffa2f76999eef9cee32c3}{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N} = 1, 
+\\*
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a498f72ae68542763da3072d3e3af6603}{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D} = 2, 
+\\*
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4adfb9d17fa33753ea5550e757b323bd46}{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O} = 3, 
+\\*
+\hyperlink{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a7ab50a9a14f4c614e875fbab74911afa}{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E} = 4
+ \}
+\begin{DoxyCompactList}\small\item\em U\+A\+R\+T parity type settings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_u_a_r_t_8h_a6b49b65f3db709c408dc4db23a68895d}{U\+A\+R\+T\+\_\+close} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function to close a U\+A\+R\+T peripheral specified by the U\+A\+R\+T handle. \end{DoxyCompactList}\item 
+int \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Function performs implementation specific features on a given U\+A\+R\+T\+\_\+\+Handle. \end{DoxyCompactList}\item 
+void \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Function to initializes the U\+A\+R\+T module. \end{DoxyCompactList}\item 
+\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open} (unsigned int index, \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize a given U\+A\+R\+T peripheral. \end{DoxyCompactList}\item 
+void \hyperlink{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}{U\+A\+R\+T\+\_\+\+Params\+\_\+init} (\hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} $\ast$params)
+\begin{DoxyCompactList}\small\item\em Function to initialize the \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} struct to its defaults. \end{DoxyCompactList}\item 
+int \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Function that writes data to a U\+A\+R\+T with interrupt enabled. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}{U\+A\+R\+T\+\_\+write\+Polling()}. \end{DoxyCompactList}\item 
+int \hyperlink{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}{U\+A\+R\+T\+\_\+write\+Polling} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Function that writes data to a U\+A\+R\+T without interrupts. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()}. \end{DoxyCompactList}\item 
+void \hyperlink{_u_a_r_t_8h_a0482cd0ab9ee7e802c8e785a5754d16d}{U\+A\+R\+T\+\_\+write\+Cancel} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function that cancels a U\+A\+R\+T\+\_\+write function call. \end{DoxyCompactList}\item 
+int \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Function that reads data from a U\+A\+R\+T with interrupt enabled. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}{U\+A\+R\+T\+\_\+read\+Polling()}. \end{DoxyCompactList}\item 
+int \hyperlink{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}{U\+A\+R\+T\+\_\+read\+Polling} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Function that reads data from a U\+A\+R\+T without interrupts. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}. \end{DoxyCompactList}\item 
+void \hyperlink{_u_a_r_t_8h_a51ed7e94d5b409ca1fcb2d65c5a25c3c}{U\+A\+R\+T\+\_\+read\+Cancel} (\hyperlink{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}{U\+A\+R\+T\+\_\+\+Handle} handle)
+\begin{DoxyCompactList}\small\item\em Function that cancels a U\+A\+R\+T\+\_\+read function call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~32}\label{_u_a_r_t_8h_a0f5a809e0884da33fef102236eb51644}
+Common U\+A\+R\+T\+\_\+control command code reservation offset. U\+A\+R\+T driver implementations should offset command codes with U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing positively
+
+Example implementation specific command codes\+: 
+\begin{DoxyCode}
+1 #define UARTXYZ\_COMMAND0         UART\_CMD\_RESERVED + 0
+2 #define UARTXYZ\_COMMAND1         UART\_CMD\_RESERVED + 1
+\end{DoxyCode}
+ \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D~-\/32}\label{_u_a_r_t_8h_a8f35027907fbab6a9ee302d2ee52a879}
+Common U\+A\+R\+T\+\_\+control status code reservation offset. U\+A\+R\+T driver implementations should offset status codes with U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+R\+E\+S\+E\+R\+V\+E\+D growing negatively.
+
+Example implementation specific status codes\+: 
+\begin{DoxyCode}
+1 #define UARTXYZ\_STATUS\_ERROR0    UART\_STATUS\_RESERVED - 0
+2 #define UARTXYZ\_STATUS\_ERROR1    UART\_STATUS\_RESERVED - 1
+3 #define UARTXYZ\_STATUS\_ERROR2    UART\_STATUS\_RESERVED - 2
+\end{DoxyCode}
+ \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S~0}\label{_u_a_r_t_8h_a101b7761f89b3ec49f0c6726669acfed}
+
+
+Successful status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. 
+
+\hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} returns U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+S\+U\+C\+C\+E\+S\+S if the control code was executed successfully. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R~-\/1}\label{_u_a_r_t_8h_a2ae076f4aae13ca8e2aea674207df0ad}
+
+
+Generic error status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. 
+
+\hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} returns U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R if the control code was not executed successfully. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D@{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D~-\/2}\label{_u_a_r_t_8h_a61125a2eb8059fd8b96ad95edc68ac2b}
+
+
+An error status code returned by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} for undefined command codes. 
+
+\hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} returns U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+U\+N\+D\+E\+F\+I\+N\+E\+D\+C\+M\+D if the control code is not recognized by the driver implementation. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+P\+E\+E\+K~0}\label{_u_a_r_t_8h_a942596a37cb2109ae021f88f3d907bdc}
+
+
+Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to read the next unsigned char. 
+
+This command is used to read the next unsigned char from the U\+A\+R\+T\textquotesingle{}s circular buffer without removing it. With this command code, arg is a pointer to an int. $\ast$arg contains the read unsigned char if data is present, else $\ast$arg is set to U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+I\+S\+A\+V\+A\+I\+L\+A\+B\+L\+E~1}\label{_u_a_r_t_8h_af5be6db621c5b048637dc93b26797693}
+
+
+Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to determine if the read buffer is empty. 
+
+This command is used to determine if there are any unsigned chars available to read from the U\+A\+R\+T\textquotesingle{}s circular buffer using \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}. With this command code, arg is a pointer to a bool. $\ast$arg contains true if data is available, else false. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+G\+E\+T\+R\+X\+C\+O\+U\+N\+T~2}\label{_u_a_r_t_8h_a470321cbd9eccf137ffbe6553ae7f35f}
+
+
+Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to determine how many unsigned chars are in the read buffer. 
+
+This command is used to determine how many unsigned chars are available to read from the U\+A\+R\+T\textquotesingle{}s circular buffer using \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}. With this command code, arg is a pointer to an int. $\ast$arg contains the number of unsignec chars available to read. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+E\+N\+A\+B\+L\+E~3}\label{_u_a_r_t_8h_ad67d01fa376f25bb28141d819647e8d3}
+
+
+Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to enable data received by the U\+A\+R\+T. 
+
+This command is used to enable the U\+A\+R\+T in such a way that it stores received unsigned chars onto the circular buffer. For drivers that are aware of the power module, it means that the U\+A\+R\+T will maintain a power constraint in place while receive is enabled. \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} will always have this option enabled. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E}}
+\index{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E@{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+C\+M\+D\+\_\+\+R\+X\+D\+I\+S\+A\+B\+L\+E~4}\label{_u_a_r_t_8h_ac0b19ce2fa9f43d3fe255bcdbd3cda7b}
+
+
+Command code used by \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()} to disable data received by the U\+A\+R\+T. 
+
+This command is used to disable the U\+A\+R\+T in such a way that ignores the data it received. For drivers that are aware of the power module, it means that the U\+A\+R\+T will release a power constraint to permit the system to enter low power modes. A call to \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} will !!\+N\+O\+T!! re-\/enable receive. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R}}
+\index{U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R@{U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R~{\bf U\+A\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+E\+R\+R\+O\+R}}\label{_u_a_r_t_8h_a7e3562e7931cf51b41a32d8109072251}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}}
+\index{U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R@{U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R~($\sim$0)}\label{_u_a_r_t_8h_ada620b673241eb6335a71e75da291716}
+
+
+Wait forever define. 
+
+
+
+\subsubsection{Typedef Documentation}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Handle@{U\+A\+R\+T\+\_\+\+Handle}}
+\index{U\+A\+R\+T\+\_\+\+Handle@{U\+A\+R\+T\+\_\+\+Handle}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Handle}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+\_\+\+Config}$\ast$ {\bf U\+A\+R\+T\+\_\+\+Handle}}\label{_u_a_r_t_8h_a13cc669fae768d8212e6491ce71b28af}
+
+
+A handle that is returned from a \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} call. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Callback@{U\+A\+R\+T\+\_\+\+Callback}}
+\index{U\+A\+R\+T\+\_\+\+Callback@{U\+A\+R\+T\+\_\+\+Callback}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+A\+R\+T\+\_\+\+Callback) ({\bf U\+A\+R\+T\+\_\+\+Handle}, void $\ast$buf, size\+\_\+t count)}\label{_u_a_r_t_8h_a44620a9d91e0357ebc6f0a79984d9e1e}
+
+
+The definition of a callback function used by the U\+A\+R\+T driver when used in \hyperlink{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em U\+A\+R\+T\+\_\+\+Handle} & U\+A\+R\+T\+\_\+\+Handle\\
+\hline
+{\em buf} & Pointer to read/write buffer\\
+\hline
+{\em count} & Number of elements read/written \\
+\hline
+\end{DoxyParams}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Mode@{U\+A\+R\+T\+\_\+\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Mode@{U\+A\+R\+T\+\_\+\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Mode}  {\bf U\+A\+R\+T\+\_\+\+Mode}}\label{_u_a_r_t_8h_a247ea9ec7b19a8e46dab1ac86b3eb0a7}
+
+
+U\+A\+R\+T mode settings. 
+
+This enum defines the read and write modes for the configured U\+A\+R\+T. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Return\+Mode@{U\+A\+R\+T\+\_\+\+Return\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Return\+Mode@{U\+A\+R\+T\+\_\+\+Return\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Return\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Return\+Mode}  {\bf U\+A\+R\+T\+\_\+\+Return\+Mode}}\label{_u_a_r_t_8h_a5fe0b5a28881f05c198e4226536cf62b}
+
+
+U\+A\+R\+T return mode settings. 
+
+This enumeration defines the return modes for U\+A\+R\+T\+\_\+read and U\+A\+R\+T\+\_\+read\+Polling. U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L unblocks or performs a callback when the read buffer has been filled. U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E unblocks or performs a callback whenever a newline character has been received. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Data\+Mode@{U\+A\+R\+T\+\_\+\+Data\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Data\+Mode@{U\+A\+R\+T\+\_\+\+Data\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Data\+Mode}  {\bf U\+A\+R\+T\+\_\+\+Data\+Mode}}\label{_u_a_r_t_8h_a5d5d37ac84acc0ea543ef3737460d41a}
+
+
+U\+A\+R\+T data mode settings. 
+
+This enumeration defines the data mode for read and write. If the Data\+Mode is text for write, write will add a return before a newline character. If the Data\+Mode is text for a read, read will replace a return with a newline. This effectively treats all device line endings as L\+F and all host P\+C line endings as C\+R\+L\+F. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Echo@{U\+A\+R\+T\+\_\+\+Echo}}
+\index{U\+A\+R\+T\+\_\+\+Echo@{U\+A\+R\+T\+\_\+\+Echo}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Echo}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+Echo}  {\bf U\+A\+R\+T\+\_\+\+Echo}}\label{_u_a_r_t_8h_a5372f2a3d7f68aa38ea560ed5fe520a9}
+
+
+U\+A\+R\+T echo settings. 
+
+This enumeration defines if the driver will echo data. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N@{U\+A\+R\+T\+\_\+\+L\+E\+N}}
+\index{U\+A\+R\+T\+\_\+\+L\+E\+N@{U\+A\+R\+T\+\_\+\+L\+E\+N}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+L\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+L\+E\+N}  {\bf U\+A\+R\+T\+\_\+\+L\+E\+N}}\label{_u_a_r_t_8h_a9290f6d71215e218998106ddff83911b}
+
+
+U\+A\+R\+T data length settings. 
+
+This enumeration defines the U\+A\+R\+T data lengths. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+O\+P@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+O\+P@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+S\+T\+O\+P}  {\bf U\+A\+R\+T\+\_\+\+S\+T\+O\+P}}\label{_u_a_r_t_8h_a7f2ba2e85c63055e158e5e4b51b1f9fd}
+
+
+U\+A\+R\+T stop bit settings. 
+
+This enumeration defines the U\+A\+R\+T stop bits. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R}}
+\index{U\+A\+R\+T\+\_\+\+P\+A\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+P\+A\+R}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf U\+A\+R\+T\+\_\+\+P\+A\+R}  {\bf U\+A\+R\+T\+\_\+\+P\+A\+R}}\label{_u_a_r_t_8h_a12584e934e85933c6b20b59b0ac5c343}
+
+
+U\+A\+R\+T parity type settings. 
+
+This enumeration defines the U\+A\+R\+T parity types. \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}}
+\index{U\+A\+R\+T\+\_\+\+Params@{U\+A\+R\+T\+\_\+\+Params}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Params}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+\_\+\+Params}  {\bf U\+A\+R\+T\+\_\+\+Params}}\label{_u_a_r_t_8h_a533d172a10c22e1e5b94e9d0a055d882}
+
+
+U\+A\+R\+T Parameters. 
+
+U\+A\+R\+T parameters are used to with the \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} call. Default values for these parameters are set using \hyperlink{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}{U\+A\+R\+T\+\_\+\+Params\+\_\+init()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}{U\+A\+R\+T\+\_\+\+Params\+\_\+init()} 
+\end{DoxySeeAlso}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Close\+Fxn@{U\+A\+R\+T\+\_\+\+Close\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Close\+Fxn@{U\+A\+R\+T\+\_\+\+Close\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Close\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+A\+R\+T\+\_\+\+Close\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}{U\+A\+R\+T\+\_\+\+Close\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Control\+Fxn@{U\+A\+R\+T\+\_\+\+Control\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Control\+Fxn@{U\+A\+R\+T\+\_\+\+Control\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Control\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+A\+R\+T\+\_\+\+Control\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, unsigned int cmd, void $\ast$arg)}\label{_u_a_r_t_8h_a4fc98447e6dd805e2d072917e8e6da3b}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}{U\+A\+R\+T\+\_\+control()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Init\+Fxn@{U\+A\+R\+T\+\_\+\+Init\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Init\+Fxn@{U\+A\+R\+T\+\_\+\+Init\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Init\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+A\+R\+T\+\_\+\+Init\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{_u_a_r_t_8h_a2b3e89df3065fffb47e7354067c14d1b}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Open\+Fxn@{U\+A\+R\+T\+\_\+\+Open\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Open\+Fxn@{U\+A\+R\+T\+\_\+\+Open\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Open\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf U\+A\+R\+T\+\_\+\+Handle}($\ast$ U\+A\+R\+T\+\_\+\+Open\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, {\bf U\+A\+R\+T\+\_\+\+Params} $\ast$params)}\label{_u_a_r_t_8h_a39e21ac60f24eb9ce32286e21de713d1}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a39e21ac60f24eb9ce32286e21de713d1}{U\+A\+R\+T\+\_\+\+Open\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Read\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Read\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Read\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+A\+R\+T\+\_\+\+Read\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)}\label{_u_a_r_t_8h_a4d855b637a26d787afec822d4cd2978e}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a4d855b637a26d787afec822d4cd2978e}{U\+A\+R\+T\+\_\+\+Read\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, void $\ast$buffer, size\+\_\+t size)}\label{_u_a_r_t_8h_a6b57fb6a7c48272141a727c7de7290e4}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a6b57fb6a7c48272141a727c7de7290e4}{U\+A\+R\+T\+\_\+\+Read\+Polling\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn@{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{_u_a_r_t_8h_aa46296acc2c197a775d44458e1eca197}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_aa46296acc2c197a775d44458e1eca197}{U\+A\+R\+T\+\_\+\+Read\+Cancel\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Write\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Write\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Write\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+A\+R\+T\+\_\+\+Write\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)}\label{_u_a_r_t_8h_abe7ee32e202ad90d912b27693fe33672}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ae08ff15291bd6b21cb4e2eb1fce164a6}{U\+A\+R\+T\+\_\+\+Close\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle, const void $\ast$buffer, size\+\_\+t size)}\label{_u_a_r_t_8h_a68d0b77abdb9da6a868edc6529ae70ff}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_a68d0b77abdb9da6a868edc6529ae70ff}{U\+A\+R\+T\+\_\+\+Write\+Polling\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn}}
+\index{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn@{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn) ({\bf U\+A\+R\+T\+\_\+\+Handle} handle)}\label{_u_a_r_t_8h_ac5a3d974279a2d161746dfbc8ca91774}
+
+
+A function pointer to a driver specific implementation of \hyperlink{_u_a_r_t_8h_ac5a3d974279a2d161746dfbc8ca91774}{U\+A\+R\+T\+\_\+\+Write\+Cancel\+Fxn()}. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Fxn\+Table@{U\+A\+R\+T\+\_\+\+Fxn\+Table}}
+\index{U\+A\+R\+T\+\_\+\+Fxn\+Table@{U\+A\+R\+T\+\_\+\+Fxn\+Table}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+\_\+\+Fxn\+Table}  {\bf U\+A\+R\+T\+\_\+\+Fxn\+Table}}\label{_u_a_r_t_8h_a24d497f125179ba5e5b16ad9a0aa249d}
+
+
+The definition of a U\+A\+R\+T function table that contains the required set of functions to control a specific U\+A\+R\+T driver implementation. 
+
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}}
+\index{U\+A\+R\+T\+\_\+\+Config@{U\+A\+R\+T\+\_\+\+Config}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Config}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf U\+A\+R\+T\+\_\+\+Config}  {\bf U\+A\+R\+T\+\_\+\+Config}}\label{_u_a_r_t_8h_ae513322c7d3184d66173cba9349989a4}
+
+
+U\+A\+R\+T Global configuration. 
+
+The \hyperlink{struct_u_a_r_t___config}{U\+A\+R\+T\+\_\+\+Config} structure contains a set of pointers used to characterize the U\+A\+R\+T driver implementation.
+
+This structure needs to be defined before calling \hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} and it must not be changed thereafter.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} 
+\end{DoxySeeAlso}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Mode@{U\+A\+R\+T\+\_\+\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Mode@{U\+A\+R\+T\+\_\+\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Mode}}\label{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90}
+
+
+U\+A\+R\+T mode settings. 
+
+This enum defines the read and write modes for the configured U\+A\+R\+T. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G@{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G}}\item[{\em 
+U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G\label{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae6b6bd5d2d5df859ad6724e89e605ebf}
+}]Uses a semaphore to block while data is being sent. Context of the call must be a Task. \index{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K@{U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}}\item[{\em 
+U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K\label{_u_a_r_t_8h_a2507a620dba95cd20885c52494d19e90ae0dbd9b5195e56c3c2aed10163523754}
+}]Non-\/blocking and will return immediately. When the transfer by the Hwi is finished the configured callback function is called. \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Return\+Mode@{U\+A\+R\+T\+\_\+\+Return\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Return\+Mode@{U\+A\+R\+T\+\_\+\+Return\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Return\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Return\+Mode}}\label{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914f}
+
+
+U\+A\+R\+T return mode settings. 
+
+This enumeration defines the return modes for U\+A\+R\+T\+\_\+read and U\+A\+R\+T\+\_\+read\+Polling. U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L unblocks or performs a callback when the read buffer has been filled. U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E unblocks or performs a callback whenever a newline character has been received. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L@{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L@{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L}}\item[{\em 
+U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+U\+L\+L\label{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914fa50c07cbaf7518a0acd14137e801687e5}
+}]Unblock/callback when buffer is full. \index{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E@{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E@{U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E}}\item[{\em 
+U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E\label{_u_a_r_t_8h_acb5a82843435a1b5d51b6c27028d914fa3b8e419e0e12abf80b25f72d17745f76}
+}]Unblock/callback when newline character is received. \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Data\+Mode@{U\+A\+R\+T\+\_\+\+Data\+Mode}}
+\index{U\+A\+R\+T\+\_\+\+Data\+Mode@{U\+A\+R\+T\+\_\+\+Data\+Mode}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Data\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Data\+Mode}}\label{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8}
+
+
+U\+A\+R\+T data mode settings. 
+
+This enumeration defines the data mode for read and write. If the Data\+Mode is text for write, write will add a return before a newline character. If the Data\+Mode is text for a read, read will replace a return with a newline. This effectively treats all device line endings as L\+F and all host P\+C line endings as C\+R\+L\+F. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y@{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y@{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y}}\item[{\em 
+U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+N\+A\+R\+Y\label{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8aaa8edcbf6c236b0d86491ea1e7c9e4d8}
+}]Data is not processed \index{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T@{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T@{U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T}}\item[{\em 
+U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T\label{_u_a_r_t_8h_a694090fdb166f94ac30b809f9cba87b8a87fdfb7ca981eab7f56c51380fd7094e}
+}]Data is processed according to above \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Echo@{U\+A\+R\+T\+\_\+\+Echo}}
+\index{U\+A\+R\+T\+\_\+\+Echo@{U\+A\+R\+T\+\_\+\+Echo}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Echo}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+Echo}}\label{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2}
+
+
+U\+A\+R\+T echo settings. 
+
+This enumeration defines if the driver will echo data. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F@{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F@{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F}}\item[{\em 
+U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+F\+F\label{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2a2b286f182793d4a71bdf99409b9600dd}
+}]Data is not echoed \index{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N@{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N@{U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N}}\item[{\em 
+U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N\label{_u_a_r_t_8h_aac6a03c2e1d76f53e1d9d923dcdc24f2a6c4d8a2d4e30c22cf9fa45cd1bf79306}
+}]Data is echoed \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N@{U\+A\+R\+T\+\_\+\+L\+E\+N}}
+\index{U\+A\+R\+T\+\_\+\+L\+E\+N@{U\+A\+R\+T\+\_\+\+L\+E\+N}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+L\+E\+N}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+L\+E\+N}}\label{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694}
+
+
+U\+A\+R\+T data length settings. 
+
+This enumeration defines the U\+A\+R\+T data lengths. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5}}\item[{\em 
+U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+5\label{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a27d04dd1fa818f764eb9b8e849feb7ff}
+}]Data length is 5 \index{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6}}\item[{\em 
+U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+6\label{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a5bfd5507335d394d826e560930ce2a12}
+}]Data length is 6 \index{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7}}\item[{\em 
+U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+7\label{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a2ac8467047f55cc1954388bf94c72e35}
+}]Data length is 7 \index{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8@{U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8}}\item[{\em 
+U\+A\+R\+T\+\_\+\+L\+E\+N\+\_\+8\label{_u_a_r_t_8h_adf245d5f10db0abcbd8ad62a0d80c694a31abbaaeaa38a5c66fbe13bfc8ece221}
+}]Data length is 8 \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+O\+P@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+O\+P@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+S\+T\+O\+P}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+S\+T\+O\+P}}\label{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243}
+
+
+U\+A\+R\+T stop bit settings. 
+
+This enumeration defines the U\+A\+R\+T stop bits. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E}}\item[{\em 
+U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E\label{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243a9bfa599e95c5da9cfe5f964dab8a9c6c}
+}]One stop bit \index{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O@{U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O}}\item[{\em 
+U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+T\+W\+O\label{_u_a_r_t_8h_a176b71ca19bc13d7534fa30fc18c2243a3f41137f3775e7d33fdb250471c0248e}
+}]Two stop bits \end{description}
+\end{Desc}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R}}
+\index{U\+A\+R\+T\+\_\+\+P\+A\+R@{U\+A\+R\+T\+\_\+\+P\+A\+R}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+P\+A\+R}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf U\+A\+R\+T\+\_\+\+P\+A\+R}}\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4}
+
+
+U\+A\+R\+T parity type settings. 
+
+This enumeration defines the U\+A\+R\+T parity types. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a469955a283c95f261990ad07043d5d2d}
+}]No parity \index{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+E\+V\+E\+N\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a5405c8d842bffa2f76999eef9cee32c3}
+}]Parity bit is even \index{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+D\+D\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a498f72ae68542763da3072d3e3af6603}
+}]Parity bit is odd \index{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+Z\+E\+R\+O\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4adfb9d17fa33753ea5550e757b323bd46}
+}]Parity bit is always zero \index{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E@{U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E}}\item[{\em 
+U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+O\+N\+E\label{_u_a_r_t_8h_ac70b5aa75500b8c45a51ec560deccfc4a7ab50a9a14f4c614e875fbab74911afa}
+}]Parity bit is always one \end{description}
+\end{Desc}
+
+
+\subsubsection{Function Documentation}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+close@{U\+A\+R\+T\+\_\+close}}
+\index{U\+A\+R\+T\+\_\+close@{U\+A\+R\+T\+\_\+close}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+close}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+close (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a6b49b65f3db709c408dc4db23a68895d}
+
+
+Function to close a U\+A\+R\+T peripheral specified by the U\+A\+R\+T handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} had to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle returned from U\+A\+R\+T\+\_\+open\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+control@{U\+A\+R\+T\+\_\+control}}
+\index{U\+A\+R\+T\+\_\+control@{U\+A\+R\+T\+\_\+control}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+control}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+\_\+control (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle, }
+\item[{unsigned int}]{cmd, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a9de3c26cfe4ce6b7f350a6ea6e16801d}
+
+
+Function performs implementation specific features on a given U\+A\+R\+T\+\_\+\+Handle. 
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} has to be called first.
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T handle returned from \hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()}\\
+\hline
+{\em cmd} & A command value defined by the driver specific implementation\\
+\hline
+{\em arg} & An optional R/\+W (read/write) argument that is accompanied with cmd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Implementation specific return codes. Negative values indicate unsuccessful operations.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}{U\+A\+R\+T\+\_\+open()} 
+\end{DoxySeeAlso}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+init@{U\+A\+R\+T\+\_\+init}}
+\index{U\+A\+R\+T\+\_\+init@{U\+A\+R\+T\+\_\+init}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}
+
+
+Function to initializes the U\+A\+R\+T module. 
+
+\begin{DoxyPrecond}{Precondition}
+The U\+A\+R\+T\+\_\+config structure must exist and be persistent before this function can be called. This function must also be called before any other U\+A\+R\+T driver A\+P\+Is. 
+\end{DoxyPrecond}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+open@{U\+A\+R\+T\+\_\+open}}
+\index{U\+A\+R\+T\+\_\+open@{U\+A\+R\+T\+\_\+open}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf U\+A\+R\+T\+\_\+\+Handle} U\+A\+R\+T\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index, }
+\item[{{\bf U\+A\+R\+T\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a0442ea1ec23901168da31726bb3254c1}
+
+
+Function to initialize a given U\+A\+R\+T peripheral. 
+
+Function to initialize a given U\+A\+R\+T peripheral specified by the particular index value.
+
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} has been called
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Logical peripheral number for the U\+A\+R\+T indexed into the U\+A\+R\+T\+\_\+config table\\
+\hline
+{\em params} & Pointer to an parameter block, if N\+U\+L\+L it will use default values. All the fields in this structure are R\+O (read-\/only).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A U\+A\+R\+T\+\_\+\+Handle on success or a N\+U\+L\+L on an error or if it has been opened already.
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_ab60a36f7295d704926120d22f806dcd1}{U\+A\+R\+T\+\_\+init()} 
+
+\hyperlink{_u_a_r_t_8h_a6b49b65f3db709c408dc4db23a68895d}{U\+A\+R\+T\+\_\+close()} 
+\end{DoxySeeAlso}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+\+Params\+\_\+init@{U\+A\+R\+T\+\_\+\+Params\+\_\+init}}
+\index{U\+A\+R\+T\+\_\+\+Params\+\_\+init@{U\+A\+R\+T\+\_\+\+Params\+\_\+init}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+\+Params\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+\+Params\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Params} $\ast$}]{params}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a40e5c0823bb7ffd2e8fbf19f9f20b399}
+
+
+Function to initialize the \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} struct to its defaults. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & An pointer to \hyperlink{struct_u_a_r_t___params}{U\+A\+R\+T\+\_\+\+Params} structure for initialization\\
+\hline
+\end{DoxyParams}
+Defaults values are\+: read\+Mode = U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G; write\+Mode = U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G; read\+Timeout = U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R; write\+Timeout = U\+A\+R\+T\+\_\+\+W\+A\+I\+T\+\_\+\+F\+O\+R\+E\+V\+E\+R; read\+Callback = N\+U\+L\+L; write\+Callback = N\+U\+L\+L; read\+Return\+Mode = U\+A\+R\+T\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+N\+E\+W\+L\+I\+N\+E; write\+Data\+Mode = U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T; read\+Data\+Mode = U\+A\+R\+T\+\_\+\+D\+A\+T\+A\+\_\+\+T\+E\+X\+T; read\+Echo = U\+A\+R\+T\+\_\+\+E\+C\+H\+O\+\_\+\+O\+N; baud\+Rate = 115200; stop\+Bits = U\+A\+R\+T\+\_\+\+S\+T\+O\+P\+\_\+\+O\+N\+E; parity\+Type = U\+A\+R\+T\+\_\+\+P\+A\+R\+\_\+\+N\+O\+N\+E; \index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+write@{U\+A\+R\+T\+\_\+write}}
+\index{U\+A\+R\+T\+\_\+write@{U\+A\+R\+T\+\_\+write}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+write}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle, }
+\item[{const void $\ast$}]{buffer, }
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}
+
+
+Function that writes data to a U\+A\+R\+T with interrupt enabled. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}{U\+A\+R\+T\+\_\+write\+Polling()}. 
+
+In U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G, U\+A\+R\+T\+\_\+write will block task execution until all the data in buffer has been written.
+
+In U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K, U\+A\+R\+T\+\_\+write does not block task execution an calls a callback function specified by write\+Callback.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}{U\+A\+R\+T\+\_\+write\+Polling()}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle\\
+\hline
+{\em buffer} & A W\+O (write-\/only) pointer to buffer containing data to be written to the U\+A\+R\+T.\\
+\hline
+{\em size} & The number of bytes in buffer that should be written onto the U\+A\+R\+T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes that have been written to the U\+A\+R\+T, U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R on an error. In U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K, the return value is always 0. 
+\end{DoxyReturn}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+write\+Polling@{U\+A\+R\+T\+\_\+write\+Polling}}
+\index{U\+A\+R\+T\+\_\+write\+Polling@{U\+A\+R\+T\+\_\+write\+Polling}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+write\+Polling}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+\_\+write\+Polling (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle, }
+\item[{const void $\ast$}]{buffer, }
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_aed09b432b5ebb7d88e78ccfe338e1bd4}
+
+
+Function that writes data to a U\+A\+R\+T without interrupts. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()}. 
+
+This function initiates an operation to write data to a U\+A\+R\+T controller.
+
+U\+A\+R\+T\+\_\+write\+Polling will not return until all the data was written to the U\+A\+R\+T (or its F\+I\+F\+O if applicable).
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle\\
+\hline
+{\em buffer} & A W\+O (write-\/only) pointer to buffer containing data to be written to the U\+A\+R\+T.\\
+\hline
+{\em size} & The number of bytes in buffer that should be written onto the U\+A\+R\+T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes that have been written to the U\+A\+R\+T, U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R on an error. 
+\end{DoxyReturn}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+write\+Cancel@{U\+A\+R\+T\+\_\+write\+Cancel}}
+\index{U\+A\+R\+T\+\_\+write\+Cancel@{U\+A\+R\+T\+\_\+write\+Cancel}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+write\+Cancel}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+write\+Cancel (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a0482cd0ab9ee7e802c8e785a5754d16d}
+
+
+Function that cancels a U\+A\+R\+T\+\_\+write function call. 
+
+This function cancels a \hyperlink{_u_a_r_t_8h_a6f2a04c09dc17886e69e361cd80aaedc}{U\+A\+R\+T\+\_\+write()} operation to a U\+A\+R\+T controller when in U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+read@{U\+A\+R\+T\+\_\+read}}
+\index{U\+A\+R\+T\+\_\+read@{U\+A\+R\+T\+\_\+read}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+read}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle, }
+\item[{void $\ast$}]{buffer, }
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}
+
+
+Function that reads data from a U\+A\+R\+T with interrupt enabled. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}{U\+A\+R\+T\+\_\+read\+Polling()}. 
+
+This function initiates an operation to read data from a U\+A\+R\+T controller.
+
+In U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+B\+L\+O\+C\+K\+I\+N\+G, U\+A\+R\+T\+\_\+read will block task execution until all the data in buffer has been read.
+
+In U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K, U\+A\+R\+T\+\_\+read does not block task execution an calls a callback function specified by read\+Callback.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}{U\+A\+R\+T\+\_\+read\+Polling()}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle\\
+\hline
+{\em buffer} & A R\+O (read-\/only) pointer to an empty buffer in which received data should be written to.\\
+\hline
+{\em size} & The number of bytes to be written into buffer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes that have been read from the U\+A\+R\+T, U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R on an error. 
+\end{DoxyReturn}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+read\+Polling@{U\+A\+R\+T\+\_\+read\+Polling}}
+\index{U\+A\+R\+T\+\_\+read\+Polling@{U\+A\+R\+T\+\_\+read\+Polling}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+read\+Polling}]{\setlength{\rightskip}{0pt plus 5cm}int U\+A\+R\+T\+\_\+read\+Polling (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle, }
+\item[{void $\ast$}]{buffer, }
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_aee4c56b20ea1c4c33406d99369db3df1}
+
+
+Function that reads data from a U\+A\+R\+T without interrupts. This A\+P\+I must be used mutually exclusive with \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}. 
+
+This function initiates an operation to read data from a U\+A\+R\+T controller.
+
+U\+A\+R\+T\+\_\+read\+Polling will not return until size data was read to the U\+A\+R\+T.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle\\
+\hline
+{\em buffer} & A R\+O (read-\/only) pointer to an empty buffer in which received data should be written to.\\
+\hline
+{\em size} & The number of bytes to be written into buffer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of bytes that have been read from the U\+A\+R\+T, U\+A\+R\+T\+\_\+\+E\+R\+R\+O\+R on an error. 
+\end{DoxyReturn}
+\index{U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}!U\+A\+R\+T\+\_\+read\+Cancel@{U\+A\+R\+T\+\_\+read\+Cancel}}
+\index{U\+A\+R\+T\+\_\+read\+Cancel@{U\+A\+R\+T\+\_\+read\+Cancel}!U\+A\+R\+T.\+h@{U\+A\+R\+T.\+h}}
+\paragraph[{U\+A\+R\+T\+\_\+read\+Cancel}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+read\+Cancel (
+\begin{DoxyParamCaption}
+\item[{{\bf U\+A\+R\+T\+\_\+\+Handle}}]{handle}
+\end{DoxyParamCaption}
+)}\label{_u_a_r_t_8h_a51ed7e94d5b409ca1fcb2d65c5a25c3c}
+
+
+Function that cancels a U\+A\+R\+T\+\_\+read function call. 
+
+This function cancels a \hyperlink{_u_a_r_t_8h_a023152d57539cad94bdd813956013e73}{U\+A\+R\+T\+\_\+read()} operation to a U\+A\+R\+T controller when in U\+A\+R\+T\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K.
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & A U\+A\+R\+T\+\_\+\+Handle \\
+\hline
+\end{DoxyParams}

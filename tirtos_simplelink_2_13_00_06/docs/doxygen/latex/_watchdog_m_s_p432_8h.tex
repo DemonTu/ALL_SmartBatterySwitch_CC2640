@@ -1,0 +1,97 @@
+\subsection{Watchdog\+M\+S\+P432.\+h File Reference}
+\label{_watchdog_m_s_p432_8h}\index{Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}}
+
+
+\subsubsection{Detailed Description}
+Watchdog driver implementation for M\+S\+P432. 
+
+============================================================================
+
+The Watchdog header file for M\+S\+P432 should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Watchdog.h>}
+\textcolor{preprocessor}{#include <ti/drivers/watchdog/WatchdogMSP432.h>}
+\end{DoxyCode}
+
+
+The M\+S\+P432 Watchdog Timer will cause resets at an interval based on the count calculated from the clock source and clock divider specified in the \hyperlink{struct_watchdog_m_s_p432___h_w_attrs}{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}. By default the Watchdog driver has resets turned on. This means that if \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} is not called to reset the Watchdog timer before it times out, a reset will be generated. \hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()} will stop the Watchdog timer. To restart it again, \hyperlink{_watchdog_8h_aa5ce656aa6d5199e1efdb4ca2cd9fb7c}{Watchdog\+\_\+open()} must be called.
+
+Opening the Watchdog driver with resets turned off (using the reset\+Mode parameter) allows the Watchdog Timer to be used like another timer interrupt. The callback fxn provided in the params will be executed when the timer expires.
+
+{\bfseries Note\+:} The \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} callback\+Fxn and debug\+Stall\+Mode are not used in this implementation nor is the \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload()} A\+P\+I. 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Watchdog.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/ports/\+Hwi\+P.\+h$>$}\\*
+Include dependency graph for Watchdog\+M\+S\+P432.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_watchdog_m_s_p432_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_watchdog_m_s_p432___h_w_attrs}{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for M\+S\+P432 These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+: \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog_m_s_p432___object}{Watchdog\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for M\+S\+P432. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_watchdog_m_s_p432___h_w_attrs}{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs} \hyperlink{_watchdog_m_s_p432_8h_aa84a69b45dcb9d42a077d1bdfad211da}{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for M\+S\+P432 These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+: \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog_m_s_p432___object}{Watchdog\+M\+S\+P432\+\_\+\+Object} \hyperlink{_watchdog_m_s_p432_8h_adda7dce88065097cb75156432dbfbede}{Watchdog\+M\+S\+P432\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for M\+S\+P432. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} \hyperlink{_watchdog_m_s_p432_8h_a7ccdf8f14ade7da8949b94ef66ec8a4f}{Watchdog\+M\+S\+P432\+\_\+fxn\+Table}
+\begin{DoxyCompactList}\small\item\em Watchdog function table for M\+S\+P432. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}!Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}
+\index{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs@{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}!Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}}
+\paragraph[{Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}  {\bf Watchdog\+M\+S\+P432\+\_\+\+H\+W\+Attrs}}\label{_watchdog_m_s_p432_8h_aa84a69b45dcb9d42a077d1bdfad211da}
+
+
+Watchdog hardware attributes for M\+S\+P432 These fields are used by driverlib A\+P\+Is and therefore must be populated by driverlib macro definitions. For M\+S\+P432\+Ware these definitions are found in\+: 
+
+
+\begin{DoxyItemize}
+\item wdt\+\_\+a.\+h
+\end{DoxyItemize}
+
+A sample structure is shown below\+: 
+\begin{DoxyCode}
+1 const WatchdogMSP432\_HWAttrs watchdogMSP432HWAttrs[MSP\_EXP432P401RLP\_WATCHDOGCOUNT] = \{
+2     \{
+3         .baseAddr = WDT\_A\_BASE,
+4         .intNum = INT\_WDT\_A,
+5         .intPriority = ~0,
+6         .clockSource = WDT\_A\_CLOCKSOURCE\_SMCLK,
+7         .clockDivider = WDT\_A\_CLOCKDIVIDER\_8192K
+8     \},
+9 \};
+\end{DoxyCode}
+ \index{Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}!Watchdog\+M\+S\+P432\+\_\+\+Object@{Watchdog\+M\+S\+P432\+\_\+\+Object}}
+\index{Watchdog\+M\+S\+P432\+\_\+\+Object@{Watchdog\+M\+S\+P432\+\_\+\+Object}!Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}}
+\paragraph[{Watchdog\+M\+S\+P432\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+M\+S\+P432\+\_\+\+Object}  {\bf Watchdog\+M\+S\+P432\+\_\+\+Object}}\label{_watchdog_m_s_p432_8h_adda7dce88065097cb75156432dbfbede}
+
+
+Watchdog Object for M\+S\+P432. 
+
+Not to be accessed by the user. 
+
+\subsubsection{Variable Documentation}
+\index{Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}!Watchdog\+M\+S\+P432\+\_\+fxn\+Table@{Watchdog\+M\+S\+P432\+\_\+fxn\+Table}}
+\index{Watchdog\+M\+S\+P432\+\_\+fxn\+Table@{Watchdog\+M\+S\+P432\+\_\+fxn\+Table}!Watchdog\+M\+S\+P432.\+h@{Watchdog\+M\+S\+P432.\+h}}
+\paragraph[{Watchdog\+M\+S\+P432\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Watchdog\+\_\+\+Fxn\+Table} Watchdog\+M\+S\+P432\+\_\+fxn\+Table}\label{_watchdog_m_s_p432_8h_a7ccdf8f14ade7da8949b94ef66ec8a4f}
+
+
+Watchdog function table for M\+S\+P432. 
+

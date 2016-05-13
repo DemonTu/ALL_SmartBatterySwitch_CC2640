@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<gep name="cc26xx/Power" title="cc26xx Power Management" version="1">
+
+<page name="Module" title="Module Settings">
+<html><body><table>
+  <tr>
+      <td><form>
+        <p>The Power module provides runtime power management services.  It also allows you to configure a Power Policy function to automatically activate power savings during CPU idle time.</p>
+        <p> </p>
+      </form></td>
+  </tr>
+  <tr>
+    <td><control type="checkbox" label="Add the Power management module to my configuration" value="value:this.$used" bold="true"/></td>
+  </tr>
+  <tr></tr>
+  <tr><td>
+      <h1>Power Management</h1>
+        <table>
+        <tr>
+          <td><control type="label" label="Invoke Power Policy function when all threads are blocked" align="left"/></td>
+          <td><control type="checkbox" 
+               enabled="value:this.$used"
+               value="value:this.idle" 
+               tooltip="value:this.idle.$summary"/></td>
+        </tr>
+        <tr>
+          <td><control type="label"
+                       label="Power Policy function"
+                       align="left"/></td>
+          <td><control type="editbox"
+                       value="value:this.policyFunc"
+                       tooltip="value:this.policyFunc.$summary"
+                       enabled="value:this.idle"/></td>
+        </tr>
+      </table>
+  </td></tr>
+</table></body></html>
+</page>
+<properties name="Advanced" title="All Options" enabled="true" visible="true" link="this"/>
+</gep>
+

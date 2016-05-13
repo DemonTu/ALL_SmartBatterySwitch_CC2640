@@ -1,0 +1,241 @@
+clean::
+	$(RM) package/ti.uia.runtime.sch
+	$(RM) package/.vers_g180
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b160
+	$(RM) package/.xdc-A71
+	$(RM) package/ti_uia_runtime.java
+	$(RM) package/ti_uia_runtime.class
+	$(RM) package/package_ti.uia.runtime.c
+	$(RM) package/package.defs.h
+	$(RM) CtxFilter.h
+	$(RM) package/internal/CtxFilter.xdc.h
+	$(RM) EventHdr.h
+	$(RM) package/internal/EventHdr.xdc.h
+	$(RM) LogCtxChg.h
+	$(RM) package/internal/LogCtxChg.xdc.h
+	$(RM) IUIATraceSyncClient.h
+	$(RM) LogSnapshot.h
+	$(RM) package/internal/LogSnapshot.xdc.h
+	$(RM) LogSync.h
+	$(RM) package/internal/LogSync.xdc.h
+	$(RM) LoggerSM.h
+	$(RM) package/internal/LoggerSM.xdc.h
+	$(RM) LoggerTypes.h
+	$(RM) package/internal/LoggerTypes.xdc.h
+	$(RM) MultiCoreTypes.h
+	$(RM) package/internal/MultiCoreTypes.xdc.h
+	$(RM) QueueDescriptor.h
+	$(RM) package/internal/QueueDescriptor.xdc.h
+	$(RM) UIAMetaData.h
+	$(RM) package/internal/UIAMetaData.xdc.h
+	$(RM) UIAPacket.h
+	$(RM) package/internal/UIAPacket.xdc.h
+	$(RM) ServiceMgr.h
+	$(RM) package/internal/ServiceMgr.xdc.h
+	$(RM) Transport.h
+	$(RM) package/internal/Transport.xdc.h
+	$(RM) ICtxFilterCallback.h
+	$(RM) IUIATransfer.h
+	$(RM) ILoggerSnapshot.h
+	$(RM) IUIATimestampProvider.h
+	$(RM) IUIATraceSyncProvider.h
+	$(RM) IServiceMgrSupport.h
+	$(RM) package/LogSync_CpuTimestampProxy.h
+	$(RM) package/internal/LogSync_CpuTimestampProxy.xdc.h
+	$(RM) package/LogSync_GlobalTimestampProxy.h
+	$(RM) package/internal/LogSync_GlobalTimestampProxy.xdc.h
+	$(RM) package/ServiceMgr_SupportProxy.h
+	$(RM) package/internal/ServiceMgr_SupportProxy.xdc.h
+	$(RM) package/ti.uia.runtime.ccs
+
+.interfaces: package/ti.uia.runtime.sch package/.vers_g180 package/.vers_r170 package/.vers_b160 package/.xdc-A71 package/ti_uia_runtime.java package/package_ti.uia.runtime.c package/package.defs.h CtxFilter.h package/internal/CtxFilter.xdc.h EventHdr.h package/internal/EventHdr.xdc.h LogCtxChg.h package/internal/LogCtxChg.xdc.h IUIATraceSyncClient.h LogSnapshot.h package/internal/LogSnapshot.xdc.h LogSync.h package/internal/LogSync.xdc.h LoggerSM.h package/internal/LoggerSM.xdc.h LoggerTypes.h package/internal/LoggerTypes.xdc.h MultiCoreTypes.h package/internal/MultiCoreTypes.xdc.h QueueDescriptor.h package/internal/QueueDescriptor.xdc.h UIAMetaData.h package/internal/UIAMetaData.xdc.h UIAPacket.h package/internal/UIAPacket.xdc.h ServiceMgr.h package/internal/ServiceMgr.xdc.h Transport.h package/internal/Transport.xdc.h ICtxFilterCallback.h IUIATransfer.h ILoggerSnapshot.h IUIATimestampProvider.h IUIATraceSyncProvider.h IServiceMgrSupport.h package/LogSync_CpuTimestampProxy.h package/internal/LogSync_CpuTimestampProxy.xdc.h package/LogSync_GlobalTimestampProxy.h package/internal/LogSync_GlobalTimestampProxy.xdc.h package/ServiceMgr_SupportProxy.h package/internal/ServiceMgr_SupportProxy.xdc.h package/ti.uia.runtime.ccs 
+package/package.xdc.inc: package/.vers_g180
+package/.vers_g180:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b160
+package/.vers_b160:
+
+.interfaces: CtxFilter.xdc EventHdr.xdc LogCtxChg.xdc LogSnapshot.xdc LogSync.xdc LoggerCircBuf.xdc LoggerProbePoint.xdc LoggerStopMode.xdc LoggerSM.xdc LoggerTypes.xdc MultiCoreTypes.xdc QueueDescriptor.xdc UIAMetaData.xdc UIAPacket.xdc ServiceMgr.xdc Transport.xdc ICtxFilterCallback.xdc ILoggerSnapshot.xdc IUIATimestampProvider.xdc IUIATraceSyncProvider.xdc IUIATraceSyncClient.xdc IServiceMgrSupport.xdc IUIATransfer.xdc 
+
+# schema include file dependencies
+package.xs:
+package/package.xdc.inc: package.xs
+CtxFilter.xs:
+package/package.xdc.inc: CtxFilter.xs
+LogCtxChg.xs:
+package/package.xdc.inc: LogCtxChg.xs
+LogSnapshot.xs:
+package/package.xdc.inc: LogSnapshot.xs
+LogSync.xs:
+package/package.xdc.inc: LogSync.xs
+LoggerCircBuf.xs:
+package/package.xdc.inc: LoggerCircBuf.xs
+LoggerProbePoint.xs:
+package/package.xdc.inc: LoggerProbePoint.xs
+LoggerStopMode.xs:
+package/package.xdc.inc: LoggerStopMode.xs
+LoggerSM.xs:
+package/package.xdc.inc: LoggerSM.xs
+QueueDescriptor.xs:
+package/package.xdc.inc: QueueDescriptor.xs
+UIAMetaData.xs:
+package/package.xdc.inc: UIAMetaData.xs
+UIAPacket.xs:
+package/package.xdc.inc: UIAPacket.xs
+ServiceMgr.xs:
+package/package.xdc.inc: ServiceMgr.xs
+
+# schema update dependencies
+package/package.xdc.inc: CtxFilter.xdc
+package/package.xdc.inc: EventHdr.xdc
+package/package.xdc.inc: LogCtxChg.xdc
+package/package.xdc.inc: LogSnapshot.xdc
+package/package.xdc.inc: LogSync.xdc
+package/package.xdc.inc: LoggerCircBuf.xdc
+package/package.xdc.inc: LoggerProbePoint.xdc
+package/package.xdc.inc: LoggerStopMode.xdc
+package/package.xdc.inc: LoggerSM.xdc
+package/package.xdc.inc: LoggerTypes.xdc
+package/package.xdc.inc: MultiCoreTypes.xdc
+package/package.xdc.inc: QueueDescriptor.xdc
+package/package.xdc.inc: UIAMetaData.xdc
+package/package.xdc.inc: UIAPacket.xdc
+package/package.xdc.inc: ServiceMgr.xdc
+package/package.xdc.inc: Transport.xdc
+package/package.xdc.inc: ICtxFilterCallback.xdc
+package/package.xdc.inc: ILoggerSnapshot.xdc
+package/package.xdc.inc: IUIATimestampProvider.xdc
+package/package.xdc.inc: IUIATraceSyncProvider.xdc
+package/package.xdc.inc: IUIATraceSyncClient.xdc
+package/package.xdc.inc: IServiceMgrSupport.xdc
+package/package.xdc.inc: IUIATransfer.xdc
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/IUIAMetaProvider.xdc
+ti/uia/events/IUIAMetaProvider.xdc:
+vpath ti/uia/events/IUIAMetaProvider.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/UIASnapshot.xdc
+ti/uia/events/UIASnapshot.xdc:
+vpath ti/uia/events/UIASnapshot.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/DvtTypes.xdc
+ti/uia/events/DvtTypes.xdc:
+vpath ti/uia/events/DvtTypes.xdc $(XPKGVPATH)
+package/package.xdc.inc: ti/uia/events/IUIAEvent.xdc
+ti/uia/events/IUIAEvent.xdc:
+vpath ti/uia/events/IUIAEvent.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampClient.xdc
+xdc/runtime/ITimestampClient.xdc:
+vpath xdc/runtime/ITimestampClient.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/IFilterLogger.xdc
+xdc/runtime/IFilterLogger.xdc:
+vpath xdc/runtime/IFilterLogger.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/Assert.xdc
+xdc/runtime/Assert.xdc:
+vpath xdc/runtime/Assert.xdc $(XPKGVPATH)
+package/package.xdc.inc: xdc/runtime/ITimestampProvider.xdc
+xdc/runtime/ITimestampProvider.xdc:
+vpath xdc/runtime/ITimestampProvider.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/antlr.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/spec/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/js.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/cmd/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/xsr/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/ecj.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/global/java/package.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/shelf/java/tar.jar
+/db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: /db/rtree/library/trees/xdcprod/xdcprod-u33/product/xdccore/Linux/xdctools_3_31_01_33_core/packages/xdc/services/intern/gen/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+package/package.xdc.inc: CtxFilter.h
+CtxFilter.h:
+package/package.xdc.inc: package/internal/CtxFilter.xdc.h
+package/internal/CtxFilter.xdc.h:
+package/package.xdc.inc: EventHdr.h
+EventHdr.h:
+package/package.xdc.inc: package/internal/EventHdr.xdc.h
+package/internal/EventHdr.xdc.h:
+package/package.xdc.inc: LogCtxChg.h
+LogCtxChg.h:
+package/package.xdc.inc: package/internal/LogCtxChg.xdc.h
+package/internal/LogCtxChg.xdc.h:
+package/package.xdc.inc: IUIATraceSyncClient.h
+IUIATraceSyncClient.h:
+package/package.xdc.inc: LogSnapshot.h
+LogSnapshot.h:
+package/package.xdc.inc: package/internal/LogSnapshot.xdc.h
+package/internal/LogSnapshot.xdc.h:
+package/package.xdc.inc: LogSync.h
+LogSync.h:
+package/package.xdc.inc: package/internal/LogSync.xdc.h
+package/internal/LogSync.xdc.h:
+package/package.xdc.inc: LoggerSM.h
+LoggerSM.h:
+package/package.xdc.inc: package/internal/LoggerSM.xdc.h
+package/internal/LoggerSM.xdc.h:
+package/package.xdc.inc: LoggerTypes.h
+LoggerTypes.h:
+package/package.xdc.inc: package/internal/LoggerTypes.xdc.h
+package/internal/LoggerTypes.xdc.h:
+package/package.xdc.inc: MultiCoreTypes.h
+MultiCoreTypes.h:
+package/package.xdc.inc: package/internal/MultiCoreTypes.xdc.h
+package/internal/MultiCoreTypes.xdc.h:
+package/package.xdc.inc: QueueDescriptor.h
+QueueDescriptor.h:
+package/package.xdc.inc: package/internal/QueueDescriptor.xdc.h
+package/internal/QueueDescriptor.xdc.h:
+package/package.xdc.inc: UIAMetaData.h
+UIAMetaData.h:
+package/package.xdc.inc: package/internal/UIAMetaData.xdc.h
+package/internal/UIAMetaData.xdc.h:
+package/package.xdc.inc: UIAPacket.h
+UIAPacket.h:
+package/package.xdc.inc: package/internal/UIAPacket.xdc.h
+package/internal/UIAPacket.xdc.h:
+package/package.xdc.inc: ServiceMgr.h
+ServiceMgr.h:
+package/package.xdc.inc: package/internal/ServiceMgr.xdc.h
+package/internal/ServiceMgr.xdc.h:
+package/package.xdc.inc: Transport.h
+Transport.h:
+package/package.xdc.inc: package/internal/Transport.xdc.h
+package/internal/Transport.xdc.h:
+package/package.xdc.inc: ICtxFilterCallback.h
+ICtxFilterCallback.h:
+package/package.xdc.inc: IUIATransfer.h
+IUIATransfer.h:
+package/package.xdc.inc: ILoggerSnapshot.h
+ILoggerSnapshot.h:
+package/package.xdc.inc: IUIATimestampProvider.h
+IUIATimestampProvider.h:
+package/package.xdc.inc: IUIATraceSyncProvider.h
+IUIATraceSyncProvider.h:
+package/package.xdc.inc: IServiceMgrSupport.h
+IServiceMgrSupport.h:
+package/package.xdc.inc: package/LogSync_CpuTimestampProxy.h
+package/LogSync_CpuTimestampProxy.h:
+package/package.xdc.inc: package/internal/LogSync_CpuTimestampProxy.xdc.h
+package/internal/LogSync_CpuTimestampProxy.xdc.h:
+package/package.xdc.inc: package/LogSync_GlobalTimestampProxy.h
+package/LogSync_GlobalTimestampProxy.h:
+package/package.xdc.inc: package/internal/LogSync_GlobalTimestampProxy.xdc.h
+package/internal/LogSync_GlobalTimestampProxy.xdc.h:
+package/package.xdc.inc: package/ServiceMgr_SupportProxy.h
+package/ServiceMgr_SupportProxy.h:
+package/package.xdc.inc: package/internal/ServiceMgr_SupportProxy.xdc.h
+package/internal/ServiceMgr_SupportProxy.xdc.h:
+

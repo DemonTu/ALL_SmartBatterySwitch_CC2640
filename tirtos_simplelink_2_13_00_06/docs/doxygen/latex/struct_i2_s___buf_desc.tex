@@ -1,0 +1,55 @@
+\subsection{I2\+S\+\_\+\+Buf\+Desc Struct Reference}
+\label{struct_i2_s___buf_desc}\index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+
+
+I2\+S buffer descriptor for issue/reclaim mode.  
+
+
+
+
+{\ttfamily \#include $<$I2\+S.\+h$>$}
+
+
+
+Collaboration diagram for I2\+S\+\_\+\+Buf\+Desc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=147pt]{struct_i2_s___buf_desc__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} \hyperlink{struct_i2_s___buf_desc_a0d0512ad9692e7eb4d486c1238cb75ce}{q\+Elem}
+\item 
+void $\ast$ \hyperlink{struct_i2_s___buf_desc_a63edcc97dba1524e4a63a055a6face33}{buf\+Ptr}
+\item 
+size\+\_\+t \hyperlink{struct_i2_s___buf_desc_a2d650ead8a0d337cb4d292e52e1a02c5}{buf\+Size}
+\item 
+uintptr\+\_\+t \hyperlink{struct_i2_s___buf_desc_a572be4bbbf39c6d7a0745829684676e1}{arg}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+I2\+S buffer descriptor for issue/reclaim mode. 
+
+\subsubsection{Field Documentation}
+\index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}!q\+Elem@{q\+Elem}}
+\index{q\+Elem@{q\+Elem}!I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+\paragraph[{q\+Elem}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem} I2\+S\+\_\+\+Buf\+Desc\+::q\+Elem}\label{struct_i2_s___buf_desc_a0d0512ad9692e7eb4d486c1238cb75ce}
+Used internally to link descriptors together \index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}!buf\+Ptr@{buf\+Ptr}}
+\index{buf\+Ptr@{buf\+Ptr}!I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+\paragraph[{buf\+Ptr}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ I2\+S\+\_\+\+Buf\+Desc\+::buf\+Ptr}\label{struct_i2_s___buf_desc_a63edcc97dba1524e4a63a055a6face33}
+Pointer to the buffer \index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}!buf\+Size@{buf\+Size}}
+\index{buf\+Size@{buf\+Size}!I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+\paragraph[{buf\+Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t I2\+S\+\_\+\+Buf\+Desc\+::buf\+Size}\label{struct_i2_s___buf_desc_a2d650ead8a0d337cb4d292e52e1a02c5}
+Size of the buffer (target M\+A\+Us). \index{I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}!arg@{arg}}
+\index{arg@{arg}!I2\+S\+\_\+\+Buf\+Desc@{I2\+S\+\_\+\+Buf\+Desc}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}uintptr\+\_\+t I2\+S\+\_\+\+Buf\+Desc\+::arg}\label{struct_i2_s___buf_desc_a572be4bbbf39c6d7a0745829684676e1}
+Optional argument associated with the descriptor. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_i2_s_8h}{I2\+S.\+h}\end{DoxyCompactItemize}

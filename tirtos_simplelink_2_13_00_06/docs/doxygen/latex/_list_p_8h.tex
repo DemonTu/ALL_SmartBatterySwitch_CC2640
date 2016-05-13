@@ -1,0 +1,367 @@
+\subsection{List\+P.\+h File Reference}
+\label{_list_p_8h}\index{List\+P.\+h@{List\+P.\+h}}
+
+
+\subsubsection{Detailed Description}
+Linked List interface for the R\+T\+O\+S Ports Interface. 
+
+============================================================================
+
+This module provides simple doubly-\/link list implementation. There are two main structures\+:
+\begin{DoxyItemize}
+\item \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List}\+: The structure that holds the start of a linked list. There is no A\+P\+I to create one. It is up to the driver to provide the structure itself.
+\item \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem}\+: The structure that must be in the structure that is placed onto a linked list. Generally it is the first field in the structure. For example\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct }MyStruct \{
+    ListP_Elem elem;
+    \textcolor{keywordtype}{void} *buffer;
+\} MyStruct;
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+The following shows how the link list with three elements.
+
+
+\begin{DoxyCode}
++ denotes null-terminated
+        \_\_\_\_\_\_\_        \_\_\_\_\_\_\_        \_\_\_\_\_\_\_      \_\_\_\_\_\_\_
+       |\_\_\_\_\_\_\_|----->|\_\_\_\_\_\_\_|----->|\_\_\_\_\_\_\_|--->|\_\_\_\_\_\_\_|--\textcolor{comment}{//---,}
+  ,----|\_\_\_\_\_\_\_|    ,-|\_\_\_\_\_\_\_|<-----|\_\_\_\_\_\_\_|<---|\_\_\_\_\_\_\_|<-\textcolor{comment}{//-, +}
+  |      List       +   elem           elem          elem       |
+  |\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_|
+\end{DoxyCode}
+
+
+The A\+P\+Is \hyperlink{_list_p_8h_a10d70aec4447b99682fda9a9a04bac41}{List\+P\+\_\+get}, \hyperlink{_list_p_8h_a0a7f250522308dd73892117dd6528d3b}{List\+P\+\_\+put}, and \hyperlink{_list_p_8h_a1f55484fc6fc6e5ab515e6652fde61bf}{List\+P\+\_\+put\+Head} are atomic. The other A\+P\+Is are not necessarily atomic. In other words, when traversing a linked list, it is up to the application to provide thread-\/safety (e.\+g. Hwi\+P\+\_\+disable/restore or Mutex\+P\+\_\+pend/post).
+
+Initializing and adding an element to the tail and removing it 
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct }MyStruct \{
+    ListP_Elem elem;
+    \textcolor{keywordtype}{void} *buffer;
+\} MyStruct;
+
+ListP_List list;
+MyStruct foo;
+MyStruct *bar;
+
+ListP_clearList(&list);
+ListP_put(&list, (ListP_Elem *)&foo);
+bar = (MyStruct *)ListP_get(&list);
+\end{DoxyCode}
+
+
+The \hyperlink{_list_p_8h_a0a7f250522308dd73892117dd6528d3b}{List\+P\+\_\+put} and \hyperlink{_list_p_8h_a10d70aec4447b99682fda9a9a04bac41}{List\+P\+\_\+get} A\+P\+Is are used to maintain a first-\/in first-\/out (F\+I\+F\+O) linked list.
+
+The \hyperlink{_list_p_8h_a1f55484fc6fc6e5ab515e6652fde61bf}{List\+P\+\_\+put\+Head} and \hyperlink{_list_p_8h_a10d70aec4447b99682fda9a9a04bac41}{List\+P\+\_\+get} A\+P\+Is are used to maintain a last-\/in first-\/out (L\+I\+F\+O) linked list.
+
+Traversing a list from head to tail. Note\+: thread-\/safety calls are not shown here. 
+\begin{DoxyCode}
+ListP_List list;
+ListP_Elem *temp;
+
+\textcolor{keywordflow}{for} (temp = ListP_head(&list); temp != NULL; temp = ListP_next(temp)) \{
+     printf(\textcolor{stringliteral}{"address = 0x%x\(\backslash\)n"}, temp);
+\}
+\end{DoxyCode}
+
+
+Traversing a list from tail to head. Note\+: thread-\/safety calls are not shown here. 
+\begin{DoxyCode}
+ListP_List list;
+ListP_Elem *temp;
+
+\textcolor{keywordflow}{for} (temp = ListP_tail(&list); temp != NULL; temp = ListP_prev(temp)) \{
+     printf(\textcolor{stringliteral}{"address = 0x%x\(\backslash\)n"}, temp);
+\}
+\end{DoxyCode}
+ 
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$stddef.\+h$>$}\\*
+Include dependency graph for List\+P.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_list_p_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_list_p_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem}
+\item 
+struct \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} \hyperlink{_list_p_8h_a836920a2438eb9d698a5d9a917cefdd4}{List\+P\+\_\+\+Elem}
+\item 
+typedef struct \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} \hyperlink{_list_p_8h_a7b0d006edcc0a69c7da886463ee49a48}{List\+P\+\_\+\+List}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_list_p_8h_acf7a7d0665fa487873202cde1f2dbcfc}{List\+P\+\_\+clear\+List} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Function to initialize the contents of a \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List}. \end{DoxyCompactList}\item 
+bool \hyperlink{_list_p_8h_aebb024ac9981fa4b949da2cef1864706}{List\+P\+\_\+empty} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Function to test whether a linked list is empty. \end{DoxyCompactList}\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$ \hyperlink{_list_p_8h_a10d70aec4447b99682fda9a9a04bac41}{List\+P\+\_\+get} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Function to atomically get the first elem in a linked list. \end{DoxyCompactList}\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$ \hyperlink{_list_p_8h_a906d92563e669e8bc403c3ade2c3f315}{List\+P\+\_\+head} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Function to return the head of a linked list. \end{DoxyCompactList}\item 
+void \hyperlink{_list_p_8h_a6c01e0009d184925094cdc25bb2d4beb}{List\+P\+\_\+insert} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list, \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$new\+Elem, \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$cur\+Elem)
+\begin{DoxyCompactList}\small\item\em Function to insert an elem into a linked list. \end{DoxyCompactList}\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$ \hyperlink{_list_p_8h_a3f00e523ca1c68910094ffb88c034b64}{List\+P\+\_\+next} (\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$elem)
+\begin{DoxyCompactList}\small\item\em Function to return the next elem in a linked list. \end{DoxyCompactList}\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$ \hyperlink{_list_p_8h_a76c97dd1c7c078919e9cc0d72722e2ef}{List\+P\+\_\+prev} (\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$elem)
+\begin{DoxyCompactList}\small\item\em Function to return the prev elem in a linked list. \end{DoxyCompactList}\item 
+void \hyperlink{_list_p_8h_a0a7f250522308dd73892117dd6528d3b}{List\+P\+\_\+put} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list, \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$elem)
+\begin{DoxyCompactList}\small\item\em Function to atomically put an elem onto the end of a linked list. \end{DoxyCompactList}\item 
+void \hyperlink{_list_p_8h_a1f55484fc6fc6e5ab515e6652fde61bf}{List\+P\+\_\+put\+Head} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list, \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$elem)
+\begin{DoxyCompactList}\small\item\em Function to atomically put an elem onto the head of a linked list. \end{DoxyCompactList}\item 
+void \hyperlink{_list_p_8h_a283e072509d6d31430afbb36c3b2ae55}{List\+P\+\_\+remove} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list, \hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$elem)
+\begin{DoxyCompactList}\small\item\em Function to remove an elem from a linked list. \end{DoxyCompactList}\item 
+\hyperlink{struct_list_p___elem}{List\+P\+\_\+\+Elem} $\ast$ \hyperlink{_list_p_8h_ab760fa05837473cb5a2a08d5d15cca88}{List\+P\+\_\+tail} (\hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Function to return the tail of a linked list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Typedef Documentation}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+\+Elem@{List\+P\+\_\+\+Elem}}
+\index{List\+P\+\_\+\+Elem@{List\+P\+\_\+\+Elem}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+\+Elem}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf List\+P\+\_\+\+Elem}  {\bf List\+P\+\_\+\+Elem}}\label{_list_p_8h_a836920a2438eb9d698a5d9a917cefdd4}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+\+List@{List\+P\+\_\+\+List}}
+\index{List\+P\+\_\+\+List@{List\+P\+\_\+\+List}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+\+List}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf List\+P\+\_\+\+List}  {\bf List\+P\+\_\+\+List}}\label{_list_p_8h_a7b0d006edcc0a69c7da886463ee49a48}
+
+
+\subsubsection{Function Documentation}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+clear\+List@{List\+P\+\_\+clear\+List}}
+\index{List\+P\+\_\+clear\+List@{List\+P\+\_\+clear\+List}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+clear\+List}]{\setlength{\rightskip}{0pt plus 5cm}void List\+P\+\_\+clear\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_acf7a7d0665fa487873202cde1f2dbcfc}
+
+
+Function to initialize the contents of a \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & Pointer to a \hyperlink{struct_list_p___list}{List\+P\+\_\+\+List} structure that will be use to maintain a linked list \\
+\hline
+\end{DoxyParams}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+empty@{List\+P\+\_\+empty}}
+\index{List\+P\+\_\+empty@{List\+P\+\_\+empty}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+empty}]{\setlength{\rightskip}{0pt plus 5cm}bool List\+P\+\_\+empty (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_aebb024ac9981fa4b949da2cef1864706}
+
+
+Function to test whether a linked list is empty. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to a linked list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if empty, false if not empty 
+\end{DoxyReturn}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+get@{List\+P\+\_\+get}}
+\index{List\+P\+\_\+get@{List\+P\+\_\+get}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+get}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem}$\ast$ List\+P\+\_\+get (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a10d70aec4447b99682fda9a9a04bac41}
+
+
+Function to atomically get the first elem in a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to a linked list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer the first elem in the linked list or N\+U\+L\+L if empty 
+\end{DoxyReturn}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+head@{List\+P\+\_\+head}}
+\index{List\+P\+\_\+head@{List\+P\+\_\+head}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+head}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem}$\ast$ List\+P\+\_\+head (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a906d92563e669e8bc403c3ade2c3f315}
+
+
+Function to return the head of a linked list. 
+
+This function does not remove the head, it simply returns a pointer to it. This function is typically used when traversing a linked list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the first elem in the linked list or N\+U\+L\+L if empty 
+\end{DoxyReturn}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+insert@{List\+P\+\_\+insert}}
+\index{List\+P\+\_\+insert@{List\+P\+\_\+insert}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+insert}]{\setlength{\rightskip}{0pt plus 5cm}void List\+P\+\_\+insert (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list, }
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{new\+Elem, }
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{cur\+Elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a6c01e0009d184925094cdc25bb2d4beb}
+
+
+Function to insert an elem into a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+{\em new\+Elem} & New elem to insert\\
+\hline
+{\em cur\+Elem} & Elem to insert the new\+Elem in front of. This value cannot be N\+U\+L\+L. \\
+\hline
+\end{DoxyParams}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+next@{List\+P\+\_\+next}}
+\index{List\+P\+\_\+next@{List\+P\+\_\+next}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem}$\ast$ List\+P\+\_\+next (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a3f00e523ca1c68910094ffb88c034b64}
+
+
+Function to return the next elem in a linked list. 
+
+This function does not remove the elem, it simply returns a pointer to next one. This function is typically used when traversing a linked list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em elem} & Elem in the list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the next elem in linked list or N\+U\+L\+L if at the end 
+\end{DoxyReturn}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+prev@{List\+P\+\_\+prev}}
+\index{List\+P\+\_\+prev@{List\+P\+\_\+prev}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+prev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem}$\ast$ List\+P\+\_\+prev (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a76c97dd1c7c078919e9cc0d72722e2ef}
+
+
+Function to return the prev elem in a linked list. 
+
+This function does not remove the elem, it simply returns a pointer to prev one. This function is typically used when traversing a linked list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em elem} & Elem in the list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the prev elem in linked list or N\+U\+L\+L if at the beginning 
+\end{DoxyReturn}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+put@{List\+P\+\_\+put}}
+\index{List\+P\+\_\+put@{List\+P\+\_\+put}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+put}]{\setlength{\rightskip}{0pt plus 5cm}void List\+P\+\_\+put (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list, }
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a0a7f250522308dd73892117dd6528d3b}
+
+
+Function to atomically put an elem onto the end of a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+{\em elem} & Element to place onto the end of the linked list \\
+\hline
+\end{DoxyParams}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+put\+Head@{List\+P\+\_\+put\+Head}}
+\index{List\+P\+\_\+put\+Head@{List\+P\+\_\+put\+Head}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+put\+Head}]{\setlength{\rightskip}{0pt plus 5cm}void List\+P\+\_\+put\+Head (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list, }
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a1f55484fc6fc6e5ab515e6652fde61bf}
+
+
+Function to atomically put an elem onto the head of a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+{\em elem} & Element to place onto the beginning of the linked list \\
+\hline
+\end{DoxyParams}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+remove@{List\+P\+\_\+remove}}
+\index{List\+P\+\_\+remove@{List\+P\+\_\+remove}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+remove}]{\setlength{\rightskip}{0pt plus 5cm}void List\+P\+\_\+remove (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list, }
+\item[{{\bf List\+P\+\_\+\+Elem} $\ast$}]{elem}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_a283e072509d6d31430afbb36c3b2ae55}
+
+
+Function to remove an elem from a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+{\em elem} & Element to be removed from a linked list \\
+\hline
+\end{DoxyParams}
+\index{List\+P.\+h@{List\+P.\+h}!List\+P\+\_\+tail@{List\+P\+\_\+tail}}
+\index{List\+P\+\_\+tail@{List\+P\+\_\+tail}!List\+P.\+h@{List\+P.\+h}}
+\paragraph[{List\+P\+\_\+tail}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List\+P\+\_\+\+Elem}$\ast$ List\+P\+\_\+tail (
+\begin{DoxyParamCaption}
+\item[{{\bf List\+P\+\_\+\+List} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}\label{_list_p_8h_ab760fa05837473cb5a2a08d5d15cca88}
+
+
+Function to return the tail of a linked list. 
+
+This function does not remove the tail, it simply returns a pointer to it. This function is typically used when traversing a linked list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & A pointer to the linked list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the last elem in the linked list or N\+U\+L\+L if empty 
+\end{DoxyReturn}

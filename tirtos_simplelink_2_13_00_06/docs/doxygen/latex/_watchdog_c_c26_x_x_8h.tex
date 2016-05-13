@@ -1,0 +1,134 @@
+\subsection{Watchdog\+C\+C26\+X\+X.\+h File Reference}
+\label{_watchdog_c_c26_x_x_8h}\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+
+
+\subsubsection{Detailed Description}
+Watchdog driver implementation for C\+C26\+X\+X. 
+
+============================================================================
+
+\subsubsection*{Driver include}
+
+The Watchdog header file for C\+C26\+X\+X should be included in an application as follows\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <ti/drivers/Watchdog.h>}
+\textcolor{preprocessor}{#include <ti/drivers/watchdog/WatchdogCC26XX.h>}
+\end{DoxyCode}
+
+
+\subsubsection*{Overview}
+
+\paragraph*{Note that the watchdog driver has not been fully validated, and thus should be considered experimental.}
+
+The general S\+P\+I A\+P\+I should be used in application code, i.\+e. \hyperlink{_s_p_i_8h_a62cfe494cb1df47cd602e8747e894fd1}{S\+P\+I\+\_\+open()} should be used instead of S\+P\+I\+C\+C26\+X\+X\+D\+M\+A\+\_\+open(). The board file will define the device specific config, and casting in the general A\+P\+I will ensure that the correct device specific functions are called.
+
+\subsubsection*{General Behavior}
+
+This Watchdog driver implementation is designed to operate on a C\+C26\+X\+X device. Once opened, C\+C26\+X\+X Watchdog will count down from the reload value specified in the \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}. If it times out, the Watchdog interrupt flag will be set, and a user-\/provided callback function will be called. If resets have been enabled in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} and the Watchdog Timer is allowed to time out again while the interrupt flag is still pending, a reset signal will be generated. To prevent a reset, \hyperlink{_watchdog_8h_a396decd6b1807db10c636f9987c3be4c}{Watchdog\+\_\+clear()} must be called to clear the interrupt flag.
+
+The reload value from which the Watchdog Timer counts down may be changed during runtime using \hyperlink{_watchdog_8h_a77ec81e1304fe05b77a9976e10e2d9a3}{Watchdog\+\_\+set\+Reload()}.
+
+\hyperlink{_watchdog_8h_a1c0dfea7011b06f303d01afb631ffbdd}{Watchdog\+\_\+close()} is {\bfseries not} supported by this driver implementation.
+
+By default the Watchdog driver has resets turned on. However, they may be turned off in the \hyperlink{struct_watchdog___params}{Watchdog\+\_\+\+Params} which allows the Watchdog Timer to be used like another timer interrupt. This functionality is {\bfseries not} supported by all platforms, refer to device specific documentation for details.
+
+\subsubsection*{Error handling}
+
+Tbd
+
+\subsubsection*{Power Management}
+
+Tbd
+
+\subsubsection*{Supported Functions}
+
+Tbd
+
+\subsubsection*{Use Cases}
+
+To have a user-\/defined function run at the warning interrupt, first define a void-\/type function that takes a Watchdog\+\_\+\+Handle cast to a U\+Arg as an argument such as the one shown below.
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} callback(UArg handle);
+
+...
+
+Watchdog\_Handle handle;
+Watchdog_Params params;
+
+Watchdog_Params_init(&params);
+params.callbackFxn = callback;
+handle = Watchdog_open(Watchdog\_configIndex, &params);
+\end{DoxyCode}
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+{\ttfamily \#include $<$ti/drivers/\+Watchdog.\+h$>$}\\*
+{\ttfamily \#include $<$ti/sysbios/family/arm/m3/\+Hwi.\+h$>$}\\*
+Include dependency graph for Watchdog\+C\+C26\+X\+X.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_watchdog_c_c26_x_x_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C26\+X\+X. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_watchdog_c_c26_x_x___object}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_watchdog_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_watchdog_c_c26_x_x___h_w_attrs}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs} \hyperlink{_watchdog_c_c26_x_x_8h_a3c5c1fb8e79e0ffbefbc0c6077490157}{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}
+\begin{DoxyCompactList}\small\item\em Watchdog hardware attributes for C\+C26\+X\+X. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{struct_watchdog_c_c26_x_x___object}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object} \hyperlink{_watchdog_c_c26_x_x_8h_a1974637ff573d5fb1e141f263ac5361f}{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}
+\begin{DoxyCompactList}\small\item\em Watchdog Object for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_watchdog___fxn_table}{Watchdog\+\_\+\+Fxn\+Table} \hyperlink{_watchdog_c_c26_x_x_8h_a1f60b940055d37c5bf8545499e948ca3}{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}
+\begin{DoxyCompactList}\small\item\em Watchdog function table for C\+C26\+X\+X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Macro Definition Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}}
+\index{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames@{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}]{\setlength{\rightskip}{0pt plus 5cm}\#define ti\+\_\+sysbios\+\_\+family\+\_\+arm\+\_\+m3\+\_\+\+Hwi\+\_\+\+\_\+nolocalnames}\label{_watchdog_c_c26_x_x_8h_aaa17ecf48f5762e2e1bdb0bab8aacf0c}
+
+
+\subsubsection{Typedef Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs@{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}  {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+H\+W\+Attrs}}\label{_watchdog_c_c26_x_x_8h_a3c5c1fb8e79e0ffbefbc0c6077490157}
+
+
+Watchdog hardware attributes for C\+C26\+X\+X. 
+
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+\+Object@{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+\+Object}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+Object}  {\bf Watchdog\+C\+C26\+X\+X\+\_\+\+Object}}\label{_watchdog_c_c26_x_x_8h_a1974637ff573d5fb1e141f263ac5361f}
+
+
+Watchdog Object for C\+C26\+X\+X. 
+
+Not to be accessed by the user. 
+
+\subsubsection{Variable Documentation}
+\index{Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}!Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table@{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}}
+\index{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table@{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}!Watchdog\+C\+C26\+X\+X.\+h@{Watchdog\+C\+C26\+X\+X.\+h}}
+\paragraph[{Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Watchdog\+\_\+\+Fxn\+Table} Watchdog\+C\+C26\+X\+X\+\_\+fxn\+Table}\label{_watchdog_c_c26_x_x_8h_a1f60b940055d37c5bf8545499e948ca3}
+
+
+Watchdog function table for C\+C26\+X\+X. 
+

@@ -1,0 +1,50 @@
+\subsection{S\+P\+I\+\_\+\+Transaction Struct Reference}
+\label{struct_s_p_i___transaction}\index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+
+
+A \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} data structure is used with \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. It indicates how many \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format} frames are sent and received from the buffers pointed to tx\+Buf and rx\+Buf. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} when the S\+P\+I driver is in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}.  
+
+
+
+
+{\ttfamily \#include $<$S\+P\+I.\+h$>$}
+
+\subsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \hyperlink{struct_s_p_i___transaction_ad049d6a900c4bdb59a5ee8ce3d5bced2}{count}
+\item 
+void $\ast$ \hyperlink{struct_s_p_i___transaction_a9461a248f1cceb4048668d44b323a0b8}{tx\+Buf}
+\item 
+void $\ast$ \hyperlink{struct_s_p_i___transaction_a214f57d7809c875fb9456a62a406e041}{rx\+Buf}
+\item 
+void $\ast$ \hyperlink{struct_s_p_i___transaction_ac47daaa10705d748ace918a098aa1945}{arg}
+\item 
+\hyperlink{_s_p_i_8h_a913c57c335166de9caa54b7eb9ad95fb}{S\+P\+I\+\_\+\+Status} \hyperlink{struct_s_p_i___transaction_aa244504b2384411f7de17340be62128a}{status}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A \hyperlink{struct_s_p_i___transaction}{S\+P\+I\+\_\+\+Transaction} data structure is used with \hyperlink{_s_p_i_8h_a989e17f96b54fcc3dc2cac5f8ac6bdb2}{S\+P\+I\+\_\+transfer()}. It indicates how many \hyperlink{_s_p_i_8h_a53949638d43ae7bf71b74c2b136ad206}{S\+P\+I\+\_\+\+Frame\+Format} frames are sent and received from the buffers pointed to tx\+Buf and rx\+Buf. The arg variable is an user-\/definable argument which gets passed to the \hyperlink{_s_p_i_8h_a207e2d5a7e7ea5606b6995b6485ca015}{S\+P\+I\+\_\+\+Callback\+Fxn} when the S\+P\+I driver is in \hyperlink{_s_p_i_8h_ab9ea76c6529d6076eee5e1c4a5a92c6fa5631e69925c47a62a261c78ebbda39fb}{S\+P\+I\+\_\+\+M\+O\+D\+E\+\_\+\+C\+A\+L\+L\+B\+A\+C\+K}. 
+
+\subsubsection{Field Documentation}
+\index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!count@{count}}
+\index{count@{count}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\paragraph[{count}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t S\+P\+I\+\_\+\+Transaction\+::count}\label{struct_s_p_i___transaction_ad049d6a900c4bdb59a5ee8ce3d5bced2}
+Number of frames for this transaction \index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!tx\+Buf@{tx\+Buf}}
+\index{tx\+Buf@{tx\+Buf}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\paragraph[{tx\+Buf}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+P\+I\+\_\+\+Transaction\+::tx\+Buf}\label{struct_s_p_i___transaction_a9461a248f1cceb4048668d44b323a0b8}
+void $\ast$ to a buffer with data to be transmitted \index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!rx\+Buf@{rx\+Buf}}
+\index{rx\+Buf@{rx\+Buf}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\paragraph[{rx\+Buf}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+P\+I\+\_\+\+Transaction\+::rx\+Buf}\label{struct_s_p_i___transaction_a214f57d7809c875fb9456a62a406e041}
+void $\ast$ to a buffer to receive data \index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!arg@{arg}}
+\index{arg@{arg}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\paragraph[{arg}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+P\+I\+\_\+\+Transaction\+::arg}\label{struct_s_p_i___transaction_ac47daaa10705d748ace918a098aa1945}
+Argument to be passed to the callback function \index{S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}!status@{status}}
+\index{status@{status}!S\+P\+I\+\_\+\+Transaction@{S\+P\+I\+\_\+\+Transaction}}
+\paragraph[{status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+P\+I\+\_\+\+Status} S\+P\+I\+\_\+\+Transaction\+::status}\label{struct_s_p_i___transaction_aa244504b2384411f7de17340be62128a}
+Status code set by S\+P\+I\+\_\+transfer 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_p_i_8h}{S\+P\+I.\+h}\end{DoxyCompactItemize}

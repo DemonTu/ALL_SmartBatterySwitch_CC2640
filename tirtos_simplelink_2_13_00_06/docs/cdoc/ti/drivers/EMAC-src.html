@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>module ti.drivers.EMAC</title>
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="../../src.css"/>
+</head>
+<body>
+<pre class=src>
+     1    <span class="comment">/*
+</span>     2    <span class="comment"> * Copyright (c) 2014, Texas Instruments Incorporated
+</span>     3    <span class="comment"> * All rights reserved.
+</span>     4    <span class="comment"> *
+</span>     5    <span class="comment"> * Redistribution and use in source and binary forms, with or without
+</span>     6    <span class="comment"> * modification, are permitted provided that the following conditions
+</span>     7    <span class="comment"> * are met:
+</span>     8    <span class="comment"> *
+</span>     9    <span class="comment"> * *  Redistributions of source code must retain the above copyright
+</span>    10    <span class="comment"> *    notice, this list of conditions and the following disclaimer.
+</span>    11    <span class="comment"> *
+</span>    12    <span class="comment"> * *  Redistributions in binary form must reproduce the above copyright
+</span>    13    <span class="comment"> *    notice, this list of conditions and the following disclaimer in the
+</span>    14    <span class="comment"> *    documentation and/or other materials provided with the distribution.
+</span>    15    <span class="comment"> *
+</span>    16    <span class="comment"> * *  Neither the name of Texas Instruments Incorporated nor the names of
+</span>    17    <span class="comment"> *    its contributors may be used to endorse or promote products derived
+</span>    18    <span class="comment"> *    from this software without specific prior written permission.
+</span>    19    <span class="comment"> *
+</span>    20    <span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+</span>    21    <span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+</span>    22    <span class="comment"> * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+</span>    23    <span class="comment"> * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+</span>    24    <span class="comment"> * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+</span>    25    <span class="comment"> * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+</span>    26    <span class="comment"> * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+</span>    27    <span class="comment"> * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+</span>    28    <span class="comment"> * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+</span>    29    <span class="comment"> * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+</span>    30    <span class="comment"> * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</span>    31    <span class="comment"> */</span>
+    32    <span class="comment">/*
+</span>    33    <span class="comment"> *  ======== EMAC.xdc ========
+</span>    34    <span class="comment"> */</span>
+    35    <span class=key>package</span> ti.drivers;
+    36    import xdc.rov.ViewInfo;
+    37    
+    38    <span class="xdoc">/*!
+</span>    39    <span class="xdoc"> *  ======== EMAC ========
+</span>    40    <span class="xdoc"> *  Module which allows configuration of the EMAC module
+</span>    41    <span class="xdoc"> *
+</span>    42    <span class="xdoc"> */</span>
+    43    @NoRuntime
+    44    @HeaderName(<span class="string">""</span>)
+    45    <span class=key>module</span> EMAC {
+    46    
+    47        <span class="xdoc">/*!
+</span>    48    <span class="xdoc">     *  ======== LibType ========
+</span>    49    <span class="xdoc">     *  EMAC library selection options
+</span>    50    <span class="xdoc">     *
+</span>    51    <span class="xdoc">     *  This enumeration defines all the EMAC library type
+</span>    52    <span class="xdoc">     *  provided by the product.  You can select the library type by setting
+</span>    53    <span class="xdoc">     *  the {<b>@link</b> #libType EMAC.libType} configuration parameter.
+</span>    54    <span class="xdoc">     *
+</span>    55    <span class="xdoc">     *  <b>@field(LibType_Instrumented)</b> The library supplied is prebuilt with
+</span>    56    <span class="xdoc">     *  logging and assertions enabled.
+</span>    57    <span class="xdoc">     *
+</span>    58    <span class="xdoc">     *  <b>@field(LibType_NonInstrumented)</b> The library supplied is prebuilt
+</span>    59    <span class="xdoc">     *  with logging and assertions disabled.
+</span>    60    <span class="xdoc">     */</span>
+    61        <span class=key>enum</span> LibType {
+    62            LibType_Instrumented,           <span class="xdoc">/*! instrumented */</span>
+    63            LibType_NonInstrumented         <span class="xdoc">/*! non-instrumented */</span>
+    64        };
+    65    
+    66        <span class="xdoc">/*!
+</span>    67    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    68    <span class="xdoc">     *  ======== EMAC_Config ========
+</span>    69    <span class="xdoc">     *  Copied from EMAC.h and must match.
+</span>    70    <span class="xdoc">     */</span>
+    71        <span class=key>struct</span> EMAC_Config {
+    72            Ptr         fxnTablePtr;
+    73            Ptr         object;
+    74            Ptr         hwAttrs;
+    75        };
+    76    
+    77        <span class="xdoc">/*!
+</span>    78    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    79    <span class="xdoc">     *  ======== EMACTiva_Object ========
+</span>    80    <span class="xdoc">     *  Copied from EMACTiva.h and must match.
+</span>    81    <span class="xdoc">     */</span>
+    82        <span class=key>struct</span> EMACTiva_Object {
+    83            ti.sysbios.knl.Swi.Handle  swi;
+    84            ti.sysbios.hal.Hwi.Handle  hwi;
+    85            UInt                       rxCount;
+    86            UInt                       rxDropped;
+    87            UInt                       txSent;
+    88            UInt                       txDropped;
+    89            UInt                       linkUp;
+    90            Ptr                        pTxDescList;
+    91            Ptr                        pRxDescList;
+    92        };
+    93    
+    94        <span class="xdoc">/*!
+</span>    95    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>    96    <span class="xdoc">     *  ======== EMACTiva_HWAttrs ========
+</span>    97    <span class="xdoc">     *  Copied from EMACTiva.h and must match.
+</span>    98    <span class="xdoc">     */</span>
+    99        <span class=key>struct</span> EMACTiva_HWAttrs {
+   100            <span class=key>unsigned</span> <span class=key>int</span>  intNum;
+   101            String        macAddress;
+   102        };
+   103    
+   104        <span class="xdoc">/*!
+</span>   105    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   106    <span class="xdoc">     *  ======== EMACSnow_HWAttrs ========
+</span>   107    <span class="xdoc">     *  Copied from EMACSnow.h and must match.
+</span>   108    <span class="xdoc">     */</span>
+   109        <span class=key>struct</span> EMACSnow_HWAttrs {
+   110            <span class=key>unsigned</span> <span class=key>int</span>  baseAddr;
+   111            <span class=key>unsigned</span> <span class=key>int</span>  intNum;
+   112            String        macAddress;
+   113        };
+   114    
+   115        <span class="xdoc">/*!
+</span>   116    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   117    <span class="xdoc">     *  ======== EMACSnow_Data ========
+</span>   118    <span class="xdoc">     *  Copied from EMACSnow.h and must match.
+</span>   119    <span class="xdoc">     */</span>
+   120        <span class=key>struct</span> EMACSnow_Data {
+   121            Ptr         hEvent;
+   122            UInt8       PBM_tx[12];
+   123            UInt8       PBM_rx[12];
+   124            UInt        rxCount;
+   125            UInt        rxDropped;
+   126            UInt        txSent;
+   127            UInt        txDropped;
+   128            UInt        abnormalInts;
+   129            UInt        isrCount;
+   130            UInt        linkUp;
+   131        };
+   132    
+   133        <span class="xdoc">/*!
+</span>   134    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   135    <span class="xdoc">     *  ======== EMACSnow_Object ========
+</span>   136    <span class="xdoc">     *  Copied from EMACTiva.h and must match.
+</span>   137    <span class="xdoc">     */</span>
+   138        <span class=key>struct</span> EMACSnow_Object {
+   139            ti.sysbios.knl.Swi.Handle  swi;
+   140        };
+   141    
+   142        <span class="xdoc">/*!
+</span>   143    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   144    <span class="xdoc">     *  ======== BasicView ========
+</span>   145    <span class="xdoc">     */</span>
+   146        <span class=key>metaonly</span> <span class=key>struct</span> BasicView {
+   147            String      macAddress;
+   148            String      functionTable;
+   149            String      libType;
+   150            String      emacHandle;
+   151            Bool        linkUp;
+   152        };
+   153    
+   154        <span class="xdoc">/*!
+</span>   155    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   156    <span class="xdoc">     *  ======== StatsView ========
+</span>   157    <span class="xdoc">     */</span>
+   158        <span class=key>metaonly</span> <span class=key>struct</span> StatsView {
+   159            UInt       rxCount;
+   160            UInt       rxDropped;
+   161            UInt       txSent;
+   162            UInt       txDropped;
+   163        }
+   164    
+   165        <span class="xdoc">/*!
+</span>   166    <span class="xdoc">     *  <b>@_nodoc</b>
+</span>   167    <span class="xdoc">     *  ======== rovViewInfo ========
+</span>   168    <span class="xdoc">     */</span>
+   169        @Facet
+   170        <span class=key>metaonly</span> <span class=key>config</span> ViewInfo.Instance rovViewInfo =
+   171            ViewInfo.create({
+   172                viewMap: [
+   173                    [<span class="string">'Basic'</span>, {type: ViewInfo.MODULE_DATA,
+   174                               viewInitFxn: <span class="string">'viewInitBasic'</span>,
+   175                               structName: <span class="string">'BasicView'</span>}],
+   176                    [<span class="string">'Statistics'</span>, {type: ViewInfo.MODULE_DATA,
+   177                                    viewInitFxn: <span class="string">'viewInitStats'</span>,
+   178                                    structName: <span class="string">'StatsView'</span>}],
+   179                ]
+   180            });
+   181    
+   182        <span class="xdoc">/*!
+</span>   183    <span class="xdoc">     *  ======== libType ========
+</span>   184    <span class="xdoc">     *  EMAC Library type
+</span>   185    <span class="xdoc">     *
+</span>   186    <span class="xdoc">     *  Deprecated: Please use ti.tirtos.TIRTOS.libType instead.
+</span>   187    <span class="xdoc">     *
+</span>   188    <span class="xdoc">     *  The EMAC runtime is provided in the form of a library that is
+</span>   189    <span class="xdoc">     *  linked with your application.  Several forms of this library are
+</span>   190    <span class="xdoc">     *  provided with the EMAC product. This configuration parameter
+</span>   191    <span class="xdoc">     *  allows you to select the form of EMAC to use.
+</span>   192    <span class="xdoc">     *
+</span>   193    <span class="xdoc">     *  The default value of libType is
+</span>   194    <span class="xdoc">     *  {<b>@link</b> #LibType_Instrumented EMAC_LibType_Instrumented}.  For a
+</span>   195    <span class="xdoc">     *  complete list of options and what they offer see {<b>@link</b> #LibType}.
+</span>   196    <span class="xdoc">     */</span>
+   197        <span class=key>metaonly</span> <span class=key>config</span> LibType libType = LibType_Instrumented;
+   198    }
+</pre>
+</body></html>
