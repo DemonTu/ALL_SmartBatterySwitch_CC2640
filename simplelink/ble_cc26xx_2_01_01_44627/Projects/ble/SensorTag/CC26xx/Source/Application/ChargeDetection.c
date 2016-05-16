@@ -26,14 +26,17 @@ static void chargeState_Callback(PIN_Handle handle, PIN_Id pinId)
 		case Board_Charge_PG:	// 充放电状态指示 0 为插上电源， 1 为拔掉电源
 			if (PIN_getInputValue(pinId))
 			{
-				// 拔掉电源
-				bspUartWrite("插电", 4);
+				// 拔掉电源		
+				//uartWriteDebug("断电", 4);
 				chargingFlag = 0;
+				//OLED_ShowString(0, 48, "rh");
 			}
 			else
 			{
 				// 插上电源充电
-				bspUartWrite("断电", 4);
+				//uartWriteDebug("插电", 4);
+				userStartClock10ms();
+				//OLED_ShowString(0, 48, "ch");
 				chargingFlag = 1;
 			}
 			break;
@@ -64,18 +67,23 @@ STR_CHARGESTATE chargeStateRead(void)
 {
 	uint8_t stat1;
 	uint8_t stat2;
+	uint8_t charge = 0;
+	
 	STR_CHARGESTATE chargeState = CHARGENONE;
 	
 	stat1 = PIN_getInputValue(Board_Charge_Stat1);
 	stat2 = PIN_getInputValue(Board_Charge_Stat2);
 
-	if (1==stat1 && 0==stat2)
+	SMB_Read(RELATIVE_SOC, &charge, 1);
+	//bspUartWrite(&charge, 1);
+
+	if (1==stat1 && 0==stat2 && charge<100)
 	{
 		chargeState = CHARGING;
 		PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 1);
 		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
 	}
-	else if (0==stat1 && 1==stat2)
+	else if (0==stat1 && 1==stat2 || 100==charge)
 	{
 		chargeState = CHARGED;
 		PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
@@ -89,8 +97,8 @@ STR_CHARGESTATE chargeStateRead(void)
 	}
 	else
 	{
-		PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 1);
-		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 1);
+		PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
+		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
 		//错误状态
 	}
 		
@@ -102,3 +110,8 @@ uint8_t isChargePowerUp(void)
 	return chargingFlag;
 }
 
+void chargedLedState(void)
+{
+	PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
+	PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 1);
+}

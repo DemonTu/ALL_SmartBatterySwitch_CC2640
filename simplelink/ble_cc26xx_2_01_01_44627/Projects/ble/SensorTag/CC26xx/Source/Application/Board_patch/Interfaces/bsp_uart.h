@@ -20,11 +20,20 @@ extern "C"
 /*********************************************************************
  * FUNCTIONS
  */
+
+//#define USART_DEBUG
+
 void bspUartInit(void);
 
 int bspUartRead(uint8_t *buf, uint8_t len);
+
 int bspUartWrite(uint8_t *buf, uint8_t len);
 
+#ifdef USART_DEBUG
+#define uartWriteDebug(a, b) bspUartWrite(a, b)    
+#else
+#define uartWriteDebug(a, b)
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus

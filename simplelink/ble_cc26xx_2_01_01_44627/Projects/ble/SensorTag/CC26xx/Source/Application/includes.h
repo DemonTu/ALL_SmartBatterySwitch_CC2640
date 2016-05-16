@@ -40,7 +40,7 @@
 #include "SmBus_Driver.h"
 #include "ChargeDetection.h"
 
-
+#include "userAppTask.h"
 
 #endif
 

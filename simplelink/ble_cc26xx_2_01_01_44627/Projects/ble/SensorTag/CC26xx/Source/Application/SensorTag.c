@@ -220,7 +220,7 @@ static uint8_t scanRspData[] =
   0x11,   // length of this data
   GAP_ADTYPE_LOCAL_NAME_COMPLETE,
   'C', 'C', '2', '6', '5', '0', ' ',
-  'S', 'e', 'n',  's',  'o',  'r', 'T', 'a', 'g',
+  'S', 'e', 'n',  's',  'o',  'r', 'T', 'a', 'T',
   
 //  'L', 'N', '-', 'W', 'i', 'C', ' ', 'I', 'n', 't', 
 //  'u', 's', 'l', 'e', 'g', 'e', 'r', 'e', 'X',	 
@@ -735,7 +735,7 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
       systemId[5] = ownAddress[3];
 
       DevInfo_SetParameter(DEVINFO_SYSTEM_ID, DEVINFO_SYSTEM_ID_LEN, systemId);
-      bspUartWrite("Initialized", 11);
+      uartWriteDebug("Initialized", 11);
     }
     break;
 
@@ -749,7 +749,7 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
     // Make sure key presses are not stuck
     sensorTag_updateAdvertisingData(0);
 
-    bspUartWrite("Advertising", 11);
+    uartWriteDebug("Advertising", 11);
     break;
 
   case GAPROLE_CONNECTED:
@@ -768,7 +768,7 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
 
     }
   
-    bspUartWrite("Connected", 9);
+    uartWriteDebug("Connected", 9);
 	OLED_showBluetoothBmp(0, 0);
 	
     break;
@@ -776,10 +776,10 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
   case GAPROLE_CONNECTED_ADV:
     break;
   case GAPROLE_WAITING:
-  	bspUartWrite("WAITING", 7);
+  	uartWriteDebug("WAITING", 7);
 	break;
   case GAPROLE_WAITING_AFTER_TIMEOUT:
-  		bspUartWrite("TIMEOUT", 7);
+  		uartWriteDebug("TIMEOUT", 7);
 		//SensorTag_resetAllSensors();
 		//LCD_WRITES_STATUS("Waiting...");
     break;

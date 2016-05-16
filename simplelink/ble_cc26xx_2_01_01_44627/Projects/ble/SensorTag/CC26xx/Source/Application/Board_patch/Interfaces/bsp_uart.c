@@ -75,8 +75,8 @@ static void bspUartReadCb(UART_Handle uarthd, void *buf, size_t count)
 	UART_readCancel(uarthd);
 	// process data that uart receive
 		
-	bspUartWrite("tt", 2);	
-    bspUartWrite(rxBuf, count);
+//	uartWriteDebug("tt", 2);	
+//  uartWriteDebug(rxBuf, count);
 	
 	UART_read(uarthd, rxBuf, UART_RX_LEN);
 }

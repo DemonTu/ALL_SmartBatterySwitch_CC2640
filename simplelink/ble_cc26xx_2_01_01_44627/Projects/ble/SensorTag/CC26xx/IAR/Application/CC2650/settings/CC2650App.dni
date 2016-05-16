@@ -16,7 +16,7 @@ xdsResetStrategy=3
 xds100serialNo=06EB122104EF
 xds100foundProbes=
 [DebugChecksum]
-Checksum=865916842
+Checksum=751885494
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -38,11 +38,15 @@ LogFile=_ ""
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.767.1" 0 0 1 "" 0 "" 0
-Count=1
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.772.2" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.120.34" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.79.5" 0 0 1 "" 0 "" 0
+Count=3
 [Aliases]
 A0=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\aon_batmon.c" ""
 A1=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\chipinfo.c" ""
 A2=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\chipinfo.h" ""
-Count=3
+A3=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\cpu.c" ""
+A4=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\sys_ctrl.c" ""
+Count=5
 SuppressDialog=0

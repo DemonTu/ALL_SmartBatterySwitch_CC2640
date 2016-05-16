@@ -79,19 +79,20 @@ static void Pollint1Sec(void)
     switch(r_pollint._100msCount)
     {
         case 1:
-			if (0)
+			#if 0
 			{
 				uint8_t smbBuf[3];
-				bspUartWrite("Test=", 5);
+				uartWriteDebug("Test=", 5);
 				SMB_Read(RELATIVE_SOC, smbBuf, 1);
-				bspUartWrite(smbBuf, 1);
+				uartWriteDebug(smbBuf, 1);
 				SMB_Read(ABSOLUTE_SOC, smbBuf, 1);
-				bspUartWrite(smbBuf, 1);
+				uartWriteDebug(smbBuf, 1);
 				SMB_Read(CYCLE_COUNT, smbBuf, 2);
-				bspUartWrite(smbBuf, 2);
+				uartWriteDebug(smbBuf, 2);
 				SMB_Read(DESIGN_CAPACITY, smbBuf, 2);
-				bspUartWrite(smbBuf, 2);
+				uartWriteDebug(smbBuf, 2);
 			}
+			#endif
             break;
         case 2:
 			if (systemState.delayPowerOffTime)
@@ -103,7 +104,7 @@ static void Pollint1Sec(void)
 					KEY_EnableIRQ();
 
 					//关掉时钟
-					bspUartWrite("tmout", 5);
+					uartWriteDebug("tmout", 5);
 					Util_stopClock(&periodicClock_10ms);
 				}
 			}
@@ -287,7 +288,7 @@ void userAppPro(void)
 					if (KEY_HIGH == pMsg->GPIOStatus)
 					{
 						wifiPowerOn();
-						bspUartWrite("poweron3v3", 10);
+						uartWriteDebug("poweron3v3", 10);
 						OLED_ShowString(40,32, "WiCore"); 
 						
 						userAppShowCharge();
@@ -301,7 +302,7 @@ void userAppPro(void)
 					else
 					{
 						wifiPowerDown();
-						bspUartWrite("powerdown3v3", 12);
+						uartWriteDebug("powerdown3v3", 12);
 						// 清低电闪烁
 						systemState.lowBatteryFlag = 0;
 						OLED_Clear(); // 这个执行时间较长 打乱了定时周期，所以stopClock是没有用的
@@ -320,7 +321,7 @@ void userAppPro(void)
 					if (KEY_IQR == pMsg->GPIOStatus)
 					{
 						KEY_DisableIRQ();
-						bspUartWrite("tttt", 4);
+						uartWriteDebug("tttt", 4);
 						systemState.powerOffFlag = 1;
 						systemState.delayPowerOffTime = 5; // 延时5s 判断是否是按键长按
 						Util_startClock(&periodicClock_10ms);
@@ -342,14 +343,14 @@ void userAppPro(void)
 								GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
 							}
 
-							bspUartWrite("poweron", 7);
+							uartWriteDebug("poweron", 7);
 						}
 						else
 						{
 							//系统断电
 							
 							wifiPowerDown();
-							bspUartWrite("powerdown", 9);
+							uartWriteDebug("powerdown", 9);
 							
 							OLED_Clear();
 													
@@ -378,7 +379,7 @@ void userAppPro(void)
 						else if (1 == systemState.keyShortFlag)// 短按松开 产生一次短按完整事件
 						{
 							//短按事件处理
-							bspUartWrite("短按", 4);
+							uartWriteDebug("短按", 4);
 						}
 					}
 					else if (KEY_HIGH == pMsg->GPIOStatus) // 短按
@@ -436,7 +437,7 @@ uint8_t userAppShowCharge(void)
 	uint8_t bmpMov = 0;
 	
 	SMB_Read(RELATIVE_SOC, &charge, 1);
-	//bspUartWrite(&charge, 1);
+	uartWriteDebug(&charge, 1);
 
 	OLED_ShowString(40,0, "          ");	// 清电池显示区域
 	
@@ -446,6 +447,7 @@ uint8_t userAppShowCharge(void)
 	}
 	if (100 == charge)
 	{
+		uartWriteDebug("T", 1);
 		bmpMov = 8;
 		chargeState = 0;
 	}
@@ -481,7 +483,7 @@ uint8_t userAppShowCharge(void)
 	}
 	
 	sprintf((char *)smbBuf, "%02d%", charge);
-	if (0==isChargePowerUp() || 100==charge)
+	if (0 == isChargePowerUp())
 	{
 		
 		OLED_showBatteryBmp(0, 88-bmpMov, chargeState);
@@ -489,9 +491,30 @@ uint8_t userAppShowCharge(void)
 	}
 	else
 	{
-		OLED_showBatteryBmp(0, 88, 7);	// 显示充电图标
+		if (charge == 100)
+		{
+			
+			uartWriteDebug("I", 1);
+			OLED_showBatteryBmp(0, 88-bmpMov, chargeState);
+			//chargedLedState();
+		}
+		else
+		{
+			uartWriteDebug("O", 1);
+			OLED_showBatteryBmp(0, 88-bmpMov, 7);	// 显示充电图标
+		}
+		
 	}
 	OLED_ShowString(104-bmpMov, 0, smbBuf);	
 	return 0;
 }
 
+//===============================================
+void userStopClock10ms(void)
+{
+	Util_stopClock(&periodicClock_10ms);
+}
+void userStartClock10ms(void)
+{
+	Util_startClock(&periodicClock_10ms);
+}

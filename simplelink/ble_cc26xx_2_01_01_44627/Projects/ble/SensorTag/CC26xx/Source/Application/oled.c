@@ -209,6 +209,7 @@ static void OLED_WR_Byte(uint8_t dat, uint8_t cmd)
 uint8_t OLED_GRAM[MAX_LINE_NAME][MAX_ROW_NAME/8];	 
 uint8_t OLED_GRAM_Temp[MAX_LINE_NAME][MAX_ROW_NAME/8];
 //更新显存到LCD		 
+#if 1
 void OLED_Refresh_Gram(void)
 {
 	uint8_t i,n;		 
@@ -230,6 +231,29 @@ void OLED_Refresh_Gram(void)
 		}
 	}    
 }
+#else
+void OLED_Refresh_Gram(void)
+{
+	uint8_t i,n;		 
+
+    // 逐行跟新 
+    
+	for(i=0;i<(MAX_ROW_NAME/8);i++)  
+	{  
+		if (memcmp(&OLED_GRAM_Temp[i*128], &OLED_GRAM[i*128], 128))
+		{
+			memcpy(&OLED_GRAM_Temp[i*128], &OLED_GRAM[i*128], 128);
+			
+			OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
+			OLED_WR_Byte (0x04,OLED_CMD);      //设置显示位置—列低地址 2为12864 4为右移两点
+			OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址   
+			for(n=0;n<MAX_LINE_NAME;n++){
+				OLED_WR_Byte(OLED_GRAM[n][i],OLED_DATA); 
+			}
+		}
+	}    
+}
+#endif
 
 	  	  
 //开启OLED显示    

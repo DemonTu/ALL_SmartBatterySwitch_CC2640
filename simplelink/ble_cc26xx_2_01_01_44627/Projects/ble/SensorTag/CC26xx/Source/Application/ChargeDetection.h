@@ -13,5 +13,6 @@ typedef enum
 extern void chargeDetection_Init(void);
 extern STR_CHARGESTATE chargeStateRead(void);
 extern uint8_t isChargePowerUp(void);
+extern void chargedLedState(void);
 
 #endif	

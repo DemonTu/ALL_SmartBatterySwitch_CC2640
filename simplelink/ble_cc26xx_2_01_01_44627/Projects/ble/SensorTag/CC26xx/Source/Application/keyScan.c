@@ -112,7 +112,7 @@ void KEY_Scan_10ms(void)
 					Util_enqueueMsg(keyMsgQueue, sem, (uint8_t *)tempMsg);
 				}
 			}
-			bspUartWrite("keydown", 7);
+			uartWriteDebug("keydown", 7);
 			// ¶Ì°´
 			break;
 		case 0xff:
@@ -126,7 +126,7 @@ void KEY_Scan_10ms(void)
 					tempMsg->GPIOStatus = KEY_LONG;
 					Util_enqueueMsg(keyMsgQueue, sem, (uint8_t *)tempMsg);
 				}
-				bspUartWrite("keylong", 7);
+				uartWriteDebug("keylong", 7);
 			}
 			else
 			{
@@ -145,7 +145,7 @@ void KEY_Scan_10ms(void)
 				}
 			}
 			
-			bspUartWrite("keyup", 5);
+			uartWriteDebug("keyup", 5);
 			// ·Å¿ª
 			break;
 		default:

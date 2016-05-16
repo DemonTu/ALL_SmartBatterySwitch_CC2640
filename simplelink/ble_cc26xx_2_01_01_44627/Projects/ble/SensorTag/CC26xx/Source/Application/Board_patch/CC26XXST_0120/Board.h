@@ -135,12 +135,12 @@ extern PIN_Config BoardGpioInitTable[];
 /* DevPack */
 // We do not have DevPack 
 
-#define Board_Charge_Stat1  		IOID_2      // D2
-#define Board_Charge_Stat2  		IOID_1      // D3
+#define Board_Charge_Stat1  		IOID_1      // D3
+#define Board_Charge_Stat2  		IOID_2      // D2
 #define Board_Charge_PG     		IOID_0		// D4
 
-#define Board_Charge_RedLED 		IOID_8  
-#define Board_Charge_GreenLED 	    IOID_9  
+#define Board_Charge_RedLED 		IOID_9  
+#define Board_Charge_GreenLED 	    IOID_8  
 
 /** ============================================================================
  *  Instance identifiers
