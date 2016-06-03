@@ -32,6 +32,7 @@ static void KEY_Callback(PIN_Handle handle, PIN_Id pinId)
 		switch (pinId) {
 
 			case Board_KEY_3V3:
+				//PIN_setInterrupt(KEYGpioPin, PIN_ID(Board_POWER)|PIN_IRQ_DIS);
 				tempMsg->GPIOName = KEY_NAME_3V3;
 				if (PIN_getInputValue(Board_KEY_3V3))
 				{
@@ -43,6 +44,7 @@ static void KEY_Callback(PIN_Handle handle, PIN_Id pinId)
 				}
 				break;
 			case Board_POWER:
+				//PIN_setInterrupt(KEYGpioPin, PIN_ID(Board_KEY_3V3)|PIN_IRQ_DIS);
 				tempMsg->GPIOName = KEY_POWER;
 				tempMsg->GPIOStatus = KEY_IQR;
 				break;

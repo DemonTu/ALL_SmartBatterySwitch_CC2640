@@ -1,0 +1,232 @@
+###############################################################################
+#
+# IAR ELF Linker V7.40.3.8902/W32 for ARM                 16/May/2016  17:01:03
+# Copyright 2007-2015 IAR Systems AB.
+#
+#    Output file  =  
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Exe\BIM_ext.out
+#    Map file     =  
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\List\BIM_ext.map
+#    Command line =  
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\baseloaderentry_iar.o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\bim_main.o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\bls_bsp.o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\bsp_spi.o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\ccfg_appBLE.o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj\ext_flash.o
+#        -o
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Exe\BIM_ext.out
+#        --config_def RTOS_IN_ROM=1 --config_def KEEP_INTVECS=1 --map
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\List\BIM_ext.map
+#        --config
+#        C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\..\..\..\..\common\cc26xx\IAR\cc26xx_bim_extflash.icf
+#        --keep __vector_table --semihosting
+#        C:\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\bin\iar\driverlib.lib
+#        --entry __iar_program_start --inline --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x00000000 { ro section .intvec };
+"A3":  place at end of [0x00000000-0x0001ffff] { ro section .ccfg };
+"A4":  place at end of [0x20000000-0x200036ff] { block CSTACK };
+"A5":  place at start of [0x0001f000-0x0001ffff] { ro section LoaderEntry };
+"P1":  place in [from 0x0001f000 to 0x0001ffff] { ro };
+"P2":  place in [from 0x20000000 to 0x200036ff] { rw };
+
+  Section      Kind        Address    Size  Object
+  -------      ----        -------    ----  ------
+"A1":                                 0x40
+  .intvec      ro code  0x00000000    0x40  vector_table_M.o [5]
+                      - 0x00000040    0x40
+
+"A5":                                 0x18
+  LoaderEntry  ro code  0x0001f000    0x18  baseloaderentry_iar.o [1]
+                      - 0x0001f018    0x18
+
+"P1":                                0x988
+  .text        ro code  0x0001f018   0x390  bim_main.o [1]
+  .text        ro code  0x0001f3a8    0x2c  flash.o [4]
+  .text        ro code  0x0001f3d4    0x5c  bls_bsp.o [1]
+  .text        ro code  0x0001f430    0x76  ABImemcpy_unaligned.o [5]
+  .text        ro code  0x0001f4a6     0x2  vector_table_M.o [5]
+  .text        ro code  0x0001f4a8     0x8  cpu.o [4]
+  .text        ro code  0x0001f4b0   0x2de  ext_flash.o [1]
+  .rodata      const    0x0001f78e     0x1  ext_flash.o [1]
+  .rodata      const    0x0001f78f     0x1  ext_flash.o [1]
+  .text        ro code  0x0001f790   0x1c0  bsp_spi.o [1]
+  .text        ro code  0x0001f950    0x1a  cmain.o [5]
+  .text        ro code  0x0001f96a     0x4  exit.o [3]
+  .text        ro code  0x0001f970     0xa  cexit.o [5]
+  .text        ro code  0x0001f97c    0x14  exit.o [6]
+  .text        ro code  0x0001f990     0xc  cstartup_M.o [5]
+  .rodata      const    0x0001f99c     0x4  ext_flash.o [1]
+                      - 0x0001f9a0   0x988
+
+"A3":                                 0x58
+  .ccfg        const    0x0001ffa8    0x58  ccfg_appBLE.o [1]
+                      - 0x00020000    0x58
+
+"P2":                               0x1010
+  .noinit      uninit   0x20000000  0x1000  bim_main.o [1]
+  .noinit      uninit   0x20001000    0x10  bim_main.o [1]
+                      - 0x20001010  0x1010
+
+"A4":                                0x400
+  CSTACK                0x20003300   0x400  <Block>
+    CSTACK     uninit   0x20003300   0x400  <Block tail>
+                      - 0x20003700   0x400
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                 ro code  ro data  rw data
+    ------                 -------  -------  -------
+C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj: [1]
+    baseloaderentry_iar.o       24
+    bim_main.o                 912             4 112
+    bls_bsp.o                   92
+    bsp_spi.o                  448
+    ccfg_appBLE.o                        88
+    ext_flash.o                734        6
+    ------------------------------------------------
+    Total:                   2 210       94    4 112
+
+command line: [2]
+    ------------------------------------------------
+    Total:
+
+dl7M_tln.a: [3]
+    exit.o                       4
+    ------------------------------------------------
+    Total:                       4
+
+driverlib.lib: [4]
+    cpu.o                        8
+    flash.o                     44
+    ------------------------------------------------
+    Total:                      52
+
+rt7M_tl.a: [5]
+    ABImemcpy_unaligned.o      118
+    cexit.o                     10
+    cmain.o                     26
+    cstartup_M.o                12
+    vector_table_M.o            66
+    ------------------------------------------------
+    Total:                     232
+
+shb_l.a: [6]
+    exit.o                      20
+    ------------------------------------------------
+    Total:                      20
+
+    Gaps                         4
+    Linker created                             1 024
+----------------------------------------------------
+    Grand Total:             2 522       94    5 136
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+?main                   0x0001f951          Code  Gb  cmain.o [5]
+BLS_close               0x0001f3e9     0x8  Code  Gb  bls_bsp.o [1]
+BLS_init                0x0001f3d5    0x14  Code  Gb  bls_bsp.o [1]
+BLS_read                0x0001f3f1    0x20  Code  Gb  bls_bsp.o [1]
+BLS_write               0x0001f411    0x20  Code  Gb  bls_bsp.o [1]
+BaseLoader_start        0x0001f001          Code  Gb  baseloaderentry_iar.o [1]
+Bim_checkImages         0x0001f2d7    0xac  Code  Gb  bim_main.o [1]
+Bim_copyImage           0x0001f0a3    0x9a  Code  Lc  bim_main.o [1]
+Bim_extReadBuf          0x0001f07b    0x14  Code  Lc  bim_main.o [1]
+Bim_extWriteBuf         0x0001f08f    0x14  Code  Lc  bim_main.o [1]
+Bim_intErasePage        0x0001f03f    0x20  Code  Lc  bim_main.o [1]
+Bim_intWriteWord        0x0001f05f    0x1c  Code  Lc  bim_main.o [1]
+Bim_safeStart           0x0001f2a3    0x34  Code  Gb  bim_main.o [1]
+CSTACK$$Base            0x20003300           --   Gb  - Linker created -
+CSTACK$$Limit           0x20003700           --   Gb  - Linker created -
+GPIOPinWrite            0x0001f4b1    0x12  Code  Lc  ext_flash.o [1]
+NOROM_CPUcpsie          0x0001f4a9     0x8  Code  Gb  cpu.o [4]
+NOROM_FlashProgram      0x0001f3b3     0xc  Code  Gb  flash.o [4]
+NOROM_FlashSectorErase  0x0001f3a9     0xa  Code  Gb  flash.o [4]
+PRCMLoadGet             0x0001f7af     0xc  Code  Lc  bsp_spi.o [1]
+PRCMLoadSet             0x0001f7a7     0x8  Code  Lc  bsp_spi.o [1]
+Region$$Table$$Base     0x00000000           --   Gb  - Linker created -
+Region$$Table$$Limit    0x00000000           --   Gb  - Linker created -
+SSIEnable               0x0001f791     0xa  Code  Lc  bsp_spi.o [1]
+SSIIntClear             0x0001f7a3     0x4  Code  Lc  bsp_spi.o [1]
+SSIIntDisable           0x0001f79b     0x8  Code  Lc  bsp_spi.o [1]
+STACK_TOP {Abs}         0x20003700           --   Gb  command line/config [2]
+WatchdogEnable          0x0001f019    0x12  Code  Lc  bim_main.o [1]
+WatchdogReloadSet       0x0001f039     0x6  Code  Lc  bim_main.o [1]
+WatchdogResetEnable     0x0001f02b     0xe  Code  Lc  bim_main.o [1]
+__ccfg                  0x0001ffa8    0x58  Data  Gb  ccfg_appBLE.o [1]
+__cmain                 0x0001f951          Code  Gb  cmain.o [5]
+__exit                  0x0001f97d    0x14  Code  Gb  exit.o [6]
+__iar_program_start     0x0001f991          Code  Gb  cstartup_M.o [5]
+__iar_unaligned___aeabi_memcpy
+                        0x0001f431          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned___aeabi_memcpy4
+                        0x0001f451          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned___aeabi_memcpy8
+                        0x0001f451          Code  Gb  ABImemcpy_unaligned.o [5]
+__vector_table          0x00000000          Data  Gb  vector_table_M.o [5]
+_call_main              0x0001f95d          Code  Gb  cmain.o [5]
+_exit                   0x0001f971          Code  Gb  cexit.o [5]
+_main                   0x0001f967          Code  Gb  cmain.o [5]
+bspFlashExtPowerDown    0x0001f4df    0x3e  Code  Lc  ext_flash.o [1]
+bspSpiClose             0x0001f8eb    0x4c  Code  Gb  bsp_spi.o [1]
+bspSpiFlush             0x0001f829    0x16  Code  Gb  bsp_spi.o [1]
+bspSpiOpen              0x0001f83f    0xac  Code  Gb  bsp_spi.o [1]
+bspSpiRead              0x0001f7eb    0x3e  Code  Gb  bsp_spi.o [1]
+bspSpiWrite             0x0001f7bb    0x30  Code  Gb  bsp_spi.o [1]
+crc16                   0x0001f26d    0x36  Code  Lc  bim_main.o [1]
+crcCalc                 0x0001f13d   0x108  Code  Lc  bim_main.o [1]
+crcCheck                0x0001f245    0x28  Code  Lc  bim_main.o [1]
+exit                    0x0001f96b     0x4  Code  Gb  exit.o [3]
+extFlashClose           0x0001f681     0xc  Code  Gb  ext_flash.o [1]
+extFlashDeselect        0x0001f4d1     0xe  Code  Lc  ext_flash.o [1]
+extFlashOpen            0x0001f641    0x22  Code  Gb  ext_flash.o [1]
+extFlashPowerStandby    0x0001f51d    0x3e  Code  Lc  ext_flash.o [1]
+extFlashRead            0x0001f68d    0x62  Code  Gb  ext_flash.o [1]
+extFlashSelect          0x0001f4c3     0xe  Code  Lc  ext_flash.o [1]
+extFlashVerifyPart      0x0001f55b    0x4e  Code  Lc  ext_flash.o [1]
+extFlashWaitPowerDown   0x0001f5f3    0x22  Code  Lc  ext_flash.o [1]
+extFlashWaitReady       0x0001f5a9    0x4a  Code  Lc  ext_flash.o [1]
+extFlashWrite           0x0001f6ef    0xa0  Code  Gb  ext_flash.o [1]
+extFlashWriteEnable     0x0001f615    0x2c  Code  Lc  ext_flash.o [1]
+imgInfo                 0x20001000    0x10  Data  Gb  bim_main.o [1]
+main                    0x0001f399    0x10  Code  Gb  bim_main.o [1]
+pgBuf                   0x20000000  0x1000  Data  Gb  bim_main.o [1]
+
+
+[1] = C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\util\BIM_extflash\CC26xx\IAR\FlashOnly\Obj
+[2] = command line
+[3] = dl7M_tln.a
+[4] = driverlib.lib
+[5] = rt7M_tl.a
+[6] = shb_l.a
+
+  2 522 bytes of readonly  code memory
+     94 bytes of readonly  data memory
+  5 136 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

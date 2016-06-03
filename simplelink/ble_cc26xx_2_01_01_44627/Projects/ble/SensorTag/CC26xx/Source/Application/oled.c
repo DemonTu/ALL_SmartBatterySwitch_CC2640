@@ -564,6 +564,7 @@ void OLED_ShowString(uint8_t x,uint8_t y,const uint8_t *p)
 *************************************************************/
 static void OLEDIICGPIO_Init(void)
 {
+	OLED_GRAM_Temp[0][0] = 0xff;
 #ifdef IIC_SOFTWARE
 	IICGpioPin = PIN_open(&pinGpioState, IICPinTable);
 #else // Ó²¼þIIC

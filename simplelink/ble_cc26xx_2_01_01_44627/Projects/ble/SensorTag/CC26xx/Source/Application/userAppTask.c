@@ -87,9 +87,9 @@ static void Pollint1Sec(void)
 				uartWriteDebug(smbBuf, 1);
 				SMB_Read(ABSOLUTE_SOC, smbBuf, 1);
 				uartWriteDebug(smbBuf, 1);
-				SMB_Read(CYCLE_COUNT, smbBuf, 2);
+				SMB_Read(BATTERY_STATUS, smbBuf, 2);
 				uartWriteDebug(smbBuf, 2);
-				SMB_Read(DESIGN_CAPACITY, smbBuf, 2);
+				SMB_Read(BATTERY_MODE, smbBuf, 2);
 				uartWriteDebug(smbBuf, 2);
 			}
 			#endif
@@ -136,7 +136,7 @@ static void Pollint1Sec(void)
 			}
             break;
         case 3:
-			chargeStateRead();
+			//chargeStateRead();
             break;
         default:
             break;
@@ -240,15 +240,20 @@ void userAppInit(void)
 
 //电池状态检测初始化
 	chargeDetection_Init();
+
+	//OLED_ShowString(40,32, "WiCore"); 
+	OLED_Clear();
 	
 	// Create one-shot clocks for internal periodic events.
 	Util_constructClock(&periodicClock_10ms, userApp_clockHandler,
 	                  10, 0, false, USER_10MS_EVT);
+#ifndef INCLUDE_CLKSTOP	
+	systemState.powerOffFlag = 1;
 	Util_startClock(&periodicClock_10ms);
+#else
+	Util_stopClock(&periodicClock_10ms);
 
-	OLED_ShowString(40,32, "WiCore"); 
-
-	Task_sleep(300);
+#endif	
 }
 
 /*******************************************************************************
@@ -275,7 +280,7 @@ void userAppPro(void)
 		Pollint100mSec();
 	}
 
-#if 1
+#if INCLUDE_CLKSTOP
 	while (!Queue_empty(keyMsgQueue))
 	{
 		KEY_stEvt_t *pMsg = (KEY_stEvt_t *)Util_dequeueMsg(keyMsgQueue);
@@ -403,6 +408,114 @@ void userAppPro(void)
 			ICall_free(pMsg);
 		}
 	}
+#else
+	while (!Queue_empty(keyMsgQueue))
+	{
+		KEY_stEvt_t *pMsg = (KEY_stEvt_t *)Util_dequeueMsg(keyMsgQueue);
+		if (pMsg)
+		{
+			// Process message.
+			switch(pMsg->GPIOName)
+			{
+				case KEY_NAME_3V3:
+					if (KEY_HIGH == pMsg->GPIOStatus)
+					{
+						wifiPowerOn();
+						uartWriteDebug("poweron3v3", 10);
+						OLED_ShowString(40,32, "WiCore"); 
+						
+						userAppShowCharge();
+						// 启动广播
+						{
+							uint8_t initialAdvertEnable = TRUE;
+							GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
+						}
+
+						systemState.powerOffFlag = 0;
+					}
+					else
+					{
+						wifiPowerDown();
+						uartWriteDebug("powerdown3v3", 12);
+						// 清低电闪烁
+						systemState.lowBatteryFlag = 0;
+						OLED_Clear(); // 这个执行时间较长 打乱了定时周期，所以stopClock是没有用的
+
+						// 有链接，关闭 
+						GAPRole_TerminateConnection();
+
+						systemState.powerOffFlag = 1;
+						
+					}
+					break;
+				case KEY_POWER:
+					if (KEY_LONG == pMsg->GPIOStatus)
+					{
+						if (1 == systemState.powerOffFlag)
+						{
+							systemState.powerOffFlag = 0;
+							systemState.delayPowerOffTime = 0;
+							wifiPowerOn();
+							
+							userAppShowCharge();
+							OLED_ShowString(40,32, "WiCore");
+							
+							// 启动广播
+							{
+								uint8_t initialAdvertEnable = TRUE;
+								GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
+							}
+
+							uartWriteDebug("poweron", 7);
+						}
+						else
+						{
+							//系统断电
+							systemState.powerOffFlag = 1;
+							wifiPowerDown();
+							uartWriteDebug("powerdown", 9);
+							
+							OLED_Clear();
+													
+							systemState.lowBatteryFlag = 0;  // 清低电闪烁 
+							// 有链接，关闭 
+							GAPRole_TerminateConnection();
+						}
+						systemState.keyShortFlag = 0;	// 忽略短按事件 
+						
+					}
+					else if (KEY_LOW == pMsg->GPIOStatus)// 松开
+					{
+						
+						if (1 == systemState.keyShortFlag)// 短按松开 产生一次短按完整事件
+						{
+							//短按事件处理
+							uartWriteDebug("短按", 4);
+							systemState.keyShortFlag = 0;
+						}
+					}
+					else if (KEY_HIGH == pMsg->GPIOStatus) // 短按
+					{
+						if (1 == systemState.powerOffFlag) // 等待长按事件 忽略此时的短按事件
+						{
+							// 关机中 不处理				
+						}
+						else
+						{
+							systemState.keyShortFlag = 1;
+						}
+						
+					}
+					break;
+				default:
+					break;
+			}
+
+			// Free the space from the message.
+			ICall_free(pMsg);
+		}
+	}
+
 #endif
 }
 
@@ -437,7 +550,7 @@ uint8_t userAppShowCharge(void)
 	uint8_t bmpMov = 0;
 	
 	SMB_Read(RELATIVE_SOC, &charge, 1);
-	uartWriteDebug(&charge, 1);
+	//uartWriteDebug(&charge, 1);
 
 	OLED_ShowString(40,0, "          ");	// 清电池显示区域
 	

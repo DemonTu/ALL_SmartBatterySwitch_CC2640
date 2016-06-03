@@ -10,14 +10,14 @@ static PIN_Config chargePinTable[] =
 {
     Board_Charge_RedLED   | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,     
     Board_Charge_GreenLED | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
-
+#ifdef INCLUDE_CHARGEIC
 	Board_Charge_Stat1 	  | PIN_INPUT_EN       | PIN_PULLUP    | PIN_IRQ_DIS,  
 	Board_Charge_Stat2    | PIN_INPUT_EN       | PIN_PULLUP    | PIN_IRQ_DIS,	
     Board_Charge_PG       | PIN_INPUT_EN       | PIN_PULLUP    | PIN_IRQ_BOTHEDGES, 
-	
+#endif	
     PIN_TERMINATE
 };
-
+#ifdef INCLUDE_CHARGEIC
 static void chargeState_Callback(PIN_Handle handle, PIN_Id pinId)
 {
 	switch (pinId) 
@@ -45,13 +45,14 @@ static void chargeState_Callback(PIN_Handle handle, PIN_Id pinId)
 			break;
 	}
 }
-
+#endif
 void chargeDetection_Init(void)
 {
 	chargeGpioPin = PIN_open(&chargeGpioState, chargePinTable);
 	// ×¢²ácharge ÖÐ¶Ïº¯Êý
+#ifdef INCLUDE_CHARGEIC	
 	PIN_registerIntCb(chargeGpioPin, chargeState_Callback );
-
+#endif
 	PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
 	PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
 	
@@ -65,6 +66,7 @@ void chargeDetection_Init(void)
 // ¶ÁÈ¡³äµç×´Ì¬
 STR_CHARGESTATE chargeStateRead(void)
 {
+#ifdef INCLUDE_CHARGEIC
 	uint8_t stat1;
 	uint8_t stat2;
 	uint8_t charge = 0;
@@ -101,7 +103,41 @@ STR_CHARGESTATE chargeStateRead(void)
 		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
 		//´íÎó×´Ì¬
 	}
-		
+#else
+	uint8_t stat1[3] = {0};
+	static uint8_t stat2=0;
+	uint8_t charge = 0;
+	STR_CHARGESTATE chargeState = CHARGENONE;
+
+	SMB_Read(BATTERY_STATUS, stat1, 2);
+    
+	SMB_Read(RELATIVE_SOC, &charge, 1);
+	if (0x80 == stat1[0])
+	{
+		stat2 = 1;
+		chargeState = CHARGING;
+		chargingFlag = 1;
+		PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 1);
+		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
+	}
+	else if (0xc0 == stat1[0])
+	{
+		if (stat2==1 && charge>=99)
+		{
+			stat2 = 0;
+			chargeState = CHARGED;
+			PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
+			PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 1);
+		}
+		chargingFlag = 0;
+	}	
+	else
+    {
+        PIN_setOutputValue(chargeGpioPin, Board_Charge_RedLED, 0);
+		PIN_setOutputValue(chargeGpioPin, Board_Charge_GreenLED, 0);
+        chargingFlag = 0;
+    } 
+#endif
 	return chargeState;
 }
 

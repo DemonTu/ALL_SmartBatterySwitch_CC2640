@@ -16,7 +16,7 @@ xdsResetStrategy=3
 xds100serialNo=06EB122104EF
 xds100foundProbes=
 [DebugChecksum]
-Checksum=751885494
+Checksum=-684406729
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -40,8 +40,9 @@ mode=0
 [Breakpoints2]
 Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.772.2" 0 0 1 "" 0 "" 0
 Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.120.34" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.79.5" 0 0 1 "" 0 "" 0
-Count=3
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.85.5" 0 0 1 "" 0 "" 0
+Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.79.5" 0 0 1 "" 0 "" 0
+Count=4
 [Aliases]
 A0=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\aon_batmon.c" ""
 A1=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\chipinfo.c" ""
