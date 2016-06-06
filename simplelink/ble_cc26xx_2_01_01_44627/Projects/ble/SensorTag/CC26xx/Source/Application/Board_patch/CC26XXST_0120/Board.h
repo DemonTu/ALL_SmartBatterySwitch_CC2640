@@ -85,7 +85,70 @@ extern PIN_Config BoardGpioInitTable[];
 /* Mapping of pins to board signals using general board aliases
  *      <board signal alias>                <pin mapping>
  */
+#define HARDWARE_VER_V1_4
+//#define HARDWARE_VER_V1_3
 
+#ifdef  HARDWARE_VER_V1_4
+/* Discrete outputs */
+#define Board_LED                   PIN_UNASSIGNED
+#define Board_LED_ON                1
+#define Board_LED_OFF               0
+
+
+/* Discrete inputs */
+#define Board_KEY_STATE             IOID_8
+#define Board_KEY_3V3               IOID_12	// 服务器控制电源
+#define Board_POWER                 IOID_11 // 系统控制电源
+
+/* I2C */
+// OLED显示驱动IO
+#define Board_I2C0_SDA              IOID_10
+#define Board_I2C0_SCL              IOID_9
+
+//电池状态读取IO
+#define Board_I2C0_SDA0             IOID_13
+#define Board_I2C0_SCL0             IOID_14
+
+#define Board_I2C0_SDA1             PIN_UNASSIGNED
+#define Board_I2C0_SCL1             PIN_UNASSIGNED
+
+/* SPI */
+#define Board_SPI_FLASH_CS          PIN_UNASSIGNED
+#define Board_SPI_DEVPK_CS          PIN_UNASSIGNED
+#define Board_FLASH_CS_ON           0
+#define Board_FLASH_CS_OFF          1
+#define Board_DEVPK_CS_ON           1
+#define Board_DEVPK_CS_OFF          0
+
+#define Board_SPI0_MISO             IOID_0
+#define Board_SPI0_MOSI             IOID_1
+#define Board_SPI0_CLK              IOID_2
+#define Board_SPI0_CSN              PIN_UNASSIGNED
+#define Board_SPI1_MISO             PIN_UNASSIGNED
+#define Board_SPI1_MOSI             PIN_UNASSIGNED
+#define Board_SPI1_CLK              PIN_UNASSIGNED
+#define Board_SPI1_CSN              PIN_UNASSIGNED
+
+
+/* UART when connected to SRF06EB */
+/* UART (when connected to SRF06EB) */
+#define Board_UART_TX               IOID_6		//
+#define Board_UART_RX               IOID_5      // UWB
+
+#define Board_UART1_TX              IOID_3		//
+#define Board_UART2_RX              IOID_4     // wifi
+
+/* DevPack */
+// We do not have DevPack 
+
+#define Board_Charge_Stat1  		PIN_UNASSIGNED      // D3
+#define Board_Charge_Stat2  		PIN_UNASSIGNED      // D2
+#define Board_Charge_PG     		IOID_7				// D4
+
+#define Board_Charge_RedLED 		PIN_UNASSIGNED  
+#define Board_Charge_GreenLED 	    PIN_UNASSIGNED  
+
+#elif defined(HARDWARE_VER_V1_3)
 /* Discrete outputs */
 #define Board_LED                   IOID_14
 #define Board_LED_ON                1
@@ -141,7 +204,7 @@ extern PIN_Config BoardGpioInitTable[];
 
 #define Board_Charge_RedLED 		IOID_9  
 #define Board_Charge_GreenLED 	    IOID_8  
-
+#endif
 /** ============================================================================
  *  Instance identifiers
  *  ==========================================================================*/

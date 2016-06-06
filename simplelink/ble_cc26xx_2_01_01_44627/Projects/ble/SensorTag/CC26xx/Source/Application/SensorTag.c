@@ -597,6 +597,7 @@ static void SensorTag_taskFxn(UArg a0, UArg a1)
 			if (gapProfileState == GAPROLE_ADVERTISING)
 			{
 			//	OLED_testShowGengeeRoll(3);
+				uartWriteDebug("¹ã²¥", 4);
 				SensorTag_blinkLed(Board_LED,1);
 			}
 		}

@@ -108,7 +108,7 @@ static void Pollint1Sec(void)
 					Util_stopClock(&periodicClock_10ms);
 				}
 			}
-			else if (systemState.powerOffFlag!=1 && systemState.keyUpFlag==0)
+			else if (systemState.powerOffFlag!=1 || systemState.keyUpFlag==1)
 			{
 				/* 
 				在长按关机时，还没松开前默认是关机的所以不能显示图标
@@ -136,7 +136,10 @@ static void Pollint1Sec(void)
 			}
             break;
         case 3:
-			//chargeStateRead();
+			if(CHARGING == chargeStateRead())
+			{
+				systemState.keyUpFlag=1;
+			}
             break;
         default:
             break;
@@ -195,6 +198,7 @@ static void Pollint100mSec(void)
 			}
             break;
         case 5:
+			
             break;
         case 6:
             break;
@@ -280,7 +284,7 @@ void userAppPro(void)
 		Pollint100mSec();
 	}
 
-#if INCLUDE_CLKSTOP
+#ifdef INCLUDE_CLKSTOP
 	while (!Queue_empty(keyMsgQueue))
 	{
 		KEY_stEvt_t *pMsg = (KEY_stEvt_t *)Util_dequeueMsg(keyMsgQueue);
@@ -455,6 +459,7 @@ void userAppPro(void)
 						{
 							systemState.powerOffFlag = 0;
 							systemState.delayPowerOffTime = 0;
+							systemState.keyUpFlag=0;
 							wifiPowerOn();
 							
 							userAppShowCharge();
@@ -471,6 +476,7 @@ void userAppPro(void)
 						else
 						{
 							//系统断电
+							systemState.keyUpFlag=0;
 							systemState.powerOffFlag = 1;
 							wifiPowerDown();
 							uartWriteDebug("powerdown", 9);

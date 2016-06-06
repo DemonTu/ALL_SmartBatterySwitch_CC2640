@@ -28,6 +28,8 @@ MixedMode=1
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
+[RecentFlashDownload]
+Path=C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\SensorTag\CC26xx\IAR\Application\CC2650\FlashOnlyOAD\Exe\SensorTagAppFlashOnlyOAD.out
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

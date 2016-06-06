@@ -14,7 +14,7 @@ Queue_Handle keyMsgQueue;
 // Pins that are actively used by the application
 static PIN_Config KEYPinTable[] =
 {
-    Board_KEY_3V3   | PIN_INPUT_EN       | PIN_PULLUP    | PIN_IRQ_BOTHEDGES,     
+    Board_KEY_3V3   | PIN_INPUT_EN       | PIN_PULLDOWN  | PIN_IRQ_BOTHEDGES,     
     Board_POWER     | PIN_INPUT_EN       | PIN_PULLUP    | PIN_IRQ_DIS, 
     Board_KEY_STATE | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
 
