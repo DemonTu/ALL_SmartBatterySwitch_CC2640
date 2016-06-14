@@ -2133,6 +2133,12 @@
       <name>$PROJ_DIR$\..\..\..\Source\Application\SensorTag_ConnCtrl.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\Source\Application\SensorTag_Mov.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\Source\Application\SensorTag_Mov.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\Source\Application\SensorTag_Revision.h</name>
     </file>
     <file>

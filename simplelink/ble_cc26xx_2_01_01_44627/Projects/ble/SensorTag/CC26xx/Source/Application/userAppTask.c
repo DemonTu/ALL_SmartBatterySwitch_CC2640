@@ -1,4 +1,5 @@
 #include "includes.h"
+#include "sensorTag.h"
 
 /**
 主要是对 按键、OLED和电池监控的处理
@@ -564,6 +565,8 @@ uint8_t userAppShowCharge(void)
 	{
 		return 2;
 	}
+	
+	SensorTag_checkBatteryInfo(charge);
 	if (100 == charge)
 	{
 		uartWriteDebug("T", 1);

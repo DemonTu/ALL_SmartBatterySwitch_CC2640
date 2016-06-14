@@ -74,10 +74,6 @@ extern "C"
  */
 extern void SensorTagMov_init(void);
 
-/*
- * Task Event Processor for SensorTag movement
- */
-extern void SensorTagMov_processSensorEvent(void);
 
 /*
  * Task Event Processor for characteristic changes
@@ -85,69 +81,13 @@ extern void SensorTagMov_processSensorEvent(void);
 extern void SensorTagMov_processCharChangeEvt(uint8_t paramID);
 
 /*
- * Reset function for the Movement task
- */
-extern void SensorTagMov_reset(void);
-
-/*
- * Process MPU data ready interrupt
- */
-extern void SensorTagMov_processInterrupt(void);
-
-/*
- * Enable or Disable MPU-9250's Interrupt
- */
-extern void SensorTagMov_setSensorInt(bool isEnable);
-
-/*
- * Power on or off MPU-9250
- */
-extern void SensorTagMov_setSensorPower(bool isPowerOn);
-
-/*
- * FSM update
- */
-extern void SensorTagMov_updateFsm(uint8_t event);
-
-/*
- * Get FSM state
- */
-extern uint8_t SensorTagMov_getFsmState(void);
-
-/*
- * For handling FSM related events
- */
-extern void SensorTagMov_handleFsmEvent(uint8_t param);
-
-/*
  * For updating battery info
  */
 extern void SensorTagMov_updateBatteryInfo(uint16_t value);
    
-/*
- * For verifying connection
- */
-extern bool SensorTagMov_verifyConnection(void);
 
-/*
- * For updating sensor calibration parameters in driver
- */
-extern void SensorTagMov_updateCaliParm(void *caliData);
 
-/*
- * Enable or disable sensors WOM
- */
-extern bool SensorTagMov_setSensorWom(bool isEnable);
 
-/*
- * Check if MPU-9250 is currently at Wake-On-Motion mode
- */
-extern bool SensorTagMov_isSensorWom(void);
-
-/*
- * Process STM H3LISXXX interrupt
- */
-extern void SensorTagH3lis_processInterrupt(void);
 
 /*********************************************************************
 *********************************************************************/

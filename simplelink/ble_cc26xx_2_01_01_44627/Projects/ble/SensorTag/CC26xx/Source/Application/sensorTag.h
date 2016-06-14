@@ -125,6 +125,11 @@ extern void SensorTag_applyFactoryImage(void);
  */
 void sensorTag_updateAdvertisingData(uint8_t keyStatus);
 
+/*
+ * Update the battery charge 
+ */
+void SensorTag_checkBatteryInfo(uint8_t charge);
+
 /*********************************************************************
 *********************************************************************/
 

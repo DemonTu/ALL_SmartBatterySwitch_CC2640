@@ -74,14 +74,13 @@
 #include "devinfoservice.h"
 #include "movementservice.h"
 
-#ifdef FEATURE_LCD
-#include "displayservice.h"
-#endif
+
 #ifdef FEATURE_REGISTER_SERVICE
 #include "registerservice.h"
 #endif
 
 // Sensor devices
+#include "SensorTag_Mov.h"
 
 // Other devices
 #include "ext_flash.h"
@@ -488,14 +487,14 @@ static void SensorTag_init(void)
 	SensorTag_setDeviceInfo();
 
 #ifdef FACTORY_IMAGE // ”–∂®“Â
-#if 1
 	// Check if a factory image exists and apply current image if necessary
 	if (!SensorTag_hasFactoryImage())
 	{
 		SensorTag_saveFactoryImage();
-	}
-#endif  
+	}  
 #endif
+
+	SensorTagMov_init();                            // Movement processor
 
 #ifdef FEATURE_REGISTER_SERVICE
 	Register_addService();                          // Generic register access
@@ -870,7 +869,7 @@ static void SensorTag_processCharValueChangeEvt(uint8_t serviceID,
   switch (serviceID)
   {
   case SERVICE_ID_MOV:
-   // SensorTagMov_processCharChangeEvt(paramID);
+    SensorTagMov_processCharChangeEvt(paramID);
     break;
 #ifdef FEATURE_OAD
   case SERVICE_ID_CC:
@@ -878,11 +877,6 @@ static void SensorTag_processCharValueChangeEvt(uint8_t serviceID,
     break;
 #endif
 
-#ifdef FEATURE_LCD
-  case SERVICE_ID_DISPLAY:
-    SensorTagDisplay_processCharChangeEvt(paramID);
-    break;
-#endif
   default:
     break;
   }
@@ -1063,6 +1057,25 @@ static void SensorTag_callback(PIN_Handle handle, PIN_Id pinId)
 }
 
 /*******************************************************************************
+ * @fn      SensorTag_checkBatteryInfo
+ *
+ * @brief   Handle periodical task to check battery information.
+ *
+ * @param   charge - battery charge.
+ *
+ * @return  none
+ * user add tqy
+ */
+void SensorTag_checkBatteryInfo(uint8_t charge)
+{
+	if ((GAPROLE_ADVERTISING == gapProfileState) || (GAPROLE_CONNECTED == gapProfileState))
+	{
+		SensorTagMov_updateBatteryInfo(charge); 
+	}
+
+}
+
+/*******************************************************************************
  * @fn      sensorTag_updateAdvertisingData
  *
  * @brief   Update the advertising data with the latest key press status
@@ -1169,29 +1182,6 @@ static bool SensorTag_hasFactoryImage(void)
 
   return valid;
 }
-
-/*******************************************************************************
- * @fn      SensorTag_checkBatteryInfo
- *
- * @brief   Handle periodical task to check battery information.
- *
- * @param   isImmediate - true for updateing battery information immediately.
- *
- * @return  none
- * user add tqy
- */
-void SensorTag_checkBatteryInfo(bool isImmediate)
-{
-	if (isImmediate)
-	{
-		if ((GAPROLE_ADVERTISING == gapProfileState) || (GAPROLE_CONNECTED == gapProfileState))
-		{
-			//SensorTagMov_updateBatteryInfo(100);	
-		}
-
-	}
-}
-
 
 /*******************************************************************************
 *******************************************************************************/

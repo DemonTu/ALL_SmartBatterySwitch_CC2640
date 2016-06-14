@@ -6,99 +6,121 @@
   <configuration>
     <name>FlashOnly</name>
     <outputs>
+      <file>$PROJ_DIR$\..\Source\ccfg_appBLE.c</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.h</file>
       <file>$PROJ_DIR$\..\Source\baseloaderentry_iar.s</file>
       <file>$PROJ_DIR$\..\Source\bls_bsp.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\common\cc26xx\IAR\cc26xx_bim_extflash.icf</file>
-      <file>$PROJ_DIR$\..\Source\ccfg_appBLE.c</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.c</file>
       <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.h</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.c</file>
       <file>$PROJ_DIR$\..\Source\bim_main.c</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.h</file>
       <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\oad_target.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\common\cc26xx\IAR\cc26xx_bim_extflash.icf</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.out</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_flash.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\interrupt.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_gpio.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\cpu.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\oad_target.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\bsp_spi.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\rom.h</file>
       <file>$TOOLKIT_DIR$\inc\c\string.h</file>
       <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ssi.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\bls_bsp.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_flash.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\watchdog.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_gpio.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\ccfg_appBLE.pbi</file>
       <file>$PROJ_DIR$\FlashOnly\Obj\bsp_spi.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_wdt.h</file>
       <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\bsp_spi.o</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_nvic.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\cpu.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.out</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\rom.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg_simple_struct.h</file>
       <file>$PROJ_DIR$\FlashOnly\List\BIM_ext.map</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_types.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\_hal_types.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\debug.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_types.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_chip_def.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\uart.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_prcm.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\systick.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\watchdog.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\bls_bsp.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\ccfg_appBLE.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_wdt.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ssi.h</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_fcfg1.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\bim_main.pbi</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\bim_main.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_uart.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_rtc.h</file>
-      <file>$PROJ_DIR$\..\Source\bls.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_defs.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\startup_files\ccfg.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\bin\iar\driverlib.lib</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_board.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\prcm.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_memmap.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\bls_bsp.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\debug.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
       <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\hal_flash.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\BIM_extflash.pbd</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_prcm.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\prcm.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_defs.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\_hal_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\systick.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_memmap.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_board.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\bin\iar\driverlib.lib</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\bim_main.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_chip_def.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\bim_main.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_rtc.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\bls_bsp.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\..\Source\bls.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\startup_files\ccfg.c</file>
       <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_board_cfg.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\ccfg_appBLE.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_mcu.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ssi.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\SensorTag\CC26xx\Source\Application\ChargeDetection.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ioc.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\ext_flash_layout.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.hex</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\flash.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\gpio.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg.h</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\baseloaderentry_iar.o</file>
-      <file>$PROJ_DIR$\FlashOnly\Obj\ext_flash.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_sysctl.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ioc.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_assert.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_sysctl.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ints.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_sysctl.h</file>
       <file>$PROJ_DIR$\FlashOnly\Obj\ext_flash.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_assert.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ints.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.hex</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\ext_flash.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ioc.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ioc.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\ext_flash_layout.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\BIM_extflash.pbd</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\baseloaderentry_iar.o</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_board_cfg.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\hal_flash.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_mcu.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\flash.h</file>
+      <file>$PROJ_DIR$\FlashOnly\Obj\ccfg_appBLE.o</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ssi.h</file>
     </outputs>
+    <file>
+      <name>$PROJ_DIR$\..\Source\ccfg_appBLE.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 82</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 56 9 25 36 58 23 73 71 52 67 20 12 45 60</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 60 56 23 20 73 36 71 9 12 58 45 52 67 25</file>
+        </tool>
+      </inputs>
+    </file>
     <file>
       <name>$PROJ_DIR$\..\Source\baseloaderentry_iar.s</name>
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 78</file>
+          <file> 77</file>
         </tool>
       </outputs>
     </file>
@@ -107,7 +129,7 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 15</file>
+          <file> 29</file>
         </tool>
         <tool>
           <name>ICCARM</name>
@@ -117,34 +139,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 12 56 65 7 23 60 59 46 33 75 52 34 51</file>
+          <file> 20 49 73 1 23 9 12 59 36 71 39 56 45</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 34 23 12 65 33 75 60 59 56 52 7 51 46</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\ccfg_appBLE.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 67</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 34 60 29 33 36 23 65 75 37 77 12 59 51 48</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 48 34 23 12 65 33 75 60 59 36 51 37 77 29</file>
+          <file> 56 23 20 73 36 71 9 12 49 39 1 45 59</file>
         </tool>
       </inputs>
     </file>
@@ -153,21 +152,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 20</file>
+          <file> 22</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 24</file>
+          <file> 17</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 51 59 13 34 28 23 84 76 12 54 64 55 10 37 35 71 80 81 69 5 36 65 60 33 75 25 26 52 18 39 45 56</file>
+          <file> 45 12 32 56 18 23 68 62 20 41 83 46 13 52 35 72 64 74 84 4 58 73 9 36 71 24 15 39 14 38 54 49</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 69 51 34 23 12 65 33 75 60 59 84 55 36 37 13 35 10 25 26 28 76 18 54 39 45 81 71 64 80 5 56 52</file>
+          <file> 84 45 56 23 20 73 36 71 9 12 68 46 58 52 32 35 13 24 15 18 62 14 41 38 54 74 72 83 64 4 49 39</file>
         </tool>
       </inputs>
     </file>
@@ -176,21 +175,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 42</file>
+          <file> 53</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 43</file>
+          <file> 51</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 34 51 38 9 23 52 41 84 36 66 10 35 39 65 75 16 26 55 31 44 28 12 74 46 60 33 14 37 25 53 68 18 40 71 76 56 11 17 61 72 59 83 22 47 82 81 32</file>
+          <file> 56 45 47 16 23 39 34 68 58 78 13 35 38 73 71 11 15 46 27 40 18 20 81 59 9 36 21 52 24 48 80 14 44 72 62 49 19 28 79 75 12 63 31 42 66 74 43</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 34 23 12 65 33 75 60 59 11 52 14 74 51 36 37 16 55 84 83 41 10 25 35 26 28 17 22 39 61 53 66 68 47 31 32 18 40 38 44 76 81 71 82 46 56 72 9</file>
+          <file> 56 23 20 73 36 71 9 12 19 39 21 81 45 58 52 11 46 68 63 34 13 24 35 15 18 28 31 38 79 48 78 80 42 27 43 14 44 47 40 62 74 72 66 59 49 75 16</file>
         </tool>
       </inputs>
     </file>
@@ -199,21 +198,40 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 79</file>
+          <file> 70</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 85</file>
+          <file> 65</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 76 59 51 36 23 34 56 5 18 12 81 71 28 35 64 7 55 65 60 33 75 37 80 10 84 25 26 52</file>
+          <file> 62 12 45 58 23 56 49 4 14 20 74 72 18 35 83 1 46 73 9 36 71 52 64 13 68 24 15 39</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 76 51 34 23 12 65 33 75 60 59 36 37 55 18 35 64 80 71 81 84 10 25 26 28 5 56 52 7</file>
+          <file> 62 45 56 23 20 73 36 71 9 12 58 52 46 14 35 83 64 72 74 68 13 24 15 18 4 49 39 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 26</file>
+        </tool>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 69</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 8 77 51 57 17 82 65 50 37 61 33 55</file>
         </tool>
       </inputs>
     </file>
@@ -222,134 +240,119 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 30 27</file>
+          <file> 26 10</file>
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\FlashOnly\Exe\BIM_ext.out</name>
-      <outputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 30</file>
-        </tool>
-        <tool>
-          <name>OBJCOPY</name>
-          <file> 73</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 2 78 43 57 24 67 85 49 58 63 21 50</file>
-        </tool>
-      </inputs>
     </file>
   </configuration>
   <configuration>
     <name>FlashOnly_SensorTag</name>
     <outputs>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.out</file>
+      <file>$PROJ_DIR$\..\Source\ccfg_appBLE.c</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.h</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ccfg_appBLE.o</file>
       <file>$PROJ_DIR$\..\Source\baseloaderentry_iar.s</file>
       <file>$PROJ_DIR$\..\Source\bls_bsp.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\common\cc26xx\IAR\cc26xx_bim_extflash.icf</file>
-      <file>$PROJ_DIR$\..\Source\ccfg_appBLE.c</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.c</file>
       <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.h</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp_spi.c</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bim_main.o</file>
       <file>$PROJ_DIR$\..\Source\bim_main.c</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.h</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\List\BIM_ext.map</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ext_flash.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.hex</file>
       <file>$PROJ_DIR$\..\Source\CC26XXST_0120\ext_flash.c</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ccfg_appBLE.pbi</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\baseloaderentry_iar.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bim_main.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\oad_target.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\common\cc26xx\IAR\cc26xx_bim_extflash.icf</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ext_flash.o</file>
+      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bsp_spi.pbi</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_flash.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\interrupt.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_gpio.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\cpu.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\oad_target.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\rom.h</file>
       <file>$TOOLKIT_DIR$\inc\c\string.h</file>
       <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ssi.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_flash.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\watchdog.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_gpio.h</file>
-      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_wdt.h</file>
       <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_nvic.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\cpu.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\rom.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg_simple_struct.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_types.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\_hal_types.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\debug.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_types.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_chip_def.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\uart.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_prcm.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\systick.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\watchdog.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_wdt.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ssi.h</file>
+      <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_fcfg1.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_uart.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_rtc.h</file>
-      <file>$PROJ_DIR$\..\Source\bls.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_defs.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\startup_files\ccfg.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\bin\iar\driverlib.lib</file>
-      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_board.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\prcm.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_memmap.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\debug.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
       <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bsp_spi.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bls_bsp.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bls_bsp.pbi</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ext_flash.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bsp_spi.pbi</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ccfg_appBLE.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bim_main.o</file>
-      <file>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.hex</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\hal_flash.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_prcm.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\prcm.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_defs.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\_hal_types.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\systick.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_memmap.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\uart.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_board.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\bin\iar\driverlib.lib</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_chip_def.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_rtc.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_types.h</file>
+      <file>$PROJ_DIR$\..\Source\bls.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\startup_files\ccfg.c</file>
       <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_board_cfg.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_mcu.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ssi.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ioc.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\ext_flash_layout.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\flash.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\gpio.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_sysctl.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ioc.h</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_assert.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_aon_sysctl.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_sysctl.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\include\hal_assert.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ccfg.h</file>
       <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ints.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\inc\hw_ioc.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ioc.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\Profiles\OAD\CC26xx\ext_flash_layout.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_board_cfg.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\_common\cc26xx\hal_flash.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\Components\hal\target\CC2650TIRTOS\hal_mcu.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\flash.h</file>
+      <file>$PROJ_DIR$\..\Source\CC26XXST_0120\bsp.h</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\ti\tirtos_simplelink_2_13_00_06\products\cc26xxware_2_21_01_15600\driverlib\ssi.h</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\baseloaderentry_iar.o</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ext_flash.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\ccfg_appBLE.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bim_main.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bsp_spi.o</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bls_bsp.pbi</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.out</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\Obj\bls_bsp.o</file>
+      <file>$PROJ_DIR$\FlashOnly_SensorTag\List\BIM_ext.map</file>
     </outputs>
     <file>
-      <name>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.out</name>
+      <name>$PROJ_DIR$\..\Source\ccfg_appBLE.c</name>
       <outputs>
         <tool>
-          <name>ILINK</name>
-          <file> 9</file>
+          <name>BICOMP</name>
+          <file> 77</file>
         </tool>
         <tool>
-          <name>OBJCOPY</name>
-          <file> 65</file>
+          <name>ICCARM</name>
+          <file> 2</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
-          <name>ILINK</name>
-          <file> 3 13 64 59 58 63 61 47 55 67 24 48</file>
+          <name>BICOMP</name>
+          <file> 53 13 27 35 54 25 66 64 50 62 23 16 44 56</file>
+        </tool>
+        <tool>
+          <name>ICCARM</name>
+          <file> 56 53 25 23 66 35 64 13 16 54 44 50 62 27</file>
         </tool>
       </inputs>
     </file>
@@ -358,7 +361,7 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 13</file>
+          <file> 75</file>
         </tool>
       </outputs>
     </file>
@@ -367,44 +370,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 60</file>
+          <file> 80</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 59</file>
+          <file> 82</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 18 54 69 8 26 57 56 44 33 76 50 34 49</file>
+          <file> 23 48 66 1 25 13 16 55 35 64 38 53 44</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 34 26 18 69 33 76 57 56 54 50 8 49 44</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\ccfg_appBLE.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 12</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 63</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 34 57 30 33 36 26 69 76 37 78 18 56 49 46</file>
-        </tool>
-        <tool>
-          <name>ICCARM</name>
-          <file> 46 34 26 18 69 33 76 57 56 36 49 37 78 30</file>
+          <file> 53 25 23 66 35 64 13 16 48 38 1 44 55</file>
         </tool>
       </inputs>
     </file>
@@ -413,21 +393,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 62</file>
+          <file> 14</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 58</file>
+          <file> 79</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 49 56 19 34 29 26 83 77 18 52 68 53 16 37 35 73 79 80 72 6 36 69 57 33 76 27 28 50 23 39 43 54</file>
+          <file> 44 16 31 53 21 25 63 58 23 40 73 45 17 50 34 65 60 67 74 5 54 66 13 35 64 26 19 38 18 37 51 48</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 72 49 34 26 18 69 33 76 57 56 83 53 36 37 19 35 16 27 28 29 77 23 52 39 43 80 73 68 79 6 54 50</file>
+          <file> 74 44 53 25 23 66 35 64 13 16 63 45 54 50 31 34 17 26 19 21 58 18 40 37 51 67 65 73 60 5 48 38</file>
         </tool>
       </inputs>
     </file>
@@ -436,21 +416,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 14</file>
+          <file> 78</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 64</file>
+          <file> 7</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 34 49 38 15 26 50 41 83 36 70 16 35 39 69 76 21 28 53 31 42 29 18 75 44 57 33 20 37 27 51 71 23 40 73 77 54 17 22 66 74 56 82 25 45 81 80 32</file>
+          <file> 53 44 46 20 25 38 33 63 54 69 17 34 37 66 64 15 19 45 28 39 21 23 72 55 13 35 24 50 26 47 71 18 43 65 58 48 22 29 70 68 16 59 30 41 61 67 42</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 34 26 18 69 33 76 57 56 17 50 20 75 49 36 37 21 53 83 82 41 16 27 35 28 29 22 25 39 66 51 70 71 45 31 32 23 40 38 42 77 80 73 81 44 54 74 15</file>
+          <file> 53 25 23 66 35 64 13 16 22 38 24 72 44 54 50 15 45 63 59 33 17 26 34 19 21 29 30 37 70 47 69 71 41 28 42 18 43 46 39 58 67 65 61 55 48 68 20</file>
         </tool>
       </inputs>
     </file>
@@ -459,21 +439,21 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 10</file>
+          <file> 76</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 61</file>
+          <file> 12</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 77 56 49 36 26 34 54 6 23 18 80 73 29 35 68 8 53 69 57 33 76 37 79 16 83 27 28 50</file>
+          <file> 58 16 44 54 25 53 48 5 18 23 67 65 21 34 73 1 45 66 13 35 64 50 60 17 63 26 19 38</file>
         </tool>
         <tool>
           <name>ICCARM</name>
-          <file> 77 49 34 26 18 69 33 76 57 56 36 37 53 23 35 68 79 73 80 83 16 27 28 29 6 54 50 8</file>
+          <file> 58 44 53 25 23 66 35 64 13 16 54 50 45 18 34 73 60 65 67 63 17 26 19 21 5 48 38 1</file>
         </tool>
       </inputs>
     </file>
@@ -482,9 +462,28 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 9 0</file>
+          <file> 83 81</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FlashOnly_SensorTag\Exe\BIM_ext.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 83</file>
+        </tool>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 11 75 7 82 79 2 12 49 36 57 32 52</file>
+        </tool>
+      </inputs>
     </file>
   </configuration>
 </project>
