@@ -32,11 +32,6 @@
 
 
 extern void SMB_Init(void);
-#ifndef INCLUDE_IIC_DRIVER
 extern void SMB_Read(uint8_t addr, uint8_t *dat, uint8_t len);
-#else
-extern uint8_t  SMB_ReadByte(uint8_t com);
-extern uint16_t SMB_Read2Byte(uint8_t com);
-extern uint8_t  SMB_ReadString(uint8_t com, uint8_t * buf);
-#endif
+
 #endif	

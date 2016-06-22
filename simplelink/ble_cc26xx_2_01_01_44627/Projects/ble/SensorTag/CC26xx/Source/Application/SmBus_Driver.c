@@ -16,22 +16,7 @@ static uint8_t deviceAddress = 11; //0x0B
 
 #define IIC_WRITE		0xfffe
 #define IIC_READ		0x0001
-
-/**********************************************************************
-* FuntionName : SMB_Init
-* Description : smbus init
-* Input       : None
-* Output      : None
-* Return      : None
-***********************************************************************/
-void SMB_Init(void)
-{
-#ifdef INCLUDE_IIC_DRIVER
-	IIC_DriverInit();
-#else
-	bspI2cInit();
-#endif
-}
+//#define INCLUDE_IIC_DRIVER
 
 #ifndef INCLUDE_IIC_DRIVER
 /**********************************************************************
@@ -51,148 +36,352 @@ void SMB_Read(uint8_t addr, uint8_t *dat, uint8_t len)
 }
 
 #else
-/**********************************************************************
-* FuntionName : SMB_ReadByte
-* Description : smbus read one byte with command
-* Input       : cmd  command
-* Output      : None
-* Return      : read data
-***********************************************************************/
-uint8_t SMB_ReadByte(uint8_t cmd)
-{
-	uint8_t dat;
 
-	IIC_Start();
-
-	if(IIC_SendByte((deviceAddress<<1) & IIC_WRITE))
-	{
-	   IIC_Stop();
-	   return 0;
-	}
-	else
-	{
-		if(IIC_SendByte(cmd))
-		{
-		   IIC_Stop();
-		   return 0;
-		}
-	}
-	
-	IIC_Start();
-	IIC_SendByte((deviceAddress<<1) | IIC_READ);
-
-	dat = IIC_ReadByte(1); // read & send noack
-	
-	return dat;
-}
-
-/**********************************************************************
-* FuntionName : SMB_Read2Byte
-* Description : smbus read two byte with command
-* Input       : command
-* Output      : None
-* Return      : data
-***********************************************************************/
-uint16_t SMB_Read2Byte(uint8_t cmd)
-{
-	uint8_t dat[2];
-	uint16_t temp;
+void udelay_us(unsigned char us)   //10us延时
+{	
 #if 1
-	IIC_ReadDevice((deviceAddress<<1), &cmd, 1, dat, 2);
-
+	
 #else
-	IIC_Start();
+	uint16_t j;
+	uint16_t i;
 
-	if(IIC_SendByte((deviceAddress<<1) & IIC_WRITE))
+	i = us*20;
+	
+	while(i--)
 	{
-	   IIC_Stop();
-	   printf("noack\r\n");
-	   return 0;
-	}
-	else
-	{
-		if(IIC_SendByte(cmd))
+		for (j=0; j<12; j++)
 		{
-		   printf("noack1\r\n");
-		   IIC_Stop();
-		   return 0;
 		}
 	}
-	//IIC_Stop();
-	
-	IIC_Start();
-	
-	if (IIC_SendByte((deviceAddress<<1) | IIC_READ))
-	{
-		printf("noack2\r\n");
-		IIC_Stop();
-		return 0;
-	}
-
-	dat[0] = IIC_ReadByte(0); // read & send ack
-	dat[1] = IIC_ReadByte(1); // read & send noack
-
-	IIC_Stop();
-#endif
-
-	temp = (uint16_t)(dat[1]<<8)|dat[0];
-	
-	return temp;
-	
+#endif	
 }
 
-/**********************************************************************
-* FuntionName : SMB_ReaadString
-* Description : smbus read string
-* Input       : command
-* Output      : string
-* Return      : None
-***********************************************************************/
-uint8_t SMB_ReadString(uint8_t cmd, uint8_t *buf)
-{
-	
-	unsigned char i;
-	uint8_t datLen;
-	
-	IIC_Start();
+static PIN_Handle IIC0GpioPin;
+static PIN_State pinGpioState;
 
-	if(IIC_SendByte((deviceAddress<<1) & IIC_WRITE))
+static PIN_Config IIC0PinInTable[] =
+{
+    Board_I2C0_SDA0 | PIN_INPUT_EN| PIN_PULLUP | PIN_DRVSTR_MAX,     
+    Board_I2C0_SCL0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+ 
+    PIN_TERMINATE
+};
+
+static PIN_Config IIC0PinOutTable[] =
+{
+    Board_I2C0_SDA0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,     
+    Board_I2C0_SCL0 | PIN_GPIO_OUTPUT_EN | PIN_GPIO_HIGH | PIN_PUSHPULL | PIN_DRVSTR_MAX,
+ 
+    PIN_TERMINATE
+};
+
+
+#define IN            1
+#define OUT           0
+
+#define  SetIicScl(x) 	PIN_setOutputValue(IIC0GpioPin, Board_I2C0_SCL0, x)
+#define  SetIicSda(x) 	PIN_setOutputValue(IIC0GpioPin, Board_I2C0_SDA0, x)
+#define  ReadIicSda()   ((PIN_getInputValue(Board_I2C0_SDA0))!=0)?1:0  //判断接收到的bit
+
+#define  SoftDelay(i)  udelay_us(i)
+
+//设置SDA IO口方向
+void SetIicSdaDir(uint8_t flag)
+{	
+	//PIN_close(IIC0GpioPin);
+	//PIN_init(IIC0PinOutTable);
+	if (IN == flag)
 	{
-	   IIC_Stop();
-	   return 0;
+		IIC0GpioPin = PIN_open(&pinGpioState, IIC0PinInTable);
 	}
 	else
+	{  	
+		IIC0GpioPin = PIN_open(&pinGpioState, IIC0PinOutTable);	
+	}
+	
+	SoftDelay(5);
+}
+
+/***********************************************************************
+
+ * Name: ReadIicSda()
+
+ * Note: Read SDA state;
+
+ * Para: None
+
+ * Return : SDA state
+
+*/
+void IIC_DriverInit(void)
+{	
+  	IIC0GpioPin = PIN_open(&pinGpioState, IIC0PinOutTable);
+
+	SetIicSda(1);
+	SetIicScl(1);				     
+}
+
+/***********************************************************************
+
+ * Name: IIC_Start()
+
+ * Note: Start I2C Bus, SDA change to low when SCL is hight
+
+ * Para: None
+
+ * Return : None
+
+*/
+static void IIC_Start(void)
+{
+	SetIicSda(1);
+  	SetIicScl(1);
+	SoftDelay(1);
+	
+	SetIicSda(0);
+	SoftDelay(0);
+	
+	SetIicScl(0);
+
+}
+
+/***********************************************************************
+
+ * Name: IIC_Stop()
+
+ * Note: Stop I2C Bus, SCL change to hight when SDA is hight
+
+ * Para: None
+
+ * Return : None
+
+*/
+static void IIC_Stop(void)
+{
+	SetIicScl(1);
+	
+	SetIicSda(0);
+	SoftDelay(1);
+	
+	SetIicSda(1);
+}
+
+/***********************************************************************
+
+ * Name: IIC_SendByte(dat)
+
+ * Note: Write 8bite data and get ack;
+
+ * Para: dat -> the data which will be send out
+
+ * Return : ack -> ack signal
+
+*/
+unsigned char IIC_SendByte(unsigned char dat)
+{
+    unsigned char i;
+	unsigned char ack;
+
+	for(i=0; i<8; i++)
 	{
-		if (IIC_SendByte(cmd))
+	    if(dat & 0x80)
 		{
-			IIC_Stop();
-	   		return 0;
+		    SetIicSda(1);
 		}
 		else
 		{
-			IIC_Start();
-			if (IIC_SendByte((deviceAddress<<1) | IIC_READ))	// 发送读地址
-			{
-				IIC_Stop();
-				return 0;
-			}
-			else
-			{
-				datLen = IIC_ReadByte(0); // read & send ACK
-			}
+
+		    SetIicSda(0);
 		}
+		SoftDelay(1);
+		
+		SetIicScl(1);
+		SoftDelay(1);
+		dat <<= 1;
+		SetIicScl(0);
+	}
+
+	SetIicSdaDir(IN);
+	SoftDelay(1);
+	
+	SetIicScl(1);
+	SoftDelay(10);	// 对于smbus 时钟周期要长
+	ack = ReadIicSda();
+	SetIicScl(0);
+	
+	SetIicSdaDir(OUT);
+	
+	return ack;
+
+}
+
+/***********************************************************************
+
+ * Name: IIC_ReadByte
+
+ * Note: Read 8bite data and Send  ack;
+
+ * Para: ack=0 -> Set ack, ack=1 -> Set noack
+
+ * Return : read data
+
+*/
+unsigned char IIC_ReadByte(unsigned char ack)
+{
+    unsigned char i;
+	unsigned char dat=0;
+
+	SetIicSdaDir(IN);
+	
+	//SetIicScl(0);
+	for(i=0; i<8; i++)
+	{
+	    dat <<= 1;
+		SetIicScl(1);
+		SoftDelay(1);
+		if(ReadIicSda())
+		{
+		    dat |= 1;
+		}
+		SetIicScl(0);
+		SoftDelay(2);
 	}
 	
-	for(i=0; i<datLen-1; i++)
+	SetIicSdaDir(OUT);
+
+	SetIicSda(ack);	   // ack = 0; ask, ack = 1,stop
+	SoftDelay(1);
+	
+	SetIicScl(1);
+	SoftDelay(1);
+	SetIicScl(0);
+
+	return dat;
+}
+
+/***********************************************************************
+
+ * Name: IicWriteDevice
+
+ * Note: Write data to device
+
+ * Para: device -> device address, buf->subaddress + data
+
+ * Return : how many bytes have been write
+
+*/
+unsigned char IIC_WriteDevice(unsigned char device, unsigned char *buf, unsigned char cnt)
+{
+
+    unsigned char i;
+
+    IIC_Start();
+
+	if(IIC_SendByte(device))
 	{
-		*buf++ =  IIC_ReadByte(0); // read & send ACK
+	    IIC_Stop();
+		return 0;
+	}
+
+	for(i=0; i<cnt; i++)
+	{
+	    if(IIC_SendByte(*buf++))
+	    {
+	        IIC_Stop();
+			break;
+	    }
+    }
+
+	IIC_Stop();
+
+	return i;
+
+}
+
+/***********************************************************************
+
+ * Name: IIC_ReadDevice
+
+ * Note: Read data from device
+
+ * Para: device->device address, subaddr->subaddress, acnt->subaddress lengh
+
+ *       buf->read out data space, bcnt->read out data lengh
+
+ * Return : write subaddress lengh
+
+*/
+unsigned char IIC_ReadDevice(unsigned char device, unsigned char *subaddr, unsigned char acnt, unsigned char *buf, unsigned char bcnt)
+{
+    unsigned char i;
+	unsigned char wlen;
+
+    IIC_Start();
+
+	if(IIC_SendByte(device))
+	{
+		uartWriteDebug("ok2\r\n", 5);
+	    IIC_Stop();
+	    return 0;
+	}
+
+	for (i=0; i<acnt; i++)
+	{
+		if(IIC_SendByte(*subaddr++))
+		{
+			uartWriteDebug("ok1\r\n", 5);
+			IIC_Stop();
+
+			return i;
+		}
+	}
+	wlen = i;
+	
+	IIC_Start();
+	if (IIC_SendByte(device+0x01))
+	{
+		uartWriteDebug("error\r\n", 7);
+	}
+
+	for(i=0; i<bcnt-1; i++)
+	{
+	    *buf++ =  IIC_ReadByte(0); // read & send ACK
 	}
 
 	*buf = IIC_ReadByte(1); // read & send noack
 
 	IIC_Stop();
+	//uartWriteDebug("ok\r\n", 4);
+	return wlen;
 
-	return (datLen);
 }
 
+/**********************************************************************
+* FuntionName : SMB_Read
+* Description : smbus read data with command
+* Input       : cmd  command
+* Output      : None
+* Return      : read data
+***********************************************************************/
+void SMB_Read(uint8_t addr, uint8_t *dat, uint8_t len)
+{
+	IIC_ReadDevice((deviceAddress<<1), (unsigned char *)&addr, 1, dat, len);	
+}
 #endif
+
+/**********************************************************************
+* FuntionName : SMB_Init
+* Description : smbus init
+* Input       : None
+* Output      : None
+* Return      : None
+***********************************************************************/
+void SMB_Init(void)
+{
+#ifdef INCLUDE_IIC_DRIVER
+	IIC_DriverInit();
+#else
+	bspI2cInit();
+#endif
+}
+
