@@ -67,6 +67,8 @@ extern "C"
 
 // Length of sensor data in bytes
 #define MOVEMENT_DATA_LEN              18
+// Length of battery data in bytes
+#define MOVEMENT_BATTERY_LEN           1
 
 /*********************************************************************
  * TYPEDEFS

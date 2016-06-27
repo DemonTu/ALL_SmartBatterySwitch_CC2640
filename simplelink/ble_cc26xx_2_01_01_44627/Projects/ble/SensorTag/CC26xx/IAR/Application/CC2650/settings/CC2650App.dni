@@ -16,7 +16,7 @@ xdsResetStrategy=3
 xds100serialNo=06EB122104EF
 xds100foundProbes=
 [DebugChecksum]
-Checksum=-684406729
+Checksum=836161300
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -24,19 +24,15 @@ StopOnThrow=_ 0
 ShowArgs=0
 [Disassembly]
 MixedMode=1
-[CallStackLog]
-Enabled=0
-[CallStackStripe]
-ShowTiming=1
 [RecentFlashDownload]
 Path=C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\SensorTag\CC26xx\IAR\Application\CC2650\FlashOnlyOAD\Exe\SensorTagAppFlashOnlyOAD.out
 [Disassemble mode]
 mode=0
 [Breakpoints2]
 Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.772.2" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.120.34" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.85.5" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.79.1" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
+Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
 Count=4
 [Log file]
 LoggingEnabled=_ 0
@@ -53,3 +49,7 @@ A3=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\dr
 A4=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\sys_ctrl.c" ""
 Count=5
 SuppressDialog=0
+[CallStackLog]
+Enabled=0
+[CallStackStripe]
+ShowTiming=1

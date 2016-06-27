@@ -113,7 +113,7 @@ extern PIN_Config BoardGpioInitTable[];
 #define Board_I2C0_SCL1             PIN_UNASSIGNED
 
 /* SPI */
-#define Board_SPI_FLASH_CS          PIN_UNASSIGNED
+#define Board_SPI_FLASH_CS          IOID_3
 #define Board_SPI_DEVPK_CS          PIN_UNASSIGNED
 #define Board_FLASH_CS_ON           0
 #define Board_FLASH_CS_OFF          1

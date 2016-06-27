@@ -70,6 +70,7 @@
 
 #define SENSOR_SERVICE          MOVEMENT_SERVICE
 #define SENSOR_DATA_LEN         MOVEMENT_DATA_LEN
+#define SENSOR_BATTERY_LEN		MOVEMENT_BATTERY_LEN
 
 #define SENSOR_DATA_DESCR       "Mov Data"
 #define SENSOR_CONFIG_DESCR     "Mov Conf."
@@ -577,6 +578,10 @@ static bStatus_t sensor_ReadAttrCB(uint16_t connHandle, gattAttribute_t *pAttr,
       *pLen = 1;
       pValue[0] = *pAttr->pValue;
       break;
+	case SENSOR_BATTERY_UUID:
+		*pLen = SENSOR_BATTERY_LEN;
+		memcpy(pValue, pAttr->pValue, SENSOR_BATTERY_LEN);
+		break;
 
     default:
       *pLen = 0;

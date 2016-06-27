@@ -216,14 +216,14 @@ static uint16_t events;
 static uint8_t scanRspData[] =
 {
   // complete name
-  0x11,   // length of this data
+  0x07,   // length of this data
   GAP_ADTYPE_LOCAL_NAME_COMPLETE,
-  'C', 'C', '2', '6', '5', '0', ' ',
-  'S', 'e', 'n',  's',  'o',  'r', 'T', 'a', 'T',
+//  'C', 'C', '2', '6', '5', '0', ' ',
+//  'S', 'e', 'n',  's',  'o',  'r', 'T', 'a', 'T',
   
 //  'L', 'N', '-', 'W', 'i', 'C', ' ', 'I', 'n', 't', 
 //  'u', 's', 'l', 'e', 'g', 'e', 'r', 'e', 'X',	 
-
+	'W', 'i', 'C', 'o', 'r', 'e',
   // connection interval range
   0x05,   // length of this data
   GAP_ADTYPE_SLAVE_CONN_INTERVAL_RANGE,
@@ -285,7 +285,7 @@ static const uint8_t devInfoModelNumber[] = "WiCore";
 static const uint8_t devInfoNA[] =          "N.A.";
 static const uint8_t devInfoFirmwareRev[] = FW_VERSION_STR;
 static const uint8_t devInfoMfrName[] =     "Gengee";
-static const uint8_t devInfoHardwareRev[] = "v20151101";
+static const uint8_t devInfoHardwareRev[] = "v1.4";
 
 // Pins that are actively used by the application
 static PIN_Config SensortagAppPinTable[] =

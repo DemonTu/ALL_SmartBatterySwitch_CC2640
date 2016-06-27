@@ -53,7 +53,7 @@ extern "C"
  * CONSTANTS
  */
 #ifndef FW_VERSION
-#define FW_VERSION	1.19
+#define FW_VERSION	2.000
 #endif
 
  /*********************************************************************

@@ -575,12 +575,12 @@ uint8_t userAppShowCharge(void)
 	uint8_t bmpMov = 0;
 	
 	SMB_Read(SPEC_INFO, stat1, 2);	
-	bspUartWrite(stat1, 2);
+	//bspUartWrite(stat1, 2);
 	SMB_Read(RELATIVE_SOC, &charge, 1);
-	//uartWriteDebug(&charge, 1);
+	uartWriteDebug(&charge, 1);
 
 	OLED_ShowString(40,0, "          ");	// 清电池显示区域
-	
+
 	if (charge >100 || stat1[0]!=0x21)
 	{
 		return 2;

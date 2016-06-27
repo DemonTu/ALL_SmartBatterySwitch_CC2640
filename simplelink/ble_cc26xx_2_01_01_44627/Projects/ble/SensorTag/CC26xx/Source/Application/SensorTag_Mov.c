@@ -56,6 +56,7 @@
 #include "sensor.h"
 #include "util.h"
 #include "string.h"
+#include "bsp_uart.h"
 
 /*********************************************************************
  * MACROS
@@ -167,7 +168,11 @@ void SensorTagMov_processCharChangeEvt(uint8_t paramID)
       break;
       
     case SENSOR_CONF:
-     
+		{
+			uint8_t temp[2]={0};
+			Movement_getParameter(SENSOR_CONF, temp);
+			uartWriteDebug(temp, 2);
+		}
       break;     
       
       
