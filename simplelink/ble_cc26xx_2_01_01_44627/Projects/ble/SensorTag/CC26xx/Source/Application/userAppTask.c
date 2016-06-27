@@ -4,6 +4,9 @@
 主要是对 按键、OLED和电池监控的处理
 ***/
 
+#define SYSTEMVER								"V2.000"
+#define VERSHOWTIME								15			// 单位100ms
+
 // Task configuration
 #define USER_TASK_PRIORITY                      2
 #define USER_TASK_STACK_SIZE                    700
@@ -45,6 +48,7 @@ typedef struct
 	uint8_t  chargingFlag;
 	uint8_t  chargeState;
 	uint8_t  delayCnt;
+	uint8_t  verShowTime;
 } STR_USERAPP;
 
 static STR_USERAPP systemState;
@@ -121,8 +125,9 @@ static void Pollint1Sec(void)
 
 				if (2 == systemState.lowBatteryFlag)
 				{
-					OLED_ShowString(40, 0, "           ");
-					OLED_ShowString(40, 0, "No battery ");  
+				//	OLED_ShowString(40, 0, "           ");
+				//	OLED_ShowString(40, 0, "No battery ");  
+					bspI2cReset();
 				}
 				else if (1 == systemState.lowBatteryFlag)
 				{
@@ -198,7 +203,13 @@ static void Pollint100mSec(void)
 			}
             break;
         case 5:
-			
+			if (systemState.verShowTime)			
+			{				
+				if (--systemState.verShowTime == 0)				
+				{					
+					OLED_ShowString(40,32, "WiCore");					
+				}
+			}
             break;
         case 6:
             break;
@@ -426,9 +437,11 @@ void userAppPro(void)
 					{
 						wifiPowerOn();
 						uartWriteDebug("poweron3v3", 10);
-						OLED_ShowString(40,32, "WiCore"); 
+						//OLED_ShowString(40,32, "WiCore"); 
 						
 						userAppShowCharge();
+						OLED_ShowString(40,32, SYSTEMVER); 		
+						systemState.verShowTime = VERSHOWTIME;
 						// 启动广播
 						{
 							uint8_t initialAdvertEnable = TRUE;
@@ -449,6 +462,7 @@ void userAppPro(void)
 						GAPRole_TerminateConnection();
 
 						systemState.powerOffFlag = 1;
+						systemState.verShowTime = 0;
 						
 					}
 					break;
@@ -463,7 +477,9 @@ void userAppPro(void)
 							wifiPowerOn();
 							
 							userAppShowCharge();
-							OLED_ShowString(40,32, "WiCore");
+							//OLED_ShowString(40,32, "WiCore");
+							OLED_ShowString(40,32, SYSTEMVER); 
+							systemState.verShowTime = VERSHOWTIME;
 							
 							// 启动广播
 							{
@@ -486,6 +502,7 @@ void userAppPro(void)
 							systemState.lowBatteryFlag = 0;  // 清低电闪烁 
 							// 有链接，关闭 
 							GAPRole_TerminateConnection();
+							systemState.verShowTime = 0;
 						}
 						systemState.keyShortFlag = 0;	// 忽略短按事件 
 						
@@ -552,15 +569,18 @@ uint8_t userAppShowCharge(void)
 {
 	uint8_t smbBuf[4];
 	uint8_t charge;
+	uint8_t stat1[3] = {0};
 	uint8_t chargeState = 6;
 	uint8_t bmpMov = 0;
 	
+	SMB_Read(SPEC_INFO, stat1, 2);	
+	bspUartWrite(stat1, 2);
 	SMB_Read(RELATIVE_SOC, &charge, 1);
 	//uartWriteDebug(&charge, 1);
 
 	OLED_ShowString(40,0, "          ");	// 清电池显示区域
 	
-	if (charge >100)
+	if (charge >100 || stat1[0]!=0x21)
 	{
 		return 2;
 	}
