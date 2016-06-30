@@ -38,6 +38,7 @@
 #include "Board.h"
 #include "bsp_spi.h"
 #include "ext_flash.h"
+#include "bsp_uart.h"
 
 /*
  * Implementation for WinBond W25X20CL Flash
@@ -191,7 +192,7 @@ static bool extFlashVerifyPart(void)
 
   ret = bspSpiRead(rbuf, sizeof(rbuf));
   extFlashDeselect();
-
+//	bspUartWrite(rbuf, 2); 
   if (ret || rbuf[0] != EXT_FLASH_MAN_ID || rbuf[1] != EXT_FLASH_DEV_ID)
   {
     return false;

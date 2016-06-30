@@ -57,7 +57,7 @@
 #include "util.h"
 #include "string.h"
 #include "bsp_uart.h"
-
+#include "userAppTask.h"
 /*********************************************************************
  * MACROS
  */
@@ -144,7 +144,8 @@ void SensorTagMov_init( void )
 
 	// Register callbacks with profile
 	Movement_registerAppCBs(&sensorCallbacks);
-
+	
+	Movement_setParameter(SENSOR_CONF, 4, (void *)&sysPara.showChar);
 }
 
 /*********************************************************************
@@ -169,9 +170,18 @@ void SensorTagMov_processCharChangeEvt(uint8_t paramID)
       
     case SENSOR_CONF:
 		{
-			uint8_t temp[2]={0};
+			uint8_t temp[4]={0};
 			Movement_getParameter(SENSOR_CONF, temp);
-			uartWriteDebug(temp, 2);
+			uartWriteDebug(temp, 4);
+			if (temp[1] <7)
+			{
+				sysPara.coordinateBac = sysPara.coordinate;
+				sysPara.showChar      = temp[0];
+				sysPara.coordinate    = temp[1];
+				sysPara.deviceNum[0]  = temp[2];
+				sysPara.deviceNum[1]  =	temp[3];
+				userSystemParaSave(&sysPara);
+			}			
 		}
       break;     
       

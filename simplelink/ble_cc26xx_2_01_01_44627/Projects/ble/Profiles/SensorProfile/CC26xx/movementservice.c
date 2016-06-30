@@ -76,7 +76,7 @@
 #define SENSOR_CONFIG_DESCR     "Mov Conf."
 #define SENSOR_PERIOD_DESCR     "Mov Period"
 
-#define SENSOR_CONFIG_LEN       2
+#define SENSOR_CONFIG_LEN       4
 
 /*********************************************************************
  * TYPEDEFS

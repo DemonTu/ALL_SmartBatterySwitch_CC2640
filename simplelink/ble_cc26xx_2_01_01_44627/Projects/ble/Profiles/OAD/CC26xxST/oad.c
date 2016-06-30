@@ -411,7 +411,7 @@ void OAD_imgIdentifyWrite(uint16_t connHandle, uint8_t *pValue)
   // Calculate block total of the new image.
   oadBlkTot = BUILD_UINT16(pValue[hdr_offset+2], pValue[hdr_offset+3]) / (OAD_BLOCK_SIZE / HAL_FLASH_WORD_SIZE);
   oadBlkNum = 0;
-
+	bspUartWrite("ror=", 4);
  	bspUartWrite(pValue, 16);
   /* Requirements to begin OAD:
    * 1) LSB of image version cannot be the same, this would imply a code overlap
@@ -437,6 +437,9 @@ void OAD_imgIdentifyWrite(uint16_t connHandle, uint8_t *pValue)
   }
   else
   {
+  	
+ 	bspUartWrite("er=", 3);
+	bspUartWrite(pValue+hdr_offset, 1);
     // Image rejected, send header information of currently running image 
     // to OAD manager.
     OAD_rejectImage(connHandle, &ImgHdr);

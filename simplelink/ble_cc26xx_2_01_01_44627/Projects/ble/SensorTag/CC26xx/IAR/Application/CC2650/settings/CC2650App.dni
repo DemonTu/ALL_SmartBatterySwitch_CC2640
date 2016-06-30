@@ -16,7 +16,7 @@ xdsResetStrategy=3
 xds100serialNo=06EB122104EF
 xds100foundProbes=
 [DebugChecksum]
-Checksum=836161300
+Checksum=-641895794
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -25,15 +25,11 @@ ShowArgs=0
 [Disassembly]
 MixedMode=1
 [RecentFlashDownload]
-Path=C:\work\source\ALL_SmartBatterySwitch_CC2640\simplelink\ble_cc26xx_2_01_01_44627\Projects\ble\SensorTag\CC26xx\IAR\Application\CC2650\FlashOnlyOAD\Exe\SensorTagAppFlashOnlyOAD.out
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.772.2" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.158.5" 0 0 1 "" 0 "" 0
-Count=4
+Path=C:\test\转接板\基站电源控制板\APP\V1.000\App_V1.001.out
+[CallStackLog]
+Enabled=0
+[CallStackStripe]
+ShowTiming=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -41,6 +37,14 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\SensorTag.c}.772.2" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.167.1" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.167.1" 0 0 1 "" 0 "" 0
+Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Source\Application\userAppTask.c}.167.2" 0 0 1 "" 0 "" 0
+Count=4
 [Aliases]
 A0=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\aon_batmon.c" ""
 A1=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\chipinfo.c" ""
@@ -49,7 +53,3 @@ A3=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\dr
 A4=_ "C:\hudson\workspace\FWGroup-DriverLib\modules\output\cc26xx_cha_2_2_ext\driverlib\sys_ctrl.c" ""
 Count=5
 SuppressDialog=0
-[CallStackLog]
-Enabled=0
-[CallStackStripe]
-ShowTiming=1

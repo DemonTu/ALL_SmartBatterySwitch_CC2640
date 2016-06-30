@@ -251,8 +251,8 @@ typedef Status_t bStatus_t;
  */
 
 // TI Base 128-bit UUID: F000XXXX-0451-4000-B000-000000000000
-#define TI_BASE_UUID_128( uuid )  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0, \
-                                  0x00, 0x40, 0x51, 0x04, LO_UINT16( uuid ), HI_UINT16( uuid ), 0x00, 0xF0
+#define TI_BASE_UUID_128( uuid )  0x65, 0x65, 0x47, 0x6E, 0x65, 0x47, 0x65, 0x72, \
+                                  0x6f, 0x43, 0x69, 0x57, LO_UINT16( uuid ), HI_UINT16( uuid ), 0x00, 0xFF
 
 /*********************************************************************
  * GLOBAL VARIABLES

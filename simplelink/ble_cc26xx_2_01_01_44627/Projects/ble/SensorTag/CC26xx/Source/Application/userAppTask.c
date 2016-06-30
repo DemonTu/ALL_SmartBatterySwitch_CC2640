@@ -1,12 +1,15 @@
 #include "includes.h"
 #include "sensorTag.h"
 
+#include "ext_flash.h"
+#include "ext_flash_layout.h"
+
 /**
 主要是对 按键、OLED和电池监控的处理
 ***/
 
 #define SYSTEMVER								"V2.000"
-#define VERSHOWTIME								15			// 单位100ms
+#define VERSHOWTIME								30			// 单位100ms
 
 // Task configuration
 #define USER_TASK_PRIORITY                      2
@@ -25,6 +28,8 @@ static Clock_Struct periodicClock_100ms;
 static uint16_t userEvents = 0;
 
 extern ICall_Semaphore sem;
+
+SYSTEMPARA_STR sysPara;
 
 //===========================================================
 
@@ -55,6 +60,8 @@ typedef struct
 static STR_USERAPP systemState;
 
 uint8_t userAppShowCharge(void);
+static void userSystemParaInit(void);
+void userAppShowCoordinate(uint8_t showFlag);
 
 /*******************************************************************************
  * PUBLIC FUNCTIONS
@@ -144,7 +151,16 @@ static void Pollint1Sec(void)
         case 3:
 			if(CHARGING == chargeStateRead())
 			{
-				systemState.keyUpFlag=1;
+				systemState.keyUpFlag = 1;
+			}
+			else
+			{
+				if (systemState.keyUpFlag && systemState.powerOffFlag)
+				{
+					/* 清除关机充电的电池图标 */
+					OLED_Clear();
+				}
+				systemState.keyUpFlag = 0;
 			}
             break;
         default:
@@ -205,14 +221,24 @@ static void Pollint100mSec(void)
             break;
         case 5:
 			if (systemState.verShowTime)			
-			{				
-				if (--systemState.verShowTime == 0)				
+			{			
+				if (--systemState.verShowTime == 0)
+				{
+					OLED_showPitchBmp(1, 0);
+				}
+				else if (systemState.verShowTime == VERSHOWTIME/2)				
 				{					
 					OLED_ShowString(40,32, "WiCore");					
 				}
 			}
+			else if ((sysPara.coordinate<7) && (systemState.powerOffFlag==0))
+			{
+				OLED_showPitchBmp(1, 0);
+				userAppShowCoordinate(sysPara.coordinate);				
+			}
             break;
         case 6:
+			
             break;
         case 7:
             break;
@@ -260,6 +286,8 @@ void userAppInit(void)
 	//OLED_ShowString(40,32, "WiCore"); 
 	OLED_Clear();
 	
+	userSystemParaInit();	// 增加系统参数读取
+
 	// Create one-shot clocks for internal periodic events.
 	Util_constructClock(&periodicClock_10ms, userApp_clockHandler,
 	                  10, 0, false, USER_10MS_EVT);
@@ -437,6 +465,7 @@ void userAppPro(void)
 					if (KEY_HIGH == pMsg->GPIOStatus)
 					{
 						wifiPowerOn();
+//						userSystemParaInit();	// 增加系统参数读取
 						uartWriteDebug("poweron3v3", 10);
 						//OLED_ShowString(40,32, "WiCore"); 
 						
@@ -476,7 +505,7 @@ void userAppPro(void)
 							systemState.delayPowerOffTime = 0;
 							systemState.keyUpFlag=0;
 							wifiPowerOn();
-							
+//							userSystemParaInit();	// 增加系统参数读取
 							userAppShowCharge();
 							//OLED_ShowString(40,32, "WiCore");
 							OLED_ShowString(40,32, SYSTEMVER); 
@@ -577,7 +606,7 @@ uint8_t userAppShowCharge(void)
 	SMB_Read(SPEC_INFO, stat1, 2);	
 	//bspUartWrite(stat1, 2);
 	SMB_Read(RELATIVE_SOC, &charge, 1);
-	uartWriteDebug(&charge, 1);
+	//uartWriteDebug(&charge, 1);
 
 	OLED_ShowString(40,0, "          ");	// 清电池显示区域
 
@@ -651,6 +680,73 @@ uint8_t userAppShowCharge(void)
 	return 0;
 }
 
+//================================================================================
+typedef struct 
+{
+	uint8_t x;
+	uint8_t y;
+}COORDINATE_STR;
+const COORDINATE_STR coordinateTable[]=
+{
+	0  , 48,
+	0  , 16,
+	120, 16,
+	120, 48,
+	56 , 48,
+	56,  16,
+		
+};
+/*******************************************************************************
+ * @fn      userAppShowCoordinate
+ *
+ * @brief   显示球场坐标标号
+ *
+ * @param  showFlag(是否显示标志位 非0显示，0不显示)
+ *
+ * @return  0 有电，1 没电
+ */
+void userAppShowCoordinate(uint8_t showFlag)
+{
+	uint8_t tmpShow[2]={0};
+	if (showFlag)
+	{
+		tmpShow[0] = sysPara.showChar;
+		OLED_ShowString(coordinateTable[sysPara.coordinateBac-1].x, coordinateTable[sysPara.coordinateBac-1].y, " ");
+		/* 补线 */
+		if (sysPara.coordinateBac == 5)
+		{
+			OLED_PitchDrawLine(63, 56);
+		}
+		else if (6 == sysPara.coordinateBac)
+		{			
+			OLED_PitchDrawLine(16, 56);
+		}
+		OLED_ShowString(coordinateTable[sysPara.coordinate-1].x, coordinateTable[sysPara.coordinate-1].y, tmpShow);
+		/* 补线 */
+		if (sysPara.coordinate == 5)
+		{
+			OLED_PitchDrawLine(63, 56);
+		}
+		else if (6 == sysPara.coordinate)
+		{			
+			OLED_PitchDrawLine(16, 56);
+		}
+	}
+	else
+	{
+		tmpShow[0] = ' ';
+		OLED_ShowString(coordinateTable[sysPara.coordinateBac-1].x, coordinateTable[sysPara.coordinateBac-1].y, tmpShow);
+		/* 补线 */
+		if (sysPara.coordinateBac == 5)
+		{
+			OLED_PitchDrawLine(63, 56);
+		}
+		else if (6 == sysPara.coordinateBac)
+		{			
+			OLED_PitchDrawLine(16, 56);
+		}
+	}
+}
 //===============================================
 void userStopClock10ms(void)
 {
@@ -659,4 +755,43 @@ void userStopClock10ms(void)
 void userStartClock10ms(void)
 {
 	Util_startClock(&periodicClock_10ms);
+}
+//========================================================
+//        系统参数管理
+static void userSystemParaInit(void)
+{
+	bool success;
+
+	success = extFlashOpen();
+
+	if (success)
+	{
+		extFlashRead(EFL_ADDR_USER, sizeof(SYSTEMPARA_STR), (uint8_t *)&sysPara);
+		if (memcmp(sysPara.ver, SYSTEMVER, strlen(SYSTEMVER)))
+		{
+			memcpy(sysPara.ver, SYSTEMVER, strlen(SYSTEMVER));
+			sysPara.coordinateBac = 1;
+			extFlashErase(EFL_ADDR_USER, EFL_PAGE_SIZE);
+
+			extFlashWrite(EFL_ADDR_USER, sizeof(SYSTEMPARA_STR), (uint8_t *)&sysPara);
+		}
+		extFlashClose();
+	}	
+	
+
+}
+
+void userSystemParaSave(SYSTEMPARA_STR *para)
+{
+	bool success;
+	
+	success = extFlashOpen();
+
+	if (success)
+	{
+		extFlashErase(EFL_ADDR_USER, EFL_PAGE_SIZE);
+		extFlashWrite(EFL_ADDR_USER, sizeof(SYSTEMPARA_STR), (uint8_t *)para);
+			
+		extFlashClose();
+	}	
 }

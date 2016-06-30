@@ -76,13 +76,13 @@ STR_CHARGESTATE chargeStateRead(void)
     STR_CHARGESTATE chargeState = CHARGENONE;
 	if (1 == PIN_getInputValue(Board_Charge_PG))
 	{
-		uartWriteDebug("PG=1", 4);	
+		//uartWriteDebug("PG=1", 4);	
 		chargeState = CHARGING;
 		chargingFlag = 1;
 	}
 	else if (0 == PIN_getInputValue(Board_Charge_PG))
 	{
-		uartWriteDebug("PG=0", 4);	
+		//uartWriteDebug("PG=0", 4);	
 		chargingFlag = 0;
 		chargeState = CHARGENONE;
 	}

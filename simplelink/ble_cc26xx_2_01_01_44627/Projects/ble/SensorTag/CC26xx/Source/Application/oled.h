@@ -36,6 +36,9 @@ void OLED_showBatteryBmp(uint8_t line, uint8_t row, uint8_t batteryState);
 void OLED_showBluetoothBmp(uint8_t line, uint8_t row);
 
 void OLED_testShowGengeeRoll(uint8_t line);
+void OLED_showPitchBmp(uint8_t line, uint8_t row);
+
+void OLED_PitchDrawLine(uint8_t y, uint8_t x);
 
 #endif
 #endif

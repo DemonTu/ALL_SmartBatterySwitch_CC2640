@@ -285,7 +285,7 @@ void OLED_Clear(void)
 }
 //画点 
 //x:0~127
-//y:0~31
+//y:0~64/32
 //t:1 填充 0,清空				   
 void OLED_DrawPoint(uint8_t x,uint8_t y,uint8_t t)
 {
@@ -416,6 +416,47 @@ void OLED_showBluetoothBmp(uint8_t line, uint8_t row)
 		y++;
 	}
 }
+
+/***********************************************************************
+* Funtion Name : OLED_showPitchBmp
+* Description  : 显示足球场, 行扫描
+* Input        : 显示行(2行 0，1)，显示列(0~20)
+* Output       : None
+* return       : None
+**************************************************************************/
+void OLED_showPitchBmp(uint8_t line, uint8_t row)
+{
+	uint8_t i;
+	uint8_t x,y;
+	uint8_t temp = 0;
+	
+	for(y=(line*16); y<MAX_ROW_NAME; y++){
+		// 每行 16*8=128;
+		for(x=row; x<(16+row); x++){
+			temp = pitchBmp[y-(line*16)][x];
+			for(i=0; i<8; i++){
+				OLED_DrawPoint(x*8+i,y,temp&0x01);
+				temp>>=1;
+			}
+		}
+	}
+}
+
+/*
+*		特殊函数，球场补线
+*/
+// line 0~64/32, row 0~120	每次画八个点的线
+void OLED_PitchDrawLine(uint8_t y, uint8_t x)
+{
+	uint8_t i;
+	
+	for(i=0; i<8; i++)
+	{
+		OLED_DrawPoint(x+i, y, 1);
+	}
+}
+
+//=====================================================================
 
 /***********************************************************************
 * Funtion Name : OLED_showGeengeeBmp

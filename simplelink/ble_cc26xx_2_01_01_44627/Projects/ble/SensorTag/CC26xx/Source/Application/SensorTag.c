@@ -272,7 +272,7 @@ static uint8_t advertData[] =
 };
 
 // GAP GATT Attributes
-static const uint8_t attDeviceName[GAP_DEVICE_NAME_LEN] = "WiCore 2.0";
+static const uint8_t attDeviceName[GAP_DEVICE_NAME_LEN] = "WiCore IntuslegereX";
 
 #if FEATURE_OAD
 // Event data from OAD profile.
@@ -777,9 +777,11 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
     break;
   case GAPROLE_WAITING:
   	uartWriteDebug("WAITING", 7);
+	OLED_ShowString(0, 0, "  ");
 	break;
   case GAPROLE_WAITING_AFTER_TIMEOUT:
   		uartWriteDebug("TIMEOUT", 7);
+		OLED_ShowString(0, 0, "  ");
 		//SensorTag_resetAllSensors();
 		//LCD_WRITES_STATUS("Waiting...");
     break;
@@ -1164,11 +1166,10 @@ static bool SensorTag_hasFactoryImage(void)
   bool valid;
 
   valid = extFlashOpen();
-
   if (valid)
   {
     uint16_t buffer[2];
-
+	
     // 1. Check reset vector
     valid = extFlashRead(EFL_ADDR_RECOVERY,sizeof(buffer),(uint8_t*)buffer);
     if (valid)
