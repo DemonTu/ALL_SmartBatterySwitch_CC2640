@@ -272,7 +272,7 @@ static uint8_t advertData[] =
 };
 
 // GAP GATT Attributes
-static const uint8_t attDeviceName[GAP_DEVICE_NAME_LEN] = "WiCore IntuslegereX";
+static const uint8_t attDeviceName[GAP_DEVICE_NAME_LEN] = "WiCore Controller";
 
 #if FEATURE_OAD
 // Event data from OAD profile.
