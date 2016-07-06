@@ -9,7 +9,7 @@
 ***/
 
 #define SYSTEMVER								"V2.000"
-#define VERSHOWTIME								30			// 单位100ms
+#define VERSHOWTIME								60			// 单位100ms
 
 // Task configuration
 #define USER_TASK_PRIORITY                      2
@@ -177,12 +177,31 @@ static void Pollint100mSec(void)
 			Pollint1Sec();
 			break;
         case 1:
-			
+			//======
+			if (1 == systemState.lowBatteryFlag)
+			{
+				static uint8_t bmpFlash = 0;
+				if (bmpFlash<=4)
+				{
+					OLED_showBatteryBmp(0, 88, 8);
+				}
+				else if (bmpFlash<=8)
+				{						
+					OLED_showBatteryBmp(0, 88, 6);
+				}
+				else
+				{
+					bmpFlash = 0;
+				}
+				bmpFlash++;
+			}
+			//========
             break;
 		case 2:
             if ((r_pollint._500msCount++) >= 5)
             {
                 r_pollint._500msCount = 0;
+				#if 0
 				if (1 == systemState.lowBatteryFlag)
 				{
 					static uint8_t bmpFlash = 0;
@@ -197,11 +216,12 @@ static void Pollint100mSec(void)
 						OLED_showBatteryBmp(0, 88, 6);
 					}
 				}
-                OLED_Refresh_Gram();//更新显示
+				#endif
+               // OLED_Refresh_Gram();//更新显示
             }
 			break;
         case 3:
-			//OLED_Refresh_Gram();//更新显示
+			OLED_Refresh_Gram();//更新显示
             break;
         case 4:
 			if (3 == systemState.keyUpFlag)
@@ -225,10 +245,16 @@ static void Pollint100mSec(void)
 				if (--systemState.verShowTime == 0)
 				{
 					OLED_showPitchBmp(1, 0);
+					//userAppShowCoordinate(sysPara.coordinate);
+					//OLED_ShowString(40,32, "      ");
+					userAppShowCoordinate(0);
 				}
 				else if (systemState.verShowTime == VERSHOWTIME/2)				
 				{					
-					OLED_ShowString(40,32, "WiCore");					
+					//OLED_ShowString(40,32, "WiCore");	
+					uint8_t showTemp[16]={0};
+					sprintf((char *)showTemp, "WiCore-%02x%02x", sysPara.deviceNum[0], sysPara.deviceNum[1]);
+					OLED_ShowString(24,32, showTemp);					
 				}
 			}
 			else if ((sysPara.coordinate<7) && (systemState.powerOffFlag==0))
@@ -604,7 +630,7 @@ uint8_t userAppShowCharge(void)
 	uint8_t bmpMov = 0;
 	
 	SMB_Read(SPEC_INFO, stat1, 2);	
-	//bspUartWrite(stat1, 2);
+	uartWriteDebug(stat1, 2);
 	SMB_Read(RELATIVE_SOC, &charge, 1);
 	//uartWriteDebug(&charge, 1);
 
@@ -688,14 +714,17 @@ typedef struct
 }COORDINATE_STR;
 const COORDINATE_STR coordinateTable[]=
 {
-	0  , 48,
-	0  , 16,
-	120, 16,
-	120, 48,
-	56 , 48,
-	56,  16,
+	6  , 50,
+	6  , 14,
+	114, 14,
+	114, 50,
+	61 , 50,
+	61,  14,
 		
 };
+
+static uint8_t cntFlag=0;
+
 /*******************************************************************************
  * @fn      userAppShowCoordinate
  *
@@ -708,6 +737,7 @@ const COORDINATE_STR coordinateTable[]=
 void userAppShowCoordinate(uint8_t showFlag)
 {
 	uint8_t tmpShow[2]={0};
+#if 0
 	if (showFlag)
 	{
 		tmpShow[0] = sysPara.showChar;
@@ -746,6 +776,65 @@ void userAppShowCoordinate(uint8_t showFlag)
 			OLED_PitchDrawLine(16, 56);
 		}
 	}
+#else
+//	OLED_ShowString(0, 16, "                ");
+//	OLED_ShowString(0, 32, "                ");
+//	OLED_ShowString(0, 48, "                ");
+//	OLED_ShowString(61, 32, "O");	
+	if (sysPara.deviceNum[0]&0x80)
+	{
+		/* 大场 */
+	#if 0	
+		OLED_PitchDrawLine(32, 8+4, 16, 0);	//  第一 |
+		OLED_PitchDrawLine(32, 8+8+44+4, 16, 0);	//  第二 |
+		OLED_PitchDrawLine(32, 8+8+8+44+44+4, 16, 0);	//  第三 |
+		
+		OLED_PitchDrawLine(16+8, 8+8, 44, 1);		//  第1  ---
+		OLED_PitchDrawLine(16+8, 8+8+44+8, 44, 1);	//  第2  ---
+		OLED_PitchDrawLine(48+8, 8+8, 44, 1);		//  第3  ---
+		OLED_PitchDrawLine(48+8, 8+8+44+8, 44, 1);	//  第4  ---
+	#endif	
+		/* 坐标标号 */
+		OLED_ShowString(8-2, 50, "a");
+		OLED_ShowString(8-2, 14, "b");
+		OLED_ShowString(8+8+96+2, 14, "c");
+		OLED_ShowString(8+8+96+2, 50, "d");
+		OLED_ShowString(8+8+44+1, 50, "e");
+		OLED_ShowString(8+8+44+1, 14, "f");
+	}
+	else
+	{
+		/* 小场 */
+	#if 0	
+		OLED_PitchDrawLine(32, 8+4, 16, 0);				//  第一 |
+		OLED_PitchDrawLine(24, 8+8+44+4, 32, 0);			//  第二 |
+		OLED_PitchDrawLine(32, 8+8+8+44+44+4, 16, 0);	//  第三 |
+		
+		OLED_PitchDrawLine(16+8, 8+8, 96, 1);		//  第1  ---
+		OLED_PitchDrawLine(48+8, 8+8, 96, 1);		//  第2  ---
+	#endif	
+		/* 坐标标号 */
+		OLED_ShowString(8-2, 50, "a");
+		OLED_ShowString(8-2, 14, "b");
+		OLED_ShowString(8+8+96+2, 14, "c");
+		OLED_ShowString(8+8+96+2, 50, "d");
+	}
+	if (showFlag)
+	{
+		tmpShow[0] = sysPara.showChar;
+		if (cntFlag >= 3)
+		{
+			tmpShow[0] = ' ';
+		}
+		OLED_ShowString(coordinateTable[sysPara.coordinate-1].x, coordinateTable[sysPara.coordinate-1].y, &tmpShow[0]); 		
+		
+		if (++cntFlag >=6)
+		{
+			cntFlag = 0;
+		}
+		
+	}
+#endif	
 }
 //===============================================
 void userStopClock10ms(void)
@@ -771,6 +860,15 @@ static void userSystemParaInit(void)
 		{
 			memcpy(sysPara.ver, SYSTEMVER, strlen(SYSTEMVER));
 			sysPara.coordinateBac = 1;
+			if (sysPara.coordinate == 0xff)
+			{
+				sysPara.coordinate = 0;
+			}
+			if (sysPara.deviceNum[0]==0xFF && sysPara.deviceNum[1]==0xFF)
+			{
+				sysPara.deviceNum[0] = 0;	
+				sysPara.deviceNum[1] = 0;	
+			}
 			extFlashErase(EFL_ADDR_USER, EFL_PAGE_SIZE);
 
 			extFlashWrite(EFL_ADDR_USER, sizeof(SYSTEMPARA_STR), (uint8_t *)&sysPara);

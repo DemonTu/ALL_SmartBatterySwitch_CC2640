@@ -173,15 +173,33 @@ void SensorTagMov_processCharChangeEvt(uint8_t paramID)
 			uint8_t temp[4]={0};
 			Movement_getParameter(SENSOR_CONF, temp);
 			uartWriteDebug(temp, 4);
-			if (temp[1] <7)
+			if (temp[2]&0x80)
 			{
-				sysPara.coordinateBac = sysPara.coordinate;
-				sysPara.showChar      = temp[0];
-				sysPara.coordinate    = temp[1];
-				sysPara.deviceNum[0]  = temp[2];
-				sysPara.deviceNum[1]  =	temp[3];
-				userSystemParaSave(&sysPara);
-			}			
+				/* 大场 */
+				if (temp[1]<7 &&temp[0]<=0x46 && temp[0]>=0x41)
+				{
+					sysPara.coordinateBac = sysPara.coordinate;
+					sysPara.showChar      = temp[0];
+					sysPara.coordinate    = temp[1];
+					sysPara.deviceNum[0]  = temp[2];
+					sysPara.deviceNum[1]  =	temp[3];
+					userSystemParaSave(&sysPara);
+				}
+			}
+			else
+			{
+				/* 大场 */
+				if (temp[1]<5 &&temp[0]<=0x44 && temp[0]>=0x41)
+				{
+					sysPara.coordinateBac = sysPara.coordinate;
+					sysPara.showChar      = temp[0];
+					sysPara.coordinate    = temp[1];
+					sysPara.deviceNum[0]  = temp[2];
+					sysPara.deviceNum[1]  =	temp[3];
+					userSystemParaSave(&sysPara);
+				}
+			}
+						
 		}
       break;     
       

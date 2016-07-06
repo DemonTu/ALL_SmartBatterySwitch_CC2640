@@ -25,18 +25,18 @@ ShowArgs=0
 [Disassembly]
 MixedMode=1
 [RecentFlashDownload]
-Path=C:\test\转接板\基站电源控制板\APP\V1.000\App_V1.001.out
+Path=C:\test\转接板\基站电源控制板\bootloader\V1.000\BIM_ext_V1.000.out
 [CallStackLog]
 Enabled=0
 [CallStackStripe]
 ShowTiming=1
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Disassemble mode]
 mode=0
 [Breakpoints2]

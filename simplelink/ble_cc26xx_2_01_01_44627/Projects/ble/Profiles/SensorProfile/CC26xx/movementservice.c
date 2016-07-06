@@ -73,11 +73,13 @@
 #define SENSOR_BATTERY_LEN		MOVEMENT_BATTERY_LEN
 
 #define SENSOR_DATA_DESCR       "Mov Data"
-#define SENSOR_CONFIG_DESCR     "Mov Conf."
+#define SENSOR_CONFIG_DESCR     "Terminal Conf."
 #define SENSOR_PERIOD_DESCR     "Mov Period"
+#define SENSOR_BATTERY_DESCR    "Battery Leve"
 
 #define SENSOR_CONFIG_LEN       4
 
+#define USER_DESCRIPTION
 /*********************************************************************
  * TYPEDEFS
  */
@@ -188,6 +190,7 @@ static uint8_t sensorBatteryProps = GATT_PROP_READ | GATT_PROP_NOTIFY;
 // Characteristic Configuration: battery info
 static gattCharCfg_t *sensorBatteryConfig;
 
+static uint8_t sensorBatteryUserDescr[] = SENSOR_BATTERY_DESCR;
 /*********************************************************************
  * Profile Attributes - Table
  */
@@ -309,6 +312,13 @@ static gattAttribute_t sensorAttrTable[] =
         0,
         (uint8_t *)&sensorBatteryConfig
       },      
+ // Characteristic User Description "Battery Charging"
+      {
+        { ATT_BT_UUID_SIZE, charUserDescUUID },
+        GATT_PERMIT_READ,
+        0,
+        sensorBatteryUserDescr
+      },
 };
 
 

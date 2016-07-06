@@ -769,7 +769,7 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
     }
   
     uartWriteDebug("Connected", 9);
-	OLED_showBluetoothBmp(0, 0);
+//	OLED_showBluetoothBmp(0, 0);   // 不显示图标，要收钱
 	
     break;
 
@@ -777,11 +777,11 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
     break;
   case GAPROLE_WAITING:
   	uartWriteDebug("WAITING", 7);
-	OLED_ShowString(0, 0, "  ");
+	//OLED_ShowString(0, 0, "  ");
 	break;
   case GAPROLE_WAITING_AFTER_TIMEOUT:
   		uartWriteDebug("TIMEOUT", 7);
-		OLED_ShowString(0, 0, "  ");
+		//OLED_ShowString(0, 0, "  ");
 		//SensorTag_resetAllSensors();
 		//LCD_WRITES_STATUS("Waiting...");
     break;

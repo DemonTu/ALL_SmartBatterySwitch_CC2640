@@ -55,9 +55,9 @@ extern "C"
  * CONSTANTS
  */
 
-#define OAD_SERVICE_UUID      0xFFC0
-#define OAD_IMG_IDENTIFY_UUID 0xFFC1
-#define OAD_IMG_BLOCK_UUID    0xFFC2
+#define OAD_SERVICE_UUID      0xFFB0
+#define OAD_IMG_IDENTIFY_UUID 0xFFB1
+#define OAD_IMG_BLOCK_UUID    0xFFB2
 
 // Offsets in bytes.
 #define OAD_IMG_CRC_OSET      0x0000

@@ -28,13 +28,13 @@ MixedMode=1
 Enabled=0
 [CallStackStripe]
 ShowTiming=224
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Disassemble mode]
 mode=0
 [Breakpoints2]

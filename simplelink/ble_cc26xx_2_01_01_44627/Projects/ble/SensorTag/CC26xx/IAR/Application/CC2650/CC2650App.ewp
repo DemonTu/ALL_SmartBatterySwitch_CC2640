@@ -2346,12 +2346,6 @@
       <name>$PROJ_DIR$\..\..\..\Source\Application\Board_patch\Board.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\Config\ccfg_appBLE.c</name>
-      <excluded>
-        <configuration>FlashOnlyOAD</configuration>
-      </excluded>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\..\..\Source\Application\main.c</name>
     </file>
   </group>

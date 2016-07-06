@@ -38,7 +38,7 @@ void OLED_showBluetoothBmp(uint8_t line, uint8_t row);
 void OLED_testShowGengeeRoll(uint8_t line);
 void OLED_showPitchBmp(uint8_t line, uint8_t row);
 
-void OLED_PitchDrawLine(uint8_t y, uint8_t x);
+void OLED_PitchDrawLine(uint8_t y, uint8_t x, uint8_t pointNum, uint8_t direction);
 
 #endif
 #endif

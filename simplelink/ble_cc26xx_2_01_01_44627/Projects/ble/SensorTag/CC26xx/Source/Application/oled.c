@@ -445,14 +445,21 @@ void OLED_showPitchBmp(uint8_t line, uint8_t row)
 /*
 *		特殊函数，球场补线
 */
-// line 0~64/32, row 0~120	每次画八个点的线
-void OLED_PitchDrawLine(uint8_t y, uint8_t x)
+// line 0~64/32, row 0~120; 每次画pointNum个点的线; direction代表画的方向 0为竖向，1为横向
+void OLED_PitchDrawLine(uint8_t y, uint8_t x, uint8_t pointNum, uint8_t direction)
 {
 	uint8_t i;
 	
-	for(i=0; i<8; i++)
+	for(i=0; i<pointNum; i++)
 	{
-		OLED_DrawPoint(x+i, y, 1);
+		if (direction)
+		{
+			OLED_DrawPoint(x+i, y, 1);
+		}
+		else
+		{			
+			OLED_DrawPoint(x, y+i, 1);
+		}
 	}
 }
 

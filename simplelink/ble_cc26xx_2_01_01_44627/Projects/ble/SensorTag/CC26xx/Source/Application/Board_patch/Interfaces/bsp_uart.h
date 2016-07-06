@@ -21,7 +21,7 @@ extern "C"
  * FUNCTIONS
  */
 
-#define USART_DEBUG
+//#define USART_DEBUG
 
 void bspUartInit(void);
 
