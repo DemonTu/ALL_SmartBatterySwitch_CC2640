@@ -99,21 +99,21 @@ extern "C"
 #define BSP_MIC_POWER           (1 << BSP_IOID_MIC_POWER)
 
 // Board key defines
-#define BSP_IOID_KEY_LEFT       IOID_0
-#define BSP_IOID_KEY_RIGHT      IOID_4
+#define BSP_IOID_KEY_LEFT       IOID_9
+#define BSP_IOID_KEY_RIGHT      IOID_14
 #define BSP_KEY_LEFT            (1 << BSP_IOID_KEY_LEFT)
 #define BSP_KEY_RIGHT           (1 << BSP_IOID_KEY_RIGHT)
 #define BSP_KEY_DIR_ALL         (BSP_KEY_LEFT |   BSP_KEY_RIGHT )
 #define BSP_KEY_ALL             (BSP_KEY_DIR_ALL) //!< Bitmask of all keys
 
 // Board external flash defines
-#define BSP_IOID_FLASH_CS       IOID_14
+#define BSP_IOID_FLASH_CS       IOID_3
 #define BSP_FLASH_CS            (1 << BSP_IOID_FLASH_CS)
-#define BSP_SPI_MOSI            IOID_19
-#define BSP_SPI_MISO            IOID_18
+#define BSP_SPI_MOSI            IOID_1
+#define BSP_SPI_MISO            IOID_0
   
 #if defined(CC2650ST_0120) || defined(CC2650ST_0110)
-  #define BSP_SPI_CLK_FLASH       IOID_17
+  #define BSP_SPI_CLK_FLASH       IOID_2
   /* External flash manufacturer and device ID */
   #define EXT_FLASH_MAN_ID            0xEF
   #define EXT_FLASH_DEV_ID            0x12

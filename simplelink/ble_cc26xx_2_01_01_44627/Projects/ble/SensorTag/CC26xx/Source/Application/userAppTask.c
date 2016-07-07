@@ -8,7 +8,7 @@
 主要是对 按键、OLED和电池监控的处理
 ***/
 
-#define SYSTEMVER								"V2.000"
+#define SYSTEMVER								"V2.001"
 #define VERSHOWTIME								60			// 单位100ms
 
 // Task configuration
@@ -201,22 +201,6 @@ static void Pollint100mSec(void)
             if ((r_pollint._500msCount++) >= 5)
             {
                 r_pollint._500msCount = 0;
-				#if 0
-				if (1 == systemState.lowBatteryFlag)
-				{
-					static uint8_t bmpFlash = 0;
-					if (bmpFlash)
-					{
-						bmpFlash = 0;
-						OLED_showBatteryBmp(0, 88, 8);
-					}
-					else
-					{						
-						bmpFlash = 1;
-						OLED_showBatteryBmp(0, 88, 6);
-					}
-				}
-				#endif
                // OLED_Refresh_Gram();//更新显示
             }
 			break;
@@ -245,13 +229,10 @@ static void Pollint100mSec(void)
 				if (--systemState.verShowTime == 0)
 				{
 					OLED_showPitchBmp(1, 0);
-					//userAppShowCoordinate(sysPara.coordinate);
-					//OLED_ShowString(40,32, "      ");
 					userAppShowCoordinate(0);
 				}
 				else if (systemState.verShowTime == VERSHOWTIME/2)				
 				{					
-					//OLED_ShowString(40,32, "WiCore");	
 					uint8_t showTemp[16]={0};
 					sprintf((char *)showTemp, "WiCore-%02x%02x", sysPara.deviceNum[0], sysPara.deviceNum[1]);
 					OLED_ShowString(24,32, showTemp);					
@@ -317,13 +298,10 @@ void userAppInit(void)
 	// Create one-shot clocks for internal periodic events.
 	Util_constructClock(&periodicClock_10ms, userApp_clockHandler,
 	                  10, 0, false, USER_10MS_EVT);
-#ifndef INCLUDE_CLKSTOP	
+
 	systemState.powerOffFlag = 1;
 	Util_startClock(&periodicClock_10ms);
-#else
-	Util_stopClock(&periodicClock_10ms);
-
-#endif	
+	
 }
 
 /*******************************************************************************
@@ -349,8 +327,6 @@ void userAppPro(void)
 
 		Pollint100mSec();
 	}
-
-#ifdef INCLUDE_CLKSTOP
 	while (!Queue_empty(keyMsgQueue))
 	{
 		KEY_stEvt_t *pMsg = (KEY_stEvt_t *)Util_dequeueMsg(keyMsgQueue);
@@ -363,135 +339,6 @@ void userAppPro(void)
 					if (KEY_HIGH == pMsg->GPIOStatus)
 					{
 						wifiPowerOn();
-						uartWriteDebug("poweron3v3", 10);
-						OLED_ShowString(40,32, "WiCore"); 
-						
-						userAppShowCharge();
-						// 启动广播
-						{
-							uint8_t initialAdvertEnable = TRUE;
-							GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
-						}
-						Util_startClock(&periodicClock_10ms);
-					}
-					else
-					{
-						wifiPowerDown();
-						uartWriteDebug("powerdown3v3", 12);
-						// 清低电闪烁
-						systemState.lowBatteryFlag = 0;
-						OLED_Clear(); // 这个执行时间较长 打乱了定时周期，所以stopClock是没有用的
-						//Util_stopClock(&periodicClock_10ms);
-					
-						// 服务器的按键开关机 设置一个按键放开标志位，等待1s后没有放开
-						// 就清标志位，关闭时钟	
-						systemState.keyUpFlag = 3;	     // 2 为电源按键 等待按键放开标志，3为 服务器按键
-						systemState.delayCnt = 10;
-						// 有链接，关闭	
-						GAPRole_TerminateConnection();
-						
-					}
-					break;
-				case KEY_POWER:
-					if (KEY_IQR == pMsg->GPIOStatus)
-					{
-						KEY_DisableIRQ();
-						uartWriteDebug("tttt", 4);
-						systemState.powerOffFlag = 1;
-						systemState.delayPowerOffTime = 5; // 延时5s 判断是否是按键长按
-						Util_startClock(&periodicClock_10ms);
-					}
-					else if (KEY_LONG == pMsg->GPIOStatus)
-					{
-						if (1 == systemState.powerOffFlag)
-						{
-							systemState.powerOffFlag = 0;
-							systemState.delayPowerOffTime = 0;
-							wifiPowerOn();
-							
-							userAppShowCharge();
-							OLED_ShowString(40,32, "WiCore");
-							
-							// 启动广播
-							{
-								uint8_t initialAdvertEnable = TRUE;
-								GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
-							}
-
-							uartWriteDebug("poweron", 7);
-						}
-						else
-						{
-							//系统断电
-							
-							wifiPowerDown();
-							uartWriteDebug("powerdown", 9);
-							
-							OLED_Clear();
-													
-							systemState.lowBatteryFlag = 0;  // 清低电闪烁 
-							systemState.keyUpFlag = 2;	     // 2 为电源按键 等待按键放开标志，3为 服务器按键
-							// 有链接，关闭	
-							GAPRole_TerminateConnection();
-						}
-						systemState.keyShortFlag = 0;   // 忽略短按事件 
-						
-					}
-					else if (KEY_LOW == pMsg->GPIOStatus)// 松开
-					{
-						if (2 == systemState.keyUpFlag)	// 长按松开，关机 
-						{
-							systemState.keyUpFlag = 0;
-							//开启外部中断
-							KEY_EnableIRQ();
-							{		
-								// 关闭广播
-								uint8_t initialAdvertEnable = FALSE;
-								GAPRole_SetParameter(GAPROLE_ADVERT_ENABLED, sizeof(uint8_t), &initialAdvertEnable);
-							}
-							Util_stopClock(&periodicClock_10ms);
-						}
-						else if (1 == systemState.keyShortFlag)// 短按松开 产生一次短按完整事件
-						{
-							//短按事件处理
-							uartWriteDebug("短按", 4);
-						}
-					}
-					else if (KEY_HIGH == pMsg->GPIOStatus) // 短按
-					{
-						if (1 == systemState.powerOffFlag) // 等待长按事件 忽略此时的短按事件
-						{
-							systemState.delayPowerOffTime = 5;	// 防止timout 剩2s时又产生长按事件					
-						}
-						else
-						{
-							systemState.keyShortFlag = 1;
-						}
-						
-					}
-					break;
-				default:
-					break;
-			}
-	
-			// Free the space from the message.
-			ICall_free(pMsg);
-		}
-	}
-#else
-	while (!Queue_empty(keyMsgQueue))
-	{
-		KEY_stEvt_t *pMsg = (KEY_stEvt_t *)Util_dequeueMsg(keyMsgQueue);
-		if (pMsg)
-		{
-			// Process message.
-			switch(pMsg->GPIOName)
-			{
-				case KEY_NAME_3V3:
-					if (KEY_HIGH == pMsg->GPIOStatus)
-					{
-						wifiPowerOn();
-//						userSystemParaInit();	// 增加系统参数读取
 						uartWriteDebug("poweron3v3", 10);
 						//OLED_ShowString(40,32, "WiCore"); 
 						
@@ -531,7 +378,6 @@ void userAppPro(void)
 							systemState.delayPowerOffTime = 0;
 							systemState.keyUpFlag=0;
 							wifiPowerOn();
-//							userSystemParaInit();	// 增加系统参数读取
 							userAppShowCharge();
 							//OLED_ShowString(40,32, "WiCore");
 							OLED_ShowString(40,32, SYSTEMVER); 
@@ -594,8 +440,6 @@ void userAppPro(void)
 			ICall_free(pMsg);
 		}
 	}
-
-#endif
 }
 
 /*******************************************************************************
@@ -630,7 +474,7 @@ uint8_t userAppShowCharge(void)
 	uint8_t bmpMov = 0;
 	
 	SMB_Read(SPEC_INFO, stat1, 2);	
-	uartWriteDebug(stat1, 2);
+	//uartWriteDebug(stat1, 2);
 	SMB_Read(RELATIVE_SOC, &charge, 1);
 	//uartWriteDebug(&charge, 1);
 
@@ -737,82 +581,22 @@ static uint8_t cntFlag=0;
 void userAppShowCoordinate(uint8_t showFlag)
 {
 	uint8_t tmpShow[2]={0};
-#if 0
-	if (showFlag)
-	{
-		tmpShow[0] = sysPara.showChar;
-		OLED_ShowString(coordinateTable[sysPara.coordinateBac-1].x, coordinateTable[sysPara.coordinateBac-1].y, " ");
-		/* 补线 */
-		if (sysPara.coordinateBac == 5)
-		{
-			OLED_PitchDrawLine(63, 56);
-		}
-		else if (6 == sysPara.coordinateBac)
-		{			
-			OLED_PitchDrawLine(16, 56);
-		}
-		OLED_ShowString(coordinateTable[sysPara.coordinate-1].x, coordinateTable[sysPara.coordinate-1].y, tmpShow);
-		/* 补线 */
-		if (sysPara.coordinate == 5)
-		{
-			OLED_PitchDrawLine(63, 56);
-		}
-		else if (6 == sysPara.coordinate)
-		{			
-			OLED_PitchDrawLine(16, 56);
-		}
-	}
-	else
-	{
-		tmpShow[0] = ' ';
-		OLED_ShowString(coordinateTable[sysPara.coordinateBac-1].x, coordinateTable[sysPara.coordinateBac-1].y, tmpShow);
-		/* 补线 */
-		if (sysPara.coordinateBac == 5)
-		{
-			OLED_PitchDrawLine(63, 56);
-		}
-		else if (6 == sysPara.coordinateBac)
-		{			
-			OLED_PitchDrawLine(16, 56);
-		}
-	}
-#else
-//	OLED_ShowString(0, 16, "                ");
-//	OLED_ShowString(0, 32, "                ");
-//	OLED_ShowString(0, 48, "                ");
-//	OLED_ShowString(61, 32, "O");	
+
 	if (sysPara.deviceNum[0]&0x80)
 	{
 		/* 大场 */
-	#if 0	
-		OLED_PitchDrawLine(32, 8+4, 16, 0);	//  第一 |
-		OLED_PitchDrawLine(32, 8+8+44+4, 16, 0);	//  第二 |
-		OLED_PitchDrawLine(32, 8+8+8+44+44+4, 16, 0);	//  第三 |
-		
-		OLED_PitchDrawLine(16+8, 8+8, 44, 1);		//  第1  ---
-		OLED_PitchDrawLine(16+8, 8+8+44+8, 44, 1);	//  第2  ---
-		OLED_PitchDrawLine(48+8, 8+8, 44, 1);		//  第3  ---
-		OLED_PitchDrawLine(48+8, 8+8+44+8, 44, 1);	//  第4  ---
-	#endif	
+
 		/* 坐标标号 */
-		OLED_ShowString(8-2, 50, "a");
-		OLED_ShowString(8-2, 14, "b");
+		OLED_ShowString(8-2, 50, "e");
+		OLED_ShowString(8-2, 14, "f");
 		OLED_ShowString(8+8+96+2, 14, "c");
 		OLED_ShowString(8+8+96+2, 50, "d");
-		OLED_ShowString(8+8+44+1, 50, "e");
-		OLED_ShowString(8+8+44+1, 14, "f");
+		OLED_ShowString(8+8+44+1, 50, "a");
+		OLED_ShowString(8+8+44+1, 14, "b");
 	}
 	else
 	{
 		/* 小场 */
-	#if 0	
-		OLED_PitchDrawLine(32, 8+4, 16, 0);				//  第一 |
-		OLED_PitchDrawLine(24, 8+8+44+4, 32, 0);			//  第二 |
-		OLED_PitchDrawLine(32, 8+8+8+44+44+4, 16, 0);	//  第三 |
-		
-		OLED_PitchDrawLine(16+8, 8+8, 96, 1);		//  第1  ---
-		OLED_PitchDrawLine(48+8, 8+8, 96, 1);		//  第2  ---
-	#endif	
 		/* 坐标标号 */
 		OLED_ShowString(8-2, 50, "a");
 		OLED_ShowString(8-2, 14, "b");
@@ -834,7 +618,7 @@ void userAppShowCoordinate(uint8_t showFlag)
 		}
 		
 	}
-#endif	
+
 }
 //===============================================
 void userStopClock10ms(void)
